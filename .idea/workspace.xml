@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/extensions.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/begin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/begin/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/begin/rest/faceLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/begin/rest/facelogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/begin/rest/passLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/begin/rest/passlogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/graph/columnar.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/graph/index.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/graph/linear.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/graph/sector.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
+    <list default="true" id="a48080d6-0ed6-4f1c-84d3-6e118141539a" name="Changes" comment="1">
+      <change beforePath="$PROJECT_DIR$/1.text" beforeDir="false" afterPath="$PROJECT_DIR$/1.text" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
