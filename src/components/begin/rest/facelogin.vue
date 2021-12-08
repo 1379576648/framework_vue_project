@@ -3,7 +3,7 @@
       <video id="video" width="250" height="250"></video>
     </div>
     <br>
-    <div>{{info}}</div>
+    <div style="text-align: center;">{{info}}</div>
     <canvas id="canvas" width="250" height="250"></canvas>
   <dd>
     <p>© 版权所有</p>

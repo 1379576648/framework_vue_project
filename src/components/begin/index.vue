@@ -1,8 +1,8 @@
 <template>
   <particles >
   </particles>
-  <dl class="admin_login" style="position: relative;z-index: 999999" >
-      <router-link to="/faceLogin" style="margin-right: 70px" active-class="active" replace >人脸验证</router-link>
+  <dl class="admin_login" style="position: relative;z-index: 999999;text-align: center;" >
+      <router-link to="/faceLogin" style="margin-right: 70px;" active-class="active" replace  >人脸验证</router-link>
       <router-link to="/passLogin" active-class="active"  replace>密码验证</router-link><br/>
     <router-view></router-view>
   </dl>

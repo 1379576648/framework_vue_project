@@ -65,7 +65,7 @@ export default {
         }else{
           alert(2)
           this.count=this.count+1;
-          // this.$router.push({path:'/home',replace:true})
+          this.$router.push({path:'/home',replace:true})
         }
       }
     }
