@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/begin/rest/passlogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/begin/rest/passlogin.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +56,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638956502156</updated>
-      <workItem from="1638956506425" duration="3219000" />
+      <workItem from="1638956506425" duration="5212000" />
     </task>
     <task id="LOCAL-00001" summary="完善">
       <created>1638957153824</created>
@@ -79,7 +79,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638960476758</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="完善">
+      <created>1638960852928</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1638960852928</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
