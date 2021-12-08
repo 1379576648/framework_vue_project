@@ -152,7 +152,7 @@
 
 
 <style type="text/css" scoped> 
-@import url("../../css/Navigation.css");
+@import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 	.mainContent .sub-Content__primary {
 	    padding: 12px 24px;

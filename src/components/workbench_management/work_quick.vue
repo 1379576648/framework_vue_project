@@ -60,7 +60,7 @@
 </script>
 
 <style type="text/css" scoped> 
-	@import url("../../css/Navigation.css");
+	@import url("../../css/navigation.css");
 	.ant-row::after {
 		clear: both;
 	}

@@ -6,6 +6,29 @@
   <component name="ChangeListManager">
     <list default="true" id="a48080d6-0ed6-4f1c-84d3-6e118141539a" name="Changes" comment="1">
       <change beforePath="$PROJECT_DIR$/1.text" beforeDir="false" afterPath="$PROJECT_DIR$/1.text" afterDir="false" />
+    <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/attendance_management/time_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/attendance_management/time_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/begin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/begin/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/employee_management/emp_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/employee_management/emp_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/organization_management/zz_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organization_management/zz_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/add_plan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/add_plan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_eliminate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_eliminate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_newresume.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_newresume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_plan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_plan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_resume.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_resume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_calendar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_calendar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_db.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_db.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_notice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_notice.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_quick.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_quick.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_statistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_statistics.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_time.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_time.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_zpprogress.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_zpprogress.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/workbench.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/workbench.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/Navigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/navigation.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
