@@ -44,7 +44,7 @@
 </script>
 
 <style type="text/css" scoped> 
-	@import url("../../css/Navigation.css");
+	@import url("../../css/navigation.css");
 .home_new_theme .home_to_do_card > ul {
     display: flex;
     justify-content: space-around;

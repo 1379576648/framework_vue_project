@@ -29,7 +29,7 @@
 							<router-link to="/empyg">员工管理</router-link>
 						</el-menu-item>
 						<el-menu-item style="height: 70px;font-weight:bold;" index="4">
-							<router-link to="shij">时间管理</router-link>
+							<router-link to="/shij">时间管理</router-link>
 						</el-menu-item>
 						<el-menu-item style="height: 70px;font-weight:bold;" index="5">
 							<router-link to="/zpdaohang">招聘管理</router-link>
@@ -167,7 +167,7 @@
 </script>
 
 <style type="text/css" scoped> 
-	@import url("../css/Navigation.css");
+	@import url("../css/navigation.css");
 	.dh-span {
 		height: 56px;
 		width: 56px;

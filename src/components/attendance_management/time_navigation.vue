@@ -63,6 +63,6 @@
 </script>
 
 <style type="text/css" scoped> 
-@import url("../../css/Navigation.css");
+@import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 </style>

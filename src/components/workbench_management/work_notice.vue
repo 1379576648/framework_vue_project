@@ -31,7 +31,7 @@
 </script>
 
 <style type="text/css" scoped> 
-	@import url("../../css/Navigation.css");
+	@import url("../../css/navigation.css");
 	.home_notice_card_title::before,
 	.home_notice_card_title::after {
 		content: '';

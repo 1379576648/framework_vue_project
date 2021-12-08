@@ -24,5 +24,5 @@
 </script>
 
 <style type="text/css" scoped> 
-	@import url("../../css/Navigation.css");
+	@import url("../../css/navigation.css");
 </style>
