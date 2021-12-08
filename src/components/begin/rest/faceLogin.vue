@@ -79,25 +79,22 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response)=>{
-        if (response.data.data.state===100){
+        if (response.data.data.state===100||response.data.data.state===300){
           ElNotification.error({
-          title: '通知',
+          title: '提示',
           message: response.data.data.info,
           offset: 100,
         })
         }else if(response.data.data.state===200){
-          this.info=response.data.data.info
-          if (response.data.data.info==="成功"){
-              this.$router.push({path:'/home',replace:true})
-          }else{
+          if (typeof response.data.data.error=="string"){
+            this.info=response.data.data.error;
             setTimeout( this.update,1000);
+          }else{
+
+            console.log(response.data.data.succeed)
+            alert(response.data.data.succeed);
+            this.$router.push({path:'/home',replace:true})
           }
-        }else if(response.data.data.state===300){
-          ElNotification.error({
-            title: '通知',
-            message: response.data.data.info,
-            offset: 100,
-          })
         }
       })
     },
@@ -110,7 +107,7 @@ export default {
       //修改显示的状态
       setTimeout( this.update,1000);
       //调用后台接口进行识别并修改状态
-     setInterval(this.face,4000);
+      setInterval(this.face,3000);
     })
   }
 }
