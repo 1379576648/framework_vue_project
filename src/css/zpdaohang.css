@@ -1,0 +1,93 @@
+.iconfont{
+	    font-family:"iconfont" !important;
+	    font-size:18px;font-style:normal;
+	    -webkit-font-smoothing: antialiased;
+	    -webkit-text-stroke-width: 0.2px;
+	    -moz-osx-font-smoothing: grayscale;
+	}
+	@font-face {
+	  font-family: 'iconfont';  /* Project id 2985811 */
+	  src: url('//at.alicdn.com/t/font_2985811_jhmer38pwra.woff2?t=1638517862602') format('woff2'),
+	       url('//at.alicdn.com/t/font_2985811_jhmer38pwra.woff?t=1638517862602') format('woff'),
+	       url('//at.alicdn.com/t/font_2985811_jhmer38pwra.ttf?t=1638517862602') format('truetype');
+	}
+	::selection {
+		color: #fff;
+		background: #085fc3;
+	}
+
+	.ant-layout.ant-layout-has-sider {
+		flex-direction: row;
+	}
+
+	.sider-view-left {
+		position: relative;
+	}
+
+	article,
+	aside,
+	dialog,
+	figcaption,
+	figure,
+	footer,
+	header,
+	hgroup,
+	main,
+	nav,
+	section {
+		display: block;
+	}
+
+	.hq-siderbar {
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.ant-layout-sider.hq-siderbar {
+		position: relative;
+		min-width: 0;
+		background: #f2f6f8;
+		transition: all 0.5s;
+	}
+
+	.ant-layout-sider.hq-siderbar>div,
+	.ant-layout-sider.hq-siderbar .ant-layout-sider-children {
+		height: 100vh;
+		overflow-y: auto;
+		position: fixed;
+		overflow-x: hidden;
+	}
+
+	.ant-layout-sider-children {
+		height: 100%;
+		margin-top: -0.1px;
+		padding-top: 0.1px;
+	}
+
+	.hq-logo-wrapper {
+		height: 70px;
+		background: #085fc3;
+		padding: 15px 8px 24px 24px;
+		text-align: center;
+		vertical-align: middle;
+		line-height: 60px;
+	}
+
+	.custom-menu {
+		padding-bottom: 20px;
+	}
+	
+    /**
+	 * 菜单样式
+	 */
+	.el-menu {
+	    background-color: #f2f6f8 ;
+	    font-weight: bold;
+		height: 100%;
+	}
+	.el-menu-item{
+		margin-left: 16px;
+		font-weight: normal;
+		font-size: 13px;
+	}
+	
