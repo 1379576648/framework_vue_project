@@ -108,12 +108,18 @@
             <el-table
                 :data="tableData"
                 style="width: 100%; margin-bottom: 20px"
-                row-key="id"
+                row-key="MENU_ID"
                 border
-                default-expand-all
             >
-              <el-table-column prop="date" label="date" sortable width="180" />
-              <el-table-column prop="name" label="Name" sortable width="180" />
+              <el-table-column prop="MENU_NAME" label="菜单名称" sortable min-width="180"/>
+              <el-table-column prop="MENU_MODULE" label="图标"  min-width="180" />
+              <el-table-column prop="MENU_ORDER" label="排序" sortable min-width="180" />
+              <el-table-column prop="MENU_ROUTE" label="组件路径" sortable min-width="180" />
+              <el-table-column prop="MENU_STATE" label="状态" sortable min-width="180" />
+              <el-table-column prop="CREATED_TIME" label="创建时间" sortable min-width="180" />
+              <el-table-column  label="操作"  min-width="180" >
+
+              </el-table-column>
             </el-table>
           </div>
         </div>
@@ -164,65 +170,140 @@ export default {
       menuShow:true,
       tableData: [
         {
-          id: 1,
-          date: '2016-05-02',
-          name: 'wangxiaohu',
+          MENU_ID: 1,
+          MENU_NAME:'工作台',
+          MENU_MODULE:'',
+          MENU_ORDER:1,
+          MENU_ROUTE:'',
+          MENU_STATE:0,
+          CREATED_TIME: '2016-05-02'
         },
         {
-          id: 2,
-          date: '2016-05-04',
-          name: 'wangxiaohu',
+          MENU_ID: 2,
+          MENU_NAME:'组织管理',
+          MENU_MODULE:'',
+          MENU_ORDER:2,
+          MENU_ROUTE:'',
+          MENU_STATE:0,
+          CREATED_TIME: '2016-05-04',
         },
         {
-          id: 3,
-          date: '2016-05-01',
-          name: 'wangxiaohu',
+          MENU_ID: 3,
+          MENU_NAME:'员工管理',
+          MENU_MODULE:'',
+          MENU_ORDER:3,
+          MENU_ROUTE:'',
+          MENU_STATE:0,
+          CREATED_TIME: '2016-05-01',
           children: [
             {
-              id: 31,
-              date: '2016-05-01',
-              name: 'wangxiaohu',
+              MENU_ID: 31,
+              MENU_NAME:'员工信息',
+              MENU_MODULE:'',
+              MENU_ORDER:1,
+              MENU_ROUTE:'',
+              MENU_STATE:0,
+              CREATED_TIME: '2016-05-01',
+              children:[
+                {
+                  MENU_ID: 33,
+                  MENU_NAME: '员工花名册',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 1,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 34,
+                  MENU_NAME: '人才展示',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 2,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 35,
+                  MENU_NAME: '人才统计',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 3,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 36,
+                  MENU_NAME: '员工审核',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 4,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 37,
+                  MENU_NAME: '历史花名册',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 5,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                }
+              ]
             },
             {
-              id: 32,
-              date: '2016-05-01',
-              name: 'wangxiaohu',
+              MENU_ID: 32,
+              MENU_NAME:'兼职管理',
+              MENU_MODULE:'',
+              MENU_ORDER:2,
+              MENU_ROUTE:'',
+              MENU_STATE:0,
+              CREATED_TIME: '2016-05-01',
+            },
+            {
+              MENU_ID: 33,
+              MENU_NAME:'档案管理',
+              MENU_MODULE:'',
+              MENU_ORDER:3,
+              MENU_ROUTE:'',
+              MENU_STATE:0,
+              CREATED_TIME: '2016-05-01',
             },
           ],
         },
         {
-          id: 4,
-          date: '2016-05-03',
-          name: 'wangxiaohu',
+          MENU_ID: 4,
+          MENU_NAME:'时间管理',
+          MENU_MODULE:'',
+          MENU_ORDER:4,
+          MENU_ROUTE:'',
+          MENU_STATE:0,
+          CREATED_TIME: '2016-05-03',
         },
+        {
+          MENU_ID: 5,
+          MENU_NAME:'招聘管理',
+          MENU_MODULE:'',
+          MENU_ORDER:5,
+          MENU_ROUTE:'',
+          MENU_STATE:0,
+          CREATED_TIME: '2016-05-03',
+        }
       ],
     }
   },
-  methods: {
-    load(row, treeNode, resolve) {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 31,
-            date: '2016-05-01',
-            name: 'wangxiaohu',
-          },
-          {
-            id: 32,
-            date: '2016-05-01',
-            name: 'wangxiaohu',
-          },
-        ])
-      }, 1000)
-    },
-  },
-
 }
-
 </script>
 
 <style scoped>
 @import url("../css/navigation.css");
+/deep/th{
+  text-align: center !important;
+}
+/deep/td{
+  text-align: center !important;
+}
 .j-set-big {
   margin: 20px;
   border: 1px saddlebrown solid;
@@ -348,5 +429,11 @@ export default {
 .top-reset{
   display: inline-block;
   text-align: center;
+}
+/deep/.el-icon{
+  display: inline-block;
+}
+/deep/.j-set-date div i{
+  top: 4px;
 }
 </style>
