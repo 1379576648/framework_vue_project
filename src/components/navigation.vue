@@ -41,7 +41,6 @@ f<!-- 首页导航栏 -->
 							<span class="dh-span iconfont" v-else-if="gend == false" style="font-size: 14px;">
 								更多 &#xe76e;
 							</span>
-							
 						</li>
 					</el-menu>
 				</div>
