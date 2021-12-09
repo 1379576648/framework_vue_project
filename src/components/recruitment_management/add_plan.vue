@@ -13,7 +13,6 @@
 			<div class="j-card-body ">
 				<span></span>
 				<div class="sub-Content__primary ">
-
 					<div style="width: 50%; margin: auto;">
 						<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
 							class="demo-ruleForm">

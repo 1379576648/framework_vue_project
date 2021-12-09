@@ -5,6 +5,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from "./store"
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 /**
  *以下代码为2021年10月21日最新加入代码，主要是解决最新
  *版本的icons导入问题。注：el官方目前尚在不断升级，
@@ -20,12 +21,15 @@ import * as ElIcons from '@element-plus/icons'
 function prefixIconName(iconName){
     //将图标文件名称对应官网SVG图标集合进行重新命名，如文件名为AddLocation，则更名为
     //el-add-location。其中add-location为官方网站上的名称
-    return 'el-'+iconName.replace(/[A-Z]/g,(match)=>'-'+match.toLowerCase())
+    return 'i'+iconName.replace(/[A-Z]/g,(match)=>'-'+match.toLowerCase())
 }
-const app=createApp(App).use(ElementPlus)
+const app=createApp(App).use(ElementPlus, {
+    locale: zhCn,
+})
 // 统一注册el-icon图标
 for(let iconName in ElIcons){
     let comname=prefixIconName(iconName);
+    console.log(comname)
     app.component(comname,ElIcons[iconName])
 }
 /**以上代码为最新代码**/
