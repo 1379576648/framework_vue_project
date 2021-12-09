@@ -56,6 +56,8 @@ import a from "../components/recruitment_management/zp_resume.vue"
 import newresume from "../components/recruitment_management/zp_newresume.vue"
 //淘汰库
 import eliminate from "../components/recruitment_management/zp_eliminate.vue"
+//角色设置
+import one from "../components/one.vue"
 const routes = [{
 	path: '/',
 	redirect: '/beginIndex'
@@ -103,7 +105,15 @@ const routes = [{
 			/* 组织管理 */
 			{
 				path: '/zuzhi',
-				component: zuzhi
+				component: zuzhi,
+				children:[
+					{
+						path:"/one",
+						components: {
+							"one":one
+						}
+					}
+				]
 			},
 			/* 员工管理 */
 			{

@@ -71,7 +71,6 @@
 	</section>
 
 
-
 </template>
 
 <script lang="ts">
