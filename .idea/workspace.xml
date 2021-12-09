@@ -4,6 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="a48080d6-0ed6-4f1c-84d3-6e118141539a" name="Changes" comment="1">
+      <change beforePath="$PROJECT_DIR$/1.text" beforeDir="false" afterPath="$PROJECT_DIR$/1.text" afterDir="false" />
     <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/one.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/one.vue" afterDir="false" />
@@ -21,17 +23,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="袁可颖 &lt;3043949730@qq.com&gt;" />
-      </list>
-    </option>
-    <option name="PUSH_TAGS">
-      <GitPushTagMode>
-        <option name="argument" value="--tags" />
-        <option name="title" value="All" />
-      </GitPushTagMode>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -75,6 +66,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638956502156</updated>
+      <workItem from="1638956506425" duration="479000" />
       <workItem from="1638956506425" duration="28928000" />
       <workItem from="1638956506425" duration="5212000" />
       <workItem from="1638964302424" duration="157000" />
@@ -139,9 +131,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="完善" />
-    <option name="LAST_COMMIT_MESSAGE" value="完善" />
   </component>
 </project>
