@@ -47,21 +47,21 @@
               </div>
             </div>
             <div class="j-set-top-bottom">
-              <el-button type="primary" plain  @mouseout="this.buttonBlueColor='#3592f2'" @mouseover="this.buttonBlueColor='white'">
+              <el-button type="primary" >
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
                       d="M792.2 491.3H532.8V231.9c0-11.3-9.2-20.5-20.5-20.5s-20.5 9.2-20.5 20.5v259.4H232.4c-11.3 0-20.5 9.2-20.5 20.5s9.2 20.5 20.5 20.5h259.4v259.4c0 11.3 9.2 20.5 20.5 20.5s20.5-9.2 20.5-20.5V532.3h259.4c11.3 0 20.5-9.2 20.5-20.5-0.1-11.3-9.2-20.5-20.5-20.5z"
-                      :fill="buttonBlueColor" p-id="5343"></path>
+                      fill="#fdfdfd" p-id="5343"></path>
                 </svg>
                 新增
               </el-button>
-              <el-button type="info" plain  @mouseout="this.buttonGrayColor='#92949a'" @mouseover="this.buttonGrayColor='white'">
+              <el-button type="info">
                 <svg t="1639016365538" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="17305" width="17" height="17">
                   <path
                       d="M618.666667 157.866667l179.2 179.2-29.866667 29.866666-149.333333-149.333333v669.866667h-42.666667V115.2l42.666667 42.666667z m-213.333334 682.666666l-179.2-179.2 29.866667-29.866666 149.333333 149.333333V115.2h42.666667v763.733333l-42.666667-38.4z"
-                      :fill="buttonGrayColor" p-id="17306"></path>
+                      fill="#fdfdfd" p-id="17306"></path>
                 </svg>
                 展开/折叠
               </el-button>
@@ -103,6 +103,18 @@
                 </el-tooltip>
               </div>
             </div>
+          </div>
+          <div class="j-set-bottom">
+            <el-table
+                :data="tableData"
+                style="width: 100%; margin-bottom: 20px"
+                row-key="id"
+                border
+                default-expand-all
+            >
+              <el-table-column prop="date" label="date" sortable width="180" />
+              <el-table-column prop="name" label="Name" sortable width="180" />
+            </el-table>
           </div>
         </div>
       </div>
@@ -148,23 +160,69 @@ export default {
       value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
       //日期选择器值
       date: [],
-      //按钮字体颜色
-      buttonBlueColor:"#3592f2",
-      //按钮字体颜色
-      buttonGrayColor:"#92949a",
       //显示隐藏菜单
-      menuShow:true
+      menuShow:true,
+      tableData: [
+        {
+          id: 1,
+          date: '2016-05-02',
+          name: 'wangxiaohu',
+        },
+        {
+          id: 2,
+          date: '2016-05-04',
+          name: 'wangxiaohu',
+        },
+        {
+          id: 3,
+          date: '2016-05-01',
+          name: 'wangxiaohu',
+          children: [
+            {
+              id: 31,
+              date: '2016-05-01',
+              name: 'wangxiaohu',
+            },
+            {
+              id: 32,
+              date: '2016-05-01',
+              name: 'wangxiaohu',
+            },
+          ],
+        },
+        {
+          id: 4,
+          date: '2016-05-03',
+          name: 'wangxiaohu',
+        },
+      ],
     }
-  }
+  },
+  methods: {
+    load(row, treeNode, resolve) {
+      setTimeout(() => {
+        resolve([
+          {
+            id: 31,
+            date: '2016-05-01',
+            name: 'wangxiaohu',
+          },
+          {
+            id: 32,
+            date: '2016-05-01',
+            name: 'wangxiaohu',
+          },
+        ])
+      }, 1000)
+    },
+  },
+
 }
 
 </script>
 
 <style scoped>
 @import url("../css/navigation.css");
-.whiteColor{
-  color:white;
-}
 .j-set-big {
   margin: 20px;
   border: 1px saddlebrown solid;
