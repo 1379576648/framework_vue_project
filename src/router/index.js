@@ -1,7 +1,7 @@
 import {
-	createRouter,
-	createWebHashHistory,
-	createWebHistory
+    createRouter,
+    createWebHashHistory,
+    createWebHistory
 } from 'vue-router'
 //登录主页
 import beginIndex from '../components/begin/index.vue'
@@ -60,7 +60,7 @@ import eliminate from "../components/recruitment_management/zp_eliminate.vue"
 import xcnavigation from "../components/salary_management/xc_navigation.vue"
 
 //角色设置
-import one from "../components/one.vue"
+import permission_set from "../components/system_management/permission_set.vue"
 
 /**
  * 系统管理
@@ -75,155 +75,153 @@ import operate_log from "../components/system_management/operate_log.vue"
 
 
 const routes = [{
-	path: '/',
-	redirect: '/beginIndex'
-},{
-	path: '/beginIndex',
-	component:beginIndex,
-	redirect: '/faceLogin',
-	children:[{
-		path:'/faceLogin',
-		component:faceLogin
-	},{
-		path:'/passLogin',
-		component:passLogin
-	}]
-},{
-	path:"/home",
-	redirect: '/workT'
+    path: '/',  //访问路径
+    redirect: '/beginIndex'//默认访问
+}, {
+    path: '/beginIndex',//访问路径
+    component: beginIndex,//组件
+    redirect: '/faceLogin',//默认访问
+    children: [{//子路由
+        path: '/faceLogin', //访问路径
+        component: faceLogin//组件
+    }, {
+        path: '/passLogin',//访问路径
+        component: passLogin//组件
+    }]
+}, {
+    path: "/home", //访问路径
+    redirect: '/workT'//默认访问
 },/*导航栏*/
-	{
-		path: '/workbench',
-		component: workbench,
-		children: [
-			/*菜单:更多*/
-			
-			/* 工作台 */
-		    {
-				path: '/workT',
-				redirect: '/worktime',
-				component: workT,
-				children:[
-					{
-						path: '/worktime',
-						components: {
-							"worktime":worktime,
-							"workdb":workdb,
-							"workcalendar":workcalendar,
-							"workstatistics":workstatistics,
-							"workzpprogress":workzpprogress,
-							"workquick":workquick,
-							"worknotice":worknotice
-						}
-					},
-				]
-			},
-			/* 组织管理 */
-			{
-				path: '/zuzhi',
-				component: zuzhi,
-				children:[
-					{
-						path:"/one",
-						components: {
-							"one":one
-						}
-					}
-				]
-			},
-			/* 员工管理 */
-			{
-				path: '/empyg',
-				component: empyg
-			},
-			/* 系统管理 */
-			{
-				path: '/system_navigation',
-				component:system_navigation,
+    {
+        path: '/workbench', //访问路径
+        component: workbench,//组件
+        children: [//子路由
+            /*菜单:更多*/
 
-				children:[
-					{
-						path:'/notice',
-						components:{
-							"notice":notice
-						}
-					},
-					{
-						path:'/login_log',
-						components:{
-							"login_log":login_log
-						}
-					},
-					{
-						path:'/operate_log',
-						components:{
-							"operate_log":operate_log
-						}
-					}
-				]
+            /* 工作台 */
+            {
+                path: '/workT', //访问路径
+                redirect: '/worktime',//默认访问
+                component: workT,//组件
+                children: [//子路由
+                    {
+                        path: '/worktime', //访问路径
+                        components: {
+                            "worktime": worktime,//组件
+                            "workdb": workdb,//组件
+                            "workcalendar": workcalendar,//组件
+                            "workstatistics": workstatistics,//组件
+                            "workzpprogress": workzpprogress,//组件
+                            "workquick": workquick,//组件
+                            "worknotice": worknotice//组件
+                        }
+                    },
+                ]
+            },
+            /* 组织管理 */
+            {
+                path: '/zuzhi', //访问路径
+                component: zuzhi,//组件
+            },
+            /* 员工管理 */
+            {
+                path: '/empyg', //访问路径
+                component: empyg//组件
+            },
+            /* 系统管理 */
+            {
+                path: '/system_navigation', //访问路径
+                component: system_navigation,//组件
+                redirect: '/permission_set',//默认访问
+                children: [//子路由
+                    {
+                        path: '/permission_set', //访问路径
+                        components: {
+                            "permission_set": permission_set//组件
+                        }
+                    },
+                    {
+                        path: '/notice', //访问路径
+                        components: {
+                            "notice": notice//组件
+                        }
+                    },
+                    {
+                        path: '/login_log', //访问路径
+                        components: {
+                            "login_log": login_log//组件
+                        }
+                    },
+                    {
+                        path: '/operate_log', //访问路径
+                        components: {
+                            "operate_log": operate_log//组件
+                        }
+                    }
+                ]
 
-			},
-			/* 时间管理 */
-			{
-				path: '/shij',
-				component: shij
-			},
-			/* 招聘管理 */
-			{
-				path: '/zpdaohang',
-				redirect: '/zpplan',
-				components: {
-					"ym1": zpdaohang
-				},
-				children: [
-					/*  招聘计划 */
-					{
-						path: '/zpplan',
-						components: {
-							"zpplan": zpplan
-						}
-					},
-					/*  新增招聘计划 */
-					{
-						path: '/addplan',
-						components: {
-							"addplan": addplan
-						}
-					},
-					//简历导航
-					{
-						path: '/a', 
-						components: {
-							"zp2": a
-						},
-					},
-					{
-						path: '/newresume',
-						components: {
-							"newresume": newresume
-						}
-					},
-					{
-						path: '/eliminate',
-						components: {
-							"eliminate": eliminate
-						}
-					},
-					
-				]
-			},
-			/* 薪酬管理 */
-			{
-				path: '/xcnavigation',
-				component:xcnavigation
-			},
+            },
+            /* 时间管理 */
+            {
+                path: '/shij', //访问路径
+                component: shij//组件
+            },
+            /* 招聘管理 */
+            {
+                path: '/zpdaohang', //访问路径
+                redirect: '/zpplan',//默认访问
+                components: {
+                    "ym1": zpdaohang//组件
+                },
+                children: [//子路由
+                    /*  招聘计划 */
+                    {
+                        path: '/zpplan', //访问路径
+                        components: {
+                            "zpplan": zpplan//组件
+                        }
+                    },
+                    /*  新增招聘计划 */
+                    {
+                        path: '/addplan', //访问路径
+                        components: {
+                            "addplan": addplan//组件
+                        }
+                    },
+                    //简历导航
+                    {
+                        path: '/a', //访问路径
+                        components: {
+                            "zp2": a//组件
+                        },
+                    },
+                    {
+                        path: '/newresume', //访问路径
+                        components: {
+                            "newresume": newresume//组件
+                        }
+                    },
+                    {
+                        path: '/eliminate', //访问路径
+                        components: {
+                            "eliminate": eliminate//组件
+                        }
+                    },
 
-		]
-	}
+                ]
+            },
+            /* 薪酬管理 */
+            {
+                path: '/xcnavigation', //访问路径
+                component: xcnavigation//组件
+            },
+
+        ]
+    }
 ]
 
 const router = createRouter({
-	history: createWebHistory(),
-	routes
+    history: createWebHistory(),
+    routes
 })
 export default router
