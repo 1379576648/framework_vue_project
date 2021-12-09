@@ -5,12 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
+      <change afterPath="$PROJECT_DIR$/src/components/salary_management/xc_navigation.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/one.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_db.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_db.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_time.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_time.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/workbench_management/work_zpprogress.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workbench_management/work_zpprogress.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/navigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/navigation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/begin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/begin/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/organization_management/zz_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organization_management/zz_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/add_plan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/add_plan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -29,11 +52,21 @@
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="4" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="21zuzOTqRUB7qRpVrKnTE8Sk1QJ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,11 +77,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Vue-Entry" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
@@ -64,6 +100,11 @@
       <workItem from="1639010994019" duration="40000" />
       <workItem from="1639030017410" duration="167000" />
       <workItem from="1639030197151" duration="81000" />
+      <workItem from="1638956506425" duration="28928000" />
+      <workItem from="1638956506425" duration="5212000" />
+      <workItem from="1638964302424" duration="157000" />
+      <workItem from="1638964474029" duration="16480000" />
+      <workItem from="1638956506425" duration="33002000" />
     </task>
     <task id="LOCAL-00001" summary="完善">
       <created>1638957153824</created>
@@ -86,7 +127,28 @@
       <option name="project" value="LOCAL" />
       <updated>1638960476758</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="完善">
+      <created>1638960852928</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1638960852928</updated>
+    </task>
+    <task id="LOCAL-00005" summary="完善">
+      <created>1638963915298</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1638963915298</updated>
+    </task>
+    <task id="LOCAL-00006" summary="完善">
+      <created>1639025730206</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1639025730206</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

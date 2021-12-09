@@ -1,4 +1,4 @@
-<!-- 首页导航栏 -->
+f<!-- 首页导航栏 -->
 <template>
 	<div>
 		<!--  头部导航栏  -->
@@ -53,14 +53,21 @@
 						<img style="width: 26px; height: 26px; border-radius: 50%;" alt="" src="../assets/aaa.jpg">
 						&nbsp;&nbsp;
 						17352763829
-						<i aria-label="图标: down" class="anticon anticon-down" style="vertical-align: middle;">
-							<svg viewBox="64 64 896 896" focusable="false" data-icon="down" height="1em"
-								fill="currentColor" aria-hidden="true" width="1em" class="">
-								<path
-									d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z">
-								</path>
-							</svg>
-						</i>
+                <el-dropdown>
+                  <span class="el-dropdown-link">
+                     <i class="iconfont" style="color: white">&#xe600;</i>
+                    <el-icon class="el-icon--right">
+                      <arrow-down />
+                    </el-icon>
+                  </span>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>账户信息</el-dropdown-item>
+                      <el-dropdown-item>SAAS PC</el-dropdown-item>
+                      <el-dropdown-item>退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
 					</span>
 				</div>
 
@@ -71,6 +78,17 @@
 							<i style="font-size: 18px; color: rgb(255, 255, 255); line-height: 70px;"
 								class="iconfont">&#xe625;</i>
 						</span>
+            <div class="header_message header_message_show">
+              <div>
+                  <el-tabs  v-model="activeName" @tab-click="handleClick" stretch="true" style="margin-top: 10px;color: black">
+                    <el-tab-pane label="未读消息" name="first">
+                      <div style="width: 100px; height: 100px; background-color: #0c9c6e"></div>
+                    </el-tab-pane>
+                    <el-tab-pane label="全部消息" name="second">全部消息</el-tab-pane>
+                    <el-tab-pane label="已读消息" name="third">已读消息</el-tab-pane>
+                  </el-tabs>
+              </div>
+            </div>
 
 
 					</div>
@@ -101,6 +119,32 @@
 								<div class="hea_nav_tot">
 									<div>
 										<ul class="hea_nav_tab">
+                      <li>
+                        <i style="font-size: 40px; vertical-align: middle; background-color: #E98F27;
+}"
+                           class="iconfont shebaofuli">
+                          &#xeb65;
+                        </i>
+                        <p><span style="font-size: 12px;">审批管理</span></p>
+                      </li>
+
+                        <li>
+                          <router-link to="xcnavigation">
+                          <i style="font-size: 40px; vertical-align: middle;"
+                            class="iconfont shebaofuli">
+                            &#xe68d;
+                          </i>
+                          <p><span style="font-size: 12px;">薪酬管理</span></p>
+                          </router-link>
+                        </li>
+
+											<li>
+												<i style="font-size: 40px; vertical-align: middle;"
+													class="iconfont shebaofuli">
+                          &#xe68c;
+												</i>
+												<p><span style="font-size: 12px;">统计分析</span></p>
+											</li>
 											<li>
 												<i style="font-size: 40px; vertical-align: middle;"
 													class="iconfont shebaofuli">
@@ -108,28 +152,14 @@
 												</i>
 												<p><span style="font-size: 12px;">社保管理</span></p>
 											</li>
-											
 											<li>
-												<i style="font-size: 40px; vertical-align: middle;"
+												<i style="font-size: 40px; vertical-align: middle;background-color: #2366A7;"
 													class="iconfont shebaofuli">
-													&#xe604;
+                          &#xe64c;
 												</i>
-												<p><span style="font-size: 12px;">社保管理</span></p>
+												<p><span style="font-size: 12px;">系统管理</span></p>
 											</li>
-											<li>
-												<i style="font-size: 40px; vertical-align: middle;"
-													class="iconfont shebaofuli">
-													&#xe604;
-												</i>
-												<p><span style="font-size: 12px;">社保管理</span></p>
-											</li>
-											<li>
-												<i style="font-size: 40px; vertical-align: middle;"
-													class="iconfont shebaofuli">
-													&#xe604;
-												</i>
-												<p><span style="font-size: 12px;">社保管理</span></p>
-											</li>
+
 										</ul>
 									</div>
 								</div>
@@ -144,10 +174,13 @@
 </template>
 
 <script>
+import { ArrowDown } from '@element-plus/icons';
 	import {
 		defineComponent,
 		ref
 	} from 'vue'
+
+
 
 	export default{
 		data() {
@@ -161,13 +194,20 @@
 				activeIndex,
 				activeIndex2,
 				handleSelect,
+        activeName:'second'
 			}
 		},
+    methods: {
+      handleClick(tab, event) {
+        console.log(tab, event)
+      },
+    },
 	}
 </script>
 
 <style type="text/css" scoped> 
 	@import url("../css/navigation.css");
+
 	.dh-span {
 		height: 56px;
 		width: 56px;
@@ -309,4 +349,45 @@
 		background-color: #49A782;
 		color: #fff;
 	}
+
+
+  /* 消息样式 */
+  .header_message {
+    width: 450px;
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    transition: all .3s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.219);
+    border-radius: 4px;
+    position: fixed;
+    top: 48px;
+    right: 32px;
+    z-index: 100;
+    background-color: #fff;
+    display: block;
+  }
+  .header_2_s:hover .header_message{
+    display: block;
+    height: 538px;
+    visibility: visible;
+    opacity: 1;
+  }
+  .ant-tabs::after {
+    clear: both;
+  }
+  .ant-tabs::before, .ant-tabs::after {
+    display: table;
+    content: '';
+  }
+  ::selection {
+    color: #fff;
+    background: #085fc3;
+  }
+  .ant-tabs-nav-scroll {
+    height: 54px;
+    line-height: 54px;
+    margin-bottom: 0;
+  }
 </style>
