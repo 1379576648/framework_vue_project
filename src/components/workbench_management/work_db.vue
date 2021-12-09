@@ -6,7 +6,7 @@
 		<div class="home_bot_tit">
 			<span>
 				<i class="iconfont">&#xe641;</i>
-				<span  style="font-weight: bold;"> 待办事项</span>
+				<span  style="font-size: 14px; font-weight: bold; color: rgba(0, 0, 0, 0.65);"> 待办事项</span>
 			</span>
 		</div>
 		
@@ -46,8 +46,10 @@
 <script>
 </script>
 
-<style type="text/css" scoped> 
+<style type="text/css" scoped>
 	@import url("../../css/navigation.css");
+
+
 	.home_new_theme .home_to_do_card > div {
 	    display: flex;
 	    justify-content: space-between;

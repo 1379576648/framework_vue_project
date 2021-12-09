@@ -42,9 +42,7 @@ import empyg from "../components/employee_management/emp_navigation.vue"
  * 考勤管理
  */
 import shij from "../components/attendance_management/time_navigation.vue"
-/**
- * 招聘导航
- */
+//招聘导航
 import zpdaohang from "../components/recruitment_management/zp_navigation.vue"
 //招聘计划
 import zpplan from "../components/recruitment_management/zp_plan.vue";
@@ -56,6 +54,11 @@ import a from "../components/recruitment_management/zp_resume.vue"
 import newresume from "../components/recruitment_management/zp_newresume.vue"
 //淘汰库
 import eliminate from "../components/recruitment_management/zp_eliminate.vue"
+/**
+ * 薪酬管理
+ */
+import xcnavigation from "../components/salary_management/xc_navigation.vue"
+
 const routes = [{
 	path: '/',
 	redirect: '/beginIndex'
@@ -158,6 +161,11 @@ const routes = [{
 					},
 					
 				]
+			},
+			/* 薪酬管理 */
+			{
+				path: '/xcnavigation',
+				component:xcnavigation
 			},
 
 		]
