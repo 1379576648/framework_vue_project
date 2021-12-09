@@ -61,6 +61,19 @@ import xcnavigation from "../components/salary_management/xc_navigation.vue"
 
 //角色设置
 import one from "../components/one.vue"
+
+/**
+ * 系统管理
+ */
+import system_navigation from "../components/system_management/system_navigation.vue"
+/*公告设置*/
+import notice from "../components/system_management/notice.vue"
+/* 登录日志 */
+import login_log from "../components/system_management/login_log.vue"
+/* 操作日志 */
+import operate_log from "../components/system_management/operate_log.vue"
+
+
 const routes = [{
 	path: '/',
 	redirect: '/beginIndex'
@@ -122,6 +135,33 @@ const routes = [{
 			{
 				path: '/empyg',
 				component: empyg
+			},
+			/* 系统管理 */
+			{
+				path: '/system_navigation',
+				component:system_navigation,
+
+				children:[
+					{
+						path:'/notice',
+						components:{
+							"notice":notice
+						}
+					},
+					{
+						path:'/login_log',
+						components:{
+							"login_log":login_log
+						}
+					},
+					{
+						path:'/operate_log',
+						components:{
+							"operate_log":operate_log
+						}
+					}
+				]
+
 			},
 			/* 时间管理 */
 			{

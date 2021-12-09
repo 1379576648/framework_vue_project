@@ -153,11 +153,13 @@ f<!-- 首页导航栏 -->
 												<p><span style="font-size: 12px;">社保管理</span></p>
 											</li>
 											<li>
+                        <router-link to="/system_navigation">
 												<i style="font-size: 40px; vertical-align: middle;background-color: #2366A7;"
 													class="iconfont shebaofuli">
                           &#xe64c;
 												</i>
 												<p><span style="font-size: 12px;">系统管理</span></p>
+                        </router-link>
 											</li>
 
 										</ul>
