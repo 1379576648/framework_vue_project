@@ -27,7 +27,7 @@
           <div class="hq-logo-wrapper"></div>
           <div class="custom-menu" style="width: 160px">
             <!-- 下拉菜单 -->
-            <el-menu unique-opened="true" default-active="3" background-color="#f2f6f8" router>
+            <el-menu unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
               <menu-util :data="menuList"/>
             </el-menu>
           </div>
@@ -35,131 +35,159 @@
       </aside>
     </div>
     <main class="ant-layout-content">
-      <router-view name="notice"></router-view>
-      <router-view name="login_log"></router-view>
-      <router-view name="operate_log"></router-view>
-      <router-view name="permission_set"></router-view>
+      <route-util :data="menuList"></route-util>
     </main>
   </section>
 </template>
 
 <script lang="ts">
 import menuUtil from '../util/menu_util.vue'
+import routeUtil from '../util/route_util.vue'
 
 export default {
   components: {
-    menuUtil
+    menuUtil,
+    routeUtil
   },
   data() {
     return {
+      //动态菜单
       menuList: [
         {
-          MENU_NAME: '权限管理',
-          MENU_ROUTE: '/1',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: 0
-          ,
-          son: [
+          MENU_ID: 1,//菜单编号
+          MENU_NAME: '权限管理',//菜单名称
+          MENU_ROUTE: '/1',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
+          son: [//子菜单
             {
-              MENU_NAME: '权限设置',
-              MENU_ROUTE: '/permission_set',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: 1
+              MENU_ID: 2,//菜单编号
+              MENU_NAME: '权限设置',//菜单名称
+              MENU_ROUTE: '/permission_set',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
             },
             {
-              MENU_NAME: '角色设置',
-              MENU_ROUTE: '/notice',
-              MENU_MODULE: '&#xe62c;',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: 0,
+              MENU_ID: 3,//菜单编号
+              MENU_NAME: '角色设置',//菜单名称
+              MENU_ROUTE: '/notice',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 0,//是否有叶子 0有 1没有
               son: [
                 {
-                  MENU_NAME: '权限设置',
-                  MENU_ROUTE: '/permission_set',
-                  MENU_MODULE: '&#xe62c;',
-                  MENU_state: 0,
-                  MENU_TYPE: 0,
-                  MENU_LEAF: 1,
-                  MENU_ORDER: 0,
-                  son:[
+                  MENU_ID: 4,//菜单编号
+                  MENU_NAME: '权限设置',//菜单名称
+                  MENU_ROUTE: '/permission_set',//路由地址
+                  MENU_MODULE: '&#xe62c;',//组件地址
+                  MENU_STATE: 0,//是否启用 0启用 1禁用
+                  MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+                  MENU_LEAF: 0,//是否有叶子 0有 1没有
+                  son: [
                     {
-                      MENU_NAME: '权限设置',
-                      MENU_ROUTE: '/permission_set',
-                      MENU_MODULE: '&#xe62c;',
-                      MENU_state: 0,
-                      MENU_TYPE: 0,
-                      MENU_LEAF: 1,
-                      MENU_ORDER: 1}
+                      MENU_ID: 5,//菜单编号
+                      MENU_NAME: '权限设置',//菜单名称
+                      MENU_ROUTE: '/permission_set',//路由地址
+                      MENU_MODULE: '&#xe62c;',//组件地址
+                      MENU_STATE: 0,//是否启用 0启用 1禁用
+                      MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+                      MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    }
                   ]
                 }
               ]
             }]
         }, {
-          MENU_NAME: '公告管理',
-          MENU_ROUTE: '/2',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: 0
-          ,
+          MENU_ID: 6,//菜单编号
+          MENU_NAME: '公告管理',//菜单名称
+          MENU_ROUTE: '/permission_set',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
           son: [
             {
-              MENU_NAME: '公告设置',
-              MENU_ROUTE: '/notice',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: 1
+              MENU_ID: 7,//菜单编号
+              MENU_NAME: '公告设置',//菜单名称
+              MENU_ROUTE: '/notice',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
             }]
         }, {
-          MENU_NAME: '日志管理',
-          MENU_ROUTE: '/3',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: 0
-          ,
+          MENU_ID: 8,//菜单编号
+          MENU_NAME: '日志管理',//菜单名称
+          MENU_ROUTE: '/3',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
           son: [
             {
-              MENU_NAME: '登录日志',
-              MENU_ROUTE: '/login_log',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: 1
+              MENU_ID: 8,//菜单编号
+              MENU_NAME: '登录日志',//菜单名称
+              MENU_ROUTE: '/login_log',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
             },
             {
-              MENU_NAME: '操作日志',
-              MENU_ROUTE: '/operate_log',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: 1
+              MENU_ID: 9,//菜单编号
+              MENU_NAME: '操作日志',//菜单名称
+              MENU_ROUTE: '/operate_log',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
             }]
         }, {
-          MENU_NAME: '权限管理',
-          MENU_ROUTE: '/1',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: 1
-        }]
+          MENU_ID: 10,//菜单编号
+          MENU_NAME: '操作日志',//菜单名称
+          MENU_ROUTE: '/1',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        }], activate_router: '',
+    }
+  }, computed: {
+    //默认激活路由
+    default_route() {
+      //找出第一个没有叶子的菜单
+      this.inquire_1();
+      return this.activate_router;
+    }
+  }, methods: {
+    inquire_1() {
+      for (let i of this.menuList) {
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+          this.inquire_2(i.son);
+        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+          if (this.activate_router == '') {
+            this.activate_router = i.MENU_ROUTE;
+          }
+        }
+      }
+    }, inquire_2(value) {
+      for (let i of value) {
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+          this.inquire_2(i.son);
+        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+          if (this.activate_router == '') {
+            this.activate_router = i.MENU_ROUTE;
+          }
+        }
+      }
     }
   }
+
 }
 </script>
 
