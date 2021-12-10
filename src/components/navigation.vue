@@ -152,7 +152,7 @@ export default {
         {MENU_NAME:'审批管理',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xeb65;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
         {MENU_NAME:'薪酬管理',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xe68d;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
         {MENU_NAME:'社保管理',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xe604;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'统计分析',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xe68c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
+        {MENU_NAME:'统计分析',MENU_ROUTE:'/Statistics',MENU_MODULE:'&#xe68c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
         {MENU_NAME:'系统管理',MENU_ROUTE:'/system_navigation',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1}
       ]
     }

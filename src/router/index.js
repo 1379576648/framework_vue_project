@@ -76,8 +76,25 @@ import notice from "../components/system_management/notice.vue"
 import login_log from "../components/system_management/login_log.vue"
 /* 操作日志 */
 import operate_log from "../components/system_management/operate_log.vue"
-
-
+/*统计分析*/
+import Statistics_One  from "../components/statistics/statistics.vue"
+/*人员统计图*/
+import StatisticePersonnel from "../components/statistics/statistice_personnel.vue"
+import StatisticePersonnel1 from "../components/statistics/statistice_personnel1.vue"
+import StatisticePersonnel2 from "../components/statistics/statistice_personnel2.vue"
+import StatisticePersonnel3 from "../components/statistics/StatisticePersonnel3.vue"
+/*考勤分析图*/
+import CheckWork from "../components/statistics/check_work.vue"
+import CheckWork1 from "../components/statistics/check_work1.vue"
+import CheckWork2 from "../components/statistics/check_work2.vue"
+import CheckWork3 from "../components/statistics/check_work3.vue"
+import CheckWork4 from "../components/statistics/check_work4.vue"
+/*薪酬分析图*/
+import SalaryAnalysis from "../components/statistics/salary_analysis.vue"
+import SalaryAnalysis1 from "../components/statistics/salary_analysis1.vue"
+import SalaryAnalysis2 from "../components/statistics/salary_analysis2.vue"
+import SalaryAnalysis3 from "../components/statistics/salary_analysis3.vue"
+import SalaryAnalysis4 from "../components/statistics/salary_analysis4.vue"
 const routes = [{
     path: '/',  //访问路径
     redirect: '/beginIndex'//默认访问
@@ -239,6 +256,103 @@ const routes = [{
             {
                 path: '/xcnavigation', //访问路径
                 component: xcnavigation//组件
+            },
+            {/*统计管理*/
+                path: '/Statistics', //访问路径
+                component: Statistics_One,//组件
+
+                children: [//子路由
+                    {
+                        path:"/StatisticePersonnel",
+                        redirect: '/StatisticePersonnel1',//默认访问
+                         components: {
+                             "StatisticePersonnel":StatisticePersonnel
+                         },children:[
+                            {
+                                path:"/StatisticePersonnel1",
+                                components: {
+                                    "StatisticePersonnel1": StatisticePersonnel1
+                                }
+                            },
+                            {
+                                path:"/StatisticePersonnel2",
+                                components: {
+                                    "StatisticePersonnel2": StatisticePersonnel2
+                                }
+                            },
+                            {
+                                path:"/StatisticePersonnel3",
+                                components: {
+                                    "StatisticePersonnel3": StatisticePersonnel3
+                            }
+                            }
+                        ]
+                    },
+                    {
+                        path: "/CheckWork",
+                        redirect:"/CheckWork1",
+                        components: {
+                            "CheckWork": CheckWork
+                        },children:[
+                            {
+                                path:"/CheckWork1",
+                                components: {
+                                    "CheckWork1": CheckWork1
+                                }
+                            },
+                            {
+                                path:"/CheckWork2",
+                                components: {
+                                    "CheckWork2": CheckWork2
+                                }
+                            },
+                            {
+                                path:"/CheckWork3",
+                                components: {
+                                    "CheckWork3": CheckWork3
+                                }
+                            },
+                            {
+                                path:"/CheckWork4",
+                                components: {
+                                    "CheckWork4": CheckWork4
+                                }
+                            },
+                        ]
+                    },{
+                        path: "/SalaryAnalysis",
+                        redirect:"/SalaryAnalysis1",
+                        components: {
+                            "SalaryAnalysis": SalaryAnalysis
+                        },children:[
+                            {
+                                path:"/SalaryAnalysis1",
+                                components: {
+                                    "SalaryAnalysis1": SalaryAnalysis1
+                                }
+                            },
+                            {
+                                path:"/SalaryAnalysis2",
+                                components: {
+                                    "SalaryAnalysis2": SalaryAnalysis2
+                                }
+                            },
+                            {
+                                path:"/SalaryAnalysis3",
+                                components: {
+                                    "SalaryAnalysis3": SalaryAnalysis3
+                                }
+                            },
+                            {
+                                path:"/SalaryAnalysis4",
+                                components: {
+                                    "SalaryAnalysis4": SalaryAnalysis4
+                                }
+                            },
+                        ]
+
+                    }
+                    ]
             },
 
 		]
