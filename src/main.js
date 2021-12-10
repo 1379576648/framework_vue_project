@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import {createApp, render} from 'vue'
 import App from './App.vue'
 import ElementPlus from 'element-plus'
 import router from './router'
@@ -33,4 +33,5 @@ for(let iconName in ElIcons){
     app.component(comname,ElIcons[iconName])
 }
 /**以上代码为最新代码**/
+//注册全局组件
 app.use(VueAxios,axios).use(store).use(router).mount('#app')

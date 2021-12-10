@@ -27,79 +27,9 @@
           <div class="hq-logo-wrapper"></div>
           <div class="custom-menu" style="width: 160px">
             <!-- 下拉菜单 -->
-            <el-menu unique-opened="true" default-active="3" background-color="#f2f6f8">
-              <!-- 权限管理 -->
-              <el-sub-menu index="1">
-                <template #title>
-                  <i class="iconfont">&#xe62c;</i>&nbsp;&nbsp;
-                  <span
-                      style="
-                         font-weight: normal;
-                         font-size: 15px;
-                         margin-left: -5px;
-                         margin-top: -1px;">
-                      权限管理
-                    </span>
-                </template>
-
-                <el-menu-item index="1-1">
-                  <router-link to="/permission_set">
-                    权限设置
-                  </router-link>
-                </el-menu-item>
-                <el-menu-item index="1-2">
-                  <router-link to="/notice">
-                    角色设置
-                  </router-link>
-                </el-menu-item>
-              </el-sub-menu>
-              <!-- 公告设置 -->
-              <el-sub-menu index="1">
-                <template #title>
-                  <i class="iconfont">&#xe62c;</i>&nbsp;&nbsp;
-                  <span
-                      style="
-                         font-weight: normal;
-                         font-size: 15px;
-                         margin-left: -5px;
-                         margin-top: -1px;">
-                      公告管理
-                    </span>
-                </template>
-
-                <el-menu-item index="1-1">
-                  <router-link to="/notice">
-                    公告设置
-                  </router-link>
-                </el-menu-item>
-              </el-sub-menu>
-              <!-- 日志管理 -->
-              <el-sub-menu index="2">
-                <template #title>
-                  <i class="iconfont">&#xe62c;</i>&nbsp;&nbsp;
-                  <span
-                      style="
-				         font-weight: normal;
-				         font-size: 15px;
-				         margin-left: -5px;
-				         margin-top: -1px;">
-				      日志管理
-				    </span>
-                </template>
-
-                <el-menu-item index="2-1">
-                  <router-link to="/login_log">
-                    登录日志
-                  </router-link>
-                </el-menu-item>
-                <el-menu-item index="2-2">
-                  <router-link to="/operate_log">
-                    操作日志
-                  </router-link>
-                </el-menu-item>
-              </el-sub-menu>
+            <el-menu unique-opened="true" default-active="3" background-color="#f2f6f8" router>
+              <menu-util :data="menuList"/>
             </el-menu>
-
           </div>
         </div>
       </aside>
@@ -113,12 +43,138 @@
   </section>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import menuUtil from '../util/menu_util.vue'
+
+export default {
+  components: {
+    menuUtil
+  },
+  data() {
+    return {
+      menuList: [
+        {
+          MENU_NAME: '权限管理',
+          MENU_ROUTE: '/1',
+          MENU_MODULE: '&#xe62c;',
+          MENU_state: 0,
+          MENU_TYPE: 0,
+          MENU_LEAF: 1,
+          MENU_ORDER: 0
+          ,
+          son: [
+            {
+              MENU_NAME: '权限设置',
+              MENU_ROUTE: '/permission_set',
+              MENU_MODULE: '',
+              MENU_state: 0,
+              MENU_TYPE: 0,
+              MENU_LEAF: 1,
+              MENU_ORDER: 1
+            },
+            {
+              MENU_NAME: '角色设置',
+              MENU_ROUTE: '/notice',
+              MENU_MODULE: '&#xe62c;',
+              MENU_state: 0,
+              MENU_TYPE: 0,
+              MENU_LEAF: 1,
+              MENU_ORDER: 0,
+              son: [
+                {
+                  MENU_NAME: '权限设置',
+                  MENU_ROUTE: '/permission_set',
+                  MENU_MODULE: '&#xe62c;',
+                  MENU_state: 0,
+                  MENU_TYPE: 0,
+                  MENU_LEAF: 1,
+                  MENU_ORDER: 0,
+                  son:[
+                    {
+                      MENU_NAME: '权限设置',
+                      MENU_ROUTE: '/permission_set',
+                      MENU_MODULE: '&#xe62c;',
+                      MENU_state: 0,
+                      MENU_TYPE: 0,
+                      MENU_LEAF: 1,
+                      MENU_ORDER: 1}
+                  ]
+                }
+              ]
+            }]
+        }, {
+          MENU_NAME: '公告管理',
+          MENU_ROUTE: '/2',
+          MENU_MODULE: '&#xe62c;',
+          MENU_state: 0,
+          MENU_TYPE: 0,
+          MENU_LEAF: 1,
+          MENU_ORDER: 0
+          ,
+          son: [
+            {
+              MENU_NAME: '公告设置',
+              MENU_ROUTE: '/notice',
+              MENU_MODULE: '',
+              MENU_state: 0,
+              MENU_TYPE: 0,
+              MENU_LEAF: 1,
+              MENU_ORDER: 1
+            }]
+        }, {
+          MENU_NAME: '日志管理',
+          MENU_ROUTE: '/3',
+          MENU_MODULE: '&#xe62c;',
+          MENU_state: 0,
+          MENU_TYPE: 0,
+          MENU_LEAF: 1,
+          MENU_ORDER: 0
+          ,
+          son: [
+            {
+              MENU_NAME: '登录日志',
+              MENU_ROUTE: '/login_log',
+              MENU_MODULE: '',
+              MENU_state: 0,
+              MENU_TYPE: 0,
+              MENU_LEAF: 1,
+              MENU_ORDER: 1
+            },
+            {
+              MENU_NAME: '操作日志',
+              MENU_ROUTE: '/operate_log',
+              MENU_MODULE: '',
+              MENU_state: 0,
+              MENU_TYPE: 0,
+              MENU_LEAF: 1,
+              MENU_ORDER: 1
+            }]
+        }, {
+          MENU_NAME: '权限管理',
+          MENU_ROUTE: '/1',
+          MENU_MODULE: '&#xe62c;',
+          MENU_state: 0,
+          MENU_TYPE: 0,
+          MENU_LEAF: 1,
+          MENU_ORDER: 1
+        }]
+    }
+  }
+}
+</script>
 
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
-a{
+
+a {
   color: rgb(48, 49, 51)
+}
+
+/deep/ .el-sub-menu__title span {
+  font-weight: normal;
+  font-size: 15px;
+  margin-left: -5px;
+  margin-top: -1px;
 }
 </style>

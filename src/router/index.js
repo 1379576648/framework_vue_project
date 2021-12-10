@@ -155,25 +155,25 @@ const routes = [{
                 component: system_navigation,//组件
                 redirect: '/permission_set',//默认访问
                 children: [//子路由
-                    {
+                    {//权限设置
                         path: '/permission_set', //访问路径
                         components: {
                             "permission_set": permission_set//组件
                         }
                     },
-                    {
+                    {//公告设置
                         path: '/notice', //访问路径
                         components: {
                             "notice": notice//组件
                         }
                     },
-                    {
+                    {//登录日志
                         path: '/login_log', //访问路径
                         components: {
                             "login_log": login_log//组件
                         }
                     },
-                    {
+                    {//操作日志
                         path: '/operate_log', //访问路径
                         components: {
                             "operate_log": operate_log//组件

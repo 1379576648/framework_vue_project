@@ -19,7 +19,7 @@
 
 						<!-- 登录状态搜索 -->
 						<el-form-item class="form-state" label="状态">
-							<el-select size="small" v-model="value" placeholder="请选择登录状态">
+							<el-select style="width: 190px" size="small" v-model="value" placeholder="请选择登录状态">
 								<el-option
 								      v-for="item in options"
 								      :key="item.value"
@@ -60,7 +60,7 @@
 				<!-- 表格内容部分 -->
 				<div class="sub-Content__primary">
 					<el-table :data="tableData" style="width: 100%"
-						:header-cell-style="{textAlign: 'center'}"
+						:header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
 						:cell-style="{ textAlign: 'center' }"
 						:default-sort="{ prop: 'date', order: 'descending' }"
 						>
@@ -68,13 +68,13 @@
 						<el-table-column type="selection" width="50" />
 						<el-table-column prop="id" label="访问编号" width="132" />
 						<el-table-column prop="name" label="员工名称" width="132" />
-						<el-table-column prop="phone" label="手机号码" width="132" />
-						<el-table-column prop="IP" label="IP地址" width="132" />
-						<el-table-column prop="device_type" label="设备类型" width="132" />
-						<el-table-column prop="state" label="状态" width="132" />
+						<el-table-column prop="phone" label="手机号码" width="135" />
+						<el-table-column prop="IP" label="IP地址" width="150" />
+						<el-table-column prop="device_type" label="设备类型" width="140" />
+						<el-table-column prop="state" label="状态" width="135" />
 						<el-table-column prop="browser" label="浏览器" width="132" />
-						<el-table-column prop="type" label="登录类型" width="132" />
-						<el-table-column prop="date" sortable label="登录日期" width="158" />
+						<el-table-column prop="type" label="登录类型" width="135" />
+						<el-table-column prop="date" sortable label="登录日期" width="170" />
 					</el-table>
 				</div>
 				<!-- 分页 -->
@@ -181,14 +181,19 @@ import {defineComponent,ref} from 'vue'
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
-	
+/*表格样式*/
+.sub-Content__primary{
+  margin-bottom: 10px;
+}
+
 	.sub-Content__primary{
 		margin-left: 10px;
 	}
 	
 	/* 分页 */
 	.demo-pagination-block{
-		margin-left: 580px;
+		margin-left: 617px;
+    margin-bottom: 20px;
 	}
 	
 	.button{
@@ -234,7 +239,7 @@ import {defineComponent,ref} from 'vue'
 	.search-ss {
 		background-color: #085FC3;
 		color: white;
-		margin: 20px 0px 0px 5px;
+		margin: 20px 0px 0px 0px;
 		width: 80px;
 	}
 	/* 重置按钮 */

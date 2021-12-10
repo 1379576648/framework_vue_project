@@ -109,28 +109,29 @@
 				<!-- 表格内容部分 -->
 				<div class="sub-Content__primary">
 
-					<el-table :data="tableData" style="width: 100%" :header-cell-style="{textAlign: 'center'}"
-						:cell-style="{ textAlign: 'center' }">
-						<!-- 全选操作按钮 -->
-						<el-table-column type="selection" width="100" />
-						<el-table-column prop="date" label="序号" width="150" />
-						<el-table-column prop="name" label="公告标题" width="170" />
-						<el-table-column prop="state" label="公告类型" width="170" />
-						<el-table-column prop="city" label="公告状态" width="160" />
-						<el-table-column prop="address" label="发布人" width="160" />
-						<el-table-column prop="zip" label="发布时间" width="160" />
-						<el-table-column align="center" label="操作" width="200">
-							<template #default="scope">
-								<el-button size="mini" style="color: #A3D3FF;"  @click="outerVisible = true,judge='修改'">
-									<i class="iconfont">&#xe606</i>
-									修改
-								</el-button>
-								<el-button size="mini" style="color: #A3D3FF;">
-									<i class="iconfont">&#xe61c</i>
-									删除
-								</el-button>
-							</template>
-						</el-table-column>
+					<el-table :data="tableData" style="width: 100%;margin-left: 24px"
+                    :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
+                    :cell-style="{ textAlign: 'center' }">
+                    <!-- 全选操作按钮 -->
+                    <el-table-column type="selection" width="100" />
+                    <el-table-column prop="date" label="序号" width="150" />
+                    <el-table-column prop="name" label="公告标题" width="170" />
+                    <el-table-column prop="state" label="公告类型" width="170" />
+                    <el-table-column prop="city" label="公告状态" width="160" />
+                    <el-table-column prop="address" label="发布人" width="160" />
+                    <el-table-column prop="zip" label="发布时间" width="160" />
+                    <el-table-column align="center" label="操作" width="200">
+                      <template #default="scope">
+                        <el-button size="mini" style="color: #A3D3FF;"  @click="outerVisible = true,judge='修改'">
+                          <i class="iconfont">&#xe606</i>
+                          修改
+                        </el-button>
+                        <el-button size="mini" style="color: #A3D3FF;">
+                          <i class="iconfont">&#xe61c</i>
+                          删除
+                        </el-button>
+                      </template>
+                    </el-table-column>
 					</el-table>
 
 				</div>
@@ -264,6 +265,9 @@
 		margin-left: 80px;
 
 	}
+  .button{
+    margin-bottom: 20px;
+  }
 	/* 表头新增按钮 */
 	.button .button-new {
 		height: 30px;
