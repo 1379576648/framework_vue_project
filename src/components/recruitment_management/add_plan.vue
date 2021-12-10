@@ -16,24 +16,25 @@
 					<div style="width: 50%; margin: auto;">
 						<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
 							class="demo-ruleForm">
+
+
 							<el-form-item label="招聘计划名称" prop="zpname" style="width:500px;">
-								<el-input v-model="ruleForm.name"></el-input>
+								<el-input v-model="ruleForm.zpname"></el-input>
 							</el-form-item>
 
 							<el-form-item label="需求部门" prop="zpdept">
-								<el-select v-model="ruleForm.zpdept" placeholder="Activity zone" style="width:380px;">
+								<el-select v-model="ruleForm.zpdept" style="width:380px;">
 									<el-option label="Zone one" value="shanghai"></el-option>
 									<el-option label="Zone two" value="beijing"></el-option>
 								</el-select>
 							</el-form-item>
 
 							<el-form-item label="招聘职位" prop="zpzw">
-								<el-select v-model="ruleForm.zpzw" placeholder="Activity zone" style="width:380px;">
+								<el-select v-model="ruleForm.zpzw" style="width:380px;">
 									<el-option label="Zone one" value="shanghai"></el-option>
 									<el-option label="Zone two" value="beijing"></el-option>
 								</el-select>
 							</el-form-item>
-
 
 
               <el-form-item label="需招聘人数" prop="zpnum">
@@ -42,7 +43,6 @@
                   :min="1"
                   :max="50"
                   controls-position="right"
-
               />
               </el-form-item>
 
@@ -53,18 +53,15 @@
                 </el-select>
               </el-form-item>
 
-
               <el-form-item label="计划开始时间" required style="width:380px">
                 <el-date-picker
                     v-model="ruleForm.timef"
                     type="daterange"
                     start-placeholder="Start Date"
                     end-placeholder="End Date"
-                    :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]"
-                >
+                    :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]">
                 </el-date-picker>
               </el-form-item>
-
 
               <el-form-item label="月薪范围" prop="zpxqf">
                 <el-select v-model="ruleForm.zpxqf" placeholder="Activity zone">
@@ -75,11 +72,12 @@
 
 
 							<el-form-item>
-								<el-button type="primary">提交</el-button>
+								<el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
 								<router-link to="zpplan">
 									<el-button style="margin-left: 30px;">取消</el-button>
 								</router-link>
 							</el-form-item>
+
 						</el-form>
 					</div>
 
@@ -128,19 +126,16 @@ import { ref } from 'vue'
 						trigger: 'change',
 					}, ],
           zpzw: [{
-						type: 'date',
 						required: true,
             message: '请设置招聘职位!!!',
 						trigger: 'change',
 					}, ],
           zpnum: [{
-						type: 'date',
 						required: true,
             message: '计划招聘人数不能为空!!!',
-						trigger: 'change',
+						trigger: 'blur',
 					}, ],
           zpxl: [{
-						type: 'array',
 						required: true,
             message: '最低学历不能为空!!!',
 						trigger: 'change',
@@ -153,13 +148,22 @@ import { ref } from 'vue'
           zpxqf: [{
 						required: true,
 						message: '请选择薪酬范围!!!',
-						trigger: 'blur',
+						trigger: 'change',
 					}, ],
 				},
 			}
 		},
 		methods: {
-
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!')
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
 		},
 	}
 </script>

@@ -20,7 +20,7 @@ f<!-- 首页导航栏 -->
             <el-menu-item  v-for="memu in memuList1" :index="memu.MENU_ROUTE">
               {{memu.MENU_NAME}}
             </el-menu-item>
-            <li style="height: 70px;font-weight:bold; width: 96px;" v-on:click="gend =! gend">
+            <li style="height: 70px;font-weight:bold; width: 96px;" v-on:click="gend=true">
 							<span class="dh-span iconfont" v-if="gend == true" style="font-size: 14px;">
 								收起 &#xe772;
 							</span>
@@ -89,7 +89,7 @@ f<!-- 首页导航栏 -->
 
   <!-- 更多弹出框 -->
   <div style="position: absolute; top: 0px; left: 0px;" v-show="gend">
-    <div>
+    <div @mouseleave="mouseLeave">
       <div class="ant-popover head_over_page ant-popover-placement-bottom"
            style="left: 450px; top: -972px; transform-origin: 50% -4px 0px; width:418px">
         <div class="ant-popover-content">
@@ -158,6 +158,12 @@ export default {
     }
   },
   methods: {
+    mouseLeave(){
+      this.gend=false;
+    },
+
+
+
     handleClick(tab, event) {
       console.log(tab, event)
     },handleSelect(key, keyPath){
@@ -184,7 +190,7 @@ export default {
 }
 /deep/.el-menu-item{
   height: 70px !important;
-  font-weight:bold !important;
+
 }
 .dh-span {
   height: 56px;
