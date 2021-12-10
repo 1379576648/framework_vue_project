@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="j-set-top-bottom">
-              <el-button type="primary" >
+              <el-button type="primary">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
@@ -56,7 +56,7 @@
                 </svg>
                 新增
               </el-button>
-              <el-button type="info">
+              <el-button type="info" @click="handle">
                 <svg t="1639016365538" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="17305" width="17" height="17">
                   <path
@@ -106,26 +106,95 @@
           </div>
           <div class="j-set-bottom">
             <el-table
+                v-if="refreshTable"
                 :data="tableData"
                 style="width: 100%; margin-bottom: 20px"
-                row-key="id"
+                row-key="MENU_ID"
                 border
-                default-expand-all
+                :default-expand-all="expands"
+                @expand-change="expands=true"
             >
-              <el-table-column prop="date" label="date" sortable width="180" />
-              <el-table-column prop="name" label="Name" sortable width="180" />
+              <el-table-column prop="MENU_NAME" label="菜单名称" min-width="200"/>
+              <el-table-column prop="MENU_MODULE" label="图标" min-width="130"/>
+              <el-table-column prop="MENU_ORDER" label="排序" min-width="100"/>
+              <el-table-column prop="MENU_ROUTE" label="组件路径" min-width="200"/>
+              <el-table-column label="状态" min-width="150">
+                <template #default="scope">
+                  <span class="button-enable" v-if="scope.row.MENU_STATE==0">启用</span>
+                  <span class="button-forbidden"  v-if="scope.row.MENU_STATE==1">禁用</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="CREATED_TIME" label="创建时间" min-width="220"/>
+              <el-table-column label="操作" min-width="180">
+                <template #default="scope">
+                  <el-button type="text">
+                    <svg t="1639052797619" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="9054" width="12" height="12">
+                      <path
+                          d="M684.203 117.248c15.893-15.872 42.154-15.36 58.922 1.408l90.518 90.517c16.661 16.662 17.344 42.987 1.429 58.923L389.419 713.749c-7.936 7.915-23.104 16.747-34.219 19.776L211.499 772.78c-21.91 5.994-35.115-7.104-29.568-28.95l37.248-146.773c2.773-10.944 11.562-26.347 19.392-34.176l445.653-445.653zM268.736 593.067c-2.901 2.901-8.107 12.074-9.13 16.021l-29.12 114.773 111.957-30.57c4.437-1.216 13.632-6.55 16.81-9.728l445.654-445.654-90.518-90.496-445.653 445.654z m414.059-414.08l90.517 90.517-30.187 30.187-90.496-90.518 30.166-30.165zM320.768 541.035l90.496 90.517-30.165 30.165-90.518-90.496 30.166-30.186zM170.667 874.667c0-11.776 9.429-21.334 21.461-21.334h661.077a21.333 21.333 0 1 1 0 42.667H192.128a21.333 21.333 0 0 1-21.461-21.333z"
+                          p-id="9055" fill="#409eff"></path>
+                    </svg>
+                    修改
+                  </el-button>
+                  <el-button type="text">
+                    <svg t="1639053259858" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="11914" width="12" height="12">
+                      <path
+                          d="M548 476h376c19.882 0 36 16.118 36 36s-16.118 36-36 36H548v376c0 19.882-16.118 36-36 36s-36-16.118-36-36V548H100c-19.882 0-36-16.118-36-36s16.118-36 36-36h376V100c0-19.882 16.118-36 36-36s36 16.118 36 36v376z"
+                          p-id="11915" fill="#409eff"></path>
+                    </svg>
+                    新增
+                  </el-button>
+                  <el-button type="text">
+                    <svg t="1639053106665" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="10997" width="12" height="12">
+                      <path
+                          d="M607.897867 768.043004c-17.717453 0-31.994625-14.277171-31.994625-31.994625L575.903242 383.935495c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 351.94087C639.892491 753.593818 625.61532 768.043004 607.897867 768.043004z"
+                          p-id="10998" fill="#409eff"></path>
+                      <path
+                          d="M415.930119 768.043004c-17.717453 0-31.994625-14.277171-31.994625-31.994625L383.935495 383.935495c0-17.717453 14.277171-31.994625 31.994625-31.994625 17.717453 0 31.994625 14.277171 31.994625 31.994625l0 351.94087C447.924744 753.593818 433.647573 768.043004 415.930119 768.043004z"
+                          p-id="10999" fill="#409eff"></path>
+                      <path
+                          d="M928.016126 223.962372l-159.973123 0L768.043004 159.973123c0-52.980346-42.659499-95.983874-95.295817-95.983874L351.94087 63.989249c-52.980346 0-95.983874 43.003528-95.983874 95.983874l0 63.989249-159.973123 0c-17.717453 0-31.994625 14.277171-31.994625 31.994625s14.277171 31.994625 31.994625 31.994625l832.032253 0c17.717453 0 31.994625-14.277171 31.994625-31.994625S945.73358 223.962372 928.016126 223.962372zM319.946246 159.973123c0-17.545439 14.449185-31.994625 31.994625-31.994625l320.806316 0c17.545439 0 31.306568 14.105157 31.306568 31.994625l0 63.989249L319.946246 223.962372 319.946246 159.973123 319.946246 159.973123z"
+                          p-id="11000" fill="#409eff"></path>
+                      <path
+                          d="M736.048379 960.010751 288.123635 960.010751c-52.980346 0-95.983874-43.003528-95.983874-95.983874L192.139761 383.591466c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 480.435411c0 17.717453 14.449185 31.994625 31.994625 31.994625l448.096758 0c17.717453 0 31.994625-14.277171 31.994625-31.994625L768.215018 384.795565c0-17.717453 14.277171-31.994625 31.994625-31.994625s31.994625 14.277171 31.994625 31.994625l0 479.231312C832.032253 916.835209 789.028725 960.010751 736.048379 960.010751z"
+                          p-id="11001" fill="#409eff"></path>
+                    </svg>
+                    删除
+                  </el-button>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div>
+    <el-select v-model="one" slot="prepend"  style="width:150px;"
+    filterable
+    allow-create
+    default-first-option
+    >
+    <el-option label="公交" value="2"></el-option>
+    <el-option label="地铁" value="3"></el-option>
+    <el-option label="高铁" value="4"></el-option>
+    <el-option label="其他" value="5"></el-option>
+    </el-select>
+  </div>
+  {{one}}
 </template>
 
 <script>
 export default {
   data() {
     return {
+      one:"",
+      //一键展开收缩菜单
+      expands: false,
+      //渲染展开菜单
+      refreshTable: true,
       //输入的菜单名称值
       menuName: '',
       shortcuts: [
@@ -161,84 +230,214 @@ export default {
       //日期选择器值
       date: [],
       //显示隐藏菜单
-      menuShow:true,
+      menuShow: true,
       tableData: [
         {
-          id: 1,
-          date: '2016-05-02',
-          name: 'wangxiaohu',
+          MENU_ID: 1,
+          MENU_NAME: '工作台',
+          MENU_MODULE: '',
+          MENU_ORDER: 1,
+          MENU_ROUTE: '',
+          MENU_STATE: 0,
+          CREATED_TIME: '2016-05-02'
         },
         {
-          id: 2,
-          date: '2016-05-04',
-          name: 'wangxiaohu',
+          MENU_ID: 2,
+          MENU_NAME: '组织管理',
+          MENU_MODULE: '',
+          MENU_ORDER: 2,
+          MENU_ROUTE: '',
+          MENU_STATE: 0,
+          CREATED_TIME: '2016-05-04',
         },
         {
-          id: 3,
-          date: '2016-05-01',
-          name: 'wangxiaohu',
+          MENU_ID: 3,
+          MENU_NAME: '员工管理',
+          MENU_MODULE: '',
+          MENU_ORDER: 3,
+          MENU_ROUTE: '',
+          MENU_STATE: 0,
+          CREATED_TIME: '2016-05-01',
           children: [
             {
-              id: 31,
-              date: '2016-05-01',
-              name: 'wangxiaohu',
+              MENU_ID: 31,
+              MENU_NAME: '员工信息',
+              MENU_MODULE: '',
+              MENU_ORDER: 1,
+              MENU_ROUTE: '',
+              MENU_STATE: 0,
+              CREATED_TIME: '2016-05-01',
+              children: [
+                {
+                  MENU_ID: 33,
+                  MENU_NAME: '员工花名册',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 1,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 34,
+                  MENU_NAME: '人才展示',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 2,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 35,
+                  MENU_NAME: '人才统计',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 3,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 1,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 36,
+                  MENU_NAME: '员工审核',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 4,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                },
+                {
+                  MENU_ID: 37,
+                  MENU_NAME: '历史花名册',
+                  MENU_MODULE: '',
+                  MENU_ORDER: 5,
+                  MENU_ROUTE: '',
+                  MENU_STATE: 0,
+                  CREATED_TIME: '2016-05-01'
+                }
+              ]
             },
             {
-              id: 32,
-              date: '2016-05-01',
-              name: 'wangxiaohu',
+              MENU_ID: 32,
+              MENU_NAME: '兼职管理',
+              MENU_MODULE: '',
+              MENU_ORDER: 2,
+              MENU_ROUTE: '',
+              MENU_STATE: 0,
+              CREATED_TIME: '2016-05-01',
+            },
+            {
+              MENU_ID: 33,
+              MENU_NAME: '档案管理',
+              MENU_MODULE: '',
+              MENU_ORDER: 3,
+              MENU_ROUTE: '',
+              MENU_STATE: 0,
+              CREATED_TIME: '2016-05-01',
             },
           ],
         },
         {
-          id: 4,
-          date: '2016-05-03',
-          name: 'wangxiaohu',
+          MENU_ID: 4,
+          MENU_NAME: '时间管理',
+          MENU_MODULE: '',
+          MENU_ORDER: 4,
+          MENU_ROUTE: '',
+          MENU_STATE: 0,
+          CREATED_TIME: '2016-05-03',
         },
+        {
+          MENU_ID: 5,
+          MENU_NAME: '招聘管理',
+          MENU_MODULE: '',
+          MENU_ORDER: 5,
+          MENU_ROUTE: '',
+          MENU_STATE: 0,
+          CREATED_TIME: '2016-05-03',
+        }
       ],
     }
-  },
-  methods: {
-    load(row, treeNode, resolve) {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 31,
-            date: '2016-05-01',
-            name: 'wangxiaohu',
-          },
-          {
-            id: 32,
-            date: '2016-05-01',
-            name: 'wangxiaohu',
-          },
-        ])
-      }, 1000)
-    },
-  },
+  }, methods: {
+    //展开操作/收起操作
+    handle() {
+      this.refreshTable = false;
+      if (this.expands == true) {
+        this.expands = false;
+      } else {
+        this.expands = true;
+      }
+      this.$nextTick(() => {
+        this.refreshTable = true;
+      });
+    }
+  }
 
 }
-
 </script>
 
 <style scoped>
-@import url("../css/navigation.css");
+@import url("../../css/navigation.css");
+.button-enable{
+  background:#ecf5ff;
+  border: 1px #cfe6ff solid;
+  color: #5aaaff;
+  display: inline-block;
+  line-height: 1;
+  min-height: 40px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+.button-forbidden{
+  background:#fef0f0;
+  border: 1px #f2c5c5 solid;
+  color: #f57a7a;
+  display: inline-block;
+  line-height: 1;
+  min-height: 40px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+
+/deep/td div button span svg{
+  position: relative !important;
+  top:2px;
+}
+/deep/ .el-button {
+  font-size: 12px !important;
+}
+
+/deep/ th {
+  text-align: center !important;
+}
+
+/deep/ td {
+  text-align: center !important;
+}
+
 .j-set-big {
   margin: 20px;
-  border: 1px saddlebrown solid;
 }
 
 .j-set-top {
   margin: 10px;
-  border: 1px #ff8257 solid;
 }
 
 .j-set-bottom {
   margin: 0px 10px 0px 10px;
-  border: 1px #0c9c6e solid;
+}
+
+/deep/ .j-set-top-bottom button span {
+  position: relative !important;
+  top: -2px !important;
 }
 
 .j-menu-name {
+  position: relative;
+  top:-2px;
   color: #606266;
   vertical-align: middle;
   text-align: right;
@@ -254,7 +453,7 @@ export default {
 
 .j-set-date {
   display: inline-block;
-  min-width: 38%;
+  min-width: 39%;
 }
 
 .j-set-name .el-input {
@@ -270,14 +469,11 @@ export default {
   display: inline-block;
 }
 
-/deep/ .el-icon {
-  display: none;
-}
 
 /deep/ .el-range-editor.el-input__inner {
   position: relative;
   height: 32px;
-  top: 7px;
+  top: 8px;
 }
 
 /deep/ .el-range-editor.el-input__inner .el-range-input {
@@ -313,8 +509,18 @@ export default {
   min-width: 35%;
 }
 
-.j-set-button .el-button--primary {
+/deep/ .j-set-button .el-button--primary {
   margin-right: 10px;
+}
+
+/deep/ .j-set-button .el-button--primary span {
+  position: relative;
+  top: -2px;
+}
+
+/deep/ .j-set-button .el-button--default span {
+  position: relative;
+  top: -2px;
 }
 
 .j-set-button .el-button--default .icon {
@@ -327,7 +533,7 @@ export default {
 }
 
 .j-set-top-bottom .el-button--info {
-  margin-right: 74.5%;
+  margin-right: 75.5%;
 }
 
 /deep/ .j-set-top-bottom .el-button--default {
@@ -340,13 +546,31 @@ export default {
 .j-set-top-bottom {
   margin-bottom: 10px;
 }
-.top-search{
+
+.top-search {
   display: inline-block;
   margin-right: 10px;
   text-align: center;
 }
-.top-reset{
+
+/deep/ .top-search button span {
+  top: 1px !important;
+}
+
+/deep/ .top-reset button span {
+  top: 1px !important;
+}
+
+.top-reset {
   display: inline-block;
   text-align: center;
+}
+
+/deep/ .el-icon {
+  display: inline-block;
+}
+
+/deep/ .j-set-date div i {
+  top: 4px;
 }
 </style>

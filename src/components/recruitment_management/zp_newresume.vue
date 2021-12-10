@@ -1,9 +1,5 @@
 <!--简历：新简历-->
 <template>
-	
-	<div class="saas-main-content">
-		<div class="j-card j-card-bordered mainContent">
-			<div class="j-card-body ">
 				<div class="sub-Content__primary">
 					<div class="ant-spin-nested-loading">
 						<div class="ant-spin-container">
@@ -11,7 +7,7 @@
 								<!-- 新增招聘计划按钮 -->
 								<a style="margin-top: 4px;">
 									<button type="button" class="ant-btn ant-btn-primary">
-										<span>+新增</span>
+										<span>+ 新增</span>
 									</button>
 								</a>
 								<!-- 批量导入按钮 -->
@@ -22,7 +18,10 @@
 								<button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
 									<span>批量删除</span>
 								</button>
-								
+                <!-- 批量设为候选人 -->
+                <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
+                  <span>批量设为候选人</span>
+                </button>
 								<!--筛选框-->
 								
 				
@@ -57,16 +56,10 @@
 						</el-table>
 					</div>
 				</div>
-				
-				
-			</div>
-		</div>
-	</div>
 </template>
 
 <script>
 	import {
-		defineComponent,
 		ref
 	} from 'vue'
 	export default {
@@ -110,4 +103,8 @@
 	    display: table;
 	    content: '';
 	}
+.abt:hover{
+  color: #0c9c6e;
+  border: 1px solid #0c9c6e;
+}
 </style>

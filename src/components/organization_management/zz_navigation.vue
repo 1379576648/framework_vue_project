@@ -11,16 +11,14 @@
 					<div class="hq-logo-wrapper"></div>
 					<div class="custom-menu" style="width: 160px;">
 
-						<el-menu default-active="2" class="" background-color="#f2f6f8"  unique-opened="true">
+						<el-menu default-active="2" class="" background-color="#f2f6f8"  unique-opened="{true}">
 							<el-sub-menu index="1">
 								<template #title>
 									<i class="iconfont">&#xe62c;</i>&nbsp;&nbsp;
 									<span
 										style="font-weight: normal;font-size: 15px;margin-left: -5px;margin-top: -1px;">组织管理</span>
 								</template>
-                <router-link to="/one">
 								  <el-menu-item index="1-1">部门设置</el-menu-item>
-                </router-link>
 							</el-sub-menu>
 							<el-sub-menu index="2">
 								<template #title>
@@ -48,7 +46,6 @@
 			
 		</div>
 		<main class="ant-layout-content">
-			<router-view name="one"></router-view>
 		</main>
 	</section>
 

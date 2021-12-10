@@ -16,31 +16,60 @@
 					<div style="width: 50%; margin: auto;">
 						<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
 							class="demo-ruleForm">
-							<el-form-item label="招聘计划名称" prop="name" style="width:500px;">
-								<el-input v-model="ruleForm.name"></el-input>
+
+
+							<el-form-item label="招聘计划名称" prop="zpname" style="width:500px;">
+								<el-input v-model="ruleForm.zpname"></el-input>
 							</el-form-item>
 
-							<el-form-item label="需求部门" prop="region">
-								<el-select v-model="ruleForm.region" placeholder="Activity zone" style="width:380px;">
+							<el-form-item label="需求部门" prop="zpdept">
+								<el-select v-model="ruleForm.zpdept" style="width:380px;">
 									<el-option label="Zone one" value="shanghai"></el-option>
 									<el-option label="Zone two" value="beijing"></el-option>
 								</el-select>
 							</el-form-item>
 
-							<el-form-item label="招聘职位" prop="region">
-								<el-select v-model="ruleForm.region" placeholder="Activity zone" style="width:380px;">
+							<el-form-item label="招聘职位" prop="zpzw">
+								<el-select v-model="ruleForm.zpzw" style="width:380px;">
 									<el-option label="Zone one" value="shanghai"></el-option>
 									<el-option label="Zone two" value="beijing"></el-option>
 								</el-select>
 							</el-form-item>
 
-							<el-form-item label="最低学历" prop="region">
-								<el-select v-model="ruleForm.region" placeholder="Activity zone" style="width:380px;">
-									<el-option label="Zone one" value="shanghai"></el-option>
-									<el-option label="Zone two" value="beijing"></el-option>
-								</el-select>
-							</el-form-item>
-							
+
+              <el-form-item label="需招聘人数" prop="zpnum">
+              <el-input-number
+                  v-model="ruleForm.zpnum"
+                  :min="1"
+                  :max="50"
+                  controls-position="right"
+              />
+              </el-form-item>
+
+              <el-form-item label="最低学历" prop="zpxl">
+                <el-select v-model="ruleForm.zpxl" placeholder="Activity zone">
+                  <el-option label="Zone one" value="shanghai"></el-option>
+                  <el-option label="Zone two" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="计划开始时间" required style="width:380px">
+                <el-date-picker
+                    v-model="ruleForm.timef"
+                    type="daterange"
+                    start-placeholder="Start Date"
+                    end-placeholder="End Date"
+                    :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]">
+                </el-date-picker>
+              </el-form-item>
+
+              <el-form-item label="月薪范围" prop="zpxqf">
+                <el-select v-model="ruleForm.zpxqf" placeholder="Activity zone">
+                  <el-option label="Zone one" value="shanghai"></el-option>
+                  <el-option label="Zone two" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+
 
 							<el-form-item>
 								<el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -48,6 +77,7 @@
 									<el-button style="margin-left: 30px;">取消</el-button>
 								</router-link>
 							</el-form-item>
+
 						</el-form>
 					</div>
 
@@ -62,87 +92,92 @@
 </template>
 
 <script lang="ts">
+import { ref } from 'vue'
 	export default {
 		data() {
+      const zpnum = ref(1)
 			return {
 				ruleForm: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: '',
-					num:''
+          //计划名称
+					zpname: '',
+          //需求部门
+					zpdept: '',
+          //职位
+					zpzw:'',
+          //人数
+					zpnum:'',
+          //学历
+					zpxl: '',
+          //时间范围
+          timef:'',
+          //薪酬范围
+          zpxqf: ''
 				},
 				rules: {
-					name: [{
+          zpname: [{
 							required: true,
-							message: 'Please input Activity name',
-							trigger: 'blur',
-						},
-						{
-							min: 3,
-							max: 5,
-							message: 'Length should be 3 to 5',
+              message: '招聘计划名称不能为空!!!',
 							trigger: 'blur',
 						},
 					],
-					region: [{
+          zpdept: [{
 						required: true,
-						message: 'Please select Activity zone',
+            message: '请选择需求部门!!!',
 						trigger: 'change',
 					}, ],
-					date1: [{
-						type: 'date',
+          zpzw: [{
 						required: true,
-						message: 'Please pick a date',
+            message: '请设置招聘职位!!!',
 						trigger: 'change',
 					}, ],
-					date2: [{
-						type: 'date',
+          zpnum: [{
 						required: true,
-						message: 'Please pick a time',
-						trigger: 'change',
-					}, ],
-					type: [{
-						type: 'array',
-						required: true,
-						message: 'Please select at least one activity type',
-						trigger: 'change',
-					}, ],
-					resource: [{
-						required: true,
-						message: 'Please select activity resource',
-						trigger: 'change',
-					}, ],
-					desc: [{
-						required: true,
-						message: 'Please input activity form',
+            message: '计划招聘人数不能为空!!!',
 						trigger: 'blur',
+					}, ],
+          zpxl: [{
+						required: true,
+            message: '最低学历不能为空!!!',
+						trigger: 'change',
+					}, ],
+          timef: [{
+						required: true,
+            message: '请选择招聘时间范围!!!',
+						trigger: 'change',
+					}, ],
+          zpxqf: [{
+						required: true,
+						message: '请选择薪酬范围!!!',
+						trigger: 'change',
 					}, ],
 				},
 			}
 		},
 		methods: {
-			submitForm(formName) {
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						alert('submit!')
-					} else {
-						console.log('error submit!!')
-						return false
-					}
-				})
-			}
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!')
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
 		},
 	}
 </script>
 
-<style type="text/css" scoped> 
+
+
+<style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
+
+/deep/.el-form-item {
+  display: flex;
+  margin-bottom: 35px;
+}
 	.j-card-head-title {
 		float: left;
 		font-size: 18px;

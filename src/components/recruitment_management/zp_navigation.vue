@@ -33,15 +33,7 @@
 								<router-link to="/a">
 									<el-menu-item index="2-1">人才库</el-menu-item>
 								</router-link>
-								<router-link to="/newresume">
-								<el-menu-item index="2-2">新简历</el-menu-item>
-								</router-link>
 
-								<el-menu-item index="2-3">候选人</el-menu-item>
-								
-								<router-link to="/eliminate">
-								<el-menu-item index="2-4">淘汰库</el-menu-item>
-								</router-link>
 							</el-sub-menu>
 							
 							<el-sub-menu index="3">
