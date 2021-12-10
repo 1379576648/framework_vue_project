@@ -1,4 +1,4 @@
-<!-- 系统导航栏 -->
+<!-- 薪酬导航栏 -->
 <template>
   <section
       class="ant-layout ant-layout-has-sider"
