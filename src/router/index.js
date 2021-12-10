@@ -50,8 +50,12 @@ import zpplan from "../components/recruitment_management/zp_plan.vue";
 import addplan from "../components/recruitment_management/add_plan.vue";
 //人才库
 import a from "../components/recruitment_management/zp_resume.vue"
+//全部简历
+import fullresume from "../components/recruitment_management/zp_fullresume.vue"
 //新简历
 import newresume from "../components/recruitment_management/zp_newresume.vue"
+//候选人
+import candidate from "../components/recruitment_management/zp_candidate.vue"
 //淘汰库
 import eliminate from "../components/recruitment_management/zp_eliminate.vue"
 /**
@@ -166,62 +170,83 @@ const routes = [{
                 path: '/shij', //访问路径
                 component: shij//组件
             },
-            /* 招聘管理 */
-            {
-                path: '/zpdaohang', //访问路径
-                redirect: '/zpplan',//默认访问
-                components: {
-                    "ym1": zpdaohang//组件
-                },
-                children: [//子路由
-                    /*  招聘计划 */
-                    {
-                        path: '/zpplan', //访问路径
-                        components: {
-                            "zpplan": zpplan//组件
-                        }
-                    },
-                    /*  新增招聘计划 */
-                    {
-                        path: '/addplan', //访问路径
-                        components: {
-                            "addplan": addplan//组件
-                        }
-                    },
-                    //简历导航
-                    {
-                        path: '/a', //访问路径
-                        components: {
-                            "zp2": a//组件
-                        },
-                    },
-                    {
-                        path: '/newresume', //访问路径
-                        components: {
-                            "newresume": newresume//组件
-                        }
-                    },
-                    {
-                        path: '/eliminate', //访问路径
-                        components: {
-                            "eliminate": eliminate//组件
-                        }
-                    },
+			/* 招聘管理 */
+			{
+				path: '/zpdaohang',//访问路径
+				redirect: '/zpplan',//默认访问
+				components: {
+					"ym1": zpdaohang//组件
+				},
+				children: [
+					/*  招聘计划 */
+					{
+						path: '/zpplan',//访问路径
+						components: {
+							"zpplan": zpplan//组件
+						}
+					},
+					/*  新增招聘计划 */
+					{
+						path: '/addplan',//访问路径
+						components: {
+							"addplan": addplan//组件
+						}
+					},
+					//人才库:简历列表
+					{
+						path: '/a',//访问路径
+						redirect: 'fullresume',//默认访问
+						components: {
+							"zp2": a//组件
+						},
+						children:[
+							/*全部简历*/
+							{
+								path: '/fullresume',//访问路径
+								components: {
+									"fullresume": fullresume//组件
+								}
+							},
+							/*新简历*/
+							{
+								path: '/newresume',//访问路径
+								components: {
+									"newresume": newresume//组件
+								}
+							},
+							/*候选人*/
+							{
+								path: '/candidate',//访问路径
+								components: {
+									"candidate": candidate//组件
+								}
+							},
+							/*淘汰库*/
+							{
+								path: '/eliminate',//访问路径
+								components: {
+									"eliminate": eliminate//组件
+								}
+							},
 
-                ]
-            },
+						]
+					},
+
+
+				]
+			},
             /* 薪酬管理 */
             {
                 path: '/xcnavigation', //访问路径
                 component: xcnavigation//组件
             },
 
-        ]
-    }
+		]
+	}
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
+	history: createWebHistory(),
+	routes
 })
 export default router

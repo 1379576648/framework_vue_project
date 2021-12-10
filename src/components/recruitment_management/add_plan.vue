@@ -13,7 +13,7 @@
 			<div class="j-card-body ">
 				<span></span>
 				<div class="sub-Content__primary ">
-					<div style="width: 50%; margin: auto;">
+					<div style="width: 80%; margin: auto;">
 						<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
 							class="demo-ruleForm">
 							<el-form-item label="招聘计划名称" prop="name" style="width:500px;">
@@ -34,13 +34,59 @@
 								</el-select>
 							</el-form-item>
 
-							<el-form-item label="最低学历" prop="region">
-								<el-select v-model="ruleForm.region" placeholder="Activity zone" style="width:380px;">
-									<el-option label="Zone one" value="shanghai"></el-option>
-									<el-option label="Zone two" value="beijing"></el-option>
-								</el-select>
-							</el-form-item>
-							
+
+
+              <el-form-item label="需招聘人数" prop="region">
+              <el-input-number
+                  v-model="num"
+                  :min="1"
+                  :max="50"
+                  controls-position="right"
+                  @change="handleChange"
+              />
+              </el-form-item>
+
+              <el-form-item label="最低学历" prop="region">
+                <el-select v-model="ruleForm.region" placeholder="Activity zone" style="width:380px;">
+                  <el-option label="Zone one" value="shanghai"></el-option>
+                  <el-option label="Zone two" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+
+
+              <el-form-item label="计划开始时间" required style="width:500px">
+                <el-col :span="11">
+                  <el-form-item prop="date1">
+                    <el-date-picker
+                        v-model="ruleForm.date1"
+                        type="date"
+                        placeholder="请选择日期"
+                        style="width: 100%"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="期望到岗时间" required style="width:500px">
+                <el-col :span="11">
+                  <el-form-item prop="date2">
+                    <el-date-picker
+                        v-model="ruleForm.date2"
+                        type="date"
+                        placeholder="请选择日期"
+                        style="width: 100%"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="月薪范围" prop="region">
+                <el-select v-model="ruleForm.region" placeholder="Activity zone" style="width:380px;">
+                  <el-option label="Zone one" value="shanghai"></el-option>
+                  <el-option label="Zone two" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
+
 
 							<el-form-item>
 								<el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -48,6 +94,7 @@
 									<el-button style="margin-left: 30px;">取消</el-button>
 								</router-link>
 							</el-form-item>
+
 						</el-form>
 					</div>
 
@@ -140,9 +187,15 @@
 	}
 </script>
 
-<style type="text/css" scoped> 
+<style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
+
+/deep/.el-form-item {
+  display: flex;
+  margin-bottom: 35px;
+  float: left;
+}
 	.j-card-head-title {
 		float: left;
 		font-size: 18px;

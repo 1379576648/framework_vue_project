@@ -7,7 +7,21 @@
     <list default="true" id="a48080d6-0ed6-4f1c-84d3-6e118141539a" name="Changes" comment="1">
       <change beforePath="$PROJECT_DIR$/1.text" beforeDir="false" afterPath="$PROJECT_DIR$/1.text" afterDir="false" />
     <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
+      <change afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_candidate.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_fullresume.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/attendance_management/time_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/attendance_management/time_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/employee_management/emp_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/employee_management/emp_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/organization_management/zz_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/organization_management/zz_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/add_plan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/add_plan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_eliminate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_eliminate.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_newresume.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_newresume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_plan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_plan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/recruitment_management/zp_resume.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recruitment_management/zp_resume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/salary_management/xc_navigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/salary_management/xc_navigation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/one.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/one.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,6 +63,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/css" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -57,6 +72,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\LearningMakeMeHappy\Backstage Engineering\framework_vue_project\src\css" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
