@@ -50,8 +50,12 @@ import zpplan from "../components/recruitment_management/zp_plan.vue";
 import addplan from "../components/recruitment_management/add_plan.vue";
 //人才库
 import a from "../components/recruitment_management/zp_resume.vue"
+//全部简历
+import fullresume from "../components/recruitment_management/zp_fullresume.vue"
 //新简历
 import newresume from "../components/recruitment_management/zp_newresume.vue"
+//候选人
+import candidate from "../components/recruitment_management/zp_candidate.vue"
 //淘汰库
 import eliminate from "../components/recruitment_management/zp_eliminate.vue"
 /**
@@ -128,6 +132,11 @@ const routes = [{
 				path: '/shij',
 				component: shij
 			},
+			/*薪酬管理*/
+			{
+				path: '/xcnavigation',
+				component: xcnavigation
+			},
 			/* 招聘管理 */
 			{
 				path: '/zpdaohang',
@@ -150,32 +159,48 @@ const routes = [{
 							"addplan": addplan
 						}
 					},
-					//简历导航
+					//人才库:简历列表
 					{
-						path: '/a', 
+						path: '/a',
+						redirect: 'fullresume',
 						components: {
 							"zp2": a
 						},
+						children:[
+							/*全部简历*/
+							{
+								path: '/fullresume',
+								components: {
+									"fullresume": fullresume
+								}
+							},
+							/*新简历*/
+							{
+								path: '/newresume',
+								components: {
+									"newresume": newresume
+								}
+							},
+							/*候选人*/
+							{
+								path: '/candidate',
+								components: {
+									"candidate": candidate
+								}
+							},
+							/*淘汰库*/
+							{
+								path: '/eliminate',
+								components: {
+									"eliminate": eliminate
+								}
+							},
+
+						]
 					},
-					{
-						path: '/newresume',
-						components: {
-							"newresume": newresume
-						}
-					},
-					{
-						path: '/eliminate',
-						components: {
-							"eliminate": eliminate
-						}
-					},
+
 					
 				]
-			},
-			/* 薪酬管理 */
-			{
-				path: '/xcnavigation',
-				component:xcnavigation
 			},
 
 		]

@@ -80,9 +80,41 @@ f<!-- 首页导航栏 -->
 						</span>
             <div class="header_message header_message_show">
               <div>
-                  <el-tabs  v-model="activeName" @tab-click="handleClick" stretch="true" style="margin-top: 10px;color: black">
+                  <el-tabs  v-model="activeName" @tab-click="handleClick" stretch="" style="margin-top: 10px;color: black">
                     <el-tab-pane label="未读消息" name="first">
-                      <div style="width: 100px; height: 100px; background-color: #0c9c6e"></div>
+
+                      <ul class="ant-list-items">
+                        <li class="ant-list-item">
+                          <div>
+                            <label class="ant-checkbox-wrapper ant-checkbox-wrapper-disabled">
+                                <span>
+                                  <span class="flex_panel">
+                                    <input type="checkbox">
+                                    <span class="flex_title">考核完成-被考核人通知:</span>
+                                    <span class="flex_item">您石毅的考核已考核完成,快来查看哦!</span>
+                                  </span>
+                                </span>
+                            </label>
+                          </div>
+                        </li>
+
+                        <li class="ant-list-item">
+                          <div>
+                            <label class="ant-checkbox-wrapper ant-checkbox-wrapper-disabled">
+                                <span>
+                                  <span class="flex_panel">
+                                    <input type="checkbox">
+                                    <span class="flex_title">考核完成-被考核人通知:</span>
+                                    <span class="flex_item">您石毅的考核已考核完成,快来查看哦!</span>
+                                  </span>
+                                </span>
+                            </label>
+                          </div>
+                        </li>
+
+
+                      </ul>
+
                     </el-tab-pane>
                     <el-tab-pane label="全部消息" name="second">全部消息</el-tab-pane>
                     <el-tab-pane label="已读消息" name="third">已读消息</el-tab-pane>
@@ -174,9 +206,7 @@ f<!-- 首页导航栏 -->
 </template>
 
 <script>
-import { ArrowDown } from '@element-plus/icons';
 	import {
-		defineComponent,
 		ref
 	} from 'vue'
 
@@ -208,6 +238,64 @@ import { ArrowDown } from '@element-plus/icons';
 <style type="text/css" scoped> 
 	@import url("../css/navigation.css");
 
+  .ant-list-items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ant-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 0;
+  }
+  .ant-checkbox-wrapper.ant-checkbox-wrapper-disabled {
+    cursor: not-allowed;
+  }
+  .ant-checkbox-wrapper {
+    color: rgba(0, 0, 0, 0.65);
+  }
+  .ant-checkbox-wrapper {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    display: inline-block;
+    line-height: unset;
+    cursor: pointer;
+  }
+  .header_message .flex_panel {
+    display: flex;
+    margin-top: -20px;
+    padding-left: 24px;
+    margin-bottom: -20px;
+  }
+  .header_message .flex_title {
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  .header_message .flex_item {
+    flex: 1;
+  }
+
+  .ant-checkbox {
+    color: rgba(0, 0, 0, 0.65);
+  }
+  .ant-checkbox-disabled {
+    cursor: not-allowed;
+  }
+
+
+
+
+  /**
+
+   */
 	.dh-span {
 		height: 56px;
 		width: 56px;

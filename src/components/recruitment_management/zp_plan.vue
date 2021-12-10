@@ -79,8 +79,6 @@
 
 <script>
 	
-	import { ref, defineComponent } from 'vue'
-	
 	export default{
 		data() {
 			return{

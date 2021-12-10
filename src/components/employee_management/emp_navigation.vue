@@ -11,7 +11,7 @@
 					<div class="hq-logo-wrapper"></div>
 					<div class="custom-menu" style="width: 160px;">
 
-						<el-menu default-active="2" class="" background-color="#f2f6f8"  unique-opened="true">
+						<el-menu default-active="2" class="" background-color="#f2f6f8"  unique-opened="{true}">
 							<el-sub-menu index="1">
 								<template #title>
 									<i class="iconfont">&#xe62c;</i>&nbsp;&nbsp;
