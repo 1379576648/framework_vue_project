@@ -16,9 +16,9 @@ f<!-- 首页导航栏 -->
           <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal"
                    background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router
                    @select="handleSelect">
-              <el-menu-item  v-for="memu in memuList1" :index="memu.MENU_ROUTE">
-                {{memu.MENU_NAME}}
-              </el-menu-item>
+            <el-menu-item  v-for="memu in memuList1" :index="memu.MENU_ROUTE">
+              {{memu.MENU_NAME}}
+            </el-menu-item>
             <li style="height: 70px;font-weight:bold; width: 96px;" v-on:click="gend =! gend">
 							<span class="dh-span iconfont" v-if="gend == true" style="font-size: 14px;">
 								收起 &#xe772;
@@ -104,10 +104,10 @@ f<!-- 首页导航栏 -->
                     <ul class="hea_nav_tab">
                       <li v-for="memu in memuList2">
                         <router-link :to="memu.MENU_ROUTE">
-                        <i class="iconfont shebaofuli">
-                         {{iconHandle(memu.MENU_MODULE)}}
-                        </i>
-                        <p><span>{{memu.MENU_NAME}}</span></p>
+                          <i class="iconfont shebaofuli">
+                            {{iconHandle(memu.MENU_MODULE)}}
+                          </i>
+                          <p><span>{{memu.MENU_NAME}}</span></p>
                         </router-link>
                       </li>
                     </ul>
@@ -155,7 +155,7 @@ export default {
         {MENU_NAME:'系统管理',MENU_ROUTE:'/system_navigation',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1}
       ]
     }
-    },
+  },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event)
