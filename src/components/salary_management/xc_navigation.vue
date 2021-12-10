@@ -15,8 +15,7 @@
               <el-sub-menu index="1">
                 <template #title>
                   <i class="iconfont">&#xe62c;</i>&nbsp;&nbsp;
-                  <span
-                      style="font-weight: normal;font-size: 15px;margin-left: -5px;margin-top: -1px;">组织管理</span>
+                  <span>组织管理</span>
                 </template>
                 <el-menu-item index="1-1">
                   部门设置
@@ -26,8 +25,7 @@
               <el-sub-menu index="2">
                 <template #title>
                   <i class="iconfont">&#xe677;</i>&nbsp;&nbsp;
-                  <span
-                      style="font-weight: normal;font-size: 15px;margin-left: -5px;margin-top: -1px;">职位管理</span>
+                  <span>职位管理</span>
                 </template>
                 <el-menu-item index="2-1">职类管理</el-menu-item>
                 <el-menu-item index="2-2">职位管理</el-menu-item>
@@ -36,8 +34,7 @@
               <el-sub-menu index="3">
                 <template #title>
                   <i class="iconfont">&#xe677;</i>&nbsp;&nbsp;
-                  <span
-                      style="font-weight: normal;font-size: 15px;margin-left: -5px;margin-top: -1px;">编制管理</span>
+                  <span>编制管理</span>
                 </template>
                 <el-menu-item index="3-1">编制管理</el-menu-item>
               </el-sub-menu>
@@ -63,5 +60,15 @@
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
+a {
+  color: rgb(48, 49, 51)
+}
+
+/deep/ .el-sub-menu__title span {
+  font-weight: normal;
+  font-size: 15px;
+  margin-left: -5px;
+  margin-top: -1px;
+}
 </style>
 
