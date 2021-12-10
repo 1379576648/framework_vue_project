@@ -13,7 +13,8 @@ f<!-- 首页导航栏 -->
         </div>
         <!--  导航菜单  -->
         <div class="ant-col header_row_menu">
-          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal"
+          <!--          :default-active默认激活的路由-->
+          <el-menu :default-active="memuList1[0].MENU_ROUTE" class="el-menu-demo" mode="horizontal"
                    background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router
                    @select="handleSelect">
             <el-menu-item  v-for="memu in memuList1" :index="memu.MENU_ROUTE">
