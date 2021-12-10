@@ -118,4 +118,7 @@
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
+a{
+  color: rgb(48, 49, 51)
+}
 </style>
