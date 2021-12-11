@@ -32,25 +32,25 @@ export default {
       if (this.name == ""||this.name==null||this.name==undefined) {
         ElNotification.warning({
           title: '提示',
-          message: "账号不为空",
+          message: "请输入账号",
           offset: 100,
         })
       }else if (this.pass == ""||this.pass==null||this.pass==undefined){
         ElNotification.warning({
           title: '提示',
-          message: "密码不为空",
+          message: "请输入密码",
           offset: 100,
         })
       }else if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.name))){
         ElNotification.warning({
           title: '提示',
-          message: "账号不合法",
+          message: "请输入正确的手机号码",
           offset: 100,
         })
       }else if(!(/^(\w){6,20}$/.test(this.pass))){
         ElNotification.warning({
           title: '提示',
-          message: "密码只能输入6-20个字母、数字、下划线",
+          message: "密码由6-20个字母、数字、下划线组成",
           offset: 100,
         })
       }else{
