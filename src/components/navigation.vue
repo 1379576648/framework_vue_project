@@ -14,24 +14,39 @@ f<!-- 首页导航栏 -->
         <!--  导航菜单  -->
         <div class="ant-col header_row_menu">
           <!--          :default-active默认激活的路由-->
-          <el-menu :default-active="default_route" class="el-menu-demo" mode="horizontal"
-                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router @close="one"
-                   @select="handleSelect">
-              <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">
-                {{ memu.MENU_NAME }}
-              </el-menu-item>
-            <li style="height: 70px;font-weight:bold; width: 96px;" v-on:click="gend=true">
-							<span class="dh-span iconfont" v-if="gend == true" style="font-size: 14px;">
-								收起 &#xe772;
-							</span>
-              <span class="dh-span iconfont" v-else-if="gend == false" style="font-size: 14px;">
-								更多 &#xe76e;
-							</span>
-            </li>
+<!--          <el-menu :default-active="default_route" class="el-menu-demo" mode="horizontal"-->
+<!--                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router @close="one"-->
+<!--                   @select="handleSelect">-->
+<!--              <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">-->
+<!--                {{ memu.MENU_NAME }}-->
+<!--              </el-menu-item>-->
+<!--          </el-menu>-->
+<!--            </span>-->
+
+
+          <el-menu
+              :default-active="activeIndex"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect"
+          >
+            <el-menu-item v-for="memu in memuList1" :index="memu.MENU_ROUTE">
+                   {{ memu.MENU_NAME }}
+            </el-menu-item>
+            <el-sub-menu index="5">
+              <template #title>更多</template>
+              <li style="text-align: center;margin: 10px 32px; float: left;width: 58px;height: 81px" v-for="memu in memuList2">
+                <router-link v-if="memu.MENU_STATE==0"  :to="memu.MENU_ROUTE" >
+                <i class="iconfont" style="color: #0c9c6e;font-size: 40px;height: 40px;width: 40px; display: block;margin: auto;">
+                  {{ iconHandle(memu.MENU_MODULE) }}</i>
+                <br/>
+                <p>{{ memu.MENU_NAME }}</p>
+                </router-link>
+              </li>
+
+            </el-sub-menu>
           </el-menu>
         </div>
-
-
         <!--  导航栏: 个人信息  -->
         <div class="ant-col header_3_s header_2_s">
 					<span style="margin-left: 15px; margin-right: 15px;">
@@ -83,42 +98,6 @@ f<!-- 首页导航栏 -->
     <!-- 招聘 -->
     <router-view name="ym1"></router-view>
 
-  </div>
-
-
-  <!-- 更多弹出框 -->
-  <div style="position: absolute; top: 0px; left: 0px;" v-show="gend">
-    <div @mouseleave="mouseLeave">
-      <div class="ant-popover head_over_page ant-popover-placement-bottom"
-           style="left: 450px; top: -972px; transform-origin: 50% -4px 0px; width:418px">
-        <div class="ant-popover-content">
-          <!-- 小角角 -->
-          <div class="ant-popover-arrow"></div>
-
-          <!--内容框框-->
-          <div class="ant-popover-inner" role="tooltip">
-            <div>
-              <div class="ant-popover-inner-content">
-                <div class="hea_nav_tot">
-                  <div>
-                    <ul class="hea_nav_tab">
-                      <li  v-for="memu in memuList2">
-                        <router-link v-if="memu.MENU_STATE==0"  :to="memu.MENU_ROUTE" >
-                          <i class="iconfont shebaofuli">
-                            {{ iconHandle(memu.MENU_MODULE) }}
-                          </i>
-                          <p><span>{{ memu.MENU_NAME }}</span></p>
-                        </router-link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -295,9 +274,65 @@ export default {
 
 }
 </script>
+<style>
+.el-menu--popup {
+  z-index: 100 !important;
+  border: none !important;
+  padding: 10px 10px !important;
+  border-radius: var(--el-border-radius-small) !important;
+  box-shadow: var(--el-box-shadow-light) !important;
+  min-width: 0px !important;
+  width: 386px;
+}
+</style>
 
 <style type="text/css" scoped>
 @import url("../css/navigation.css");
+
+.gengd_li{
+  width: 100px;
+  height: 100px;
+}
+
+/deep/.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+  height: 71px;
+  line-height: 60px;
+  border-bottom: 2px solid transparent;
+  border-bottom-color: transparent;
+  color: var(--el-menu-text-color);
+}
+
+
+.el-menu--horizontal .el-menu .el-menu-item, .el-menu--horizontal .el-menu .el-sub-menu__title {
+  background-color: var(--el-menu-background-color);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: var(--el-menu-text-color);
+  width: 100px;
+  height: 100px;
+  float: left;
+}
+.el-menu[data-v-09d1a3b8] {
+  height: 71px;
+  font-weight: bold;
+  background-color: #085fc3;
+}
+.el-menu--horizontal > .el-menu-item {
+  color: white;
+}
+ /deep/.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+   height: 71px;
+   line-height: 60px;
+   border-bottom: 2px solid transparent;
+   border-bottom-color: transparent;
+   border-bottom-color: transparent;
+   color: white;
+ }
+
+
+
+
 
 .hea_nav_tab li a i {
   font-size: 40px;
