@@ -1,4 +1,4 @@
-<!-- 招聘导航栏 -->
+<!-- 统计分析导航栏 -->
 <template>
   <section
       class="ant-layout ant-layout-has-sider"
@@ -55,7 +55,7 @@ export default {
       menuList: [
         {
           MENU_ID: 1,//菜单编号
-          MENU_NAME: '招聘计划',//菜单名称
+          MENU_NAME: '人员分析',//菜单名称
           MENU_ROUTE: '/1',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
@@ -64,27 +64,26 @@ export default {
           son: [
             {
               MENU_ID: 2,//菜单编号
-              MENU_NAME: '招聘计划',//菜单名称
-              MENU_ROUTE: '/zpplan',//路由地址
+              MENU_NAME: '人员数量分析',//菜单名称
+              MENU_ROUTE: '/StatisticePersonnel1',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }
-          ]
-        }, {
-          MENU_ID: 3,//菜单编号
-          MENU_NAME: '简历管理',//菜单名称
-          MENU_ROUTE: '/2',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
-          MENU_STATE: 0,//是否启用 0启用 1禁用
-          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-          MENU_LEAF: 0,//是否有叶子 0有 1没有
-          son: [
+            },
+            {
+              MENU_ID: 3,//菜单编号
+              MENU_NAME: '人员异动分析',//菜单名称
+              MENU_ROUTE: '/StatisticePersonnel2',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },
             {
               MENU_ID: 4,//菜单编号
-              MENU_NAME: '人才库',//菜单名称
-              MENU_ROUTE: '/a',//路由地址
+              MENU_NAME: '员工概况',//菜单名称
+              MENU_ROUTE: '/StatisticePersonnel3',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -93,8 +92,8 @@ export default {
           ]
         }, {
           MENU_ID: 5,//菜单编号
-          MENU_NAME: '招聘过程',//菜单名称
-          MENU_ROUTE: '/3',//路由地址
+          MENU_NAME: '考勤分析',//菜单名称
+          MENU_ROUTE: '/2',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -102,16 +101,76 @@ export default {
           son: [
             {
               MENU_ID: 6,//菜单编号
-              MENU_NAME: '面试管理',//菜单名称
-              MENU_ROUTE: '/3-1',//路由地址
+              MENU_NAME: '出勤分析',//菜单名称
+              MENU_ROUTE: '/CheckWork1',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }, {
+              MENU_ID: 7,//菜单编号
+              MENU_NAME: '工时分析',//菜单名称
+              MENU_ROUTE: '/CheckWork2',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },
+            {
+              MENU_ID: 8,//菜单编号
+              MENU_NAME: '加班分析',//菜单名称
+              MENU_ROUTE: '/CheckWork3',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }, {
+              MENU_ID: 9,//菜单编号
+              MENU_NAME: '请假分析',//菜单名称
+              MENU_ROUTE: '/CheckWork4',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }
+          ]
+        }, {
+          MENU_ID: 10,//菜单编号
+          MENU_NAME: '薪酬分析',//菜单名称
+          MENU_ROUTE: '/3',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
+          son: [
+            {
+              MENU_ID: 11,//菜单编号
+              MENU_NAME: '工资成本分析',//菜单名称
+              MENU_ROUTE: '/SalaryAnalysis1',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
             },{
-              MENU_ID: 7,//菜单编号
-              MENU_NAME: '复试管理',//菜单名称
-              MENU_ROUTE: '/3-2',//路由地址
+              MENU_ID: 12,//菜单编号
+              MENU_NAME: '社保成本分析',//菜单名称
+              MENU_ROUTE: '/SalaryAnalysis2',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },{
+              MENU_ID: 13,//菜单编号
+              MENU_NAME: '薪酬结构分析',//菜单名称
+              MENU_ROUTE: '/SalaryAnalysis3',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },{
+              MENU_ID: 14,//菜单编号
+              MENU_NAME: '部门成本分析',//菜单名称
+              MENU_ROUTE: '/SalaryAnalysis4',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -174,9 +233,6 @@ export default {
   top: 4px !important;
   right: 0px!important;
 }
-/deep/.el-sub-menu .el-menu-item{
-  min-width: auto !important;
-}
 /deep/#el-menu{
   height: 100%!important;
   overflow-x: auto !important;
@@ -184,6 +240,9 @@ export default {
 .custom-menu{
   padding: 0px !important;
   height: 90% !important;
+}
+/deep/.el-sub-menu .el-menu-item{
+  min-width: auto !important;
 }
 /deep/label li div span{
   margin-right: 20px;
@@ -221,4 +280,3 @@ a{
   color: black;
 }
 </style>
-

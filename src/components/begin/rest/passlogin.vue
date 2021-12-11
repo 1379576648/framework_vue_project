@@ -3,10 +3,10 @@
     <input type="text" placeholder="账号" class="login_txtbx"  v-model="name"/>
   </dd>
   <dd class="pwd_icon">
-    <input type="password" placeholder="密码" class="login_txtbx"  v-model="pass"/>
+    <input type="password" placeholder="密码" class="login_txtbx"  v-model="pass" @keyup.enter="submit"/>
   </dd>
   <dd>
-    <input type="button" value="点击登录" class="submit_btn" v-on:click="submit" />
+    <input type="button" value="点击登录" class="submit_btn"  @click="submit"/>
   </dd>
   <dd>
     <p>© 版权所有</p>
@@ -32,25 +32,25 @@ export default {
       if (this.name == ""||this.name==null||this.name==undefined) {
         ElNotification.warning({
           title: '提示',
-          message: "账号不为空",
+          message: "请输入账号",
           offset: 100,
         })
       }else if (this.pass == ""||this.pass==null||this.pass==undefined){
         ElNotification.warning({
           title: '提示',
-          message: "密码不为空",
+          message: "请输入密码",
           offset: 100,
         })
       }else if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.name))){
         ElNotification.warning({
           title: '提示',
-          message: "账号不合法",
+          message: "请输入正确的手机号码",
           offset: 100,
         })
       }else if(!(/^(\w){6,20}$/.test(this.pass))){
         ElNotification.warning({
           title: '提示',
-          message: "密码只能输入6-20个字母、数字、下划线",
+          message: "密码由6-20个字母、数字、下划线组成",
           offset: 100,
         })
       }else{
@@ -63,7 +63,6 @@ export default {
           })
           setTimeout( this.reset,3000);
         }else{
-          alert(2)
           this.count=this.count+1;
           this.$router.push({path:'/home',replace:true})
         }

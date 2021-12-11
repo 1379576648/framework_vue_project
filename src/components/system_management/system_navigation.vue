@@ -1,4 +1,4 @@
-<!-- 招聘导航栏 -->
+<!-- 系统导航栏 -->
 <template>
   <section
       class="ant-layout ant-layout-has-sider"
@@ -55,71 +55,107 @@ export default {
       menuList: [
         {
           MENU_ID: 1,//菜单编号
-          MENU_NAME: '招聘计划',//菜单名称
+          MENU_NAME: '权限管理',//菜单名称
           MENU_ROUTE: '/1',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
           MENU_LEAF: 0,//是否有叶子 0有 1没有
-          son: [
+          son: [//子菜单
             {
               MENU_ID: 2,//菜单编号
-              MENU_NAME: '招聘计划',//菜单名称
-              MENU_ROUTE: '/zpplan',//路由地址
+              MENU_NAME: '权限设置',//菜单名称
+              MENU_ROUTE: '/permission_set',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }
-          ]
+            },
+            {
+              MENU_ID: 3,//菜单编号
+              MENU_NAME: '角色设置',//菜单名称
+              MENU_ROUTE: '/notice',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 0,//是否有叶子 0有 1没有
+              son: [
+                {
+                  MENU_ID: 4,//菜单编号
+                  MENU_NAME: '权限设置',//菜单名称
+                  MENU_ROUTE: '/3-1',//路由地址
+                  MENU_MODULE: '&#xe62c;',//组件地址
+                  MENU_STATE: 0,//是否启用 0启用 1禁用
+                  MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+                  MENU_LEAF: 0,//是否有叶子 0有 1没有
+                  son: [
+                    {
+                      MENU_ID: 5,//菜单编号
+                      MENU_NAME: '权限设置',//菜单名称
+                      MENU_ROUTE: '/3-2',//路由地址
+                      MENU_MODULE: '&#xe62c;',//组件地址
+                      MENU_STATE: 0,//是否启用 0启用 1禁用
+                      MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+                      MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    }
+                  ]
+                }
+              ]
+            }]
         }, {
-          MENU_ID: 3,//菜单编号
-          MENU_NAME: '简历管理',//菜单名称
-          MENU_ROUTE: '/2',//路由地址
+          MENU_ID: 6,//菜单编号
+          MENU_NAME: '公告管理',//菜单名称
+          MENU_ROUTE: '/4',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
           MENU_LEAF: 0,//是否有叶子 0有 1没有
           son: [
             {
-              MENU_ID: 4,//菜单编号
-              MENU_NAME: '人才库',//菜单名称
-              MENU_ROUTE: '/a',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
-              MENU_STATE: 0,//是否启用 0启用 1禁用
-              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-              MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }
-          ]
-        }, {
-          MENU_ID: 5,//菜单编号
-          MENU_NAME: '招聘过程',//菜单名称
-          MENU_ROUTE: '/3',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
-          MENU_STATE: 0,//是否启用 0启用 1禁用
-          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-          MENU_LEAF: 0,//是否有叶子 0有 1没有
-          son: [
-            {
-              MENU_ID: 6,//菜单编号
-              MENU_NAME: '面试管理',//菜单名称
-              MENU_ROUTE: '/3-1',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
-              MENU_STATE: 0,//是否启用 0启用 1禁用
-              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-              MENU_LEAF: 1,//是否有叶子 0有 1没有
-            },{
               MENU_ID: 7,//菜单编号
-              MENU_NAME: '复试管理',//菜单名称
-              MENU_ROUTE: '/3-2',//路由地址
+              MENU_NAME: '公告设置',//菜单名称
+              MENU_ROUTE: '/notice',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }
-          ]
-        }
-      ], activate_router: '',
+            }]
+        }, {
+          MENU_ID: 8,//菜单编号
+          MENU_NAME: '日志管理',//菜单名称
+          MENU_ROUTE: '/5',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
+          son: [
+            {
+              MENU_ID: 8,//菜单编号
+              MENU_NAME: '登录日志',//菜单名称
+              MENU_ROUTE: '/login_log',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },
+            {
+              MENU_ID: 9,//菜单编号
+              MENU_NAME: '操作日志',//菜单名称
+              MENU_ROUTE: '/operate_log',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }]
+        }, {
+          MENU_ID: 10,//菜单编号
+          MENU_NAME: '操作日志',//菜单名称
+          MENU_ROUTE: '/6',//路由地址
+          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        }], activate_router: '',
     }
   }, computed: {
     //默认激活路由
@@ -221,4 +257,3 @@ a{
   color: black;
 }
 </style>
-

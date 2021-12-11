@@ -1,4 +1,4 @@
-<!-- 招聘导航栏 -->
+<!-- 薪酬导航栏 -->
 <template>
   <section
       class="ant-layout ant-layout-has-sider"
@@ -55,7 +55,7 @@ export default {
       menuList: [
         {
           MENU_ID: 1,//菜单编号
-          MENU_NAME: '招聘计划',//菜单名称
+          MENU_NAME: '组织管理',//菜单名称
           MENU_ROUTE: '/1',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
@@ -64,8 +64,8 @@ export default {
           son: [
             {
               MENU_ID: 2,//菜单编号
-              MENU_NAME: '招聘计划',//菜单名称
-              MENU_ROUTE: '/zpplan',//路由地址
+              MENU_NAME: '部门设置',//菜单名称
+              MENU_ROUTE: '/1-1',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -74,7 +74,7 @@ export default {
           ]
         }, {
           MENU_ID: 3,//菜单编号
-          MENU_NAME: '简历管理',//菜单名称
+          MENU_NAME: '组织管理',//菜单名称
           MENU_ROUTE: '/2',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
@@ -83,8 +83,16 @@ export default {
           son: [
             {
               MENU_ID: 4,//菜单编号
-              MENU_NAME: '人才库',//菜单名称
-              MENU_ROUTE: '/a',//路由地址
+              MENU_NAME: '职类管理',//菜单名称
+              MENU_ROUTE: '/2-1',//路由地址
+              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }, {
+              MENU_ID: 5,//菜单编号
+              MENU_NAME: '职位管理',//菜单名称
+              MENU_ROUTE: '/2-2',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -92,8 +100,8 @@ export default {
             }
           ]
         }, {
-          MENU_ID: 5,//菜单编号
-          MENU_NAME: '招聘过程',//菜单名称
+          MENU_ID: 6,//菜单编号
+          MENU_NAME: '编制管理',//菜单名称
           MENU_ROUTE: '/3',//路由地址
           MENU_MODULE: '&#xe62c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
@@ -101,17 +109,9 @@ export default {
           MENU_LEAF: 0,//是否有叶子 0有 1没有
           son: [
             {
-              MENU_ID: 6,//菜单编号
-              MENU_NAME: '面试管理',//菜单名称
+              MENU_ID: 2,//菜单编号
+              MENU_NAME: '编制管理',//菜单名称
               MENU_ROUTE: '/3-1',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
-              MENU_STATE: 0,//是否启用 0启用 1禁用
-              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-              MENU_LEAF: 1,//是否有叶子 0有 1没有
-            },{
-              MENU_ID: 7,//菜单编号
-              MENU_NAME: '复试管理',//菜单名称
-              MENU_ROUTE: '/3-2',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -221,4 +221,3 @@ a{
   color: black;
 }
 </style>
-

@@ -56,14 +56,15 @@
 				<!-- 表格内容部分 -->
 				<div class="sub-Content__primary">
 					
-					 <el-table :data="tableData" style="width: 100%">
-					    <el-table-column prop="date" label="Date" width="150" />
-					    <el-table-column prop="name" label="Name" width="120" />
-					    <el-table-column prop="state" label="State" width="120" />
-					    <el-table-column prop="city" label="City" width="120" />
-					    <el-table-column prop="address" label="Address" width="600" />
-					    <el-table-column prop="zip" label="Zip" width="120" />
-					    <el-table-column fixed="right" label="Operations" width="120">
+					 <el-table :data="tableData" style="width: 100%" size="mini">
+					    <el-table-column prop="ID" label="序号" width="150"/>
+					    <el-table-column prop="zpname" label="招聘计划名称" width="200" />
+					    <el-table-column prop="zpzw" label="招聘职位" width="200" />
+					    <el-table-column prop="zpdept" label="需求部门" width="200" />
+					    <el-table-column prop="zpnum" label="招聘人数" width="200" />
+					    <el-table-column prop="statetime" label="发布时间" width="200" />
+             <el-table-column prop="zpzt" label="招聘状态" width="200" />
+             <el-table-column fixed="right" label="操作" width="180">
 					      <template #default>
 					        <el-button type="text" size="small" @click="">Detail</el-button>
 					        <el-button type="text" size="small">Edit</el-button>
@@ -78,8 +79,6 @@
 </template>
 
 <script>
-	
-	import { ref, defineComponent } from 'vue'
 	
 	export default{
 		data() {
@@ -98,52 +97,9 @@
 				 //输入框数据
 				 input:"",
 				tableData: [
-				         {
-				           date: '2016-05-03',
-				           name: 'Tom',
-				           state: 'California',
-				           city: 'Los Angeles',
-				           address: 'No. 189, Grove St, Los Angeles',
-				           zip: 'CA 90036',
-				           tag: 'Home',
-				         },
-				         {
-				           date: '2016-05-02',
-				           name: 'Tom',
-				           state: 'California',
-				           city: 'Los Angeles',
-				           address: 'No. 189, Grove St, Los Angeles',
-				           zip: 'CA 90036',
-				           tag: 'Office',
-				         },
-				         {
-				           date: '2016-05-04',
-				           name: 'Tom',
-				           state: 'California',
-				           city: 'Los Angeles',
-				           address: 'No. 189, Grove St, Los Angeles',
-				           zip: 'CA 90036',
-				           tag: 'Home',
-				         },
-				         {
-				           date: '2016-05-01',
-				           name: 'Tom',
-				           state: 'California',
-				           city: 'Los Angeles',
-				           address: 'No. 189, Grove St, Los Angeles',
-				           zip: 'CA 90036',
-				           tag: 'Office',
-				         },
-						 {
-						   date: '2016-05-01',
-						   name: 'Tom',
-						   state: 'California',
-						   city: 'Los Angeles',
-						   address: 'No. 189, Grove St, Los Angeles',
-						   zip: 'CA 90036',
-						   tag: 'Office',
-						 }
-				       ]
+          {ID: '1', zpname: 'HTR2001招聘计划', zpzw: '研发人员', zpdept: '市场部', zpnum: '10', statetime: '2016-05-03',zpzt: '招聘中'},
+          {ID: '1', zpname: 'HTR2001招聘计划', zpzw: '研发人员', zpdept: '市场部', zpnum: '10', statetime: '2016-05-03',zpzt: '招聘结束'},
+        ]
 			}
 		}
 	}
@@ -163,5 +119,16 @@
 		border: 1px solid #085FC3;
 		color: #085FC3;
 	}
+
+
+  /deep/.el-table th.el-table__cell > .cell {
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+    font-weight: initial;
+    color: black;
+  }
 </style>
 

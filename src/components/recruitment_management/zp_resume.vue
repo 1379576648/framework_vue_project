@@ -1,61 +1,41 @@
-<!--人才库:全部简历-->
+<!--人才库-->
 <template>
-	
+
 	<div class="saas-main-content">
 		<div class="j-card j-card-bordered mainContent">
 			<div class="j-card-body ">
-				<div class="sub-Content__primary">
-					<div class="ant-spin-nested-loading">
-						<div class="ant-spin-container">
-							<div class="mt-20 ml-20 mr-20">
-								<!-- 新增招聘计划按钮 -->
-								<a style="margin-top: 4px;">
-									<button type="button" class="ant-btn ant-btn-primary">
-										<span>+新增</span>
-									</button>
-								</a>
-								<!-- 批量导入按钮 -->
-								<button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-									<span>批量导入</span>
-								</button>
-								<!-- 批量批量删除按钮 -->
-								<button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-									<span>批量删除</span>
-								</button>
-				
-								<div style="float: right;">
-									<!--搜索输入框-->
-									&nbsp;&nbsp;&nbsp;
-									<el-input style="width: 200px;" v-model="input" placeholder="名称" clearable />
-									<!--搜索按钮-->
-									&nbsp;&nbsp;&nbsp;
-									<el-button style="background-color: #085fc3; color: white;" size="small">Custom
-									</el-button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<br />
-					<!-- 表格数据 -->
-					<div class="ant-table-wrapper j_statistics_layout">
-						<el-table :data="tableData" style="width: 100%">
-							<el-table-column fixed="left" prop="date" label="Date" width="150" />
-							<el-table-column prop="name" label="Name" width="120" />
-							<el-table-column prop="state" label="State" width="120" />
-							<el-table-column prop="city" label="City" width="120" />
-							<el-table-column prop="address" label="Address" width="600" />
-							<el-table-column prop="zip" label="Zip" width="120" />
-							<el-table-column fixed="right" label="Operations" width="120">
-								<template #default>
-									<el-button type="text" size="small" @click="">Detail</el-button>
-									<el-button type="text" size="small">Edit</el-button>
-								</template>
-							</el-table-column>
-						</el-table>
-					</div>
-				</div>
-				
-				
+        <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top: 10px;">
+
+          <el-tab-pane name="">
+              <template #label>
+                <router-link to="/fullresume"><div style="width: 120px;text-align: center">全部简历</div></router-link>
+              </template>
+            <router-view name="fullresume"></router-view>
+          </el-tab-pane>
+
+          <el-tab-pane name="newresume">
+              <template #label>
+                <router-link to="/newresume"><div style="width: 120px;text-align: center">新简历</div> </router-link>
+              </template>
+              <router-view name="newresume"></router-view>
+          </el-tab-pane>
+
+          <el-tab-pane name="candidate">
+              <template #label>
+                <router-link to="/candidate"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
+              </template>
+              <router-view name="candidate"></router-view>
+          </el-tab-pane>
+
+          <el-tab-pane name="eliminate">
+              <template #label>
+                <router-link to="/eliminate"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
+              </template>
+            <router-view name="eliminate"></router-view>
+          </el-tab-pane>
+
+        </el-tabs>
+
 			</div>
 		</div>
 	</div>
@@ -63,48 +43,41 @@
 
 <script>
 	import {
-		defineComponent,
 		ref
 	} from 'vue'
-	export default {
-		data() {
-			const activeIndex = ref('1')
-			return {
-				activeIndex,
-				input:"",
-				tableData:[]
-			}
-		},
 
-	}
 </script>
 
-<style type="text/css" scoped> 
+<style  type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
-	.j-tabs {
-		border-bottom: 1px solid #d9d9d9;
-	}
 
-	.mainContent .sub-Content__primary {
-		padding: 12px 24px;
-		background: #fff;
-		border-radius: 4px;
-	}
+/deep/ .el-tabs__item {
+    padding: 0px 10px;
+    padding-left: 36px;
+    height: 40px;
+    box-sizing: border-box;
+    line-height: 40px;
+    display: inline-block;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--el-text-color-primary);
+    position: relative;
+  }
+/deep/.el-tabs__nav {
+  white-space: nowrap;
+  position: relative;
+  transition: transform var(--el-transition-duration);
+  float: left;
+  z-index: calc(var(--el-index-normal) + 1);
+  margin-left: 0px;
+}
 
-	.ant-spin-nested-loading {
-		position: relative;
-	}
+a{
+  font-size: 15px;
+  color: black;
+}
 
-	.ant-spin-container {
-		position: relative;
-		transition: opacity 0.3s;
-	}
-	.ant-table-wrapper::after {
-	    clear: both;
-	}
-	.ant-table-wrapper::before, .ant-table-wrapper::after {
-	    display: table;
-	    content: '';
-	}
+
 </style>

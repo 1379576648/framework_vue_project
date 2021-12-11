@@ -1,4 +1,4 @@
-<!-- 招聘导航栏 -->
+<!--员工管理导航栏-->
 <template>
   <section
       class="ant-layout ant-layout-has-sider"
@@ -36,6 +36,7 @@
     </div>
     <main class="ant-layout-content">
       <route-util :data="menuList"></route-util>
+      <router-view name="yg1"></router-view>
     </main>
   </section>
 </template>
@@ -55,70 +56,69 @@ export default {
       menuList: [
         {
           MENU_ID: 1,//菜单编号
-          MENU_NAME: '招聘计划',//菜单名称
-          MENU_ROUTE: '/1',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_NAME: '员工信息',//菜单名称
+          MENU_ROUTE: '/',//路由地址
+          MENU_MODULE: '&#xe60a;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
           MENU_LEAF: 0,//是否有叶子 0有 1没有
           son: [
             {
               MENU_ID: 2,//菜单编号
-              MENU_NAME: '招聘计划',//菜单名称
-              MENU_ROUTE: '/zpplan',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_NAME: '员工花名册',//菜单名称
+              MENU_ROUTE: '/staff_one',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },
+            {
+              MENU_ID: 3,//菜单编号
+              MENU_NAME: '历史花名册',//菜单名称
+              MENU_ROUTE: '/historyemp',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
             }
           ]
         }, {
-          MENU_ID: 3,//菜单编号
-          MENU_NAME: '简历管理',//菜单名称
-          MENU_ROUTE: '/2',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_ID: 4,//菜单编号
+          MENU_NAME: '人事异动',//菜单名称
+          MENU_ROUTE: '/',//路由地址
+          MENU_MODULE: '&#xe60a;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
           MENU_LEAF: 0,//是否有叶子 0有 1没有
           son: [
             {
-              MENU_ID: 4,//菜单编号
-              MENU_NAME: '人才库',//菜单名称
-              MENU_ROUTE: '/a',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_ID: 5,//菜单编号
+              MENU_NAME: '入职管理',//菜单名称
+              MENU_ROUTE: '/abandon',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }
-          ]
-        }, {
-          MENU_ID: 5,//菜单编号
-          MENU_NAME: '招聘过程',//菜单名称
-          MENU_ROUTE: '/3',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
-          MENU_STATE: 0,//是否启用 0启用 1禁用
-          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-          MENU_LEAF: 0,//是否有叶子 0有 1没有
-          son: [
-            {
+            }, {
               MENU_ID: 6,//菜单编号
-              MENU_NAME: '面试管理',//菜单名称
-              MENU_ROUTE: '/3-1',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_NAME: '转正管理',//菜单名称
+              MENU_ROUTE: '/conversion',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
-            },{
+            },
+            {
               MENU_ID: 7,//菜单编号
-              MENU_NAME: '复试管理',//菜单名称
-              MENU_ROUTE: '/3-2',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_NAME: '调动管理',//菜单名称
+              MENU_ROUTE: '/transfer',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
             }
           ]
-        }
+        },
       ], activate_router: '',
     }
   }, computed: {
@@ -221,4 +221,3 @@ a{
   color: black;
 }
 </style>
-
