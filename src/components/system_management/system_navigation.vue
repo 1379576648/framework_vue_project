@@ -114,7 +114,7 @@ export default {
             {
               MENU_ID: 7,//菜单编号
               MENU_NAME: '公告设置',//菜单名称
-              MENU_ROUTE: '/4-1',//路由地址
+              MENU_ROUTE: '/notice',//路由地址
               MENU_MODULE: '&#xe62c;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
@@ -162,14 +162,20 @@ export default {
     default_route() {
       //找出第一个没有叶子的菜单
       this.inquire_1();
+      //返回结果
       return this.activate_router;
     }
   }, methods: {
     inquire_1() {
       for (let i of this.menuList) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //递归循环
           this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        }
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //如果默认激活路由没有则添加默认激活路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }
@@ -177,9 +183,14 @@ export default {
       }
     }, inquire_2(value) {
       for (let i of value) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //递归循环
           this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        }
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //如果默认激活路由没有则添加默认激活路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }

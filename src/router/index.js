@@ -260,69 +260,71 @@ const routes = [{
                 component: Statistics_One,//组件
                 redirect: '/StatisticePersonnel1',//默认访问
                 children: [//子路由
-                    {
+                    {//人员数量分析
+
+
                         path: "/StatisticePersonnel1",
                         components: {
                             "StatisticePersonnel1": StatisticePersonnel1
                         }
                     },
-                    {
+                    {//人员异动分析
                         path: "/StatisticePersonnel2",
                         components: {
                             "StatisticePersonnel2": StatisticePersonnel2
                         }
                     },
-                    {
+                    {//员工概况
                         path: "/StatisticePersonnel3",
                         components: {
                             "StatisticePersonnel3": StatisticePersonnel3
                         }
                     },
 
-                    {
+                    {//出勤分析
                         path: "/CheckWork1",
                         components: {
                             "CheckWork1": CheckWork1
                         }
                     },
-                    {
+                    {//工时分析
                         path: "/CheckWork2",
                         components: {
                             "CheckWork2": CheckWork2
                         }
                     },
-                    {
+                    {//加班分析
                         path: "/CheckWork3",
                         components: {
                             "CheckWork3": CheckWork3
                         }
                     },
-                    {
+                    {//请假分析
                         path: "/CheckWork4",
                         components: {
                             "CheckWork4": CheckWork4
                         }
                     },
 
-                    {
+                    {//工资成本分析
                         path: "/SalaryAnalysis1",
                         components: {
                             "SalaryAnalysis1": SalaryAnalysis1
                         }
                     },
-                    {
+                    {//社保成本分析
                         path: "/SalaryAnalysis2",
                         components: {
                             "SalaryAnalysis2": SalaryAnalysis2
                         }
                     },
-                    {
+                    {//薪酬结构分析
                         path: "/SalaryAnalysis3",
                         components: {
                             "SalaryAnalysis3": SalaryAnalysis3
                         }
                     },
-                    {
+                    {//部门成本分析
                         path: "/SalaryAnalysis4",
                         components: {
                             "SalaryAnalysis4": SalaryAnalysis4

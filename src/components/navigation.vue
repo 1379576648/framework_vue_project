@@ -103,7 +103,7 @@ f<!-- 首页导航栏 -->
                   <div>
                     <ul class="hea_nav_tab">
                       <li  v-for="memu in memuList2">
-                        <router-link v-if="memu.MENU_STATE==0"  :to="memu.MENU_ROUTE" >
+                        <router-link v-if="memu.MENU_STATE==0"  :to="memu.MENU_ROUTE"  @click="activate_router=memu.MENU_ROUTE">
                           <i class="iconfont shebaofuli">
                             {{ iconHandle(memu.MENU_MODULE) }}
                           </i>
@@ -120,6 +120,7 @@ f<!-- 首页导航栏 -->
       </div>
     </div>
   </div>
+  {{default_route}}
 </template>
 
 <script>
@@ -156,9 +157,9 @@ export default {
           MENU_NAME: '组织管理',//菜单名称
           MENU_ROUTE: '/zuzhi',//路由地址
           MENU_MODULE: '&#xe64c;',//组件地址
-          MENU_STATE: 1,//是否启用 0启用 1禁用
+          MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-          MENU_LEAF: 1,//是否有叶子 0有 1没有
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
         },
         {
           MENU_ID: 3,//菜单编号
@@ -219,7 +220,7 @@ export default {
         },
         {
           MENU_ID: 4,//菜单编号
-          MENU_NAME: '薪酬管理',//菜单名称
+          MENU_NAME: '统计分析',//菜单名称
           MENU_ROUTE: '/Statistics',//路由地址
           MENU_MODULE: '&#xe68c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
@@ -256,19 +257,9 @@ export default {
     },
     inquire_1() {
       for (let i of this.memuList1) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
-          this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
-          if (this.activate_router == '') {
-            this.activate_router = i.MENU_ROUTE;
-          }
-        }
-      }
-    }, inquire_2(value) {
-      for (let i of value) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
-          this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        //判断列表状态是否启用 类型是否是菜单
+        if (i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //默认激活路由为空则添加路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }
@@ -285,7 +276,8 @@ export default {
     filter_menu(){
       var menu_list =[]
       for (let i = 0; i <this.memuList1.length ; i++) {
-        if (this.memuList1[i].MENU_STATE==0){
+        //判断状态是否被启用 菜单是否有是菜单类型
+        if (this.memuList1[i].MENU_STATE==0&&this.memuList1[i].MENU_TYPE==0){
           menu_list.push(this.memuList1[i])
         }
       }
