@@ -14,12 +14,12 @@ f<!-- 首页导航栏 -->
         <!--  导航菜单  -->
         <div class="ant-col header_row_menu">
           <!--          :default-active默认激活的路由-->
-          <el-menu :default-active="memuList1[0].MENU_ROUTE" class="el-menu-demo" mode="horizontal"
-                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router
+          <el-menu :default-active="default_route" class="el-menu-demo" mode="horizontal"
+                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router @close="one"
                    @select="handleSelect">
-            <el-menu-item  v-for="memu in memuList1" :index="memu.MENU_ROUTE">
-              {{memu.MENU_NAME}}
-            </el-menu-item>
+              <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">
+                {{ memu.MENU_NAME }}
+              </el-menu-item>
             <li style="height: 70px;font-weight:bold; width: 96px;" v-on:click="gend=true">
 							<span class="dh-span iconfont" v-if="gend == true" style="font-size: 14px;">
 								收起 &#xe772;
@@ -102,12 +102,12 @@ f<!-- 首页导航栏 -->
                 <div class="hea_nav_tot">
                   <div>
                     <ul class="hea_nav_tab">
-                      <li v-for="memu in memuList2">
-                        <router-link :to="memu.MENU_ROUTE">
+                      <li  v-for="memu in memuList2">
+                        <router-link v-if="memu.MENU_STATE==0"  :to="memu.MENU_ROUTE"  @click="activate_router=memu.MENU_ROUTE">
                           <i class="iconfont shebaofuli">
-                            {{iconHandle(memu.MENU_MODULE)}}
+                            {{ iconHandle(memu.MENU_MODULE) }}
                           </i>
-                          <p><span>{{memu.MENU_NAME}}</span></p>
+                          <p><span>{{ memu.MENU_NAME }}</span></p>
                         </router-link>
                       </li>
                     </ul>
@@ -120,7 +120,7 @@ f<!-- 首页导航栏 -->
       </div>
     </div>
   </div>
-
+  {{default_route}}
 </template>
 
 <script>
@@ -134,63 +134,177 @@ import {
 export default {
   data() {
     return {
+      //默认激活路由
+      activate_router: '',
+      two: '',
       gend: false,
-      activeIndex:'1',
-      activeIndex2:'1',
+      activeIndex: '1',
+      activeIndex2: '1',
       activeName: 'second',
       //更多之外的菜单
-      memuList1:[
-        {MENU_NAME:'工作台',MENU_ROUTE:'/workT',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'组织管理',MENU_ROUTE:'/zuzhi',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'员工管理',MENU_ROUTE:'/empyg',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'时间管理',MENU_ROUTE:'/shij',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'招聘管理',MENU_ROUTE:'/zpdaohang',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1}
+      memuList1: [
+        {
+          MENU_ID: 1,//菜单编号
+          MENU_NAME: '工作台',//菜单名称
+          MENU_ROUTE: '/workT',//路由地址
+          MENU_MODULE: '&#xe64c;',//组件地址
+          MENU_STATE: 1,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 2,//菜单编号
+          MENU_NAME: '组织管理',//菜单名称
+          MENU_ROUTE: '/zuzhi',//路由地址
+          MENU_MODULE: '&#xe64c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 0,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 3,//菜单编号
+          MENU_NAME: '员工管理',//菜单名称
+          MENU_ROUTE: '/empyg',//路由地址
+          MENU_MODULE: '&#xe64c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 4,//菜单编号
+          MENU_NAME: '时间管理',//菜单名称
+          MENU_ROUTE: '/shij',//路由地址
+          MENU_MODULE: '&#xe64c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 5,//菜单编号
+          MENU_NAME: '招聘管理',//菜单名称
+          MENU_ROUTE: '/zpdaohang',//路由地址
+          MENU_MODULE: '&#xe64c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        }
       ],
       //更多之内的菜单
-      memuList2:[
-        {MENU_NAME:'审批管理',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xeb65;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'薪酬管理',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xe68d;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'社保管理',MENU_ROUTE:'/xcnavigation',MENU_MODULE:'&#xe604;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'统计分析',MENU_ROUTE:'/Statistics',MENU_MODULE:'&#xe68c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1},
-        {MENU_NAME:'系统管理',MENU_ROUTE:'/system_navigation',MENU_MODULE:'&#xe64c;',MENU_state:0,MENU_TYPE:0,MENU_LEAF:1,MENU_ORDER:1}
+      memuList2: [
+        {
+          MENU_ID: 1,//菜单编号
+          MENU_NAME: '审批管理',//菜单名称
+          MENU_ROUTE: '/xcnavigation',//路由地址
+          MENU_MODULE: '&#xeb65;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 2,//菜单编号
+          MENU_NAME: '薪酬管理',//菜单名称
+          MENU_ROUTE: '/xcnavigation',//路由地址
+          MENU_MODULE: '&#xe68d;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 3,//菜单编号
+          MENU_NAME: '社保管理',//菜单名称
+          MENU_ROUTE: '/xcnavigation',//路由地址
+          MENU_MODULE: '&#xe604;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 4,//菜单编号
+          MENU_NAME: '统计分析',//菜单名称
+          MENU_ROUTE: '/Statistics',//路由地址
+          MENU_MODULE: '&#xe68c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        },
+        {
+          MENU_ID: 5,//菜单编号
+          MENU_NAME: '系统管理',//菜单名称
+          MENU_ROUTE: '/system_navigation',//路由地址
+          MENU_MODULE: '&#xe64c;',//组件地址
+          MENU_STATE: 0,//是否启用 0启用 1禁用
+          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+          MENU_LEAF: 1,//是否有叶子 0有 1没有
+        }
       ]
     }
   },
   methods: {
-    mouseLeave(){
-      this.gend=false;
+    mouseLeave() {
+      this.gend = false;
     },
-
-
-
     handleClick(tab, event) {
       console.log(tab, event)
-    },handleSelect(key, keyPath){
+    }, handleSelect(key, keyPath) {
+      this.two = key;
       console.log(key, keyPath)
     },
     //字符串转图标字体
-    iconHandle(icon){
-      icon= icon.replace(/(&#x|;)/g, "")
-      console.log(icon,"%u"+icon);
-      return unescape("%u"+icon)
+    iconHandle(icon) {
+      icon = icon.replace(/(&#x|;)/g, "")
+      console.log(icon, "%u" + icon);
+      return unescape("%u" + icon)
+    },
+    inquire_1() {
+      for (let i of this.memuList1) {
+        //判断列表状态是否启用 类型是否是菜单
+        if (i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //默认激活路由为空则添加路由
+          if (this.activate_router == '') {
+            this.activate_router = i.MENU_ROUTE;
+          }
+        }
+      }
     }
-  },
+  }, computed: {
+    //默认激活路由
+    default_route() {
+      //找出第一个没有叶子的菜单
+      this.inquire_1();
+      return this.activate_router;
+    }, //筛选菜单列表
+    filter_menu(){
+      var menu_list =[]
+      for (let i = 0; i <this.memuList1.length ; i++) {
+        //判断状态是否被启用 菜单是否有是菜单类型
+        if (this.memuList1[i].MENU_STATE==0&&this.memuList1[i].MENU_TYPE==0){
+          menu_list.push(this.memuList1[i])
+        }
+      }
+      return menu_list;
+    }
+  }
+
 }
 </script>
 
 <style type="text/css" scoped>
 @import url("../css/navigation.css");
-.hea_nav_tab  li a i{
+
+.hea_nav_tab li a i {
   font-size: 40px;
   vertical-align: middle;
 }
-.hea_nav_tab  li a  p span{
-  color:rgba(0, 0, 0, 0.65);
+
+.hea_nav_tab li a p span {
+  color: rgba(0, 0, 0, 0.65);
 }
-/deep/.el-menu-item{
+
+/deep/ .el-menu-item {
   height: 70px !important;
 
 }
+
 .dh-span {
   height: 56px;
   width: 56px;
