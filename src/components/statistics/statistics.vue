@@ -218,14 +218,36 @@ export default {
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 
-a {
-  color: rgb(48, 49, 51)
+/deep/ .el-menu-item{
+  font-weight: normal !important;
+  font-size: 13px !important;
+  margin-left: 16px !important;
+  height: 50px !important;
+}
+/deep/ .el-tabs__item {
+  padding: 0px 10px;
+  padding-left: 36px;
+  height: 40px;
+  box-sizing: border-box;
+  line-height: 40px;
+  display: inline-block;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--el-text-color-primary);
+  position: relative;
+}
+/deep/.el-tabs__nav {
+  white-space: nowrap;
+  position: relative;
+  transition: transform var(--el-transition-duration);
+  float: left;
+  z-index: calc(var(--el-index-normal) + 1);
+  margin-left: 0px;
 }
 
-/deep/ .el-sub-menu__title span {
-  font-weight: normal;
+a{
   font-size: 15px;
-  margin-left: -5px;
-  margin-top: -1px;
+  color: black;
 }
 </style>
