@@ -193,7 +193,7 @@ export default {
         {
           MENU_ID: 1,//菜单编号
           MENU_NAME: '审批管理',//菜单名称
-          MENU_ROUTE: '/xcnavigation',//路由地址
+          MENU_ROUTE: '/ExamineApprove',//路由地址
           MENU_MODULE: '&#xeb65;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮

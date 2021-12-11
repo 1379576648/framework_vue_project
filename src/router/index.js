@@ -93,6 +93,24 @@ import SalaryAnalysis2 from "../components/statistics/salary_analysis2.vue"
 import SalaryAnalysis3 from "../components/statistics/salary_analysis3.vue"
 import SalaryAnalysis4 from "../components/statistics/salary_analysis4.vue"
 
+/**
+ * 审批管理
+ */
+/*审批左边的纵向导航栏*/
+import ExamineApprove from "../components/examine_management/ExamineApprove.vue"
+/*发起审批流程的页面*/
+import Examine_1 from "../components/examine_management/Examine_1.vue"
+/*转正审批的页面*/
+import Examine_2 from "../components/examine_management/Examine_2.vue"
+import Examine_3 from "../components/examine_management/Examine_3.vue"
+import Examine_4 from "../components/examine_management/Examine_4.vue"
+import Examine_5_change from "../components/examine_management/Examine_5_change.vue"
+import Examine_6_quit from "../components/examine_management/Examine_6_quit.vue"
+import Examine_7_work from "../components/examine_management/Examine_7_work.vue"
+import Examine_8_punch from "../components/examine_management/Examine_8_punch.vue"
+import Examine_9_travel from "../components/examine_management/Examine_9_travel.vue"
+import Examine_10_leave from "../components/examine_management/Examine_10_leave.vue"
+
 const routes = [{
     path: '/',  //访问路径
     redirect: '/beginIndex'//默认访问
@@ -330,7 +348,87 @@ const routes = [{
                     }
                 ]
             },
-
+            /* 审批管理 */
+            {
+                path: '/ExamineApprove', //访问路径
+                component: ExamineApprove,//组件
+                redirect:'/Examine_1',
+                children: [
+                    /*  发起转正流程的页面 */
+                    {
+                        path: '/Examine_1',//访问路径
+                        components: {
+                            "Examine_1": Examine_1//组件
+                        }
+                    },
+                    /*  发起转正流程的页面 */
+                    {
+                        path: '/Examine_2',//访问路径
+                        components: {
+                            "Examine_2": Examine_2//组件
+                        }
+                    },{
+                        path: '/Examine_3',//访问路径
+                        components: {
+                            "Examine_3": Examine_3//组件
+                        }
+                    },
+                    /*  发起异动流程的页面 */
+                    {
+                        path: '/Examine_4',//访问路径
+                        components: {
+                            "Examine_4": Examine_4//组件
+                        }
+                    },
+                    /*  发起调薪流程的页面 */
+                    {
+                        path: '/Examine_5_change',//访问路径
+                        components: {
+                            "Examine_5_change": Examine_5_change//组件
+                        }
+                    },
+                    /*  发起离职流程的页面 */
+                    {
+                        path: '/Examine_6_quit',//访问路径
+                        components: {
+                            "Examine_6_quit": Examine_6_quit//组件
+                        }
+                    },
+                    /*  发起加班流程的页面 */
+                    {
+                        path: '/Examine_7_work',//访问路径
+                        components: {
+                            "Examine_7_work": Examine_7_work//组件
+                        }
+                    },
+                    /*  发起补打卡流程的页面 */
+                    {
+                        path: '/Examine_8_punch',//访问路径
+                        components: {
+                            "Examine_8_punch": Examine_8_punch//组件
+                        }
+                    },
+                    /*  发起出差流程的页面 */
+                    {
+                        path: '/Examine_9_travel',//访问路径
+                        components: {
+                            "Examine_9_travel": Examine_9_travel//组件
+                        }
+                    },
+                    /*  发起请假流程的页面 */
+                    {
+                        path: '/Examine_10_leave',//访问路径
+                        components: {
+                            "Examine_10_leave": Examine_10_leave//组件
+                        }
+                    },
+                    ]
+            },
+            // /* 审批管理 */
+            // {
+            //     path: '/Examine_1', //访问路径
+            //     component: Examine_1//组件
+            // },
         ]
     }
 ]
