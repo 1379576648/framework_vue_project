@@ -164,7 +164,7 @@ export default {
         {
           MENU_ID: 3,//菜单编号
           MENU_NAME: '员工管理',//菜单名称
-          MENU_ROUTE: '/empyg',//路由地址
+          MENU_ROUTE: '/emp_navigation',//路由地址
           MENU_MODULE: '&#xe64c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
