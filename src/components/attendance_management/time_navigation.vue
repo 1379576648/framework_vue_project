@@ -26,7 +26,7 @@
           <div class="hq-logo-wrapper"></div>
           <div class="custom-menu" style="width: 160px">
             <!-- 下拉菜单 -->
-            <el-menu unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
+            <el-menu id="el-menu" unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
               <menu-util :data="menuList"/>
             </el-menu>
           </div>
@@ -192,7 +192,25 @@ export default {
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
-
+/deep/.el-sub-menu .el-menu-item{
+  min-width: auto !important;
+}
+/deep/.el-sub-menu .el-sub-menu__icon-arrow{
+  position: relative!important;
+  top: 4px !important;
+  right: 0px!important;
+}
+/deep/#el-menu{
+  height: 100%!important;
+  overflow-x: auto !important;
+}
+.custom-menu{
+  padding: 0px !important;
+  height: 90% !important;
+}
+/deep/label li div span{
+  margin-right: 20px;
+}
 /deep/ .el-menu-item{
   font-weight: normal !important;
   font-size: 13px !important;

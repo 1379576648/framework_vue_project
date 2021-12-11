@@ -290,7 +290,6 @@ export default {
 
 <style type="text/css" scoped>
 @import url("../css/navigation.css");
-
 .hea_nav_tab li a i {
   font-size: 40px;
   vertical-align: middle;
