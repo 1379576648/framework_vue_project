@@ -137,7 +137,6 @@ const routes = [{
         component: workbench,//组件
         children: [//子路由
             /*菜单:更多*/
-
             /* 工作台 */
             {
                 path: '/workT', //访问路径

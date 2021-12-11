@@ -13,24 +13,13 @@ f<!-- 首页导航栏 -->
         </div>
         <!--  导航菜单  -->
         <div class="ant-col header_row_menu">
-          <!--          :default-active默认激活的路由-->
-          <!--          <el-menu :default-active="default_route" class="el-menu-demo" mode="horizontal"-->
-          <!--                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router @close="one"-->
-          <!--                   @select="handleSelect">-->
-          <!--              <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">-->
-          <!--                {{ memu.MENU_NAME }}-->
-          <!--              </el-menu-item>-->
-          <!--          </el-menu>-->
-          <!--            </span>-->
-
-
           <el-menu
               :default-active="activeIndex"
               class="el-menu-demo"
               mode="horizontal"
-              @select="handleSelect"
+              @select="handleSelect" router
           >
-            <el-menu-item v-for="memu in memuList1" :index="memu.MENU_ROUTE">
+            <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">
               {{ memu.MENU_NAME }}
             </el-menu-item>
             <el-sub-menu index="5">
@@ -122,6 +111,7 @@ export default {
       //更多之外的菜单
       memuList1: [
         {
+
           MENU_ID: 1,//菜单编号
           MENU_NAME: '工作台',//菜单名称
           MENU_ROUTE: '/workT',//路由地址
@@ -142,7 +132,7 @@ export default {
         {
           MENU_ID: 3,//菜单编号
           MENU_NAME: '员工管理',//菜单名称
-          MENU_ROUTE: '/empyg',//路由地址
+          MENU_ROUTE: '/emp_navigation',//路由地址
           MENU_MODULE: '&#xe64c;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
