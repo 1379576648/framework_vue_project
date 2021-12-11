@@ -166,6 +166,7 @@ const routes = [{
             /* 员工管理 */
             {
                 path: '/emp_navigation',
+                redirect:'/staff',
                 components:{
                     "ym1":emp_navigation
                 },
