@@ -1,8 +1,5 @@
 <template>
   <div class="saas-main-content">
-   
-
-
     <!--搜索输入框-->
     <el-row style="width:200px;float:right;">
       <el-input v-model="input3" placeholder="搜索">
@@ -11,9 +8,6 @@
         </template>
       </el-input>
     </el-row>
-
- 
-    
 	<br/>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="name" label="姓名" width="180" />
