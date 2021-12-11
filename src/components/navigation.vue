@@ -14,14 +14,14 @@ f<!-- 首页导航栏 -->
         <!--  导航菜单  -->
         <div class="ant-col header_row_menu">
           <!--          :default-active默认激活的路由-->
-<!--          <el-menu :default-active="default_route" class="el-menu-demo" mode="horizontal"-->
-<!--                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router @close="one"-->
-<!--                   @select="handleSelect">-->
-<!--              <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">-->
-<!--                {{ memu.MENU_NAME }}-->
-<!--              </el-menu-item>-->
-<!--          </el-menu>-->
-<!--            </span>-->
+          <!--          <el-menu :default-active="default_route" class="el-menu-demo" mode="horizontal"-->
+          <!--                   background-color="#085fc3" text-color="#ffffff" active-text-color="#ffd04b" router @close="one"-->
+          <!--                   @select="handleSelect">-->
+          <!--              <el-menu-item v-for="memu in filter_menu" :index="memu.MENU_ROUTE">-->
+          <!--                {{ memu.MENU_NAME }}-->
+          <!--              </el-menu-item>-->
+          <!--          </el-menu>-->
+          <!--            </span>-->
 
 
           <el-menu
@@ -31,16 +31,16 @@ f<!-- 首页导航栏 -->
               @select="handleSelect"
           >
             <el-menu-item v-for="memu in memuList1" :index="memu.MENU_ROUTE">
-                   {{ memu.MENU_NAME }}
+              {{ memu.MENU_NAME }}
             </el-menu-item>
             <el-sub-menu index="5">
               <template #title>更多</template>
               <li style="text-align: center;margin: 10px 32px; float: left;width: 58px;height: 81px" v-for="memu in memuList2">
                 <router-link v-if="memu.MENU_STATE==0"  :to="memu.MENU_ROUTE" >
-                <i class="iconfont" style="color: #0c9c6e;font-size: 40px;height: 40px;width: 40px; display: block;margin: auto;">
-                  {{ iconHandle(memu.MENU_MODULE) }}</i>
-                <br/>
-                <p>{{ memu.MENU_NAME }}</p>
+                  <i class="iconfont" style="color: #0c9c6e;font-size: 40px;height: 40px;width: 40px; display: block;margin: auto;">
+                    {{ iconHandle(memu.MENU_MODULE) }}</i>
+                  <br/>
+                  <p>{{ memu.MENU_NAME }}</p>
                 </router-link>
               </li>
 
@@ -321,14 +321,14 @@ export default {
 .el-menu--horizontal > .el-menu-item {
   color: white;
 }
- /deep/.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
-   height: 71px;
-   line-height: 60px;
-   border-bottom: 2px solid transparent;
-   border-bottom-color: transparent;
-   border-bottom-color: transparent;
-   color: white;
- }
+/deep/.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+  height: 71px;
+  line-height: 60px;
+  border-bottom: 2px solid transparent;
+  border-bottom-color: transparent;
+  border-bottom-color: transparent;
+  color: white;
+}
 
 
 

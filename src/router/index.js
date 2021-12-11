@@ -37,7 +37,28 @@ import zuzhi from "../components/organization_management/zz_navigation.vue"
 /**
  * 员工管理
  */
-import empyg from "../components/employee_management/emp_navigation.vue"
+//员工管理
+import emp_navigation from "../components/employee_management/Emp_Navigation.vue"
+//员工子组件
+import staff_one from "../components/employee_management/Staff_One.vue"
+//员工花名册
+import staff from "../components/employee_management/Staff.vue"
+//工作经历
+import work from "../components/employee_management/Work.vue"
+//转正管理
+import conversion from "../components/employee_management/Conversion.vue"
+//历史花名册
+import historyemp from "../components/employee_management/HistoryEmp.vue"
+//放弃入职
+import abandon from "../components/employee_management/Abandon.vue"
+//入职子组件
+import entry from "../components/employee_management/Entry.vue"
+//待入职
+import stockemp from "../components/employee_management/StockEmp.vue"
+//调动管理
+import transfer from "../components/employee_management/Transfer.vue"
+//办理离职
+import dimission from "../components/employee_management/Dimission.vue"
 /**
  * 考勤管理
  */
@@ -144,8 +165,97 @@ const routes = [{
             },
             /* 员工管理 */
             {
-                path: '/empyg', //访问路径
-                component: empyg//组件
+                path: '/emp_navigation',
+                redirect:'/staff',
+                components:{
+                    "ym1":emp_navigation
+                },
+                children:[
+                    /* 员工管理 子1 */
+                    {
+                        path: '/staff_one',
+                        redirect: '/staff',
+                        components: {
+                            "yg1": staff_one
+                        },
+                        children:[
+                            //员工花名册
+                            {
+                                path:'/staff',
+                                components:{
+                                    "yg1":staff
+                                }
+                            },
+                            //工作经历
+                            {
+                                path:'/work',
+                                components:{
+                                    "yg1":work
+                                }
+                            },
+
+                        ]
+                    },
+                    //转正管理
+                    {
+                        path: '/conversion',
+                        components: {
+                            "yg1": conversion
+                        },
+
+                    },
+                    //历史花名册
+                    {
+                        path:'/historyemp',
+                        components:{
+                            "yg1": historyemp,
+                        }
+
+                    },
+                    //入职管理
+                    {
+                        path:'/entry',
+                        redirect: '/stockemp',
+                        components:{
+                            "yg1": entry,
+                        },
+                        children: [
+                            //待入职员工
+                            {
+                                path:'/stockemp',
+                                components:{
+                                    "yg1": stockemp,
+                                },
+                            },
+                            //放弃入职员工
+                            {
+                                path:'/abandon',
+                                components:{
+                                    "yg1": abandon,
+                                },
+                            },
+
+                        ]
+
+                    },
+                    //调动管理
+                    {
+                        path:'/transfer',
+                        components:{
+                            "yg1": transfer,
+                        },
+                    },
+                    //办理离职
+                    {
+                        path:'/dimission',
+                        components:{
+                            "yg1":dimission,
+                        }
+                    },
+
+
+
+                ]
             },
             /* 系统管理 */
             {
@@ -260,69 +370,71 @@ const routes = [{
                 component: Statistics_One,//组件
                 redirect: '/StatisticePersonnel1',//默认访问
                 children: [//子路由
-                    {
+                    {//人员数量分析
+
+
                         path: "/StatisticePersonnel1",
                         components: {
                             "StatisticePersonnel1": StatisticePersonnel1
                         }
                     },
-                    {
+                    {//人员异动分析
                         path: "/StatisticePersonnel2",
                         components: {
                             "StatisticePersonnel2": StatisticePersonnel2
                         }
                     },
-                    {
+                    {//员工概况
                         path: "/StatisticePersonnel3",
                         components: {
                             "StatisticePersonnel3": StatisticePersonnel3
                         }
                     },
 
-                    {
+                    {//出勤分析
                         path: "/CheckWork1",
                         components: {
                             "CheckWork1": CheckWork1
                         }
                     },
-                    {
+                    {//工时分析
                         path: "/CheckWork2",
                         components: {
                             "CheckWork2": CheckWork2
                         }
                     },
-                    {
+                    {//加班分析
                         path: "/CheckWork3",
                         components: {
                             "CheckWork3": CheckWork3
                         }
                     },
-                    {
+                    {//请假分析
                         path: "/CheckWork4",
                         components: {
                             "CheckWork4": CheckWork4
                         }
                     },
 
-                    {
+                    {//工资成本分析
                         path: "/SalaryAnalysis1",
                         components: {
                             "SalaryAnalysis1": SalaryAnalysis1
                         }
                     },
-                    {
+                    {//社保成本分析
                         path: "/SalaryAnalysis2",
                         components: {
                             "SalaryAnalysis2": SalaryAnalysis2
                         }
                     },
-                    {
+                    {//薪酬结构分析
                         path: "/SalaryAnalysis3",
                         components: {
                             "SalaryAnalysis3": SalaryAnalysis3
                         }
                     },
-                    {
+                    {//部门成本分析
                         path: "/SalaryAnalysis4",
                         components: {
                             "SalaryAnalysis4": SalaryAnalysis4

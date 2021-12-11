@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="7119a421-fb97-47d1-85fe-4b0406920cfb" name="Changes" comment="you">
     <list default="true" id="a48080d6-0ed6-4f1c-84d3-6e118141539a" name="Changes" comment="1">
       <change beforePath="$PROJECT_DIR$/1.text" beforeDir="false" afterPath="$PROJECT_DIR$/1.text" afterDir="false" />
     <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
@@ -47,6 +48,12 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="4" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="4" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -81,17 +88,24 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="" />
       <created>1638956502156</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638956502156</updated>
+      <workItem from="1638956506425" duration="3219000" />
+      <workItem from="1639010633445" duration="910000" />
+      <workItem from="1638970277415" duration="110000" />
+      <workItem from="1639010994019" duration="40000" />
+      <workItem from="1639030017410" duration="167000" />
+      <workItem from="1639030197151" duration="81000" />
       <workItem from="1638956506425" duration="479000" />
       <workItem from="1638956506425" duration="28928000" />
       <workItem from="1638956506425" duration="5212000" />
       <workItem from="1638964302424" duration="157000" />
       <workItem from="1638964474029" duration="16480000" />
       <workItem from="1638956506425" duration="33002000" />
+      <workItem from="1639035654067" duration="63000" />
+      <workItem from="1639055395183" duration="53000" />
     </task>
     <task id="LOCAL-00001" summary="完善">
       <created>1638957153824</created>
