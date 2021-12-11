@@ -3,10 +3,10 @@
     <input type="text" placeholder="账号" class="login_txtbx"  v-model="name"/>
   </dd>
   <dd class="pwd_icon">
-    <input type="password" placeholder="密码" class="login_txtbx"  v-model="pass"/>
+    <input type="password" placeholder="密码" class="login_txtbx"  v-model="pass" @keyup.enter="submit"/>
   </dd>
   <dd>
-    <input type="button" value="点击登录" class="submit_btn" v-on:click="submit" />
+    <input type="button" value="点击登录" class="submit_btn"  @click="submit"/>
   </dd>
   <dd>
     <p>© 版权所有</p>
