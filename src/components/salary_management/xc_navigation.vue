@@ -27,7 +27,7 @@
           <div class="hq-logo-wrapper"></div>
           <div class="custom-menu" style="width: 160px">
             <!-- 下拉菜单 -->
-            <el-menu unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
+            <el-menu id="el-menu" unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
               <menu-util :data="menuList"/>
             </el-menu>
           </div>
@@ -126,14 +126,20 @@ export default {
     default_route() {
       //找出第一个没有叶子的菜单
       this.inquire_1();
+      //返回结果
       return this.activate_router;
     }
   }, methods: {
     inquire_1() {
       for (let i of this.menuList) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //递归循环
           this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        }
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //如果默认激活路由没有则添加默认激活路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }
@@ -141,9 +147,14 @@ export default {
       }
     }, inquire_2(value) {
       for (let i of value) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //递归循环
           this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        }
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //如果默认激活路由没有则添加默认激活路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }
@@ -158,8 +169,25 @@ export default {
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
-
-
+/deep/.el-sub-menu .el-sub-menu__icon-arrow{
+  position: relative!important;
+  top: 4px !important;
+  right: 0px!important;
+}
+/deep/.el-sub-menu .el-menu-item{
+  min-width: auto !important;
+}
+/deep/#el-menu{
+  height: 100%!important;
+  overflow-x: auto !important;
+}
+.custom-menu{
+  padding: 0px !important;
+  height: 90% !important;
+}
+/deep/label li div span{
+  margin-right: 20px;
+}
 /deep/ .el-menu-item{
   font-weight: normal !important;
   font-size: 13px !important;

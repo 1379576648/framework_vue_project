@@ -1,4 +1,4 @@
-<!--员工导航栏-->
+<!--员工管理导航栏-->
 <template>
   <section
       class="ant-layout ant-layout-has-sider"
@@ -27,7 +27,7 @@
           <div class="hq-logo-wrapper"></div>
           <div class="custom-menu" style="width: 160px">
             <!-- 下拉菜单 -->
-            <el-menu unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
+            <el-menu id="el-menu" unique-opened="true" :default-active="default_route" background-color="#f2f6f8" router>
               <menu-util :data="menuList"/>
             </el-menu>
           </div>
@@ -36,6 +36,7 @@
     </div>
     <main class="ant-layout-content">
       <route-util :data="menuList"></route-util>
+      <router-view name="yg1"></router-view>
     </main>
   </section>
 </template>
@@ -56,8 +57,8 @@ export default {
         {
           MENU_ID: 1,//菜单编号
           MENU_NAME: '员工信息',//菜单名称
-          MENU_ROUTE: '/1',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_ROUTE: '/',//路由地址
+          MENU_MODULE: '&#xe60a;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
           MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -65,59 +66,59 @@ export default {
             {
               MENU_ID: 2,//菜单编号
               MENU_NAME: '员工花名册',//菜单名称
-              MENU_ROUTE: '/emps',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_ROUTE: '/staff_one',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
             },
             {
               MENU_ID: 3,//菜单编号
-              MENU_NAME: '人才统计',//菜单名称
-              MENU_ROUTE: '/1-3',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
-              MENU_STATE: 0,//是否启用 0启用 1禁用
-              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-              MENU_LEAF: 1,//是否有叶子 0有 1没有
-            },
-            {
-              MENU_ID: 4,//菜单编号
-              MENU_NAME: '人才展示',//菜单名称
-              MENU_ROUTE: '/1-4',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
-              MENU_STATE: 0,//是否启用 0启用 1禁用
-              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-              MENU_LEAF: 1,//是否有叶子 0有 1没有
-            },
-            {
-              MENU_ID: 5,//菜单编号
               MENU_NAME: '历史花名册',//菜单名称
-              MENU_ROUTE: '/1-5',//路由地址
-              MENU_MODULE: '&#xe62c;',//组件地址
+              MENU_ROUTE: '/historyemp',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
               MENU_STATE: 0,//是否启用 0启用 1禁用
               MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
               MENU_LEAF: 1,//是否有叶子 0有 1没有
             }
           ]
         }, {
-          MENU_ID: 6,//菜单编号
-          MENU_NAME: '兼职管理',//菜单名称
-          MENU_ROUTE: '/2',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
+          MENU_ID: 4,//菜单编号
+          MENU_NAME: '人事异动',//菜单名称
+          MENU_ROUTE: '/',//路由地址
+          MENU_MODULE: '&#xe60a;',//组件地址
           MENU_STATE: 0,//是否启用 0启用 1禁用
           MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
           MENU_LEAF: 0,//是否有叶子 0有 1没有
-          son: []
-        }, {
-          MENU_ID: 7,//菜单编号
-          MENU_NAME: '档案管理',//菜单名称
-          MENU_ROUTE: '/2-1',//路由地址
-          MENU_MODULE: '&#xe62c;',//组件地址
-          MENU_STATE: 0,//是否启用 0启用 1禁用
-          MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
-          MENU_LEAF: 0,//是否有叶子 0有 1没有
-          son: []
-        }
+          son: [
+            {
+              MENU_ID: 5,//菜单编号
+              MENU_NAME: '入职管理',//菜单名称
+              MENU_ROUTE: '/abandon',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }, {
+              MENU_ID: 6,//菜单编号
+              MENU_NAME: '转正管理',//菜单名称
+              MENU_ROUTE: '/conversion',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            },
+            {
+              MENU_ID: 7,//菜单编号
+              MENU_NAME: '调动管理',//菜单名称
+              MENU_ROUTE: '/transfer',//路由地址
+              MENU_MODULE: '&#xe60a;',//组件地址
+              MENU_STATE: 0,//是否启用 0启用 1禁用
+              MENU_TYPE: 0,//菜单类型 0菜单 1:按钮
+              MENU_LEAF: 1,//是否有叶子 0有 1没有
+            }
+          ]
+        },
       ], activate_router: '',
     }
   }, computed: {
@@ -125,14 +126,20 @@ export default {
     default_route() {
       //找出第一个没有叶子的菜单
       this.inquire_1();
+      //返回结果
       return this.activate_router;
     }
   }, methods: {
     inquire_1() {
       for (let i of this.menuList) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //递归循环
           this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        }
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //如果默认激活路由没有则添加默认激活路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }
@@ -140,9 +147,14 @@ export default {
       }
     }, inquire_2(value) {
       for (let i of value) {
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //递归循环
           this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+        }
+        //判断列表是否有叶子 状态是否启用 类型是否是菜单
+        else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0 && i.MENU_TYPE==0) {
+          //如果默认激活路由没有则添加默认激活路由
           if (this.activate_router == '') {
             this.activate_router = i.MENU_ROUTE;
           }
@@ -157,7 +169,25 @@ export default {
 <style type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
-
+/deep/.el-sub-menu .el-sub-menu__icon-arrow{
+  position: relative!important;
+  top: 4px !important;
+  right: 0px!important;
+}
+/deep/.el-sub-menu .el-menu-item{
+  min-width: auto !important;
+}
+/deep/#el-menu{
+  height: 100%!important;
+  overflow-x: auto !important;
+}
+.custom-menu{
+  padding: 0px !important;
+  height: 90% !important;
+}
+/deep/label li div span{
+  margin-right: 20px;
+}
 /deep/ .el-menu-item{
   font-weight: normal !important;
   font-size: 13px !important;

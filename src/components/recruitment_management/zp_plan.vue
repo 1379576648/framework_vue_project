@@ -10,7 +10,7 @@
 				<div class="mt-20 ml-20 mr-20">
 					<!-- 新增招聘计划按钮 -->
 					<a style="margin-top: 4px;">
-						<router-link to="addplan">
+						<router-link to="/addplan">
 				        <button type="button" class="ant-btn ant-btn-primary">
 							<span>新增招聘计划</span>
 						</button>
