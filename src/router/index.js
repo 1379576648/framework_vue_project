@@ -76,7 +76,22 @@ import notice from "../components/system_management/notice.vue"
 import login_log from "../components/system_management/login_log.vue"
 /* 操作日志 */
 import operate_log from "../components/system_management/operate_log.vue"
-
+/*统计分析*/
+import Statistics_One from "../components/statistics/statistics.vue"
+/*人员统计图*/
+import StatisticePersonnel1 from "../components/statistics/statistice_personnel1.vue"
+import StatisticePersonnel2 from "../components/statistics/statistice_personnel2.vue"
+import StatisticePersonnel3 from "../components/statistics/statisticePersonnel3.vue"
+/*考勤分析图*/
+import CheckWork1 from "../components/statistics/check_work1.vue"
+import CheckWork2 from "../components/statistics/check_work2.vue"
+import CheckWork3 from "../components/statistics/check_work3.vue"
+import CheckWork4 from "../components/statistics/check_work4.vue"
+/*薪酬分析图*/
+import SalaryAnalysis1 from "../components/statistics/salary_analysis1.vue"
+import SalaryAnalysis2 from "../components/statistics/salary_analysis2.vue"
+import SalaryAnalysis3 from "../components/statistics/salary_analysis3.vue"
+import SalaryAnalysis4 from "../components/statistics/salary_analysis4.vue"
 
 const routes = [{
     path: '/',  //访问路径
@@ -170,83 +185,158 @@ const routes = [{
                 path: '/shij', //访问路径
                 component: shij//组件
             },
-			/* 招聘管理 */
-			{
-				path: '/zpdaohang',//访问路径
-				redirect: '/zpplan',//默认访问
-				components: {
-					"ym1": zpdaohang//组件
-				},
-				children: [
-					/*  招聘计划 */
-					{
-						path: '/zpplan',//访问路径
-						components: {
-							"zpplan": zpplan//组件
-						}
-					},
-					/*  新增招聘计划 */
-					{
-						path: '/addplan',//访问路径
-						components: {
-							"addplan": addplan//组件
-						}
-					},
-					//人才库:简历列表
-					{
-						path: '/a',//访问路径
-						redirect: 'fullresume',//默认访问
-						components: {
-							"zp2": a//组件
-						},
-						children:[
-							/*全部简历*/
-							{
-								path: '/fullresume',//访问路径
-								components: {
-									"fullresume": fullresume//组件
-								}
-							},
-							/*新简历*/
-							{
-								path: '/newresume',//访问路径
-								components: {
-									"newresume": newresume//组件
-								}
-							},
-							/*候选人*/
-							{
-								path: '/candidate',//访问路径
-								components: {
-									"candidate": candidate//组件
-								}
-							},
-							/*淘汰库*/
-							{
-								path: '/eliminate',//访问路径
-								components: {
-									"eliminate": eliminate//组件
-								}
-							},
+            /* 招聘管理 */
+            {
+                path: '/zpdaohang',//访问路径
+                redirect: '/zpplan',//默认访问
+                components: {
+                    "ym1": zpdaohang//组件
+                },
+                children: [
+                    /*  招聘计划 */
+                    {
+                        path: '/zpplan',//访问路径
+                        components: {
+                            "zpplan": zpplan//组件
+                        }
+                    },
+                    /*  新增招聘计划 */
+                    {
+                        path: '/addplan',//访问路径
+                        components: {
+                            "addplan": addplan//组件
+                        }
+                    },
+                    //人才库:简历列表
+                    {
+                        path: '/a',//访问路径
+                        redirect: 'fullresume',//默认访问
+                        components: {
+                            "zp2": a//组件
+                        },
+                        children: [
+                            /*全部简历*/
+                            {
+                                path: '/fullresume',//访问路径
+                                components: {
+                                    "fullresume": fullresume//组件
+                                }
+                            },
+                            /*新简历*/
+                            {
+                                path: '/newresume',//访问路径
+                                components: {
+                                    "newresume": newresume//组件
+                                }
+                            },
+                            /*候选人*/
+                            {
+                                path: '/candidate',//访问路径
+                                components: {
+                                    "candidate": candidate//组件
+                                }
+                            },
+                            /*淘汰库*/
+                            {
+                                path: '/eliminate',//访问路径
+                                components: {
+                                    "eliminate": eliminate//组件
+                                }
+                            },
 
-						]
-					},
+                        ]
+                    },
 
 
-				]
-			},
+                ]
+            },
             /* 薪酬管理 */
             {
                 path: '/xcnavigation', //访问路径
                 component: xcnavigation//组件
             },
+            {/*统计分析*/
+                path: '/Statistics', //访问路径
+                component: Statistics_One,//组件
+                redirect: '/StatisticePersonnel1',//默认访问
+                children: [//子路由
+                    {
+                        path: "/StatisticePersonnel1",
+                        components: {
+                            "StatisticePersonnel1": StatisticePersonnel1
+                        }
+                    },
+                    {
+                        path: "/StatisticePersonnel2",
+                        components: {
+                            "StatisticePersonnel2": StatisticePersonnel2
+                        }
+                    },
+                    {
+                        path: "/StatisticePersonnel3",
+                        components: {
+                            "StatisticePersonnel3": StatisticePersonnel3
+                        }
+                    },
 
-		]
-	}
+                    {
+                        path: "/CheckWork1",
+                        components: {
+                            "CheckWork1": CheckWork1
+                        }
+                    },
+                    {
+                        path: "/CheckWork2",
+                        components: {
+                            "CheckWork2": CheckWork2
+                        }
+                    },
+                    {
+                        path: "/CheckWork3",
+                        components: {
+                            "CheckWork3": CheckWork3
+                        }
+                    },
+                    {
+                        path: "/CheckWork4",
+                        components: {
+                            "CheckWork4": CheckWork4
+                        }
+                    },
+
+                    {
+                        path: "/SalaryAnalysis1",
+                        components: {
+                            "SalaryAnalysis1": SalaryAnalysis1
+                        }
+                    },
+                    {
+                        path: "/SalaryAnalysis2",
+                        components: {
+                            "SalaryAnalysis2": SalaryAnalysis2
+                        }
+                    },
+                    {
+                        path: "/SalaryAnalysis3",
+                        components: {
+                            "SalaryAnalysis3": SalaryAnalysis3
+                        }
+                    },
+                    {
+                        path: "/SalaryAnalysis4",
+                        components: {
+                            "SalaryAnalysis4": SalaryAnalysis4
+                        }
+                    }
+                ]
+            },
+
+        ]
+    }
 ]
 
 const router = createRouter({
-	history: createWebHistory(),
-	routes
+    history: createWebHistory(),
+    routes
 })
 export default router
