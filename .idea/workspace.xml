@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="7119a421-fb97-47d1-85fe-4b0406920cfb" name="Changes" comment="you">
     <list default="true" id="a48080d6-0ed6-4f1c-84d3-6e118141539a" name="Changes" comment="1">
       <change beforePath="$PROJECT_DIR$/1.text" beforeDir="false" afterPath="$PROJECT_DIR$/1.text" afterDir="false" />
     <list default="true" id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="完善">
@@ -50,6 +51,9 @@
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="4" />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="4" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -84,12 +88,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="e934c9d8-ed77-41c1-95cc-d50bde1b1df6" name="变更" comment="" />
       <created>1638956502156</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638956502156</updated>
       <workItem from="1638956506425" duration="3219000" />
+      <workItem from="1639010633445" duration="910000" />
       <workItem from="1638970277415" duration="110000" />
       <workItem from="1639010994019" duration="40000" />
       <workItem from="1639030017410" duration="167000" />
