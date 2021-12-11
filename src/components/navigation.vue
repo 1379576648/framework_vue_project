@@ -120,7 +120,6 @@ f<!-- 首页导航栏 -->
       </div>
     </div>
   </div>
-  {{default_route}}
 </template>
 
 <script>
