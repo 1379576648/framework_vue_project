@@ -5,7 +5,6 @@ const store = createStore({
         //动态菜单
         memuList: [
             {
-
                 MENU_ID: 1,//菜单编号
                 MENU_NAME: '工作台',//菜单名称Picture address
                 MENU_ROUTE: '/workT',//路由地址,
