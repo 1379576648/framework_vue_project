@@ -12,20 +12,20 @@
 						<div class="ant-spin-nested-loading">
 							<div class="ant-spin-container">
 								<div style="margin-left: -8px; margin-right: -8px;">
-									<router-view name="worktime"></router-view>
-
+                  <worktime/>
 									<!--  body左  -->
 									<div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-16">
 										<!--
 											待办事项
 											-->
-										<router-view name="workdb"></router-view>
+                    <workdb/>
 										<!--a
 											工作日历
 											-->
-										<router-view name="workcalendar"></router-view>
+                    <workcalendar/>
 										<!--  统计分析  -->
-										<router-view name="workstatistics"></router-view>
+
+                   <workstatistics/>
 
 									</div>
 									<!--  body右  -->
@@ -33,17 +33,16 @@
 										<!--
 											招聘进度
 											-->
-										<router-view name="workzpprogress"></router-view>
-										
+                    <workzpprogress/>
 										<!--
 											快捷功能入口
 											-->
-										<router-view name="workquick"></router-view>
+                    <workquick/>
 										
 										<!--
 											公司系统公告
 											-->
-										<router-view name="worknotice"></router-view>
+                    <worknotice/>
 										
 									</div>
 
@@ -65,15 +64,26 @@
 		</main>
 	</section>
 
-
-
-
-
 </template>
-
-
-
 <script>
+import worktime from "./work_time.vue";
+import workdb from "./work_db.vue";
+import workcalendar from "./work_calendar.vue";
+import workstatistics from "./work_statistics.vue";
+import workzpprogress from "./work_zpprogress.vue";
+import workquick from "./work_quick.vue";
+import worknotice from "./work_notice.vue";
+export  default {
+  components:{
+    worktime,
+    workdb,
+    workcalendar,
+    workstatistics,
+    workzpprogress,
+    workquick,
+    worknotice
+  }
+}
 </script>
 
 <style type="text/css" scoped> 

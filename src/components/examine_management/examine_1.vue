@@ -6,18 +6,6 @@
       <div class="process-box" style="margin-top: 40px">
         <h2 class="big-title">人事</h2>
         <div class="link-list">
-          <div style="display: none"
-              title="转正"
-              class="link-list-item"
-          >
-            <el-button
-                type="text"
-                style="color: #606c82; font-size: 12px"
-            >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_3.svg" />
-              <p class="link-text">转正</p>
-            </el-button>
-          </div>
           <!-- 转正 -->
           <div
             title="转正"

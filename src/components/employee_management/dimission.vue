@@ -10,10 +10,6 @@
         <div class="sub-Content__primary edit__forms">
           <div class="ant-spin-nested-loading">
             <div class="ant-spin-container">
-
-           
-           
-           
            <div style="height:100%; width:50%; margin:auto;">
               <el-form
                 ref="ruleForm"
