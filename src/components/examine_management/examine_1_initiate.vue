@@ -361,10 +361,10 @@
             <el-input v-model="salary_1.qgwgz" disabled></el-input>
           </el-form-item>
           <el-form-item label="调薪后基本工资">
-            <el-input
+            <el-input-number :precision="2" :step="100" :max="30000" :min="0"
                 v-model="salary_1.hjbgz"
                 oninput="value=value.toString().match(/^\d+(?:\.\d{0,2})?/)"
-            ></el-input>
+            ></el-input-number>
           </el-form-item>
           <el-form-item label="调薪后岗位工资">
             <el-input v-model="salary_1.hgwgz" disabled></el-input>
