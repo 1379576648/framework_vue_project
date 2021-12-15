@@ -279,7 +279,20 @@ export default {
         menuModule: ''
       },
       rules: {
-
+        //上级菜单名称
+        previousMenu:[],
+        //菜单名称
+        menuName: [],
+        //菜单类型
+        menuType: [],
+        //菜单状态
+        menuState: [],
+        //菜单图标
+        menuImage: [],
+        //菜单路由
+        menuRouter:[],
+        //菜单组件
+        menuModule: []
       },
       //新增菜单弹出框
       insertMenu: false,
