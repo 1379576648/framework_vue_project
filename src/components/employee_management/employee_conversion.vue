@@ -134,8 +134,8 @@
              v-model="become_1.type"
             placeholder="请选择"
         >
-          <el-option label="转正" value="zz"></el-option>
-          <el-option label="提前转正" value="tqzz"></el-option>
+          <el-option label="转正" value="zz" style="margin-left: 20px"></el-option>
+          <el-option label="提前转正" value="tqzz" style="margin-left: 20px"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="转正日期 :">
@@ -159,10 +159,10 @@
     </el-form>
     <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="submitForm('form_1')"
+            <el-button style="width: 60px" type="primary" @click="submitForm('form_1')"
             >确定</el-button
             >
-            <el-button @click="become = false">取消</el-button>
+            <el-button style="width: 60px" @click="become = false">取消</el-button>
           </span>
     </template>
   </el-dialog>
@@ -240,6 +240,7 @@ export default defineComponent({
 
 
 <style scoped>
+@import url("../../css/navigation.css");
 /deep/.mainContent .sub-Content__primary {
   padding: 12px 24px;
   background: #fff;
@@ -250,6 +251,10 @@ export default defineComponent({
   padding-left: 10px;
   text-align: center;
   color: black;
+}
+/deep/.el-form-item {
+  display: flex;
+  margin-bottom: 22px;
 }
 
 /deep/.el-card__body {
