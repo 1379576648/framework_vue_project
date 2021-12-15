@@ -9,7 +9,7 @@
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
                    @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 15px;">搜索</el-button>
+      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
     </div>
 
   </div>
@@ -18,7 +18,7 @@
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  人均周工时 -->
     <div id="mainy1" style="width: 980px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">昨日缺勤人数</span>
@@ -36,11 +36,11 @@
         style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
       <!-- 上周工时分布 -->
-      <div id="mainy2" style="width: 700px;height:460px; float: left;"></div>
+      <div id="mainy2" style="width: 655px;height:425px; float: left;"></div>
     </div>
     <div style="  width: 50%;height: 480px; position: absolute;top: 0px;right: 2px; ">
       <!-- 	员工年代分布 -->
-      <div id="mainy8" style="width: 800px;height:460px; float: right;">
+      <div id="mainy8" style="width: 655px;height:460px; float: right;">
         <div style="width: 100%;height: 40px;">
           <span style="font-size: 30px;">上周工时排行榜TOP9</span>&nbsp;&nbsp;&nbsp;
 

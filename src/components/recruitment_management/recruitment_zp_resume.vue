@@ -1,58 +1,68 @@
 <!--人才库-->
 <template>
 
-	<div class="saas-main-content">
-		<div class="j-card j-card-bordered mainContent">
-			<div class="j-card-body ">
-        <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top: 10px;">
+  <div class="saas-main-content">
+    <div class="j-card j-card-bordered mainContent">
+      <div class="j-card-body ">
+        <el-tabs  style="margin-top: 10px;">
 
           <el-tab-pane name="">
-              <template #label>
-                <router-link to="/fullresume"><div style="width: 120px;text-align: center">全部简历</div></router-link>
-              </template>
-            <router-view name="fullresume"></router-view>
+            <template #label>
+              <router-link :to="{path:this.path.afullresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">全部简历</div></router-link>
+            </template>
+            <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="newresume">
-              <template #label>
-                <router-link to="/newresume"><div style="width: 120px;text-align: center">新简历</div> </router-link>
-              </template>
-              <router-view name="newresume"></router-view>
+          <el-tab-pane name="">
+            <template #label>
+              <router-link :to="{path:this.path.bnewresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">新简历</div> </router-link>
+            </template>
+            <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="candidate">
-              <template #label>
-                <router-link to="/candidate"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
-              </template>
-              <router-view name="candidate"></router-view>
+          <el-tab-pane name="">
+            <template #label>
+              <router-link :to="{path:this.path.ccandidate,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
+            </template>
+            <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="eliminate">
-              <template #label>
-                <router-link to="/eliminate"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
-              </template>
-            <router-view name="eliminate"></router-view>
+          <el-tab-pane name="">
+            <template #label>
+              <router-link :to="{path:this.path.deliminate,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
+            </template>
+            <router-view/>
           </el-tab-pane>
 
         </el-tabs>
 
-			</div>
-		</div>
-	</div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-	import {
-		ref
-	} from 'vue'
-
+<script >
+export  default {
+  data(){
+    return{
+      path:{
+        //路由地址
+        afullresume:'/recruitment/recruit/fullresume',
+        bnewresume:'/recruitment/recruit/newresume',
+        ccandidate:'/recruitment/recruit/candidate',
+        deliminate:'/recruitment/recruit/eliminate'
+      }
+    }
+  }
+}
 </script>
+
 
 <style  type="text/css" scoped>
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 
-/deep/ .el-tabs__item {
+/deep/.el-tabs__item {
     padding: 0px 10px;
     padding-left: 36px;
     height: 40px;

@@ -74,6 +74,7 @@
 
 
 <style scoped>
+@import url("../../css/navigation.css");
 	/deep/.mainContent .sub-Content__primary {
 	    padding: 12px 24px;
 	    background: #fff;

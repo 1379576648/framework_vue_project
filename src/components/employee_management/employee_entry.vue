@@ -13,12 +13,12 @@
               mode="horizontal"
               @select="handleSelect"
             >
-            <router-link to="/stockemp" style="text-decoration: none">
+              <router-link :to="{path:this.tobehired,query:{path: this.$route.query.path}}" style="text-decoration: none">
               <el-menu-item style="height: 50px; " index="1"
                 >待入职员工</el-menu-item
               >
             </router-link>
-            <router-link to="/abandon" style="text-decoration: none">
+              <router-link :to="{path:this.hashired,query:{path: this.$route.query.path}}" style="text-decoration: none">
               <el-menu-item style="height: 50px; " index="4"
                 >放弃入职员工</el-menu-item
               >
@@ -37,20 +37,30 @@
             id="scrollLayout"
           >
             <main style="margin:10px" class="ant-layout-content">
-              <router-view name="yg1"></router-view>
+              <router-view></router-view>
             </main>
           </section>
         </div>
       </div>
     </div>
   </div>
+  &nbsp;
 </template>
 
 <script>
+export default {
+  data(){
+    return{
+      tobehired:'/employee/transaction/entry/tobehired',
+      hashired:'/employee/transaction/entry/hashired'
+    }
+  }
+}
 </script>
 
 
 <style scoped>
+@import url("../../css/navigation.css");
 /deep/.mainContent .sub-Content__primary {
   padding: 12px 24px;
   background: #fff;

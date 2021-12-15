@@ -1,6 +1,6 @@
 <template>
   <div class="saas-main-content">
-   
+
 
 
     <!--搜索输入框-->
@@ -12,9 +12,9 @@
       </el-input>
     </el-row>
 
- 
-    
-	<br/>
+
+
+    <br/>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="name" label="姓名" width="180" />
       <el-table-column prop="depart" label="部门" width="180" />
@@ -22,9 +22,12 @@
       <el-table-column prop="phone" label="手机号" width="180" />
       <el-table-column prop="email" label="邮箱" width="180" />
       <el-table-column prop="entrydate" label="入职日期" width="180" />
-      <el-table-column fixed="right" label="操作">
+      <el-table-column  label="操作">
         <template #default>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button type="text" size="small">入职</el-button>
+
+          <el-button @click="become=true" type="text" size="small">放弃</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -46,13 +49,27 @@
       </el-pagination>
     </div>
 
+    <div >
+      <el-dialog
+          v-model="become"
+          width="30%"
+          :close-on-click-modal="false" >
+        放弃原因：<el-input type="textarea" style="width:240px;"></el-input>
+        <div style="margin-top:30px;margin-left: 120px;">
+          <el-button @click="become=false">取消</el-button>
+          <el-button type="primary">确定</el-button></div>
+
+      </el-dialog>
+    </div>
+
 
 
   </div>
 </template>
 
 <script>
-export default {
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
   data(){
     return{
       input3:"",
@@ -62,13 +79,62 @@ export default {
         pagesize: 3, // 页大小
         total: 0, // 总页数
       },
+      tableData: [
+        {
+          entrydate: '2016-05-03',
+          name: 'Tom',
+          depart: 'California',
+          post: 'Los Angeles',
+          email: 'No. 189, Grove St, Los Angeles',
+          phone: 'CA 90036',
+          cause: 'Home',
+        },
+        {
+          entrydate: '2016-05-02',
+          name: 'Tom',
+          depart: 'California',
+          post: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          phone: 'CA 90036',
+          email: 'Office',
+        },
+        {
+          entrydate: '2016-05-04',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+          tag: 'Home',
+        },
+        {
+          entrydate: '2016-05-01',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+          tag: 'Office',
+        },
+      ],
+      form:[
+        {
+          desc:""
+        }
+      ]
 
     }
+  },setup() {
+    const become = ref(false)
+    return{
+      become,
+    }
   }
-}
+})
 </script>
 
 <style scoped>
+
 /deep/.mainContent .sub-Content__primary {
   padding: 12px 24px;
   background: #fff;
@@ -84,5 +150,6 @@ export default {
   float: right;
   margin: 20px;
 }
+
 
 </style>

@@ -9,7 +9,7 @@
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
                    @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 15px;">搜索</el-button>
+      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
     </div>
 
 
@@ -18,7 +18,7 @@
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月请假人数 -->
     <div id="mainy5" style="width: 980px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">当前月请假人数：</span>
@@ -34,7 +34,7 @@
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月人均请假人数 -->
     <div id="mainy6" style="width: 980px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">当前月请假人数：</span>
