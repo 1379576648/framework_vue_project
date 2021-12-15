@@ -39,7 +39,7 @@
 
       <el-form-item>
         <div class="u">
-          <router-link to="check">
+          <router-link to="/attendance/check">
             <el-button>
               <el-icon><i-circle-close /></el-icon>
               <span>取消</span>
@@ -54,6 +54,7 @@
       </el-form-item>
     </el-form>
   </div>
+  <router-view/>
 </template>
 
 <script lang="ts">
