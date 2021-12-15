@@ -26,30 +26,30 @@
                   <el-input v-model="ruleForm.state" disabled></el-input>
                 </el-form-item>
 
-                <el-form-item label="离职原因" prop="region" style="width:500px">
+                <el-form-item label="离职原因" prop="region" style="width:500px;">
                   <el-select
                     v-model="ruleForm.region"
                     placeholder="请选择"
                   >
-                    <el-option label="家庭原因" value="jtyy"></el-option>
-                    <el-option label="实习生返校" value="sxsfx"></el-option>
-                    <el-option label="回校深造" value="hxsz"></el-option>
-                    <el-option label="交通不便" value="jtbb"></el-option>
-                    <el-option label="身体健康因素" value="stjkys"></el-option>
-                    <el-option label="薪资原因" value="xzyy"></el-option>
-                    <el-option label="福利原因" value="flyy"></el-option>
-                    <el-option label="个人发展原因" value="grfzyy"></el-option>
-                    <el-option label="人际关系不融洽" value="rjgxyy"></el-option>
-                    <el-option label="工作环境不适应" value="gzhjbsy"></el-option>
-                    <el-option label="团队气氛不适应" value="tdqfbsy"></el-option>
-                    <el-option label="企业文化不适应" value="qyehbsy"></el-option>
-                    <el-option label="工作职责及目标不明确" value="gzzejmbbmq"></el-option>
-                    <el-option label="未得到充分的支持和授权" value="wddcfdzchsq"></el-option>
-                    <el-option label="其它" value="qt"></el-option>
+                    <el-option label="家庭原因" value="jtyy" style="margin-left: 20px"></el-option>
+                    <el-option label="实习生返校" value="sxsfx" style="margin-left: 20px"></el-option>
+                    <el-option label="回校深造" value="hxsz" style="margin-left: 20px"></el-option>
+                    <el-option label="交通不便" value="jtbb" style="margin-left: 20px"></el-option>
+                    <el-option label="身体健康因素" value="stjkys" style="margin-left: 20px"></el-option>
+                    <el-option label="薪资原因" value="xzyy" style="margin-left: 20px"></el-option>
+                    <el-option label="福利原因" value="flyy" style="margin-left: 20px"></el-option>
+                    <el-option label="个人发展原因" value="grfzyy" style="margin-left: 20px"></el-option>
+                    <el-option label="人际关系不融洽" value="rjgxyy" style="margin-left: 20px"></el-option>
+                    <el-option label="工作环境不适应" value="gzhjbsy" style="margin-left: 20px"></el-option>
+                    <el-option label="团队气氛不适应" value="tdqfbsy" style="margin-left: 20px"></el-option>
+                    <el-option label="企业文化不适应" value="qyehbsy" style="margin-left: 20px"></el-option>
+                    <el-option label="工作职责及目标不明确" value="gzzejmbbmq" style="margin-left: 20px"></el-option>
+                    <el-option label="未得到充分的支持和授权" value="wddcfdzchsq" style="margin-left: 20px"></el-option>
+                    <el-option label="其它" value="qt" style="margin-left: 20px"></el-option>
                   </el-select>
                 </el-form-item>
 
-                <el-form-item label="最后工作时间" required style="width:500px">
+                <el-form-item label="最后工作时间" required style="width:500px;height: 40.8px;">
                   <el-col :span="11">
                     <el-form-item prop="date1">
                       <el-date-picker
@@ -62,7 +62,7 @@
                   </el-col>
                 </el-form-item>
 
-                 <el-form-item label="离职生效时间" required style="width:500px">
+                 <el-form-item label="离职生效时间" required style="width:500px;height: 40.8px;">
                   <el-col :span="11">
                     <el-form-item prop="date2">
                       <el-date-picker
@@ -79,11 +79,11 @@
                   <el-input v-model="ruleForm.desc" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="submitForm('ruleForm')"
+                  <el-button style="width: 80px" type="primary" @click="submitForm('ruleForm')"
                     >提交</el-button
                   >
-                 <router-link to="/staff" style="text-decoration: none">&nbsp;
-                  <el-button>取消</el-button></router-link>
+
+                  <el-button style="width: 80px;" @click="goblack()">取消</el-button>
                 </el-form-item>
               </el-form>
            </div>
@@ -103,6 +103,7 @@
 export default {
   data() {
     return {
+      book:'/employee/message/employee_roster/book',
       ruleForm: {
         region: "",
         date1: "",
@@ -141,9 +142,15 @@ export default {
       },
     };
   },
+  methods:{
+    goblack(){
+      this.$router.go('-1');
+    }
+  }
 };
 </script>
 
 <style scoped>
-@import url(../../css/dimission.css);
+@import url("../../css/dimission.css");
+@import url("../../css/navigation.css");
 </style>

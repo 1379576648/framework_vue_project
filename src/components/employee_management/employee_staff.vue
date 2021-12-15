@@ -65,11 +65,11 @@
 	</el-table-column>
     <el-table-column fixed="right" label="操作" width="150">
       <template #default>
+        <router-link :to="{path:this.staffedit,query:{path: this.$route.query.path}}">
         <el-button type="text" size="small" @click="handleClick"
-          >编辑</el-button
-        >
-		<el-button type="text" size="small" @click="handleClick">调动</el-button>
-        <router-link to="/dimission" style="text-decoration: none">&nbsp;
+          >编辑</el-button>
+        </router-link>
+        <router-link :to="{path:this.leave,query:{path: this.$route.query.path}}" style="text-decoration: none">&nbsp;
         <el-button type="text" size="small">办理离职</el-button></router-link>
       </template>
     </el-table-column>
@@ -104,6 +104,8 @@ export default {
   data() {
     const value2 = ref('')
     return {
+      leave:'/employee/message/employee_roster/leave',
+      staffedit:'/employee/message/employee_roster/staffedit',
       tableData: [
         {
           date: '2016-03-03',

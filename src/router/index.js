@@ -71,8 +71,46 @@ const routes = [{
                     children:[
                         {//员工花名册
                             path: '/employee/message/employee_roster',
-                            component:modules[`${'../components/employee_management/employee_staff.vue'}`],
+                            redirect:"/employee/message/employee_roster/book",
+                            component:modules[`${'../components/employee_management/employee_staff_one.vue'}`],
+                            children:[
+                                //花名册
+                                {
+                                path: '/employee/message/employee_roster/book',
+                                component:modules[`${'../components/employee_management/employee_staff.vue'}`],
+                                },
+                                //工作经历
+                                {
+                                    path: '/employee/message/employee_roster/business',
+                                    component:modules[`${'../components/employee_management/employee_work.vue'}`],
+                                },
+
+                            ]
                         },
+                        //办理离职
+                        {
+                            path: '/employee/message/employee_roster/leave',
+                            component:modules[`${'../components/employee_management/employee_dimission.vue'}`],
+                        },
+                        //员工编辑
+                        {
+                            path:'/employee/message/employee_roster/staffedit',
+                            component:modules[`${'../components/employee_management/employee_compile.vue'}`],
+                            redirect: "/employee/message/employee_roster/basicfile",
+                            children: [
+                                //基本档案
+                                {
+                                    path:'/employee/message/employee_roster/basicfile',
+                                    component:modules[`${'../components/employee_management/employee_basic.vue'}`],
+                                },
+                                //个人信息
+                                {
+                                    path:'/employee/message/employee_roster/information',
+                                    component:modules[`${'../components/employee_management/employee_personal.vue'}`],
+                                }
+                            ]
+                        },
+
                         {//历史花名册
                             path: '/employee/message/history_roster',
                             component:modules[`${'../components/employee_management/employee_history.vue'}`],
@@ -85,7 +123,20 @@ const routes = [{
                     children:[
                         {//入职管理
                             path: '/employee/transaction/entry',
-                            component:modules[`${'../components/employee_management/employee_abandon.vue'}`],
+                            component:modules[`${'../components/employee_management/employee_entry.vue'}`],
+                            redirect: "/employee/transaction/entry/tobehired",
+                            children: [
+                                //待入职
+                                {
+                                    path: '/employee/transaction/entry/tobehired',
+                                    component:modules[`${'../components/employee_management/employee_stock.vue'}`],
+                                },
+                                //放弃入职
+                                {
+                                    path: '/employee/transaction/entry/hashired',
+                                    component:modules[`${'../components/employee_management/employee_abandon.vue'}`],
+                                },
+                            ]
                         },
                         {//转正管理
                             path: '/employee/transaction/worker',
@@ -117,9 +168,44 @@ const routes = [{
                         {//招聘计划
                             path: '/recruitment/plan/plan',
                             component:modules[`${'../components/recruitment_management/recruitment_zp_plan.vue'}`],
+                        },
+                        {//新增招聘计划
+                            path: '/recruitment/addplan/addplan',
+                            component:modules[`${'../components/recruitment_management/recruitment_add_plan.vue'}`],
                         }
+
                     ]
                 },
+                {//简历管理
+                    path: '/recruitment/zptresume',
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children:[
+                        {//人才库
+                            path: '/recruitment/zptresume/zptresume',
+                            redirect: "/recruitment/fullresume",
+                            component:modules[`${'../components/recruitment_management/recruitment_zp_resume.vue'}`],
+                            children:[
+                                {//全部简历
+                                    path: '/recruitment/fullresume',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
+                                },
+                                {//新简历
+                                    path: '/recruitment/newresume',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
+                                },
+                                {//候选人
+                                    path: '/recruitment/candidate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_candidate.vue'}`],
+                                },
+                                {//淘汰库
+                                    path: '/recruitment/eliminate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
+                                },
+                            ]
+                        },
+                    ]
+
+                }
             ]
         },
         {//审批管理
