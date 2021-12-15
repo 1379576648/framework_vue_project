@@ -9,14 +9,14 @@
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
                    @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 15px;">搜索</el-button>
+      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
     </div>
 
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月计薪人数 -->
-    <div id="main" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="main" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月计薪人数：</span>
       <br>
       <span class="ziti">3</span>
@@ -28,8 +28,8 @@
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月人力成本总额 -->
-    <div id="main1" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="main1" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月人力成本：</span>
       <br>
       <span class="ziti">3</span>
@@ -41,8 +41,8 @@
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月实发工资总额-->
-    <div id="main2" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="main2" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月实发工资：</span>
       <br>
       <span class="ziti">3</span>
@@ -54,8 +54,8 @@
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月平均工资 -->
-    <div id="main3" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="main3" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月人均工资：</span>
       <br>
       <span class="ziti">3</span>

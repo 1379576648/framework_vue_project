@@ -182,23 +182,23 @@ const routes = [{
                     children:[
                         {//人才库
                             path: '/recruitment/zptresume/zptresume',
-                            redirect: "/recruitment/fullresume",
+                            redirect: "/recruitment/recruit/fullresume",
                             component:modules[`${'../components/recruitment_management/recruitment_zp_resume.vue'}`],
                             children:[
                                 {//全部简历
-                                    path: '/recruitment/fullresume',
+                                    path: '/recruitment/recruit/fullresume',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
                                 },
-                                {//新简历0
-                                    path: '/recruitment/newresume',
+                                {//新简历
+                                    path: '/recruitment/recruit/newresume',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
                                 },
                                 {//候选人
-                                    path: '/recruitment/candidate',
+                                    path: '/recruitment/recruit/candidate',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_candidate.vue'}`],
                                 },
                                 {//淘汰库
-                                    path: '/recruitment/eliminate',
+                                    path: '/recruitment/recruit/eliminate',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
                                 },
                             ]
@@ -378,6 +378,16 @@ const routes = [{
                         {//权限设置
                             path: '/system/authority_management/authority_set',
                             component:modules[`${'../components/system_management/system_permission_set.vue'}`],
+                        },
+                        {//角色设置
+                            path: '/system/authority_management/role',
+                            component:modules[`${'../components/system_management/system_role.vue'}`],
+
+                        },
+                        {//设置
+                            path: '/system/authority_management/allot_user',
+                            component:modules[`${'../components/system_management/system_allot_user.vue'}`],
+
                         }
                     ]
 
