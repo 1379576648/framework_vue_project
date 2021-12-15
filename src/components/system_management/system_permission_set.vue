@@ -263,75 +263,23 @@ export default {
   data() {
     return {
       ruleForm: {
+        //上级菜单名称
+        previousMenu:'',
         //菜单名称
         menuName: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
+        //菜单类型
+        menuType: '',
+        //菜单状态
+        menuState: false,
+        //菜单图标
+        menuImage: '',
+        //菜单路由
+        menuRouter:'',
+        //菜单组件
+        menuModule: ''
       },
       rules: {
-        name: [
-          {
-            required: false,
-            message: 'Please input Activity name',
-            trigger: 'blur',
-          },
-          {
-            min: 3,
-            max: 5,
-            message: 'Length should be 3 to 5',
-            trigger: 'blur',
-          },
-        ],
-        region: [
-          {
-            required: true,
-            message: 'Please select Activity zone',
-            trigger: 'change',
-          },
-        ],
-        date1: [
-          {
-            type: 'date',
-            required: true,
-            message: 'Please pick a date',
-            trigger: 'change',
-          },
-        ],
-        date2: [
-          {
-            type: 'date',
-            required: true,
-            message: 'Please pick a time',
-            trigger: 'change',
-          },
-        ],
-        type: [
-          {
-            type: 'array',
-            required: true,
-            message: 'Please select at least one activity type',
-            trigger: 'change',
-          },
-        ],
-        resource: [
-          {
-            required: true,
-            message: 'Please select activity resource',
-            trigger: 'change',
-          },
-        ],
-        desc: [
-          {
-            required: true,
-            message: 'Please input activity form',
-            trigger: 'blur',
-          },
-        ],
+
       },
       //新增菜单弹出框
       insertMenu: false,
@@ -342,6 +290,7 @@ export default {
       refreshTable: true,
       //输入的菜单名称值
       menuName: '',
+      //日期组件
       shortcuts: [
         {
           text: '过去一周',
