@@ -168,9 +168,44 @@ const routes = [{
                         {//招聘计划
                             path: '/recruitment/plan/plan',
                             component:modules[`${'../components/recruitment_management/recruitment_zp_plan.vue'}`],
+                        },
+                        {//新增招聘计划
+                            path: '/recruitment/addplan/addplan',
+                            component:modules[`${'../components/recruitment_management/recruitment_add_plan.vue'}`],
                         }
+
                     ]
                 },
+                {//简历管理
+                    path: '/recruitment/zptresume',
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children:[
+                        {//人才库
+                            path: '/recruitment/zptresume/zptresume',
+                            redirect: "/recruitment/fullresume",
+                            component:modules[`${'../components/recruitment_management/recruitment_zp_resume.vue'}`],
+                            children:[
+                                {//全部简历
+                                    path: '/recruitment/fullresume',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
+                                },
+                                {//新简历
+                                    path: '/recruitment/newresume',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
+                                },
+                                {//候选人
+                                    path: '/recruitment/candidate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_candidate.vue'}`],
+                                },
+                                {//淘汰库
+                                    path: '/recruitment/eliminate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
+                                },
+                            ]
+                        },
+                    ]
+
+                }
             ]
         },
         {//审批管理
