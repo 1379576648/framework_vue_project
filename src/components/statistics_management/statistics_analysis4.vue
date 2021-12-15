@@ -9,18 +9,18 @@
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
                    @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 15px;">搜索</el-button>
+      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
     </div>
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  部门人工成本总额 -->
-    <div id="mainy1" style="width: 1500px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="mainy1" style="width:100%;height:460px; margin-top: 20px; "></div>
 
-    </div>
+
+
   </div>
 
-  <el-table :data="tableData" style="width: 90%;text-align: center;" height="250">
+  <el-table :data="tableData" style="width: 95%;text-align: center;" height="250">
     <el-table-column fixed prop="date" label="Date" width="150" />
     <el-table-column prop="name" label="Name" width="120" />
     <el-table-column prop="state" label="State" width="120" />
@@ -32,13 +32,11 @@
 
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  部门平均人工成本 -->
-    <div id="mainy2" style="width: 1500px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="mainy2" style="width: 100%;height:460px; margin-top: 20px; "></div>
 
-    </div>
   </div>
 
-  <el-table :data="tableData" style="width: 90%;text-align: center;" height="250">
+  <el-table :data="tableData" style="width: 95%;text-align: center;" height="250">
     <el-table-column fixed prop="date" label="Date" width="150" />
     <el-table-column prop="name" label="Name" width="120" />
     <el-table-column prop="state" label="State" width="120" />
