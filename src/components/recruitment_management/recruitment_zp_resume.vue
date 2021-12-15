@@ -8,28 +8,28 @@
 
           <el-tab-pane name="">
             <template #label>
-              <router-link :to="{path:this.fullresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">全部简历</div></router-link>
+              <router-link :to="{path:this.afullresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">全部简历</div></router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
           <el-tab-pane name="newresume">
             <template #label>
-              <router-link :to="{path:this.newresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">新简历</div> </router-link>
+              <router-link :to="{path:this.bnewresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">新简历</div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
           <el-tab-pane name="candidate">
             <template #label>
-              <router-link :to="{path:this.candidate,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
+              <router-link :to="{path:this.ccandidate,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
           <el-tab-pane name="eliminate">
             <template #label>
-              <router-link :to="{path:this.eliminate,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
+              <router-link :to="{path:this.deliminate,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
@@ -50,10 +50,10 @@ export  default {
   data(){
     return{
       //路由地址
-      fullresume:'/recruitment/fullresume',
-      newresume:'/recruitment/newresume',
-      candidate:'/recruitment/candidate',
-      eliminate:'/recruitment/eliminate'
+      afullresume:'/recruitment/fullresume',
+      bnewresume:'/recruitment/newresume',
+      ccandidate:'/recruitment/candidate',
+      deliminate:'/recruitment/eliminate'
     }
   }
 }
