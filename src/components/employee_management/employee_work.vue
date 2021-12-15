@@ -20,7 +20,9 @@
     <el-table-column prop="name" label="离职原因" width="180" />
     <el-table-column fixed="right" label="操作">
     <template #default>
+      <router-link :to="{path:this.information,query:{path: this.$route.query.path}}">
 			<el-button type="text" size="small">编辑</el-button>
+      </router-link>
 	</template>
     </el-table-column>
   </el-table>
@@ -49,6 +51,7 @@
 export default {
   data() {
     return {
+      information:'/employee/message/employee_roster/information',
       tableData: [
         {
           date: '2016-05-03',
