@@ -189,7 +189,7 @@ const routes = [{
                                     path: '/recruitment/fullresume',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
                                 },
-                                {//新简历
+                                {//新简历0
                                     path: '/recruitment/newresume',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
                                 },
@@ -204,7 +204,35 @@ const routes = [{
                             ]
                         },
                     ]
-
+                },
+                {//招聘过程
+                    path: '/recruitment/zpprocess',
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children: [
+                        {//面试管理
+                            path: '/recruitment/zpprocess/recruitment_zp_interview',
+                            redirect: "/recruitment/daiInterview",
+                            component:modules[`${'../components/recruitment_management/recruitment_zp_interview.vue'}`],
+                            children: [
+                                {//待面试
+                                    path: '/recruitment/daiInterview',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_daiInterview.vue'}`],
+                                },
+                                {//面试通过
+                                    path: '/recruitment/interviewPass',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_interviewPass.vue'}`],
+                                },
+                                {//待复试
+                                    path: '/recruitment/daiSecondInterview',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterview.vue'}`],
+                                },
+                                {//复试通过
+                                    path: '/recruitment/daiSecondInterviewPass',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterviewPass.vue'}`],
+                                },
+                            ]
+                        }
+                    ]
                 }
             ]
         },
