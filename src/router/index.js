@@ -264,6 +264,16 @@ const routes = [{
                         {//权限设置
                             path: '/system/authority_management/authority_set',
                             component:modules[`${'../components/system_management/system_permission_set.vue'}`],
+                        },
+                        {//角色设置
+                            path: '/system/authority_management/role',
+                            component:modules[`${'../components/system_management/system_role.vue'}`],
+
+                        },
+                        {//设置
+                            path: '/system/authority_management/allot_user',
+                            component:modules[`${'../components/system_management/system_allot_user.vue'}`],
+
                         }
                     ]
 

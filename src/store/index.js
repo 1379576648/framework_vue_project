@@ -821,8 +821,8 @@ const store = createStore({
                                 MENU_ID: 3,//菜单编号
                                 MENU_NAME: '角色设置',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/system_navigation',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/system/authority_management/role',//路由地址
+                                MENU_MODULE: 'system_management/system_role',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
