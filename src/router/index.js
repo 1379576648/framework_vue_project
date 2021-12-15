@@ -168,9 +168,72 @@ const routes = [{
                         {//招聘计划
                             path: '/recruitment/plan/plan',
                             component:modules[`${'../components/recruitment_management/recruitment_zp_plan.vue'}`],
+                        },
+                        {//新增招聘计划
+                            path: '/recruitment/addplan/addplan',
+                            component:modules[`${'../components/recruitment_management/recruitment_add_plan.vue'}`],
                         }
+
                     ]
                 },
+                {//简历管理
+                    path: '/recruitment/zptresume',
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children:[
+                        {//人才库
+                            path: '/recruitment/zptresume/zptresume',
+                            redirect: "/recruitment/recruit/fullresume",
+                            component:modules[`${'../components/recruitment_management/recruitment_zp_resume.vue'}`],
+                            children:[
+                                {//全部简历
+                                    path: '/recruitment/recruit/fullresume',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
+                                },
+                                {//新简历
+                                    path: '/recruitment/recruit/newresume',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
+                                },
+                                {//候选人
+                                    path: '/recruitment/recruit/candidate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_candidate.vue'}`],
+                                },
+                                {//淘汰库
+                                    path: '/recruitment/recruit/eliminate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {//招聘过程
+                    path: '/recruitment/zpprocess',
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children: [
+                        {//面试管理
+                            path: '/recruitment/zpprocess/recruitment_zp_interview',
+                            redirect: "/recruitment/daiInterview",
+                            component:modules[`${'../components/recruitment_management/recruitment_zp_interview.vue'}`],
+                            children: [
+                                {//待面试
+                                    path: '/recruitment/daiInterview',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_daiInterview.vue'}`],
+                                },
+                                {//面试通过
+                                    path: '/recruitment/interviewPass',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_interviewPass.vue'}`],
+                                },
+                                {//待复试
+                                    path: '/recruitment/daiSecondInterview',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterview.vue'}`],
+                                },
+                                {//复试通过
+                                    path: '/recruitment/daiSecondInterviewPass',
+                                    component:modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterviewPass.vue'}`],
+                                },
+                            ]
+                        }
+                    ]
+                }
             ]
         },
         {//审批管理
@@ -394,6 +457,16 @@ const routes = [{
                         {//权限设置
                             path: '/system/authority_management/authority_set',
                             component:modules[`${'../components/system_management/system_permission_set.vue'}`],
+                        },
+                        {//角色设置
+                            path: '/system/authority_management/role',
+                            component:modules[`${'../components/system_management/system_role.vue'}`],
+
+                        },
+                        {//设置
+                            path: '/system/authority_management/allot_user',
+                            component:modules[`${'../components/system_management/system_allot_user.vue'}`],
+
                         }
                     ]
 

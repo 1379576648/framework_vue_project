@@ -1,49 +1,49 @@
 <!-- 新增招聘计划 -->
 
 <template>
-	<div class="saas-main-content">
-		<div class="j-card j-card-bordered mainContent">
-			<!--标题-->
-			<div class="j-card-head">
-				<div class="j-card-head-title">
-					<span>新增招聘计划</span>
-				</div>
-			</div>
-			<!--内容-->
-			<div class="j-card-body ">
-				<span></span>
-				<div class="sub-Content__primary ">
-					<div style="width: 50%; margin: auto;">
-						<el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
-							class="demo-ruleForm">
+  <div class="saas-main-content">
+    <div class="j-card j-card-bordered mainContent">
+      <!--标题-->
+      <div class="j-card-head">
+        <div class="j-card-head-title">
+          <span>新增招聘计划</span>
+        </div>
+      </div>
+      <!--内容-->
+      <div class="j-card-body ">
+        <span></span>
+        <div class="sub-Content__primary ">
+          <div style="width: 50%; margin: auto;">
+            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
+                     class="demo-ruleForm">
 
 
-							<el-form-item label="招聘计划名称" prop="zpname" style="width:500px;">
-								<el-input v-model="ruleForm.zpname"></el-input>
-							</el-form-item>
+              <el-form-item label="招聘计划名称" prop="zpname" style="width:500px;">
+                <el-input v-model="ruleForm.zpname"></el-input>
+              </el-form-item>
 
-							<el-form-item label="需求部门" prop="zpdept">
-								<el-select v-model="ruleForm.zpdept" style="width:380px;">
-									<el-option label="Zone one" value="shanghai"></el-option>
-									<el-option label="Zone two" value="beijing"></el-option>
-								</el-select>
-							</el-form-item>
+              <el-form-item label="需求部门" prop="zpdept">
+                <el-select v-model="ruleForm.zpdept" style="width:380px;">
+                  <el-option label="Zone one" value="shanghai"></el-option>
+                  <el-option label="Zone two" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
 
-							<el-form-item label="招聘职位" prop="zpzw">
-								<el-select v-model="ruleForm.zpzw" style="width:380px;">
-									<el-option label="Zone one" value="shanghai"></el-option>
-									<el-option label="Zone two" value="beijing"></el-option>
-								</el-select>
-							</el-form-item>
+              <el-form-item label="招聘职位" prop="zpzw">
+                <el-select v-model="ruleForm.zpzw" style="width:380px;">
+                  <el-option label="Zone one" value="shanghai"></el-option>
+                  <el-option label="Zone two" value="beijing"></el-option>
+                </el-select>
+              </el-form-item>
 
 
               <el-form-item label="需招聘人数" prop="zpnum">
-              <el-input-number
-                  v-model="ruleForm.zpnum"
-                  :min="1"
-                  :max="50"
-                  controls-position="right"
-              />
+                <el-input-number
+                    v-model="ruleForm.zpnum"
+                    :min="1"
+                    :max="50"
+                    controls-position="right"
+                />
               </el-form-item>
 
               <el-form-item label="最低学历" prop="zpxl">
@@ -71,108 +71,118 @@
               </el-form-item>
 
 
-							<el-form-item>
-								<el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-								<router-link to="zpplan">
-									<el-button style="margin-left: 30px;">取消</el-button>
-								</router-link>
-							</el-form-item>
+              <el-form-item>
+                <el-button style="width: 100px;"  type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                <el-button  style="margin-left: 30px; width: 100px" @click="goback()">取消</el-button>
+              </el-form-item>
 
-						</el-form>
-					</div>
+            </el-form>
+          </div>
 
 
 
 
-				</div>
-			</div>
+        </div>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { ref } from 'vue'
-	export default {
-		data() {
-      const zpnum = ref(1)
-			return {
-				ruleForm: {
-          //计划名称
-					zpname: '',
-          //需求部门
-					zpdept: '',
-          //职位
-					zpzw:'',
-          //人数
-					zpnum:'',
-          //学历
-					zpxl: '',
-          //时间范围
-          timef:'',
-          //薪酬范围
-          zpxqf: ''
-				},
-				rules: {
-          zpname: [{
-							required: true,
-              message: '招聘计划名称不能为空!!!',
-							trigger: 'blur',
-						},
-					],
-          zpdept: [{
-						required: true,
-            message: '请选择需求部门!!!',
-						trigger: 'change',
-					}, ],
-          zpzw: [{
-						required: true,
-            message: '请设置招聘职位!!!',
-						trigger: 'change',
-					}, ],
-          zpnum: [{
-						required: true,
-            message: '计划招聘人数不能为空!!!',
-						trigger: 'blur',
-					}, ],
-          zpxl: [{
-						required: true,
-            message: '最低学历不能为空!!!',
-						trigger: 'change',
-					}, ],
-          timef: [{
-						required: true,
-            message: '请选择招聘时间范围!!!',
-						trigger: 'change',
-					}, ],
-          zpxqf: [{
-						required: true,
-						message: '请选择薪酬范围!!!',
-						trigger: 'change',
-					}, ],
-				},
-			}
-		},
-		methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!')
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
+export default {
+  data() {
+    const zpnum = ref(1)
+    return {
+      ruleForm: {
+        //计划名称
+        zpname: '',
+        //需求部门
+        zpdept: '',
+        //职位
+        zpzw:'',
+        //人数
+        zpnum:'',
+        //学历
+        zpxl: '',
+        //时间范围
+        timef:'',
+        //薪酬范围
+        zpxqf: ''
       },
-		},
-	}
+      rules: {
+        zpname: [{
+          required: true,
+          message: '招聘计划名称不能为空!!!',
+          trigger: 'blur',
+        },
+        ],
+        zpdept: [{
+          required: true,
+          message: '请选择需求部门!!!',
+          trigger: 'change',
+        }, ],
+        zpzw: [{
+          required: true,
+          message: '请设置招聘职位!!!',
+          trigger: 'change',
+        }, ],
+        zpnum: [{
+          required: true,
+          message: '计划招聘人数不能为空!!!',
+          trigger: 'blur',
+        }, ],
+        zpxl: [{
+          required: true,
+          message: '最低学历不能为空!!!',
+          trigger: 'change',
+        }, ],
+        timef: [{
+          required: true,
+          message: '请选择招聘时间范围!!!',
+          trigger: 'change',
+        }, ],
+        zpxqf: [{
+          required: true,
+          message: '请选择薪酬范围!!!',
+          trigger: 'change',
+        }, ],
+      },
+    }
+  },
+  methods: {
+    //提交按钮
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    //取消：跳转上一级目录
+    goback(){
+      this.$router.go('-1');
+    }
+  },
+
+}
 </script>
 
 
 
 <style type="text/css" scoped>
-@import url("../../css/navigation.css");
-@import url("../../css/zpdaohang.css");
+.j-card-head {
+  height: 48px;
+  line-height: 48px;
+  background: #fff;
+  border-bottom: 1px solid #e9e9e9;
+  margin: 0 24px;
+  overflow: hidden;
+}
 
 /deep/.el-form-item {
   display: flex;
@@ -195,4 +205,44 @@ import { ref } from 'vue'
 		background: #fff;
 		border-radius: 4px;
 	}
+.saas-main-content {
+  padding-top: 12px;
+  min-height: 500px;
+}
+
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+}
+
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
+}
+.j-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  border-color: transparent;
+}
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+  border-top-color: rgb(233, 233, 233);
+  border-right-color: rgb(233, 233, 233);
+  border-bottom-color: rgb(233, 233, 233);
+  border-left-color: rgb(233, 233, 233);
+}
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
+}
 </style>
