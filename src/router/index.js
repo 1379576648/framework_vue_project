@@ -228,7 +228,86 @@ const routes = [{
         },
         {//薪资管理
             path: '/salary',
-            component:modules[`${'../components/salary_management/salary_main.vue'}`]
+            component:modules[`${'../components/salary_management/salary_main.vue'}`],
+            redirect:"/salary/paynavigation",
+            children:[
+                //薪酬导航
+                {
+                    path: '/salary/paynavigation',
+                    component:modules[`${'../components/salary_management/salary_salarynavigation.vue'}`],
+                    redirect:"/salary/flat",
+                    children:[
+                        //薪酬结构
+                        {
+                            path: '/salary/flat',
+                            component:modules[`${'../components/salary_management/salary_construction.vue'}`]
+                        },
+                        //核算方案
+                        {
+                            path: '/salary/scheme',
+                            component:modules[`${'../components/salary_management/salary_accountscheme.vue'}`]
+                        },
+                        //工资表
+                        {
+                            path: '/salary/paysheet',
+                            component:modules[`${'../components/salary_management/salary_archive.vue'}`]
+                        },
+                    ]
+                },
+                //工资表导航
+                {
+                    path: '/salary/wagesheet',
+                    component:modules[`${'../components/salary_management/salary_checkwage.vue'}`],
+                    redirect: "/salary/selectwagetable",
+                    children: [
+                        //查看工资表
+                        {
+                            path: '/salary/selectwagetable',
+                            component:modules[`${'../components/salary_management/salary_wagetable.vue'}`]
+                        },
+                    ]
+                },
+                //固定工资方案
+                {
+                    path: '/salary/regular',
+                    component:modules[`${'../components/salary_management/salary_fixedsalary.vue'}`]
+                },
+                //加班工资方案
+                {
+                    path: '/salary/callbackpay',
+                    component:modules[`${'../components/salary_management/salary_workovertimeplan.vue'}`]
+                },
+                //新增编辑加班工资方案
+                {
+                    path: '/salary/insertcallbackpay',
+                    component:modules[`${'../components/salary_management/salary_insertplan.vue'}`]
+                },
+                //考勤扣款方案
+                {
+                    path: '/salary/attendanceplan',
+                    component:modules[`${'../components/salary_management/salary_attendance.vue'}`]
+                },
+                //新增编辑考勤扣款方案
+                {
+                    path: '/salary/insertattendanceplan',
+                    component:modules[`${'../components/salary_management/salary_insertplantwo.vue'}`]
+                },
+                //出差方案
+                {
+                    path: '/salary/evectionplan',
+                    component:modules[`${'../components/salary_management/salary_evection.vue'}`]
+                },
+                //新增编辑出差方案
+                {
+                    path: '/salary/insertevectionplan',
+                    component:modules[`${'../components/salary_management/salary_insertplanthree.vue'}`]
+                },
+                //薪酬统计
+                {
+                    path: '/salary/count',
+                    component:modules[`${'../components/salary_management/salary_statistics.vue'}`]
+                }
+            ]
         },
         {//社保管理
             path: '/social',
