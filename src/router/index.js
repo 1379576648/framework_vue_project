@@ -182,23 +182,23 @@ const routes = [{
                     children:[
                         {//人才库
                             path: '/recruitment/zptresume/zptresume',
-                            redirect: "/recruitment/fullresume",
+                            redirect: "/recruitment/recruit/fullresume",
                             component:modules[`${'../components/recruitment_management/recruitment_zp_resume.vue'}`],
                             children:[
                                 {//全部简历
-                                    path: '/recruitment/fullresume',
+                                    path: '/recruitment/recruit/fullresume',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
                                 },
                                 {//新简历
-                                    path: '/recruitment/newresume',
+                                    path: '/recruitment/recruit/newresume',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
                                 },
                                 {//候选人
-                                    path: '/recruitment/candidate',
+                                    path: '/recruitment/recruit/candidate',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_candidate.vue'}`],
                                 },
                                 {//淘汰库
-                                    path: '/recruitment/eliminate',
+                                    path: '/recruitment/recruit/eliminate',
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
                                 },
                             ]

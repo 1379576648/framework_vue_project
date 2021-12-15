@@ -63,12 +63,12 @@
             <el-table-column prop="statetime" label="发布时间" width="200"/>
             <el-table-column prop="zpzt" label="招聘状态" width="200"/>
             <el-table-column fixed="right" label="操作" width="180">
-              <template #default slot-scope="scope">
-                <div>
-                  <el-button type="text" size="small" @click="">编辑</el-button>
+              <template #default="scope">
+                <div v-if="tableData[scope.$index].zpzt=='招聘中'">
+                  <el-button type="text" size="small" @click="a(tableData[scope.$index].zpzt)">编辑</el-button>
                   <el-button type="text" size="small">关闭</el-button>
                 </div>
-                <div >
+                <div v-else-if="tableData[scope.$index].zpzt=='已结束'">
                   <el-button type="text" size="small" @click="">查看</el-button>
                   <el-button type="text" size="small">删除</el-button>
                 </div>
@@ -123,6 +123,11 @@ export default {
           zpzt: '已结束'
         },
       ]
+    }
+  },
+  methods:{
+    a(value){
+      alert(value);
     }
   }
 }

@@ -50,10 +50,10 @@ export  default {
   data(){
     return{
       //路由地址
-      afullresume:'/recruitment/fullresume',
-      bnewresume:'/recruitment/newresume',
-      ccandidate:'/recruitment/candidate',
-      deliminate:'/recruitment/eliminate'
+      afullresume:'/recruitment/recruit/fullresume',
+      bnewresume:'/recruitment/recruit/newresume',
+      ccandidate:'/recruitment/recruit/candidate',
+      deliminate:'/recruitment/recruit/eliminate'
     }
   }
 }
