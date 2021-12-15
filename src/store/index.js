@@ -131,7 +131,7 @@ const store = createStore({
                                 MENU_NAME: '员工花名册',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/employee/message/employee_roster',//路由地址
-                                MENU_MODULE: 'employee_management/employee_staff',//组件地址
+                                MENU_MODULE: 'employee_management/employee_staff_one',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -333,6 +333,7 @@ const store = createStore({
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
                             }
+
                         ]
                     }, {
                         MENU_ID: 3,//菜单编号
@@ -348,7 +349,7 @@ const store = createStore({
                                 MENU_ID: 4,//菜单编号
                                 MENU_NAME: '人才库',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/zpdaohang/zp_resume',//路由地址
+                                MENU_ROUTE: '/recruitment/zptresume/zptresume',//路由地址
                                 MENU_MODULE: 'recruitment_management/recruitment_zp_resume.vue',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
@@ -394,7 +395,7 @@ const store = createStore({
                         MENU_NAME: '发起审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
                         MENU_ROUTE: '/examine/sponsor_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_1',//组件地址
+                        MENU_MODULE: 'examine_management/examine_1_initiate',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -413,7 +414,7 @@ const store = createStore({
                                 MENU_NAME: '转正审批',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/examine/examine_centre/sponsor_examine',//路由地址
-                                MENU_MODULE: 'examine_management/examine_2',//组件地址
+                                MENU_MODULE: 'examine_management/examine_2_positive',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -422,7 +423,7 @@ const store = createStore({
                                 MENU_NAME: '异动审批',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/examine/examine_centre/transaction_examine', //路由地址
-                                MENU_MODULE: 'examine_management/examine_4',//组件地址
+                                MENU_MODULE: 'examine_management/examine_4_move',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -490,7 +491,7 @@ const store = createStore({
                         MENU_NAME: '我的申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
                         MENU_ROUTE: '/examine/my_application',//路由地址
-                        MENU_MODULE: 'examine_management/examine_3',//组件地址
+                        MENU_MODULE: 'examine_management/examine_3_applyfor',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有

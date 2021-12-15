@@ -9,14 +9,14 @@
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
                    @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 15px;">搜索</el-button>
+      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
     </div>
 
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月参保人数 -->
-    <div id="mainy1" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="mainy1" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月参保人数：</span>
       <br>
       <span class="ziti">3</span>
@@ -28,8 +28,8 @@
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月社保缴纳总额 -->
-    <div id="mainy2" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="mainy2" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月公司社保总额：</span>
       <br>
       <span class="ziti">3</span>
@@ -43,8 +43,8 @@
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月公积金缴纳总额-->
-    <div id="mainy3" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="mainy3" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月公司公积金总额：</span>
       <br>
       <span class="ziti">3</span>
@@ -58,8 +58,8 @@
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  每月平均工资 -->
-    <div id="mainy4" style="width: 1122px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div id="mainy4" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
       <span class="ziti">当前月人均工资：</span>
       <br>
       <span class="ziti">3</span>

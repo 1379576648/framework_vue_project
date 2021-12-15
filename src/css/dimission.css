@@ -2,6 +2,13 @@
     margin: 0;
     padding: 0;
 }
+
+/deep/.el-form-item {
+    display: flex;
+    margin-bottom: 22px;
+}
+
+
 .j-card-head-title {
     font-size: 18px;
     display: inline-block;

@@ -46,7 +46,7 @@
                 </el-button>
               </div>
             </div>
-            <div class="j-set-top-bottom">
+            <div class="j-set-top-bottom" @click="this.insertMenu=true">
               <el-button type="primary">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
@@ -121,7 +121,7 @@
               <el-table-column label="状态" min-width="150">
                 <template #default="scope">
                   <span class="button-enable" v-if="scope.row.MENU_STATE==0">启用</span>
-                  <span class="button-forbidden"  v-if="scope.row.MENU_STATE==1">禁用</span>
+                  <span class="button-forbidden" v-if="scope.row.MENU_STATE==1">禁用</span>
                 </template>
               </el-table-column>
               <el-table-column prop="CREATED_TIME" label="创建时间" min-width="220"/>
@@ -171,32 +171,139 @@
       </div>
     </div>
   </div>
-  <div>
-    <el-select v-model="one" slot="prepend"  style="width:150px;"
-    filterable
-    allow-create
-    default-first-option
+  <!--  新增菜单弹出框-->
+  <el-dialog
+      v-model="insertMenu"
+      title="添加菜单"
+      width="50%"
+      destroy-on-close
+      left
+  >
+    <el-form
+        ref="ruleForm"
+        :model="ruleForm"
+        :rules="rules"
+        label-width="120px"
+        class="demo-ruleForm"
+        inline="true"
     >
-    <el-option label="公交" value="2"></el-option>
-    <el-option label="地铁" value="3"></el-option>
-    <el-option label="高铁" value="4"></el-option>
-    <el-option label="其他" value="5"></el-option>
-    </el-select>
-  </div>
-  {{one}}
+      <el-form-item label="上级菜单" prop="name" style="margin-bottom: 10px">
+        <el-input v-model="ruleForm.name" style="width: 203px" disabled ></el-input>
+      </el-form-item>
+      <el-form-item label="菜单名称" prop="name" style="margin-bottom: 10px">
+        <el-select v-model="one" slot="prepend" style="width: 203px"
+                   filterable
+                   allow-create
+                   default-first-option>
+          <el-option label="公交" value="2"></el-option>
+          <el-option label="地铁" value="3"></el-option>
+          <el-option label="高铁" value="4"></el-option>
+          <el-option label="其他" value="5"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="菜单类型" prop="region">
+        <el-radio-group v-model="ruleForm.resource">
+          <el-radio label="目录" style="margin: 10px"></el-radio>
+          <el-radio label="菜单" style="margin: 10px"></el-radio>
+          <el-radio label="按钮" style="margin: 10px"></el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="菜单状态" prop="name" style="margin-bottom: 10px">
+        <el-switch v-model="one"  active-text="禁用" inactive-text="启用"/>
+      </el-form-item>
+      <el-form-item label="菜单图标" prop="name" style="margin-bottom: 10px">
+        <el-select v-model="one" slot="prepend" style="width: 535px"
+                   filterable
+                   allow-create
+                   default-first-option>
+          <el-option label="公交" value="2"></el-option>
+          <el-option label="地铁" value="3"></el-option>
+          <el-option label="高铁" value="4"></el-option>
+          <el-option label="其他" value="5"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="路由地址" prop="name" style="margin-bottom: 10px">
+        <el-select v-model="one" slot="prepend" style="width: 535px"
+                   filterable
+                   allow-create
+                   default-first-option
+        >
+          <el-option label="公交" value="2"></el-option>
+          <el-option label="地铁" value="3"></el-option>
+          <el-option label="高铁" value="4"></el-option>
+          <el-option label="其他" value="5"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="组件地址" prop="name" style="margin-bottom: 10px">
+        <el-select v-model="one" slot="prepend" style="width: 535px"
+                   filterable
+                   allow-create
+                   default-first-option
+        >
+          <el-option label="公交" value="2"></el-option>
+          <el-option label="地铁" value="3"></el-option>
+          <el-option label="高铁" value="4"></el-option>
+          <el-option label="其他" value="5"></el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="insertMenu = false,submitForm('ruleForm')">确认</el-button>
+        <el-button @click="insertMenu = false">取消</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
+  {{ one }}
 </template>
 
 <script>
 export default {
   data() {
     return {
-      one:"",
+      ruleForm: {
+        //上级菜单名称
+        previousMenu:'',
+        //菜单名称
+        menuName: '',
+        //菜单类型
+        menuType: '',
+        //菜单状态
+        menuState: false,
+        //菜单图标
+        menuImage: '',
+        //菜单路由
+        menuRouter:'',
+        //菜单组件
+        menuModule: ''
+      },
+      rules: {
+        //上级菜单名称
+        previousMenu:[],
+        //菜单名称
+        menuName: [],
+        //菜单类型
+        menuType: [],
+        //菜单状态
+        menuState: [],
+        //菜单图标
+        menuImage: [],
+        //菜单路由
+        menuRouter:[],
+        //菜单组件
+        menuModule: []
+      },
+      //新增菜单弹出框
+      insertMenu: false,
+      one: "",
       //一键展开收缩菜单
       expands: false,
       //渲染展开菜单
       refreshTable: true,
       //输入的菜单名称值
       menuName: '',
+      //日期组件
       shortcuts: [
         {
           text: '过去一周',
@@ -356,6 +463,20 @@ export default {
       ],
     }
   }, methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    //清空表单数据
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    },
     //展开操作/收起操作
     handle() {
       this.refreshTable = false;
@@ -369,14 +490,30 @@ export default {
       });
     }
   }
-
 }
 </script>
-
 <style scoped>
 @import url("../../css/navigation.css");
-.button-enable{
-  background:#ecf5ff;
+.el-scrollbar__view .el-select-dropdown__item{
+  text-align: center;
+}
+/deep/.el-input__suffix  .el-input__suffix-inner .el-icon svg{
+  position: relative;
+  top: 10px;
+}
+.dialog-footer .el-button {
+  width: 100px;
+  min-height: 33px;
+}
+
+/deep/ .el-date-editor .el-range__close-icon svg {
+  position: relative;
+  top: -13px;
+  left: 30px;
+}
+
+.button-enable {
+  background: #ecf5ff;
   border: 1px #cfe6ff solid;
   color: #5aaaff;
   display: inline-block;
@@ -388,8 +525,9 @@ export default {
   padding: 12px 20px;
   border-radius: var(--el-border-radius-base);
 }
-.button-forbidden{
-  background:#fef0f0;
+
+.button-forbidden {
+  background: #fef0f0;
   border: 1px #f2c5c5 solid;
   color: #f57a7a;
   display: inline-block;
@@ -402,10 +540,11 @@ export default {
   border-radius: var(--el-border-radius-base);
 }
 
-/deep/td div button span svg{
+/deep/ td div button span svg {
   position: relative !important;
-  top:2px;
+  top: 2px;
 }
+
 /deep/ .el-button {
   font-size: 12px !important;
 }
@@ -437,7 +576,7 @@ export default {
 
 .j-menu-name {
   position: relative;
-  top:-2px;
+  top: -2px;
   color: #606266;
   vertical-align: middle;
   text-align: right;
