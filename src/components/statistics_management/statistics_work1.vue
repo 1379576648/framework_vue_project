@@ -9,7 +9,7 @@
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
                    @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 15px;">搜索</el-button>
+      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
     </div>
 
 
@@ -22,7 +22,7 @@
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!-- 	每日员工异常人数	 -->
     <div id="main5" style="width: 952px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
       <span class="ziti">昨日迟到人数</span>
       <br>
@@ -44,7 +44,7 @@
     <div id="main" style="width: 952px;height:460px;"></div>
 
 
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">昨日请假人数</span>
@@ -63,7 +63,7 @@
 
     <!-- 每日出差人数 -->
     <div id="main1" style="width: 952px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">昨日出差人数</span>
@@ -82,7 +82,7 @@
 
     <!-- 员工出勤率 -->
     <div id="main2" style="width: 952px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">昨日出勤人数</span>
@@ -101,7 +101,7 @@
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <!--  员工缺勤率 -->
     <div id="main3" style="width: 952px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 25%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
       <span class="ziti">昨日缺勤人数</span>

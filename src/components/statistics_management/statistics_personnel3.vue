@@ -3,11 +3,11 @@
     <div style="border-right: 1px #000000 dashed; width: 50%;height: 480px;border-left: 1px #000000 dashed;">
 
       <!-- //员工性别分布 -->
-      <div id="mainy1" style="width: 700px;height:460px; float: left;"></div>
+      <div id="mainy1" style="width: 655px;height:425px; float: left;"></div>
     </div>
-    <div style="  width: 50%;height: 480px; position: absolute;top: 0px;right: 2px; ">
+    <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
       <!-- //员工婚姻分布 -->
-      <div id="mainy2" style="width: 700px;height:460px; float: right;"></div>
+      <div id="mainy2" style="width: 655px;height:425px; float: right;"></div>
     </div>
   </div>
 
@@ -17,11 +17,11 @@
     <div style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
       <!--  员工司龄分布 -->
-      <div id="mainy3" style="width: 700px;height:460px; float: left;"></div>
+      <div id="mainy3" style="width: 655px;height:425px; float: left;"></div>
     </div>
-    <div style="  width: 50%;height: 480px; position: absolute;top: 0px;right: 2px; ">
+    <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
       <!-- 员工学历分布 -->
-      <div id="mainy4" style="width: 700px;height:460px; float: right;"></div>
+      <div id="mainy4" style="width: 655px;height:425px; float: right;"></div>
     </div>
   </div>
 
@@ -30,11 +30,11 @@
     <div style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
       <!-- 员工年龄段分布 -->
-      <div id="mainy5" style="width: 700px;height:460px; float: left;"></div>
+      <div id="mainy5" style="width: 655px;height:425px; float: left;"></div>
     </div>
-    <div style="  width: 50%;height: 480px; position: absolute;top: 0px;right: 2px; ">
+    <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
       <!-- 	员工年代分布 -->
-      <div id="mainy6" style="width: 700px;height:460px; float: right;"></div>
+      <div id="mainy6" style="width: 655px;height:425px; float: right;"></div>
     </div>
 
 
@@ -42,11 +42,11 @@
       <div style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
         <!-- 员工年龄段分布 -->
-        <div id="mainy7" style="width: 700px;height:460px; float: left;"></div>
+        <div id="mainy7" style="width: 655px;height:425px; float: left;"></div>
       </div>
-      <div style="  width: 50%;height: 480px; position: absolute;top: 0px;right: 2px; ">
+      <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
         <!-- 	员工年代分布 -->
-        <div id="mainy8" style="width: 700px;height:460px; float: right;"></div>
+        <div id="mainy8" style="width: 655px;height:425px; float: right;"></div>
       </div>
     </div>
   </div>
