@@ -29,24 +29,28 @@ export default {
     },
     //点击登录操作
     submit() {
+      //如果账号为空
       if (this.name == ""||this.name==null||this.name==undefined) {
         ElNotification.warning({
           title: '提示',
           message: "请输入账号",
           offset: 100,
         })
+        //如果密码为空
       }else if (this.pass == ""||this.pass==null||this.pass==undefined){
         ElNotification.warning({
           title: '提示',
           message: "请输入密码",
           offset: 100,
         })
+        //如果账号格式有误
       }else if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.name))){
         ElNotification.warning({
           title: '提示',
           message: "请输入正确的手机号码",
           offset: 100,
         })
+        //如果密码格式有误
       }else if(!(/^(\w){6,20}$/.test(this.pass))){
         ElNotification.warning({
           title: '提示',

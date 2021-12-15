@@ -32,7 +32,7 @@
                      style="color: #0c9c6e;font-size: 40px;height: 40px;width: 40px; display: block;margin: auto;">
                     {{ iconHandle(memu.PICTURE_ADDRESS) }}</i>
                   <br/>
-                  <p>{{ memu.MENU_NAME }}</p>
+                  <p style="color: #040711">{{ memu.MENU_NAME }}</p>
                 </router-link>
               </li>
             </el-sub-menu>
@@ -114,14 +114,12 @@ export default {
     },
     //菜单点击事件
     handleSelect(key, keyPath) {
-      //更换默认二级路由名称
+      //将当前点击的路由存起来
       this.$store.state.activate_router = key
-      //更换默认二级路由名称版本
-      this.$store.state.router_versions = this.$route.query.path
+      //通过path 跳转路由 并且传当前激活路由为参数
       this.$router.push({
         path: key,
         query: {path: key},
-        replace:true
       })
     },
     //字符串转图标字体
@@ -131,27 +129,43 @@ export default {
       return unescape("%u" + icon)
     },
     inquire_1() {
-      for (let i of this.memuList1) {
-        //默认激活路由为空则添加路由
-        if (this.activate_router == '') {
-          this.activate_router = i.MENU_ROUTE;
+      //如果菜单列表有值
+      if (this.memuList1){
+        //循环菜单列表
+        for (let i of this.memuList1) {
+            //如果默认激活路由为空
+          if (this.activate_router == '') {
+            //选择菜单列表第一个路由为默认激活
+            this.activate_router = i.MENU_ROUTE;
+          }
         }
       }
     }
   }, computed: {
     //默认激活路由
     default_route() {
+      //如果存起来的默认激活路由不等于参数值
+      if (this.$store.state.activate_router != this.$route.query.path) {
+        //如果参数不为空
+        if (this.$route.query.path != null) {
+          //默认激活路由等于参数值
+          this.activate_router = this.$route.query.path
+        } else {
+          //初始化默认激活参数
+          this.activate_router = ''
+        }
+        //如果存起来的默认激活路由等于参数值
+      } else {
+        //则默认激活路由取出来
+        this.activate_router = this.$store.state.activate_router;
+      }
       //找出第一个菜单
       this.inquire_1();
+      //将目前激活的路由存起来
+      this.$store.state.activate_router = this.activate_router
       return this.activate_router;
     }
-  },watch: {
-    //点击路由刷新页面
-    '$route'(to, from) {
-      this.$router.go(0);
-    }
   }
-
 }
 </script>
 <style>
