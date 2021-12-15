@@ -71,8 +71,46 @@ const routes = [{
                     children:[
                         {//员工花名册
                             path: '/employee/message/employee_roster',
-                            component:modules[`${'../components/employee_management/employee_staff.vue'}`],
+                            redirect:"/employee/message/employee_roster/book",
+                            component:modules[`${'../components/employee_management/employee_staff_one.vue'}`],
+                            children:[
+                                //花名册
+                                {
+                                path: '/employee/message/employee_roster/book',
+                                component:modules[`${'../components/employee_management/employee_staff.vue'}`],
+                                },
+                                //工作经历
+                                {
+                                    path: '/employee/message/employee_roster/business',
+                                    component:modules[`${'../components/employee_management/employee_work.vue'}`],
+                                },
+
+                            ]
                         },
+                        //办理离职
+                        {
+                            path: '/employee/message/employee_roster/leave',
+                            component:modules[`${'../components/employee_management/employee_dimission.vue'}`],
+                        },
+                        //员工编辑
+                        {
+                            path:'/employee/message/employee_roster/staffedit',
+                            component:modules[`${'../components/employee_management/employee_compile.vue'}`],
+                            redirect: "/employee/message/employee_roster/basicfile",
+                            children: [
+                                //基本档案
+                                {
+                                    path:'/employee/message/employee_roster/basicfile',
+                                    component:modules[`${'../components/employee_management/employee_basic.vue'}`],
+                                },
+                                //个人信息
+                                {
+                                    path:'/employee/message/employee_roster/information',
+                                    component:modules[`${'../components/employee_management/employee_personal.vue'}`],
+                                }
+                            ]
+                        },
+
                         {//历史花名册
                             path: '/employee/message/history_roster',
                             component:modules[`${'../components/employee_management/employee_history.vue'}`],
@@ -85,7 +123,20 @@ const routes = [{
                     children:[
                         {//入职管理
                             path: '/employee/transaction/entry',
-                            component:modules[`${'../components/employee_management/employee_abandon.vue'}`],
+                            component:modules[`${'../components/employee_management/employee_entry.vue'}`],
+                            redirect: "/employee/transaction/entry/tobehired",
+                            children: [
+                                //待入职
+                                {
+                                    path: '/employee/transaction/entry/tobehired',
+                                    component:modules[`${'../components/employee_management/employee_stock.vue'}`],
+                                },
+                                //放弃入职
+                                {
+                                    path: '/employee/transaction/entry/hashired',
+                                    component:modules[`${'../components/employee_management/employee_abandon.vue'}`],
+                                },
+                            ]
                         },
                         {//转正管理
                             path: '/employee/transaction/worker',
