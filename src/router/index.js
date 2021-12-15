@@ -129,7 +129,7 @@ const routes = [{
             children:[
                 {//发起审批
                     path: '/examine/sponsor_examine',
-                    component:modules[`${'../components/examine_management/examine_1.vue'}`],
+                    component:modules[`${'../components/examine_management/examine_1_initiate.vue'}`],
                 },
                 {//审批中心
                     path: '/examine/examine_centre',
@@ -137,11 +137,11 @@ const routes = [{
                     children:[
                         {//转正审批
                             path: '/examine/examine_centre/sponsor_examine',
-                            component:modules[`${'../components/examine_management/examine_2.vue'}`],
+                            component:modules[`${'../components/examine_management/examine_2_positive.vue'}`],
                         },
                         {//异动审批
                             path: '/examine/examine_centre/transaction_examine',
-                            component:modules[`${'../components/examine_management/examine_4.vue'}`],
+                            component:modules[`${'../components/examine_management/examine_4_move.vue'}`],
                         },
                         {//调薪审批
                             path: '/examine/examine_centre/wage_examine',
@@ -171,7 +171,7 @@ const routes = [{
                 },
                 {//我的申请
                     path: '/examine/my_application',
-                    component:modules[`${'../components/examine_management/examine_3.vue'}`],
+                    component:modules[`${'../components/examine_management/examine_3_applyfor.vue'}`],
                 }
             ]
         },

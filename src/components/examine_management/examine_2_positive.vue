@@ -1,4 +1,5 @@
 <template>
+<!--  转正审批页面-->
   <div class="body_1">
     <el-tabs type="border-card">
       <el-tab-pane label="待办申请">
