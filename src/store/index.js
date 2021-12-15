@@ -370,8 +370,8 @@ const store = createStore({
                                 MENU_ID: 6,//菜单编号
                                 MENU_NAME: '面试管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: 'a',//路由地址
-                                MENU_MODULE: 'recruitment_management/recruitment_zp_resume.vue',//组件地址
+                                MENU_ROUTE: '/recruitment/zpprocess/recruitment_zp_interview',//路由地址
+                                MENU_MODULE: 'recruitment_management/recruitment_zp_interview.vue',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -512,8 +512,8 @@ const store = createStore({
                         MENU_ID: 7.1,//菜单编号
                         MENU_NAME: '薪酬结构',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-1',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/paynavigation',//路由地址
+                        MENU_MODULE: '/salary_management/salary_salarynavigation.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -522,8 +522,8 @@ const store = createStore({
                         MENU_ID: 7.2,//菜单编号
                         MENU_NAME: '核算方案',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-2',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/scheme',//路由地址
+                        MENU_MODULE: '/salary_management/salary_accountscheme.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -532,8 +532,8 @@ const store = createStore({
                         MENU_ID: 7.3,//菜单编号
                         MENU_NAME: '工资表',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-3',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/paysheet',//路由地址
+                        MENU_MODULE: '/salary_management/salary_salarynavigation.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -542,8 +542,8 @@ const store = createStore({
                         MENU_ID: 7.4,//菜单编号
                         MENU_NAME: '薪酬统计',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-4',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/count',//路由地址
+                        MENU_MODULE: '/salary_management/salary_statistics.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -822,8 +822,8 @@ const store = createStore({
                                 MENU_ID: 3,//菜单编号
                                 MENU_NAME: '角色设置',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/system_navigation',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/system/authority_management/role',//路由地址
+                                MENU_MODULE: 'system_management/system_role',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
