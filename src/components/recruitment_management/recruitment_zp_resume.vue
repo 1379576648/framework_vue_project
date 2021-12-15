@@ -4,32 +4,32 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
-        <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-top: 10px;">
+        <el-tabs  style="margin-top: 10px;">
 
           <el-tab-pane name="">
             <template #label>
-              <router-link :to="{path:this.afullresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">全部简历</div></router-link>
+              <router-link :to="{path:this.path.afullresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">全部简历</div></router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="newresume">
+          <el-tab-pane name="">
             <template #label>
-              <router-link :to="{path:this.bnewresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">新简历</div> </router-link>
+              <router-link :to="{path:this.path.bnewresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">新简历</div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="candidate">
+          <el-tab-pane name="">
             <template #label>
-              <router-link :to="{path:this.ccandidate,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
+              <router-link :to="{path:this.path.ccandidate,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="eliminate">
+          <el-tab-pane name="">
             <template #label>
-              <router-link :to="{path:this.deliminate,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
+              <router-link :to="{path:this.path.deliminate,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
@@ -41,15 +41,17 @@
   </div>
 </template>
 
-<script>
+<script >
 export  default {
   data(){
     return{
-      //路由地址
-      afullresume:'/recruitment/recruit/fullresume',
-      bnewresume:'/recruitment/recruit/newresume',
-      ccandidate:'/recruitment/recruit/candidate',
-      deliminate:'/recruitment/recruit/eliminate'
+      path:{
+        //路由地址
+        afullresume:'/recruitment/recruit/fullresume',
+        bnewresume:'/recruitment/recruit/newresume',
+        ccandidate:'/recruitment/recruit/candidate',
+        deliminate:'/recruitment/recruit/eliminate'
+      }
     }
   }
 }
