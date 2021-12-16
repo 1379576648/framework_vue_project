@@ -1,3 +1,4 @@
+<!--查看工资表 -->
 <template>
   <div style="width:100%;">
   <div style="width:100%;height:10px;">
