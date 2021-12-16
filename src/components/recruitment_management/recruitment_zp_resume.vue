@@ -1,57 +1,61 @@
 <!--人才库-->
 <template>
-
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
-        <el-tabs  style="margin-top: 10px;">
+        <el-tabs v-model="activeName" style="margin-top: 10px;">
 
-          <el-tab-pane name="">
+          <el-tab-pane name="value_a">
             <template #label>
-              <router-link :to="{path:this.path.afullresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">全部简历</div></router-link>
+              <router-link :to="{path:this.one,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">
+                全部简历(99)
+              </div></router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="">
+          <el-tab-pane name="value_b">
             <template #label>
-              <router-link :to="{path:this.path.bnewresume,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">新简历</div> </router-link>
+              <router-link :to="{path:this.two,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">
+                新简历(99)
+              </div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="">
+          <el-tab-pane name="value_c">
             <template #label>
-              <router-link :to="{path:this.path.ccandidate,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">候选人</div> </router-link>
+              <router-link :to="{path:this.three,query:{path:this.$route.query.path}}"> <div style="width: 120px;text-align: center">
+                候选人(99)
+              </div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
 
-          <el-tab-pane name="">
+          <el-tab-pane name="value_d">
             <template #label>
-              <router-link :to="{path:this.path.deliminate,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">淘汰库</div> </router-link>
+              <router-link :to="{path:this.foue,query:{path:this.$route.query.path}}"><div style="width: 120px;text-align: center">
+                淘汰库(99)
+              </div> </router-link>
             </template>
             <router-view/>
           </el-tab-pane>
-
         </el-tabs>
-
       </div>
     </div>
   </div>
 </template>
 
-<script >
+<script>
 export  default {
   data(){
     return{
-      path:{
-        //路由地址
-        afullresume:'/recruitment/recruit/fullresume',
-        bnewresume:'/recruitment/recruit/newresume',
-        ccandidate:'/recruitment/recruit/candidate',
-        deliminate:'/recruitment/recruit/eliminate'
-      }
+      activeName:'value_a',
+      //路由地址
+      one:'/recruitment/recruit/fullresume',
+      two:'/recruitment/recruit/newresume',
+      three:'/recruitment/recruit/candidate',
+      foue:'/recruitment/recruit/eliminate'
     }
   }
 }
@@ -62,7 +66,7 @@ export  default {
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 
-/deep/.el-tabs__item {
+/deep/ .el-tabs__item {
     padding: 0px 10px;
     padding-left: 36px;
     height: 40px;
@@ -85,7 +89,7 @@ export  default {
 }
 
 a{
-  font-size: 15px;
+  font-size: 14px;
   color: black;
 }
 
