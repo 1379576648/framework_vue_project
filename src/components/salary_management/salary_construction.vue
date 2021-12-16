@@ -1,40 +1,5 @@
+<!--薪酬结构 -->
 <template>
-<!--  <div class="payroll2-tabs">-->
-<!--    <ul style="margin-left: 85px">-->
-<!--      <router-link to="/construction">-->
-<!--      <li class="">-->
-<!--        <i class="iconfont i-iconfont">&#xe602;</i>-->
-<!--        <h3>-->
-<!--          <span>第一步</span>-->
-<!--        </h3>-->
-<!--        <p><span>设置薪酬结构</span></p>-->
-<!--      </li>-->
-<!--      </router-link>-->
-
-<!--      <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>-->
-
-<!--      <router-link to="/salary2">-->
-<!--      <li class="">-->
-<!--        <i class="iconfont">&#xe633;</i>-->
-<!--        <h3>-->
-<!--          <span>第二步</span>-->
-<!--        </h3>-->
-<!--        <p><span>设置核算方案</span></p>-->
-<!--      </li>-->
-<!--      </router-link>-->
-
-<!--      <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>-->
-<!--      <router-link to="/archive">-->
-<!--        <li class="">-->
-<!--          <i class="iconfont">&#xe624;</i>-->
-<!--          <h3>-->
-<!--            <span>第三步</span>-->
-<!--          </h3>-->
-<!--          <p><span>核算工资并<br/>生成工资表</span></p>-->
-<!--        </li>-->
-<!--      </router-link>-->
-<!--    </ul>-->
-<!--  </div>-->
   <div class="demo-collapse">
     <div style="width: 95%;margin: auto">
     <div class="">

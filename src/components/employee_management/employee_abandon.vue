@@ -1,5 +1,8 @@
+
+<!--  放弃入职员工页面  -->
 <template>
   <div class="saas-main-content">
+
     <!--搜索输入框-->
     <el-row style="width:200px;float:right;">
       <el-input v-model="input3" placeholder="搜索">

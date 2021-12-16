@@ -1,3 +1,4 @@
+<!--调动管理页面-->
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -39,9 +40,9 @@
                 <div style="display: inline-block;position: absolute;left:500px;" >
                   <el-form-item label="异动类型：" prop="region">
                     <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:240px;">
-                      <el-option label="调岗" value="tg"></el-option>
-                      <el-option label="普升" value="ps"></el-option>
-                      <el-option label="降职" value="jj"></el-option>
+                      <el-option label="调岗" value="tg" style="margin-left: 20px;"></el-option>
+                      <el-option label="普升" value="ps" style="margin-left: 20px;"></el-option>
+                      <el-option label="降职" value="jj" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item><br/>
 
