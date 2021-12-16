@@ -1,48 +1,9 @@
+<!--薪酬步骤导航 -->
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <span></span>
-<!--        <div style="width: 80%;margin:auto; margin-top: 20px">-->
-<!--          <div style="width:100%;margin: auto">-->
-<!--            <div class="icon-div" style="display: inline-block;padding: 0px 80px">-->
-<!--                 <el-button plain  style="width: 145px;height: 188px;  border-radius: 10px;">-->
-<!--                    <i class="iconfont">&#xe602;</i>-->
-<!--                   <h3>第一步</h3>-->
-<!--                   <br/>-->
-<!--                    <p style="font-size: 14px;">设置薪酬结构</p>-->
-<!--                  </el-button>-->
-<!--            </div>-->
-
-
-<!--            <i class="iconfont">&#xe658;</i>-->
-<!--            <div class="icon-div" style="display: inline-block;padding: 0px 80px">-->
-<!--                <el-button plain  style="width: 145px;height: 188px;  border-radius: 10px;">-->
-<!--                  <i class="iconfont">&#xe633;</i>-->
-<!--                  <h3>第二步</h3>-->
-<!--                  <br/>-->
-<!--                  <p style="font-size: 14px;">设置核算方案</p>-->
-<!--                </el-button>-->
-<!--            </div>-->
-
-
-<!--            <i class="iconfont">&#xe658;</i>-->
-
-<!--            <div class="icon-div" style="display: inline-block;padding: 0px 80px">-->
-<!--              <router-link to="/archive">-->
-<!--              <el-button plain  style="width: 145px;height: 188px;  border-radius: 10px;">-->
-<!--                <i class="iconfont">&#xe624;</i>-->
-<!--                <h3>第三步</h3>-->
-<!--                <br/>-->
-<!--                <p style="font-size: 14px;">核算工资并生成工资表</p>-->
-<!--              </el-button>-->
-<!--              </router-link>-->
-<!--            </div>-->
-
-
-<!--            </div>-->
-<!--        </div>-->
-
         <div class="payroll2-tabs">
           <ul style="margin-left: 85px">
             <router-link :to="{path:this.flat,query:{path: this.$route.query.path}}">

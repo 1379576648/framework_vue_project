@@ -127,8 +127,8 @@
                 </span>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item :icon="Plus">删除</el-dropdown-item>
-                      <el-dropdown-item :icon="CirclePlus">转入淘汰库</el-dropdown-item>
+                      <el-dropdown-item>删除</el-dropdown-item>
+                      <el-dropdown-item>转入淘汰库</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
