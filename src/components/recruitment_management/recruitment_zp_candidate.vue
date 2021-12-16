@@ -40,8 +40,6 @@
                 <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
-
-
           </div>
 
         </div>
