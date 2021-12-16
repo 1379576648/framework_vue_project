@@ -47,18 +47,18 @@
 </template>
 
 <script>
-export  default {
-  data(){
-    return{
-      activeName:'value_a',
-      //路由地址
-      one:'/recruitment/recruit/fullresume',
-      two:'/recruitment/recruit/newresume',
-      three:'/recruitment/recruit/candidate',
-      foue:'/recruitment/recruit/eliminate'
-    }
-  }
-}
+// export  default {
+//   data(){
+//     return{
+//       activeName:'value_a',
+//       //路由地址
+//       one:'/recruitment/recruit/fullresume',
+//       two:'/recruitment/recruit/newresume',
+//       three:'/recruitment/recruit/candidate',
+//       foue:'/recruitment/recruit/eliminate'
+//     }
+//   }
+// }
 </script>
 
 
