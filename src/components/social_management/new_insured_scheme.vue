@@ -273,7 +273,7 @@
 </template>
 
 <script>
-// import { ref, defineComponent } from "vue";
+import { ref, defineComponent } from "vue";
 
 export default {
   methods: {
@@ -356,10 +356,10 @@ export default {
 </script>
 
 <style scoped>
-/*.el-input {*/
-/*  width: 50%;*/
-/*  display: inline-block;*/
-/*}*/
+.el-input {
+  width: 50%;
+  display: inline-block;
+}
 
 .all-input {
   /*  上、右、下、左  */
