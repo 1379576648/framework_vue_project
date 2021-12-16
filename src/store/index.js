@@ -46,8 +46,8 @@ const store = createStore({
                         MENU_ID: 2.1,//菜单编号
                         MENU_NAME: '组织情报',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/2-1',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: 'organization/message',//路由地址
+                        MENU_MODULE: '/components/organization_management/zz_evection',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -56,8 +56,8 @@ const store = createStore({
                                 MENU_ID: 2.11,//菜单编号
                                 MENU_NAME: '部门详情',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-1-1',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/organization/message/zz_evectino',//路由地址
+                                MENU_MODULE: '/components/organization_management/zz_evection',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -66,8 +66,8 @@ const store = createStore({
                                 MENU_ID: 2.12,//菜单编号
                                 MENU_NAME: '职位详情',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-1-2',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/organization/message/zz_post',//路由地址
+                                MENU_MODULE: 'components/organization_management/zz_post',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -87,8 +87,8 @@ const store = createStore({
                                 MENU_ID: 2.21,//菜单编号
                                 MENU_NAME: '职位管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-2-1',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/organization/message/zz_edit',//路由地址
+                                MENU_MODULE: 'components/organization_management/zz_edit',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -96,8 +96,8 @@ const store = createStore({
                                 MENU_ID: 2.22,//菜单编号
                                 MENU_NAME: '部门管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-2-2',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/organization/message/zz_depts',//路由地址
+                                MENU_MODULE: 'components/organization_management/zz_depts',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -568,7 +568,7 @@ const store = createStore({
                         MENU_ID: 8.1,//菜单编号
                         MENU_NAME: '基本设置',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/8-1',//路由地址
+                        MENU_ROUTE: '/social/basic_setup',//路由地址
                         MENU_MODULE: 'social_management/social_main',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
@@ -578,8 +578,8 @@ const store = createStore({
                                 MENU_ID: 8.11,//菜单编号
                                 MENU_NAME: '参保方案',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/8-1-1',//路由地址
-                                MENU_MODULE: 'social_management/social_main',//组件地址
+                                MENU_ROUTE: '/social/basic_setup/insured_scheme',//路由地址
+                                MENU_MODULE: 'social_management/insured_scheme',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -589,7 +589,7 @@ const store = createStore({
                         MENU_ID: 8.2,//菜单编号
                         MENU_NAME: '社保管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/8-2',//路由地址
+                        MENU_ROUTE: '/social/social_management',//路由地址
                         MENU_MODULE: 'social_management/social_main',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
@@ -599,8 +599,8 @@ const store = createStore({
                                 MENU_ID: 8.21,//菜单编号
                                 MENU_NAME: '参保人员管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/8-2-1',//路由地址
-                                MENU_MODULE: 'social_management/social_main',//组件地址
+                                MENU_ROUTE: '/social/social_management/insured_management',//路由地址
+                                MENU_MODULE: 'social_management/insured_management',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -610,7 +610,7 @@ const store = createStore({
                         MENU_ID: 8.3,//菜单编号
                         MENU_NAME: '社保缴费',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/8-3',//路由地址
+                        MENU_ROUTE: '/social/social_payment',//路由地址
                         MENU_MODULE: 'social_management/social_main',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
@@ -620,8 +620,8 @@ const store = createStore({
                                 MENU_ID: 8.31,//菜单编号
                                 MENU_NAME: '月底报表',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/8-3-1',//路由地址
-                                MENU_MODULE: 'social_management/social_main',//组件地址
+                                MENU_ROUTE: '/social/social_payment/monthly_report',//路由地址
+                                MENU_MODULE: 'social_management/monthly_report',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -630,8 +630,8 @@ const store = createStore({
                                 MENU_ID: 8.32,//菜单编号
                                 MENU_NAME: '社保缴费明细',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/8-3-2',//路由地址
-                                MENU_MODULE: 'social_management/social_main',//组件地址
+                                MENU_ROUTE: '/social/social_payment/payment_detail',//路由地址
+                                MENU_MODULE: 'social_management/payment_detail',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有

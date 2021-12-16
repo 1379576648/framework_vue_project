@@ -54,7 +54,7 @@
 
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
-          <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini">
+          <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
             <el-table-column prop="ID" label="序号" width="150"/>
             <el-table-column prop="zpname" label="招聘计划名称" width="200"/>
             <el-table-column prop="zpzw" label="招聘职位" width="200"/>
