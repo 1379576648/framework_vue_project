@@ -451,7 +451,9 @@ export default {
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.woff?t=1638864192788') format('woff'),
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.ttf?t=1638864192788') format('truetype');
 }
-
+.el-form-item__content .menus .el-checkbox{
+  margin-left: 10px;
+}
 /*数据权限样式*/
 .role-character{
   font-weight:bold;

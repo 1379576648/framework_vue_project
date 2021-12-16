@@ -46,8 +46,9 @@
                 </el-button>
               </div>
             </div>
-            <div class="j-set-top-bottom" @click="this.insertMenu=true">
-              <el-button type="primary">
+            <div class="j-set-top-bottom">
+              <el-button type="primary"
+                         @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目'">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
@@ -127,7 +128,8 @@
               <el-table-column prop="CREATED_TIME" label="创建时间" min-width="220"/>
               <el-table-column label="操作" min-width="180">
                 <template #default="scope">
-                  <el-button type="text">
+                  <el-button type="text"
+                             @click="this.insertMenu=true,this.boxName='修改菜单',this.ruleForm.previousMenu=scope.row.MENU_NAME">
                     <svg t="1639052797619" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="9054" width="12" height="12">
                       <path
@@ -136,7 +138,8 @@
                     </svg>
                     修改
                   </el-button>
-                  <el-button type="text">
+                  <el-button type="text"
+                             @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu=scope.row.MENU_NAME">
                     <svg t="1639053259858" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="11914" width="12" height="12">
                       <path
@@ -145,7 +148,7 @@
                     </svg>
                     新增
                   </el-button>
-                  <el-button type="text">
+                  <el-button type="text" @click="deleteMenu(scope.row.MENU_NAME)">
                     <svg t="1639053106665" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="10997" width="12" height="12">
                       <path
@@ -174,7 +177,7 @@
   <!--  新增菜单弹出框-->
   <el-dialog
       v-model="insertMenu"
-      title="添加菜单"
+      :title="this.boxName"
       width="50%"
       destroy-on-close
       left
@@ -251,17 +254,20 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
-        <el-button @click="resetForm('ruleForm')">取消</el-button
-        >
+        <el-button @click="resetForm('ruleForm')">取消</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script>
+import {ElMessageBox, ElMessage} from 'element-plus'
+
 export default {
   data() {
     return {
+      //弹出框名称
+      boxName: '',
       ruleForm: {
         //上级菜单名称
         previousMenu: '',
@@ -482,16 +488,44 @@ export default {
       ],
     }
   }, methods: {
+    deleteMenu(value) {
+      ElMessageBox.confirm(
+          '是否确认删除名称为“'+value+'"的数据项?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        ElMessage({
+          type: 'success',
+          message: '删除成功',
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          if (this.boxName==='新增菜单'){
+
+          }else{
+
+          }
           //清空表单
           this.$refs[formName].resetFields();
           //关闭弹出框
-          this.insertMenu=false;
+          this.insertMenu = false;
+          ElMessage({
+            type: 'success',
+            message: this.boxName=='新增菜单'?'新增成功':'修改成功',
+          })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -502,6 +536,10 @@ export default {
       this.$refs[formName].resetFields();
       //关闭弹出框
       this.insertMenu = false;
+      ElMessage({
+        type: 'info',
+        message: '取消成功',
+      })
     },
     //展开操作/收起操作
     handle() {
@@ -519,19 +557,20 @@ export default {
 }
 </script>
 <style scoped>
-
-/deep/.el-input__suffix .el-input__validateIcon{
+@import url("../../css/navigation.css");
+/deep/ .el-input__suffix .el-input__validateIcon {
   position: relative !important;
   top: 13px;
 }
-/deep/.el-scrollbar__wrap{
-  overflow-y:auto;
-  opacity:1;
+
+/deep/ .el-scrollbar__wrap {
+  overflow-y: auto;
+  opacity: 1;
 }
 
 
 /deep/ .insert_menuType .el-form-item__label {
-  position: relative!important;
+  position: relative !important;
   top: 10px;
 }
 
