@@ -511,62 +511,81 @@ const routes = [
                     redirect: "/statistics/staff_analyze/statistics_personnel1",
                     component:modules[`${'../components/menu_skip.vue'}`],
                     children:[
-                        {//人员数量分析
-                            path:'/statistics/staff_analyze/statistics_personnel1',
-                            component:modules[`${'../components/statistics_management/statistics_personnel1.vue'}`],
+                        {
+                            path: '/statistics/staff_analyze/statistics_personnel',
+                            component:modules[`${'../components/statistics_management/statistics_personnel.vue'}`],
+                            children:[
+                                {//人员数量分析
+                                    path:'/statistics/staff_analyze/statistics_personnel1',
+                                    component:modules[`${'../components/statistics_management/statistics_personnel1.vue'}`],
+                                },
+                                {//人工异动分析
+                                    path:'/statistics/staff_analyze/statistics_personnel2',
+                                    component:modules[`${'../components/statistics_management/statistics_personnel2.vue'}`],
+                                },
+                                {//员工概况
+                                    path:'/statistics/staff_analyze/statistics_personnel3',
+                                    component:modules[`${'../components/statistics_management/statistics_personnel3.vue'}`],
+                                }
+                            ]
                         },
-                        {//人工异动分析
-                            path:'/statistics/staff_analyze/statistics_personnel2',
-                            component:modules[`${'../components/statistics_management/statistics_personnel2.vue'}`],
-                        },
-                        {//员工概况
-                            path:'/statistics/staff_analyze/statistics_personnel3',
-                            component:modules[`${'../components/statistics_management/statistics_personnel3.vue'}`],
-                        }
+
                     ]
                 },
                 {//考勤分析
                     path:'/statistics/attendance_analyze',
                     component:modules[`${'../components/menu_skip.vue'}`],
-                    children:[
-                        {//出勤分析
-                            path:'/statistics/attendance_analyze/statistics_work1',
-                            component:modules[`${'../components/statistics_management/statistics_work1.vue'}`],
-                        },
-                        {//工时分析
-                            path:'/statistics/attendance_analyze/statistics_work2',
-                            component:modules[`${'../components/statistics_management/statistics_work2.vue'}`],
-                        },
-                        {//加班分析
-                            path:'/statistics/attendance_analyze/statistics_work3',
-                            component:modules[`${'../components/statistics_management/statistics_work3.vue'}`],
-                        },
-                        {//请假分析
-                            path:'/statistics/attendance_analyze/statistics_work4',
-                            component:modules[`${'../components/statistics_management/statistics_work4.vue'}`],
-                        }
+                    children:[{
+                        path:'/statistics/attendance_analyze/statistics_work',
+                        component:modules[`${'../components/statistics_management/statistics_work.vue'}`],
+                        children: [
+
+                            {//出勤分析
+                                path:'/statistics/attendance_analyze/statistics_work1',
+                                component:modules[`${'../components/statistics_management/statistics_work1.vue'}`],
+                            },
+                            {//工时分析
+                                path:'/statistics/attendance_analyze/statistics_work2',
+                                component:modules[`${'../components/statistics_management/statistics_work2.vue'}`],
+                            },
+                            {//加班分析
+                                path:'/statistics/attendance_analyze/statistics_work3',
+                                component:modules[`${'../components/statistics_management/statistics_work3.vue'}`],
+                            },
+                            {//请假分析
+                                path:'/statistics/attendance_analyze/statistics_work4',
+                                component:modules[`${'../components/statistics_management/statistics_work4.vue'}`],
+                            }
+                        ]
+                    },
                     ]
                 },
                 {//薪酬分析
                     path:'/statistics/remuneration_analyze',
                     component:modules[`${'../components/menu_skip.vue'}`],
-                    children:[
-                        {//工资成本分析
-                            path:'/statistics/remuneration_analyze/statistics_analysis1',
-                            component:modules[`${'../components/statistics_management/statistics_analysis1.vue'}`],
-                        },
-                        {//社保成本分析
-                            path:'/statistics/remuneration_analyze/statistics_analysis2',
-                            component:modules[`${'../components/statistics_management/statistics_analysis2.vue'}`],
-                        },
-                        {//薪酬成本分析
-                            path:'/statistics/remuneration_analyze/statistics_analysis3',
-                            component:modules[`${'../components/statistics_management/statistics_analysis3.vue'}`],
-                        },
-                        {//部门成本分析
-                            path:'/statistics/remuneration_analyze/statistics_analysis4',
-                            component:modules[`${'../components/statistics_management/statistics_analysis4.vue'}`],
-                        }
+                    children:[{
+                        path:'/statistics/remuneration_analyze/statistics_analysis',
+                        component:modules[`${'../components/statistics_management/statistics_analysis.vue'}`],
+                        children: [
+                            {//工资成本分析
+                                path:'/statistics/remuneration_analyze/statistics_analysis1',
+                                component:modules[`${'../components/statistics_management/statistics_analysis1.vue'}`],
+                            },
+                            {//社保成本分析
+                                path:'/statistics/remuneration_analyze/statistics_analysis2',
+                                component:modules[`${'../components/statistics_management/statistics_analysis2.vue'}`],
+                            },
+                            {//薪酬成本分析
+                                path:'/statistics/remuneration_analyze/statistics_analysis3',
+                                component:modules[`${'../components/statistics_management/statistics_analysis3.vue'}`],
+                            },
+                            {//部门成本分析
+                                path:'/statistics/remuneration_analyze/statistics_analysis4',
+                                component:modules[`${'../components/statistics_management/statistics_analysis4.vue'}`],
+                            }
+                        ]
+                    },
+
                     ]
                 }
             ]
