@@ -62,7 +62,7 @@ export  default {
 @import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 
-/deep/ .el-tabs__item {
+/deep/.el-tabs__item {
     padding: 0px 10px;
     padding-left: 36px;
     height: 40px;
