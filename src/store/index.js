@@ -204,8 +204,8 @@ const store = createStore({
                         MENU_ID: 4.1,//菜单编号
                         MENU_NAME: '基础设置',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/4-1',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: 'attendance/check',//路由地址
+                        MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -214,19 +214,20 @@ const store = createStore({
                                 MENU_ID: 4.11,//菜单编号
                                 MENU_NAME: '班次管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/4-1-1',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/attendance/check/classes',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_check',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
                             }
                         ]
-                    }, {
+                    },
+                    {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '考勤记录',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/2',//路由地址
-                        MENU_MODULE: '&#xe62c;',//组件地址
+                        MENU_ROUTE: '/attendance/TimeCard',//路由地址
+                        MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -235,35 +236,38 @@ const store = createStore({
                                 MENU_ID: 4,//菜单编号
                                 MENU_NAME: '打卡记录',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-1',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/attendance/checking/clock',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_clock',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
-                            }, {
+                            },
+                            {
                                 MENU_ID: 5,//菜单编号
                                 MENU_NAME: '加班查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-2',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/attendance/checking/overtime',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_overtime',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
-                            }, {
+                            },
+                            {
                                 MENU_ID: 6,//菜单编号
                                 MENU_NAME: '请假查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-3',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/attendance/checking/leave',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_leave',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
-                            }, {
+                            },
+                            {
                                 MENU_ID: 7,//菜单编号
                                 MENU_NAME: '出差查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-4',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/attendance/checking/evection',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_evection',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -272,8 +276,8 @@ const store = createStore({
                                 MENU_ID: 7,//菜单编号
                                 MENU_NAME: '补打卡查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/2-4',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/attendance/checking/fillclock',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_reissue',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -283,8 +287,8 @@ const store = createStore({
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '考勤统计',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/3',//路由地址
-                        MENU_MODULE: '&#xe62c;',//组件地址
+                        MENU_ROUTE: 'attendance/statistics',//路由地址
+                        MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -293,12 +297,12 @@ const store = createStore({
                                 MENU_ID: 9,//菜单编号
                                 MENU_NAME: '考勤记录',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/3-1',//路由地址
-                                MENU_MODULE: '&#xe62c;',//组件地址
+                                MENU_ROUTE: '/attendance/statistics',//路由地址
+                                MENU_MODULE: 'attendance_management/attendance_statistics',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
-                            }
+                            },
                         ]
                     }
                 ]
@@ -370,8 +374,8 @@ const store = createStore({
                                 MENU_ID: 6,//菜单编号
                                 MENU_NAME: '面试管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: 'a',//路由地址
-                                MENU_MODULE: 'recruitment_management/recruitment_zp_resume.vue',//组件地址
+                                MENU_ROUTE: '/recruitment/zpprocess/recruitment_zp_interview',//路由地址
+                                MENU_MODULE: 'recruitment_management/recruitment_zp_interview.vue',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -512,8 +516,8 @@ const store = createStore({
                         MENU_ID: 7.1,//菜单编号
                         MENU_NAME: '薪酬结构',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-1',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/paynavigation',//路由地址
+                        MENU_MODULE: '/salary_management/salary_salarynavigation.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -522,8 +526,8 @@ const store = createStore({
                         MENU_ID: 7.2,//菜单编号
                         MENU_NAME: '核算方案',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-2',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/scheme',//路由地址
+                        MENU_MODULE: '/salary_management/salary_accountscheme.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -532,8 +536,8 @@ const store = createStore({
                         MENU_ID: 7.3,//菜单编号
                         MENU_NAME: '工资表',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-3',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/paysheet',//路由地址
+                        MENU_MODULE: '/salary_management/salary_salarynavigation.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -542,8 +546,8 @@ const store = createStore({
                         MENU_ID: 7.4,//菜单编号
                         MENU_NAME: '薪酬统计',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/7-4',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/salary/count',//路由地址
+                        MENU_MODULE: '/salary_management/salary_statistics.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -822,8 +826,8 @@ const store = createStore({
                                 MENU_ID: 3,//菜单编号
                                 MENU_NAME: '角色设置',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/system_navigation',//路由地址
-                                MENU_MODULE: '',//组件地址
+                                MENU_ROUTE: '/system/authority_management/role',//路由地址
+                                MENU_MODULE: 'system_management/system_role',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
