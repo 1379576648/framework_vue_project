@@ -446,6 +446,7 @@ const routes = [{
             children:[
                 {//人员分析
                     path:'/statistics/staff_analyze',
+                    redirect: "/statistics/staff_analyze/statistics_personnel1",
                     component:modules[`${'../components/menu_skip.vue'}`],
                     children:[
                         {//人员数量分析
@@ -515,6 +516,7 @@ const routes = [{
             children:[
                 {//权限管理
                     path: '/system/authority_management',
+                    redirect: "/system/authority_management/authority_set",
                     component:modules[`${'../components/menu_skip.vue'}`],
                     children:[
                         {//权限设置
