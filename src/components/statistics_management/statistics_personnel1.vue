@@ -5,7 +5,7 @@
       <span class="demonstration" style="position: relative;top: 15px;">时间范围：</span>
 
       <el-date-picker v-model="value1" type="daterange" range-separator="To"
-                      start-placeholder="Start date" end-placeholder="End date" style="position: relative;top: 15px;">
+                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 15px;">
       </el-date-picker>
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
@@ -20,7 +20,7 @@
   <div style="position: relative; display: block; width: 100%; border-top: 1px #000000 dashed;">
 
     <div :id="uuid" :style="style"></div>
-    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
+    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
       <span class="ziti">当前月在职人数</span>
       <br>
@@ -230,7 +230,8 @@ export default ({
 
 
       title: {
-        text: '每月末在职人数'
+        text: '每月末在职人数',
+        left:50
       },
       tooltip: {},
       legend: {
@@ -242,6 +243,7 @@ export default ({
       yAxis: {
         type: 'value',
         name: '人',
+
         min: 0,
         max: 25,
         interval: 5,
@@ -263,7 +265,8 @@ export default ({
     /* 当前月入职人数 */
     var option1 = {
       title: {
-        text: '每月入职人数'
+        text: '每月入职人数',
+        left:50
       },
       tooltip: {},
       legend: {
@@ -295,7 +298,8 @@ export default ({
     /*  当前月离职人数 */
     var option2 = {
       title: {
-        text: '每月离职人数'
+        text: '每月离职人数',
+        left:50
       },
       tooltip: {},
       legend: {
@@ -328,7 +332,8 @@ export default ({
 
 
       title: {
-        text: '每月转正人数'
+        text: '每月转正人数',
+        left:50
       },
       tooltip: {},
       legend: {
@@ -360,7 +365,8 @@ export default ({
     /*  当前最多人数部门 */
     var option4 = {
       title: {
-        text: '部门top人数'
+        text: '部门top人数',
+        left:50
       },
       tooltip: {},
       legend: {
@@ -388,7 +394,8 @@ export default ({
     /*   当前最多岗位人数： */
     var option5 = {
       title: {
-        text: '岗位Top榜'
+        text: '岗位Top榜',
+        left:50
       },
       tooltip: {},
       legend: {
