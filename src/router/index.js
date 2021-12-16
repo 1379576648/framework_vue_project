@@ -437,7 +437,66 @@ const routes = [{
         },
         {//社保管理
             path: '/social',
-            component:modules[`${'../components/social_management/social_main.vue'}`]
+            redirect:"/social/basic_setup",
+            component:modules[`${'../components/social_management/social_main.vue'}`],
+            children:[
+                {//基本设置
+                    path:'/social/basic_setup',
+                    redirect:"/social/basic_setup/insured_scheme",
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children:[
+                        {//参保方案
+                            path:'/social/basic_setup/insured_scheme',
+                            component:modules[`${'../components/social_management/insured_scheme.vue'}`],
+                        },
+                        {//新增、修改参保方案
+                            path:'/social/basic_setup/new_insured_scheme',
+                            component:modules[`${'../components/social_management/new_insured_scheme.vue'}`],
+                        },
+                    ]
+                },
+                {//社保管理
+                    path:'/social/social_management',
+                    redirect:"/social/social_management/insured_management",
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children:[
+                        {//参保人员管理
+                            path:'/social/social_management/insured_management',
+                            component:modules[`${'../components/social_management/insured_management.vue'}`],
+                        },
+                    ]
+                },
+                {//社保缴费
+                    path:'/social/social_payment',
+                    redirect:"/social/social_payment/monthly_report",
+                    component:modules[`${'../components/menu_skip.vue'}`],
+                    children:[
+                        {//月度报表
+                            path:'/social/social_payment/monthly_report',
+                            component:modules[`${'../components/social_management/monthly_report.vue'}`],
+                        },
+                        {//社保缴费明细
+                            path:'/social/social_payment/payment_detail',
+                            component:modules[`${'../components/social_management/payment_detail.vue'}`],
+                        },
+                        {// 查看个人参保详情
+                            path:'/social/social_payment/someone_insured_particulars',
+                            redirect:"/social/social_payment/someone_insured_particulars/someone_insured_details",
+                            component:modules[`${'../components/social_management/someone_insured_particulars.vue'}`],
+                            children:[
+                                {//参保明细
+                                    path:'/social/social_payment/someone_insured_particulars/someone_insured_details',
+                                    component: modules[`${'../components/social_management/someone_insured_details.vue'}`],
+                                },
+                                {//参保记录
+                                    path:'/social/social_payment/someone_insured_particulars/someone_insured_record',
+                                    component:modules[`${'../components/social_management/someone_insured_record.vue'}`],
+                                },
+                            ]
+                        },
+                    ]
+                },
+            ]
         },
         {//统计分析
             path: '/statistics',
