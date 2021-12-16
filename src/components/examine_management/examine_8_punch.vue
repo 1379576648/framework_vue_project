@@ -1,6 +1,8 @@
 <template>
+  <!-- 补打卡审批页面-->
   <div class="body_1">
     <el-tabs type="border-card">
+      <!-- 待办申请页面 -->
       <el-tab-pane label="待办申请">
         <el-button @click="resetDateFilter1">重置日期过滤</el-button>
         &nbsp;
@@ -11,7 +13,7 @@
         />
         &nbsp;
         <el-button type="success" plain>搜索</el-button>
-
+        <!--  表格 -->
         <el-table
           ref="filterTable1"
           row-key="date1"
@@ -39,11 +41,6 @@
           <el-table-column prop="AUDITFLOW_STATE" label="状态" width="100" />
           <el-table-column prop="STAFF_NAME" label="当前审批人" width="150" />
           <el-table-column prop="UPDATED_TIME" label="最近处理" width="150" />
-
-          <!-- <el-table-column prop="tag" label="操作" width="100">
-						<el-button type="success" plain>通过</el-button>
-						<el-button type="danger" plain>驳回</el-button>
-					</el-table-column> -->
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="success" plain>通过</el-button>
@@ -75,11 +72,11 @@
           </el-pagination>
         </div>
       </el-tab-pane>
-
+      <!-- 点击详情，弹出抽屉-->
       <el-drawer v-model="drawer" title="I am the title" :with-header="false">
         <span>Hi there!</span>
       </el-drawer>
-
+      <!-- 已办申请页面 -->
       <el-tab-pane label="已办申请">
         <el-button @click="resetDateFilter">重置日期过滤</el-button>
         &nbsp;
@@ -131,7 +128,6 @@
             </template>
           </el-table-column>
         </el-table>
-
         <!-- 分页插件 -->
         <div class="demo-pagination-block">
           <el-pagination
@@ -144,8 +140,6 @@
             :pager-count="5"
             background
           >
-            <!--  @size-change="selectUsers"
-						@current-change="selectUsers" -->
           </el-pagination>
         </div>
       </el-tab-pane>
@@ -172,6 +166,7 @@ export default {
   },
   data() {
     return {
+      // 待办转正审批列表
       tableData: [
         {
           date: "2016-05-02",
@@ -306,21 +301,18 @@ export default {
     };
   },
   methods: {
+    // 重置日期过滤
     resetDateFilter1() {
       this.$refs.filterTable1.clearFilter("date1");
     },
+    // 重置日期过滤
     resetDateFilter() {
       this.$refs.filterTable.clearFilter("date");
     },
     clearFilter() {
       this.$refs.filterTable.clearFilter();
     },
-    // formatter(row, column) {
-    //   return row.address;
-    // },
-    // filterTag(value, row) {
-    //   return row.tag === value;
-    // },
+    // 筛选
     filterHandler(value, row, column) {
       const property = column["property"];
       return row[property] === value;
@@ -331,5 +323,4 @@ export default {
 
 <style scoped>
 @import url("../../css/Examine_2.css");
-/* @import url("../css/Examine_3.css"); */
 </style>

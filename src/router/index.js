@@ -62,6 +62,32 @@ const routes = [
             {//组织管理
                 path: '/organization',
                 component: modules[`${'../components/organization_management/organization_main.vue'}`],
+                redirect: '/organization/message',
+                children:[
+                    {//组织情报
+                        path: '/organization/message',
+                        component: modules[`${'../components/menu_skip.vue'}`],
+                        redirect: '/organization/message/zz_evectino',
+                        children:[
+                            {//部门详情
+                                path: '/organization/message/zz_evectino',
+                                component: modules[`${'../components/organization_management/zz_evection.vue'}`],
+                            },
+                            {//职位信息
+                                path: '/organization/message/zz_post',
+                                component: modules[`${'../components/organization_management/zz_post.vue'}`],
+                            },
+                            {//职位管理
+                                path: '/organization/message/zz_edit',
+                                component: modules[`${'../components/organization_management/zz_edit.vue'}`],
+                            },
+                            {//部门管理
+                                path: '/organization/message/zz_depts',
+                                component: modules[`${'../components/organization_management/zz_depts.vue'}`],
+                            }
+                        ]
+                    }
+                ]
             },
             {//员工管理
                 path: '/employee',

@@ -1,7 +1,6 @@
+<!--待入职员工页面-->
 <template>
   <div class="saas-main-content">
-
-
 
     <!--搜索输入框-->
     <el-row style="width:200px;float:right;">
@@ -11,8 +10,6 @@
         </template>
       </el-input>
     </el-row>
-
-
 
     <br/>
     <el-table :data="tableData" stripe style="width: 100%">
@@ -49,6 +46,7 @@
       </el-pagination>
     </div>
 
+    <!--  弹框  -->
     <div >
       <el-dialog
           v-model="become"

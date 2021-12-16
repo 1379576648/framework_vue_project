@@ -6,6 +6,7 @@
       <div class="process-box" style="margin-top: 40px">
         <h2 class="big-title">人事</h2>
         <div class="link-list">
+
           <!-- 转正 -->
           <div
               title="转正"
@@ -17,10 +18,11 @@
                 @click="become = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_3.svg"/>
+              <img class="icon" src="../../assets/process_3.svg"/>
               <p class="link-text">转正</p>
             </el-button>
           </div>
+
           <!-- 异动 -->
           <div
               title="异动"
@@ -32,10 +34,11 @@
                 @click="Change = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_4.svg"/>
+              <img class="icon" src="../../assets/process_4.svg"/>
               <p class="link-text">异动</p>
             </el-button>
           </div>
+
           <!-- 调薪 -->
           <div title="调薪" class="link-list-item">
             <el-button
@@ -43,10 +46,11 @@
                 @click="salary = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_5.svg"/>
+              <img class="icon" src="../../assets/process_5.svg"/>
               <p class="link-text">调薪</p>
             </el-button>
           </div>
+
           <!-- 离职 -->
           <div title="离职" class="link-list-item">
             <el-button
@@ -54,7 +58,7 @@
                 @click="quit = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_6.svg"/>
+              <img class="icon" src="../../assets/process_6.svg"/>
               <p class="link-text">离职</p>
             </el-button>
           </div>
@@ -66,37 +70,36 @@
         <div class="link-list">
           <!-- 加班 -->
           <div title="加班" class="link-list-item">
-            <!-- overtime -->
             <el-button
                 type="text"
                 @click="overtime = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_18.svg"/>
+              <img class="icon" src="../../assets/process_18.svg"/>
               <p class="link-text">加班</p>
             </el-button>
           </div>
+
           <!-- 补打卡 -->
           <div title="补打卡" class="link-list-item">
-            <!-- punch -->
             <el-button
                 type="text"
                 @click="punch = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_19.svg"/>
+              <img class="icon" src="../../assets/process_19.svg"/>
               <p class="link-text">补打卡</p>
             </el-button>
           </div>
+
           <!-- 出差 -->
           <div title="出差" class="link-list-item">
-            <!-- travel -->
             <el-button
                 type="text"
                 @click="travel = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_21.svg"/>
+              <img class="icon" src="../../assets/process_21.svg"/>
               <p class="link-text">出差</p>
             </el-button>
           </div>
@@ -112,16 +115,16 @@
               class="link-list-item"
               v-on:click="this.sick_1.type_1 = '病假'"
           >
-            <!-- sick -->
             <el-button
                 type="text"
                 @click="sick = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_9.svg"/>
+              <img class="icon" src="../../assets/process_9.svg"/>
               <p class="link-text">病假</p>
             </el-button>
           </div>
+
           <!-- 事假 -->
           <div
               title="事假"
@@ -133,10 +136,11 @@
                 @click="sick = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_10.svg"/>
+              <img class="icon" src="../../assets/process_10.svg"/>
               <p class="link-text">事假</p>
             </el-button>
           </div>
+
           <!-- 丧假 -->
           <div
               title="丧假"
@@ -148,10 +152,11 @@
                 @click="sick = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_15.svg"/>
+              <img class="icon" src="../../assets/process_15.svg"/>
               <p class="link-text">丧假</p>
             </el-button>
           </div>
+
           <!-- 婚假 -->
           <div
               title="婚假"
@@ -163,10 +168,11 @@
                 @click="sick = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_11.svg"/>
+              <img class="icon" src="../../assets/process_11.svg"/>
               <p class="link-text">婚假</p>
             </el-button>
           </div>
+
           <!-- 产假 -->
           <div
               title="产假"
@@ -178,10 +184,11 @@
                 @click="sick = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_12.svg"/>
+              <img class="icon" src="../../assets/process_12.svg"/>
               <p class="link-text">产假</p>
             </el-button>
           </div>
+
           <!-- 工伤假 -->
           <div
               title="工伤假"
@@ -193,7 +200,7 @@
                 @click="sick = true"
                 style="color: #606c82; font-size: 12px"
             >
-              <img class="ZhaoPinXuQiu" src="../../assets/process_16.svg"/>
+              <img class="icon" src="../../assets/process_16.svg"/>
               <p class="link-text">工伤假</p>
             </el-button>
           </div>
@@ -235,7 +242,7 @@
             >
             </el-date-picker>
           </el-form-item>
-          <!-- 头像 -->
+          <!-- 审批人 -->
           <el-form-item label="审批人 :">
             <el-col :span="12">
               <div class="demo-basic--circle">
@@ -330,7 +337,6 @@
             </el-col>
           </el-form-item>
         </el-form>
-
         <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="submitForm_2">确定</el-button>
@@ -338,7 +344,6 @@
           </span>
         </template>
       </el-dialog>
-
       <!-- 调薪弹出框 -->
       <el-dialog
           v-model="salary"
@@ -362,8 +367,8 @@
           </el-form-item>
           <el-form-item label="调薪后基本工资">
             <el-input-number :precision="2" :step="100" :max="30000" :min="0"
-                v-model="salary_1.hjbgz"
-                oninput="value=value.toString().match(/^\d+(?:\.\d{0,2})?/)"
+                             v-model="salary_1.hjbgz"
+                             oninput="value=value.toString().match(/^\d+(?:\.\d{0,2})?/)"
             ></el-input-number>
           </el-form-item>
           <el-form-item label="调薪后岗位工资">
@@ -377,7 +382,6 @@
                 show-word-limit
             ></el-input>
           </el-form-item>
-
           <el-form-item label="期望调薪日期">
             <el-date-picker
                 v-model="salary_1.date1"
@@ -386,7 +390,6 @@
                 @change="difference6"
             ></el-date-picker>
           </el-form-item>
-
           <el-form-item label="审批人">
             <!-- 头像 -->
             <el-col :span="12">
@@ -417,7 +420,6 @@
             </el-col>
           </el-form-item>
         </el-form>
-
         <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="submitForm_3">确定</el-button>
@@ -425,7 +427,6 @@
           </span>
         </template>
       </el-dialog>
-
       <!-- 离职弹出框 -->
       <el-dialog
           v-model="quit"
@@ -528,7 +529,6 @@
             </el-col>
           </el-form-item>
         </el-form>
-
         <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="submitForm_4">确定</el-button>
@@ -536,7 +536,6 @@
           </span>
         </template>
       </el-dialog>
-
       <!-- 加班弹出框 -->
       <el-dialog
           v-model="overtime"
@@ -576,6 +575,7 @@
             >
             </el-date-picker>
           </el-form-item>
+          <!--  加班总时长-->
           <el-form-item label="加班总时长">
             <el-input v-model="overtime_1.date3" disabled></el-input>
           </el-form-item>
@@ -625,7 +625,6 @@
           </span>
         </template>
       </el-dialog>
-
       <!-- 补打卡弹出框 -->
       <el-dialog
           v-model="punch"
@@ -654,7 +653,6 @@
             >
             </el-date-picker>
           </el-form-item>
-
           <el-form-item label="补打卡备注">
             <el-input
                 v-model="punch_1.remarks_1"
@@ -693,7 +691,6 @@
             </el-col>
           </el-form-item>
         </el-form>
-
         <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="submitForm_6">确定</el-button>
@@ -701,7 +698,6 @@
           </span>
         </template>
       </el-dialog>
-
       <!-- 出差弹出框 -->
       <el-dialog
           v-model="travel"
@@ -717,7 +713,6 @@
           <el-form-item label="部门名称">
             <el-input v-model="travel_1.dept" disabled></el-input>
           </el-form-item>
-
           <!-- 出差地址选择器 -->
           <el-form-item label="出差地址">
             <div id="app">
@@ -732,7 +727,6 @@
               </div>
             </div>
           </el-form-item>
-
           <el-form-item label="出差事由">
             <el-input
                 v-model="travel_1.remarks_2"
@@ -793,7 +787,6 @@
             </el-col>
           </el-form-item>
         </el-form>
-
         <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="submitForm_7">确定</el-button>
@@ -801,7 +794,6 @@
           </span>
         </template>
       </el-dialog>
-
       <!-- 请假弹出框 -->
       <el-dialog
           v-model="sick"
@@ -1043,6 +1035,7 @@ export default defineComponent({
   },
   setup() {
     const dialogVisible = ref(false);
+    // 弹出框
     const become = ref(false);
     const Change = ref(false);
     const salary = ref(false);
@@ -1051,6 +1044,7 @@ export default defineComponent({
     const punch = ref(false);
     const travel = ref(false);
     const sick = ref(false);
+    // 审批人图标
     const state = reactive({
       circleUrl:
           "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
@@ -1187,6 +1181,7 @@ export default defineComponent({
       };
       this.overtime = false;
     },
+    // 时间
     cancel_date() {
       this.overtime_1.date1 = "";
       this.overtime_1.date2 = "";
@@ -1218,6 +1213,7 @@ export default defineComponent({
       };
       this.punch = false;
     },
+    // 时间
     cancel_date4() {
       this.punch_1.date1 = "";
     },
@@ -1248,6 +1244,7 @@ export default defineComponent({
       };
       this.travel = false;
     },
+    // 时间
     cancel_date2() {
       this.travel_1.date1 = "";
       this.travel_1.date2 = "";
@@ -1285,18 +1282,18 @@ export default defineComponent({
       };
       this.sick = false;
     },
+    // 时间
     cancel_date3() {
       this.sick_1.date1 = "";
       this.sick_1.date2 = "";
       this.sick_1.date3 = "";
     },
+    // 地址选择器
     handleChange() {
-      //var loc = "";
       for (let i = 0; i < this.selectedOptions.length; i++) {
         this.travel_1.remarks_1 += CodeToText[this.selectedOptions[i]];
       }
     },
-
     // 判断加班开始时间
     difference1_1: function (beginTime) {
       var date = new Date();
@@ -1347,7 +1344,6 @@ export default defineComponent({
         }
       }
     },
-
     // 判断出差开始时间
     difference2_1: function (beginTime) {
       var date = new Date();
@@ -1392,7 +1388,6 @@ export default defineComponent({
         }
       }
     },
-
     // 判断请假开始时间
     difference3_1: function (beginTime) {
       var date = new Date();
@@ -1404,7 +1399,6 @@ export default defineComponent({
         this.cancel_date3();
       }
     },
-
     // 计算请假天数
     difference3_2: function (beginTime, endTime) {
       if (beginTime.length == 0) {
