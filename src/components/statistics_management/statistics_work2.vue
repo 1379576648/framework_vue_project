@@ -4,7 +4,7 @@
       <span class="demonstration" style="position: relative;top: 15px;">时间范围：</span>
 
       <el-date-picker v-model="value1" type="daterange" range-separator="To"
-                      start-placeholder="Start date" end-placeholder="End date" style="position: relative;top: 15px;">
+                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 15px;">
       </el-date-picker>
       <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
       <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"

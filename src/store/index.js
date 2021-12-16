@@ -215,17 +215,7 @@ const store = createStore({
                                 MENU_NAME: '班次管理',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/check/classes',//路由地址
-                                MENU_MODULE: 'attendance_management/Check',//组件地址
-                                MENU_STATE: 0,//是否启用 0启用 1禁用
-                                MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
-                                MENU_LEAF: 1,//是否有叶子 0有 1没有
-                            },
-                            {
-                                MENU_ID: 4.111,//菜单编号
-                                MENU_NAME: '新增班次',//菜单名称
-                                PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                                MENU_ROUTE: '/attendance/check/classes/addclass',//路由地址
-                                MENU_MODULE: 'attendance_management/Classes',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_check',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -247,7 +237,7 @@ const store = createStore({
                                 MENU_NAME: '打卡记录',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/checking/clock',//路由地址
-                                MENU_MODULE: 'attendance_management/Clock',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_clock',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -257,7 +247,7 @@ const store = createStore({
                                 MENU_NAME: '加班查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/checking/overtime',//路由地址
-                                MENU_MODULE: 'attendance_management/Overtime',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_overtime',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -267,7 +257,7 @@ const store = createStore({
                                 MENU_NAME: '请假查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/checking/leave',//路由地址
-                                MENU_MODULE: 'attendance_management/leave',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_leave',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -277,7 +267,7 @@ const store = createStore({
                                 MENU_NAME: '出差查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/checking/evection',//路由地址
-                                MENU_MODULE: 'attendance_management/Overtime',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_evection',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -287,7 +277,7 @@ const store = createStore({
                                 MENU_NAME: '补打卡查询',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/checking/fillclock',//路由地址
-                                MENU_MODULE: 'attendance_management/Reissue',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_reissue',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -308,7 +298,7 @@ const store = createStore({
                                 MENU_NAME: '考勤记录',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '/attendance/statistics',//路由地址
-                                MENU_MODULE: 'attendance_management/Statistics.vue',//组件地址
+                                MENU_MODULE: 'attendance_management/attendance_statistics',//组件地址
                                 MENU_STATE: 0,//是否启用 0启用 1禁用
                                 MENU_TYPE: 0,//菜单类型 0:目录 1:菜单 2:按钮
                                 MENU_LEAF: 1,//是否有叶子 0有 1没有

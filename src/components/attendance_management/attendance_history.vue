@@ -108,7 +108,7 @@ export default {
   margin-top: 20px;
 }
 .amei {
-  widows: 100%;
+  width: 100%;
   height: 2px;
   background-color: rgb(9, 152, 248);
   margin-top: 20px;

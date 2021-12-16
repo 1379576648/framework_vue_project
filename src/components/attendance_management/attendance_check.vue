@@ -1,7 +1,7 @@
 <!--班次管理页面-->
 <template>
   <div class="w" >
-    <router-link to="/attendance/check/classes/addclass">
+    <router-link :to="{path: this.one,query:{path:this.$route.query.path}}">
       <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;">
         <el-icon><i-plus /></el-icon>
         <span>新增</span>
@@ -59,6 +59,8 @@
 export default {
   data() {
     return {
+      // 新增路由地址
+      one:'/attendance/check/classes/addclass',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
