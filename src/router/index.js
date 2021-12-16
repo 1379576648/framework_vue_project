@@ -164,10 +164,10 @@ const routes = [{
                     children: [
                         {//班次管理
                             path: '/attendance/check/classes',
-                            component: modules[`${'../components/attendance_management/Check.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_check.vue'}`],
                         },{//添加班次
                             path: '/attendance/check/classes/addclass',
-                            component: modules[`${'../components/attendance_management/Classes.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_classes.vue'}`],
                         }
                         ]
                 },
@@ -177,42 +177,42 @@ const routes = [{
                     children: [
                         {//打卡记录
                             path: '/attendance/checking/clock',
-                            component: modules[`${'../components/attendance_management/Clock.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_clock.vue'}`],
                         },
                         {//加班记录
                             path: '/attendance/checking/overtime',
-                            component: modules[`${'../components/attendance_management/Overtime.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_overtime.vue'}`],
                         },
                         {//请假记录
                             path: '/attendance/checking/leave',
-                            component: modules[`${'../components/attendance_management/Leave.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_leave.vue'}`],
                         },
                         {//出差记录
                             path: '/attendance/checking/evection',
-                            component: modules[`${'../components/attendance_management/Evection.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_evection.vue'}`],
                         },
                         {//补打卡记录
                             path: '/attendance/checking/fillclock',
-                            component: modules[`${'../components/attendance_management/Reissue.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_reissue.vue'}`],
                         },
                     ]
                 },
                 {// 考勤记录、考勤月报表、历史归档
                     path: '/attendance/statistics',
-                    component: modules[`${'../components/attendance_management/Statistics.vue'}`],
+                    component: modules[`${'../components/attendance_management/attendance_statistics.vue'}`],
                     redirect: "/attendance/statistics/record",
                     children: [
                         {// 考勤记录
                             path: '/attendance/statistics/record',
-                            component: modules[`${'../components/attendance_management/Record.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_record.vue'}`],
                         },
                         {// 考勤月报表
                             path: '/attendance/statistics/report',
-                            component: modules[`${'../components/attendance_management/Month.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_month.vue'}`],
                         },
                         {// 历史归档
                             path: '/attendance/statistics/archive',
-                            component: modules[`${'../components/attendance_management/History.vue'}`],
+                            component: modules[`${'../components/attendance_management/attendance_history.vue'}`],
                         },
                     ]
                 },
