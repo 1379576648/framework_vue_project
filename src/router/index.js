@@ -114,7 +114,6 @@ const routes = [
                                         path: '/employee/message/employee_roster/business',
                                         component: modules[`${'../components/employee_management/employee_work.vue'}`],
                                     },
-
                                 ]
                             },
                             //办理离职
@@ -194,7 +193,8 @@ const routes = [
                             {//班次管理
                                 path: '/attendance/check/classes',
                                 component: modules[`${'../components/attendance_management/attendance_check.vue'}`],
-                            }, {//添加班次
+                            },
+                            {//添加班次
                                 path: '/attendance/check/classes/addclass',
                                 component: modules[`${'../components/attendance_management/attendance_classes.vue'}`],
                             }
@@ -618,8 +618,6 @@ const routes = [
                     component:modules[`${'../components/statistics_management/three.vue'}`]
                 }
             ],
-
-
         },
         {//系统管理
             path: '/system',
