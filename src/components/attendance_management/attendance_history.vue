@@ -1,3 +1,4 @@
+<!--历史归档-->
 <template>
   <div class="head">
     <div class="head-to">
@@ -27,7 +28,7 @@
       <span>1</span>
     </div>
     <div class="amei"></div>
-    <div>
+    <div class="tis">
       <el-alert
         title="迟到、早退和补打卡的统计单位为 “次”; 所有假期类型、出差、旷工的统计单位均为 “天” 。 "
         type="warning"
@@ -108,12 +109,16 @@ export default {
   margin-top: 20px;
 }
 .amei {
-  width: 100%;
   height: 2px;
   background-color: rgb(9, 152, 248);
   margin-top: 20px;
+  margin-left: 20px;
+}
+.tis{
+  margin-left: 20px;
 }
 .bottom{
   margin-top: 30px;
+  margin-left: 20px;
 }
 </style>
