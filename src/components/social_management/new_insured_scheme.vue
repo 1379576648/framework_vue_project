@@ -414,7 +414,7 @@ export default {
       social_tableData: [
         {
           payment_name: "养老保险", // 缴费项目
-          lower: 1, // 基数下限、
+          lower: 1, // 基数下限
           upper: 2, // 基数上限
           company_payment_ratio: 3, // 公司缴纳比例
           personage_payment_ratio: 4, // 个人缴纳比例
