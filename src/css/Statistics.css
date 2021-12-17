@@ -3,3 +3,6 @@
     color: #000000;
     font-weight: lighter;
 }
+element.style {
+    height: 55px;
+}
