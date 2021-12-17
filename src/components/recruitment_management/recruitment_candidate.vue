@@ -1,4 +1,4 @@
-<!--&lt;!&ndash;简历：候选人&ndash;&gt;-->
+<!-- 候选人 -->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">

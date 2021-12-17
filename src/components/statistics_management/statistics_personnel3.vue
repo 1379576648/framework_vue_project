@@ -3,11 +3,11 @@
     <div style="border-right: 1px #000000 dashed; width: 50%;height: 480px;border-left: 1px #000000 dashed;">
 
       <!-- //员工性别分布 -->
-      <div id="mainy1" style="width: 655px;height:425px; float: left;"></div>
+      <div id="mainy1" style="width: 630px;height:405px; float: left;"></div>
     </div>
-    <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
+    <div style="  width: 50%;height: 440px; position: absolute;top: 0px;right: 2px; ">
       <!-- //员工婚姻分布 -->
-      <div id="mainy2" style="width: 655px;height:425px; float: right;"></div>
+      <div id="mainy2" style="width: 630px;height:405px; float: right;"></div>
     </div>
   </div>
 
@@ -17,11 +17,11 @@
     <div style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
       <!--  员工司龄分布 -->
-      <div id="mainy3" style="width: 655px;height:425px; float: left;"></div>
+      <div id="mainy3" style="width: 630px;height:405px; float: left;"></div>
     </div>
-    <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
+    <div style="  width: 50%;height: 440px; position: absolute;top: 0px;right: 2px; ">
       <!-- 员工学历分布 -->
-      <div id="mainy4" style="width: 655px;height:425px; float: right;"></div>
+      <div id="mainy4" style="width: 630px;height:405px; float: right;"></div>
     </div>
   </div>
 
@@ -30,11 +30,11 @@
     <div style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
       <!-- 员工年龄段分布 -->
-      <div id="mainy5" style="width: 655px;height:425px; float: left;"></div>
+      <div id="mainy5" style="width: 630px;height:405px; float: left;"></div>
     </div>
     <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
       <!-- 	员工年代分布 -->
-      <div id="mainy6" style="width: 655px;height:425px; float: right;"></div>
+      <div id="mainy6" style="width: 630px;height:405px; float: right;"></div>
     </div>
 
 
@@ -42,11 +42,11 @@
       <div style="border-left: 1px #000000 dashed; width: 50%;height: 480px;border-right: 1px #000000 dashed;">
 
         <!-- 员工年龄段分布 -->
-        <div id="mainy7" style="width: 655px;height:425px; float: left;"></div>
+        <div id="mainy7" style="width: 630px;height:405px; float: left;"></div>
       </div>
-      <div style="  width: 50%;height: 450px; position: absolute;top: 0px;right: 2px; ">
+      <div style="  width: 50%;height: 440px; position: absolute;top: 0px;right: 2px; ">
         <!-- 	员工年代分布 -->
-        <div id="mainy8" style="width: 655px;height:425px; float: right;"></div>
+        <div id="mainy8" style="width: 630px;height:405px; float: right;"></div>
       </div>
     </div>
   </div>
@@ -97,6 +97,7 @@ export default {
 
     return {
       ...toRefs(state),
+
     }
   },
 
@@ -144,40 +145,6 @@ export default {
     var chartDomy8 = document.getElementById('mainy8');
     var myCharty8 = echarts.init(chartDomy8);
     var optiony8;
-
-
-    var option = {
-
-
-      title: {
-        text: '每月末在职人数'
-      },
-      tooltip: {},
-      legend: {
-        data: ['在职人数', '增长率']
-      },
-      xAxis: {
-        data: ['2021-07', '2021-07', '2021-07', '2021-07', '2021-07', '2021-07']
-      },
-      yAxis: {
-        type: 'value',
-
-        min: 0,
-        max: 25,
-        interval: 5,
-        formatter: '{value} 人'
-      },
-      series: [{
-        name: '在职人数',
-        type: 'bar',
-        data: [5, 20, 25, 10, 10, 20],
-
-      }, {
-        name: '增长率',
-        type: 'line',
-        data: [5, 20, 25, 10, 10, 20],
-      }]
-    };
 
 
 

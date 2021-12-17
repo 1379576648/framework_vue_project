@@ -123,7 +123,10 @@ export default {
   methods: {
     // 点击编辑跳转
     redact() {
-      this.$router.replace('{path: this.one,query:{path:this.$route.query.path}}')
+      this.$router.push({
+        path: this.one,
+        query: {path: this.$route.query.path}
+      })
     },
     // 点击禁用确认按钮触发
     through1() {
