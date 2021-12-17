@@ -1,3 +1,4 @@
+<!--查看工资表导航 -->
 <template>
 
   <div class="saas-main-content">
@@ -41,22 +42,6 @@ export default {
   text-align: center;
   color: black;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

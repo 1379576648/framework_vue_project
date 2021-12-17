@@ -1,17 +1,26 @@
 <template>
 
-  <div class="demo-date-picker" style="width: 100%;height: 55px;">
-    <div class="" style="width: 850px;height: 55px; float: right;">
-      <span class="demonstration" style="position: relative;top: 15px;">时间范围：</span>
+  <div class="demo-date-picker" style="width: 100%;height: 49px;">
+    <div class="" style="width: 850px;height: 49px; float: right;">
+      <span class="demonstration" style="position: relative;top: -1px;">时间范围：</span>
 
-      <el-date-picker v-model="value1" type="daterange" range-separator="To"
-                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 15px;">
+      <el-date-picker v-model="value1" type="daterange" range-separator="到"
+                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
       </el-date-picker>
-      <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
-      <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
-                   @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
+      <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
+      <el-select v-model="valuee" placeholder="请选择">
+        <el-option
+            v-for="item in optionss"
+            :key="item.valuee"
+            :label="item.labell"
+            :value="item.valuee"
+            style="position: relative;top: -1px;"
+        >
+        </el-option>
+      </el-select>
+      <el-button type="primary" style="position: relative;top: -2px;">搜索</el-button>
     </div>
+
   </div>
 
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
@@ -59,7 +68,7 @@
 <script>
 import {
   defineComponent,
-  reactive,
+  reactive, ref,
   toRefs
 } from 'vue'
 import * as echarts from 'echarts'
@@ -102,6 +111,30 @@ export default ({
 
     return {
       ...toRefs(state),
+      optionss: ref([
+        {
+          valuee: 'Option1',
+          labell: 'Option1',
+        },
+        {
+          valuee: 'Option2',
+          labell: 'Option2',
+        },
+        {
+          valuee: 'Option3',
+          labell: 'Option3',
+        },
+        {
+          valuee: 'Option4',
+          labell: 'Option4',
+        },
+        {
+          valuee: 'Option5',
+          labell: 'Option5',
+        },
+      ]),
+      valuee: ref(''),
+
     }
   },
 
@@ -145,6 +178,7 @@ export default ({
       title: {
         text: '每月员工新进率'
       },
+
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -159,7 +193,18 @@ export default ({
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {
+            show: true,
+            title:'保存'
+          }, magicType: {
+            show: true,
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
+          },
+
         }
       },
       grid: {
@@ -184,7 +229,8 @@ export default ({
         emphasis: {
           focus: 'series'
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth:true
       }
 
 
@@ -211,7 +257,19 @@ export default ({
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {
+            show:true,
+            title:"保存"
+          },
+          magicType: {
+            show: true,
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
+          },
+
         }
       },
       grid: {
@@ -252,7 +310,8 @@ export default ({
         emphasis: {
           focus: 'series'
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth:true
       }
 
 
@@ -277,7 +336,19 @@ export default ({
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {
+            show:true,
+            title:"保存"
+          },
+
+          magicType: {
+            show: true,
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
+          },
         }
       },
       grid: {
@@ -318,7 +389,8 @@ export default ({
         emphasis: {
           focus: 'series'
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth:true
       }
 
       ]

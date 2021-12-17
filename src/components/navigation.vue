@@ -70,13 +70,157 @@
 						</span>
             <div class="header_message header_message_show">
               <div>
-                <el-tabs v-model="activeName" @tab-click="handleClick" stretch="true"
+                <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true"
                          style="margin-top: 10px;color: black">
+
                   <el-tab-pane label="未读消息" name="first">
-                    <div style="width: 100px; height: 100px; background-color: #0c9c6e"></div>
+
+                    <div role="tabpanel" aria-hidden="false" class="ant-tabs-tabpane ant-tabs-tabpane-active tab_panel">
+                      <div class="ant-list ant-list-split">
+                        <div class="ant-spin-nested-loading">
+                          <div class="ant-spin-container">
+
+                           <ul>
+                             <li>
+                                <div style="padding-top: 10px">
+                                  <span>
+                                     <input type="checkbox" />
+                                  </span>
+                                  <span style="margin-left: 5px;font-weight: bold">缺卡提醒：</span>
+                                  <span>2021-01-13您有缺卡，请及时处理避免考勤统计异常。</span>
+                                </div>
+                             </li>
+
+                           </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bottom_panel">
+                        <div>
+                          <!--分页-->
+                           <div style="text-align: center; padding-bottom: 8px;">
+                             <el-pagination
+                                 style="height: 30px"
+                                 :page-size="10"
+                                 :pager-count="5"
+                                 layout="prev, pager, next"
+                                 :total="100"
+                             >
+                             </el-pagination>
+                           </div>
+                           <div>
+                             <input type="checkbox" />
+                             <span>全选</span>
+
+                             <el-button style="margin-left: 10px">已读</el-button>
+                           </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+
                   </el-tab-pane>
-                  <el-tab-pane label="全部消息" name="second">全部消息</el-tab-pane>
-                  <el-tab-pane label="已读消息" name="third">已读消息</el-tab-pane>
+                  <el-tab-pane label="全部消息" name="second">
+
+                    <div role="tabpanel" aria-hidden="false" class="ant-tabs-tabpane ant-tabs-tabpane-active tab_panel">
+                      <div class="ant-list ant-list-split">
+                        <div class="ant-spin-nested-loading">
+                          <div class="ant-spin-container">
+
+                            <ul>
+                              <li>
+                                <div style="padding-top: 10px">
+                                  <span>
+                                     <input type="checkbox" />
+                                  </span>
+                                  <span style="margin-left: 5px;font-weight: bold">缺卡提醒：</span>
+                                  <span>2021-01-13您有缺卡，请及时处理避免考勤统计异常。</span>
+                                </div>
+                              </li>
+
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bottom_panel">
+                        <div>
+                          <!--分页-->
+                          <div style="text-align: center; padding-bottom: 8px;">
+                            <el-pagination
+                                style="height: 30px"
+                                :page-size="10"
+                                :pager-count="5"
+                                layout="prev, pager, next"
+                                :total="100"
+                            >
+                            </el-pagination>
+                          </div>
+                          <div>
+                            <input type="checkbox" />
+                            <span>全选</span>
+
+                            <el-button style="margin-left: 10px">已读</el-button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </el-tab-pane>
+                  <el-tab-pane label="已读消息" name="third">
+
+                    <div role="tabpanel" aria-hidden="false" class="ant-tabs-tabpane ant-tabs-tabpane-active tab_panel">
+                      <div class="ant-list ant-list-split">
+                        <div class="ant-spin-nested-loading">
+                          <div class="ant-spin-container">
+
+                            <ul>
+                              <li>
+                                <div style="padding-top: 10px">
+                                  <span>
+                                     <input type="checkbox" />
+                                  </span>
+                                  <span style="margin-left: 5px;font-weight: bold">缺卡提醒：</span>
+                                  <span>2021-01-13您有缺卡，请及时处理避免考勤统计异常。</span>
+                                </div>
+                              </li>
+
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bottom_panel">
+                        <div>
+                          <!--分页-->
+                          <div style="text-align: center; padding-bottom: 8px;">
+                            <el-pagination
+                                style="height: 30px"
+                                :page-size="10"
+                                :pager-count="5"
+                                layout="prev, pager, next"
+                                :total="100"
+                            >
+                            </el-pagination>
+                          </div>
+                          <div>
+                            <input type="checkbox" />
+                            <span>全选</span>
+
+                            <el-button style="margin-left: 10px">已读</el-button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </el-tab-pane>
+
+
                 </el-tabs>
               </div>
             </div>
@@ -84,21 +228,17 @@
         </div>
       </div>
     </div>
-    <!-- 工作台 -->
+    <!-- 显示视图 -->
     <router-view/>
   </div>
 </template>
 
 <script>
-// import {ArrowDown} from '@element-plus/icons';
-// import {
-//   defineComponent,
-//   ref
-// } from 'vue'
 
 export default {
   data() {
     return {
+      true: true,
       //默认激活的路由
       activate_router: this.$store.state.activate_router,
       activeName: 'second',
@@ -130,10 +270,10 @@ export default {
     },
     inquire_1() {
       //如果菜单列表有值
-      if (this.memuList1){
+      if (this.memuList1) {
         //循环菜单列表
         for (let i of this.memuList1) {
-            //如果默认激活路由为空
+          //如果默认激活路由为空
           if (this.activate_router == '') {
             //选择菜单列表第一个路由为默认激活
             this.activate_router = i.MENU_ROUTE;
@@ -163,6 +303,7 @@ export default {
       this.inquire_1();
       //将目前激活的路由存起来
       this.$store.state.activate_router = this.activate_router
+      //返回路由结果
       return this.activate_router;
     }
   }
@@ -182,6 +323,139 @@ export default {
 
 <style type="text/css" scoped>
 @import url("../css/navigation.css");
+.header_message .bottom_panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: #fff;
+}
+
+.ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane, .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
+  flex-shrink: 0;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  opacity: 1;
+  transition: opacity 0.45s;
+}
+
+.header_message .tab_panel {
+  height: 460px;
+  display: block;
+  padding: 0 16px;
+  padding-bottom: 0px;
+  margin-bottom: 16px;
+  overflow-y: auto;
+  text-align: left;
+  padding-bottom: 72px;
+}
+.ant-list {
+  color: rgba(0, 0, 0, 0.65);
+}
+.ant-list {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  position: relative;
+}
+.ant-spin-nested-loading {
+  position: relative;
+}
+.ant-spin-container {
+   position: relative;
+   transition: opacity 0.3s;
+ }
+
+.ant-spin-container::after {
+
+  background: #fff;
+
+}
+.ant-spin-container::after {
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: none \9;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0;
+  transition: all 0.3s;
+  content: '';
+  pointer-events: none;
+
+}
+*, ::before, ::after {
+
+  box-sizing: border-box;
+
+}
+.ant-list-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ant-list * {
+  outline: none;
+}
+.ant-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/deep/ .el-tabs__header {
+  padding: 0;
+  position: relative;
+  margin: 0 0 5px;
+}
 
 .gengd_li {
   width: 100px;

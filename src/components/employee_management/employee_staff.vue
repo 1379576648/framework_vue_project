@@ -1,6 +1,8 @@
+<!--花名册页面-->
 <template>
 <div class="saas-main-content">
 <div class="icon-p">
+
 <el-row :gutter="20">
     <el-col :span="4">
       <el-card shadow="always" style="background-color: rgb(35, 102, 167);color:white;font-size:14px;">
@@ -67,7 +69,7 @@
       <template #default>
         <router-link :to="{path:this.staffedit,query:{path: this.$route.query.path}}">
         <el-button type="text" size="small" @click="handleClick"
-          >编辑</el-button>
+          >编辑 </el-button>
         </router-link>
         <router-link :to="{path:this.leave,query:{path: this.$route.query.path}}" style="text-decoration: none">&nbsp;
         <el-button type="text" size="small">办理离职</el-button></router-link>

@@ -1,88 +1,109 @@
+<!--加班记录-->
 <template>
+  <!--  加班查询页面-->
   <div class="w">
     <div class="head">
       <el-button size="medium">
-        <el-icon style="font-size: 18px"><i-upload /></el-icon>导出
+        <el-icon style="font-size: 18px">
+          <i-upload/>
+        </el-icon>
+        导出
       </el-button>
       <el-button size="medium">
-        <el-icon style="font-size: 18px"><i-folder-opened /></el-icon>导入
+        <el-icon style="font-size: 18px">
+          <i-folder-opened/>
+        </el-icon>
+        导入
       </el-button>
-
+      <!--选择开始时间和结束时间-->
       <el-date-picker
-        v-model="value1"
-        type="daterange"
-        unlink-panels
-        range-separator="TO"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        wdaWD
-        aW
-        :shortcuts="shortcuts"
-        style="margin-left: 340px"
+          v-model="value1"
+          type="daterange"
+          unlink-panels
+          range-separator="TO"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          wdaWD
+          aW
+          :shortcuts="shortcuts"
+          style="margin-left: 340px"
       >
       </el-date-picker>
-
+      <!--全部部门-->
       <el-select size="small" v-model="value" clearable placeholder="全部部门" style="margin-left: 25px">
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
         >
         </el-option>
       </el-select>
-
+      <!--搜索框-->
       <el-input size="small" v-model="input" placeholder="搜索" style="width:150px;margin-left: 25px">
-          <template #suffix>
-          <el-icon style="margin-top:9px;margin-right:10px"><i-search /></el-icon>
+        <template #suffix>
+          <el-icon style="margin-top:9px;margin-right:10px">
+            <i-search/>
+          </el-icon>
         </template>
       </el-input>
-
     </div>
-
+    <!--表格-->
     <div class="y">
-    <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="applyfor" label="申请名称"/> 
-    <el-table-column prop="department" label="发起人部门"/>
-    <el-table-column prop="type" label="加班类型" />
-    <el-table-column prop="thing" label="加班事由" />
-    <el-table-column prop="begin" label="加班开始时间" />
-    <el-table-column prop="finish" label="加班结束时间" />
-    <el-table-column prop="hour" label="加班总小时" />
-    <el-table-column prop="subsidy" label="加班补贴" />
-    <el-table-column prop="operate" label="操作" >
-      <template #default>
-        <el-button type="text" size="small" style="color:darkorange">删除</el-button>
-      </template>
-    </el-table-column>
-    </el-table>
+      <el-table :data="tableData" stripe style="width: 100%">
+        <el-table-column prop="applyfor" label="申请名称"/>
+        <el-table-column prop="department" label="发起人部门"/>
+        <el-table-column prop="type" label="加班类型"/>
+        <el-table-column prop="thing" label="加班事由"/>
+        <el-table-column prop="begin" label="加班开始时间"/>
+        <el-table-column prop="finish" label="加班结束时间"/>
+        <el-table-column prop="hour" label="加班总小时"/>
+        <el-table-column prop="subsidy" label="加班补贴"/>
+        <el-table-column prop="operate" label="操作">
+          <template #default>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定删除吗?"
+                @confirm="through1()"
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+              </template>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-
+    <!--分页-->
     <div class="demo-pagination-block">
-    <el-pagination
-      v-model:currentPage="pageInfo.currenPage"
-      :page-sizes="[3, 5, 10, 50]"
-      v-model:page-size="pageInfo.pagesize"
-      :default-page-size="pageInfo.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pageInfo.total"
-      :pager-count="5"
-      background
-      @size-change="sele"
-      @current-change="sele"
-    >
-    </el-pagination>
+      <el-pagination
+          v-model:currentPage="pageInfo.currenPage"
+          :page-sizes="[3, 5, 10, 50]"
+          v-model:page-size="pageInfo.pagesize"
+          :default-page-size="pageInfo.pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="pageInfo.total"
+          :pager-count="5"
+          background
+          @size-change="sele"
+          @current-change="sele"
+      >
+      </el-pagination>
     </div>
 
   </div>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from "vue";
+import {ref, defineComponent} from "vue";
+
 export default {
   data() {
     return {
-        pageInfo: {
+      pageInfo: {
         currenPage: 1,
         /* 当前的页 */
         pagesize: 3,
@@ -138,79 +159,89 @@ export default {
           value: "Option5",
           label: "Option5",
         },
-      ]), 
+      ]),
       tableData: [
-          {
-              applyfor:'王鑫',
-              department:'行政部',
-              type:'加班',
-              thing:'没有钱了',
-              begin:'20:00',
-              finish:'22:00',
-              hour:'4小时',
-              subsidy:'补贴',
-          },
-          {
-              applyfor:'王鑫',
-              department:'行政部',
-              type:'加班',
-              thing:'没有钱了',
-              begin:'20:00',
-              finish:'22:00',
-              hour:'4小时',
-              subsidy:'补贴',
-          },
-          {
-              applyfor:'王鑫',
-              department:'行政部',
-              type:'加班',
-              thing:'没有钱了',
-              begin:'20:00',
-              finish:'22:00',
-              hour:'4小时',
-              subsidy:'补贴',
-          },
-          {
-              applyfor:'王鑫',
-              department:'行政部',
-              type:'加班',
-              thing:'没有钱了',
-              begin:'20:00',
-              finish:'22:00',
-              hour:'4小时',
-              subsidy:'补贴',
-          }
+        {
+          applyfor: '王鑫',
+          department: '行政部',
+          type: '加班',
+          thing: '没有钱了',
+          begin: '20:00',
+          finish: '22:00',
+          hour: '4小时',
+          subsidy: '补贴',
+        },
+        {
+          applyfor: '王鑫',
+          department: '行政部',
+          type: '加班',
+          thing: '没有钱了',
+          begin: '20:00',
+          finish: '22:00',
+          hour: '4小时',
+          subsidy: '补贴',
+        },
+        {
+          applyfor: '王鑫',
+          department: '行政部',
+          type: '加班',
+          thing: '没有钱了',
+          begin: '20:00',
+          finish: '22:00',
+          hour: '4小时',
+          subsidy: '补贴',
+        },
+        {
+          applyfor: '王鑫',
+          department: '行政部',
+          type: '加班',
+          thing: '没有钱了',
+          begin: '20:00',
+          finish: '22:00',
+          hour: '4小时',
+          subsidy: '补贴',
+        }
       ],
       value1: "", //日期
       value: ref(""), //选择
     };
   },
+  methods: {
+    // 点击删除确认按钮触发
+    through1() {
+      alert(1)
+    },
+  }
 };
 </script>
 
 <style>
 
-table *{
-    text-align: center;
+table * {
+  text-align: center;
 }
+
 .w {
   margin-top: 20px;
   border: 1px solid #e9e9e9;
 }
+
 .w:hover {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   border-color: transparent;
 }
-.y{
-    margin-top: 20px;
+
+.y {
+  margin-top: 20px;
 }
+
 .head {
   margin-left: 2%;
   margin-top: 2%;
 }
 
-.demo-pagination-block{
-  margin-left:850px ;
+.demo-pagination-block {
+  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }

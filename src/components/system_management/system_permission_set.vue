@@ -109,9 +109,9 @@
             <el-table
                 v-if="refreshTable"
                 :data="tableData"
-                style="width: 100%; margin-bottom: 20px"
+                style="width: 100%; margin-bottom: 20px;"
+                :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
                 row-key="MENU_ID"
-                border
                 :default-expand-all="expands"
                 @expand-change="expands=true"
             >
@@ -328,7 +328,7 @@ export default {
       refreshTable: true,
       //输入的菜单名称值
       menuName: '',
-      //日期组件
+      //日期选择组件
       shortcuts: [
         {
           text: '过去一周',
@@ -363,6 +363,7 @@ export default {
       date: [],
       //显示隐藏菜单
       menuShow: true,
+      //表格数据
       tableData: [
         {
           MENU_ID: 1,
@@ -490,7 +491,7 @@ export default {
   }, methods: {
     deleteMenu(value) {
       ElMessageBox.confirm(
-          '是否确认删除名称为“'+value+'"的数据项?',
+          '是否确认删除名称为“' + value + '"的数据项?',
           '系统提示',
           {
             cancelButtonText: '取消',
@@ -512,9 +513,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (this.boxName==='新增菜单'){
+          if (this.boxName === '新增菜单') {
 
-          }else{
+          } else {
 
           }
           //清空表单
@@ -523,7 +524,7 @@ export default {
           this.insertMenu = false;
           ElMessage({
             type: 'success',
-            message: this.boxName=='新增菜单'?'新增成功':'修改成功',
+            message: this.boxName == '新增菜单' ? '新增成功' : '修改成功',
           })
         } else {
           return false
@@ -558,6 +559,7 @@ export default {
 </script>
 <style scoped>
 @import url("../../css/navigation.css");
+
 /deep/ .el-input__suffix .el-input__validateIcon {
   position: relative !important;
   top: 13px;

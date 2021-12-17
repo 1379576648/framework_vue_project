@@ -1,51 +1,10 @@
+
+<!--工资表 -->
 <template>
-<!--  <div class="saas-main-content">-->
-<!--    <div class="j-card j-card-bordered mainContent">-->
-<!--      <div class="j-card-body">-->
-<!--        <div class="payroll2-tabs">-->
-<!--          <ul style="margin-left: 85px">-->
-<!--            <router-link to="/construction">-->
-<!--              <li class="">-->
-<!--                <i class="iconfont i-iconfont">&#xe602;</i>-->
-<!--                <h3>-->
-<!--                  <span>第一步</span>-->
-<!--                </h3>-->
-<!--                <p><span>设置薪酬结构</span></p>-->
-<!--              </li>-->
-<!--            </router-link>-->
-
-<!--            <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>-->
-
-<!--            <router-link to="/salary2">-->
-<!--              <li class="">-->
-<!--                <i class="iconfont">&#xe633;</i>-->
-<!--                <h3>-->
-<!--                  <span>第二步</span>-->
-<!--                </h3>-->
-<!--                <p><span>设置核算方案</span></p>-->
-<!--              </li>-->
-<!--            </router-link>-->
-
-<!--            <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>-->
-<!--            <router-link to="/archive">-->
-<!--              <li class="">-->
-<!--                <i class="iconfont">&#xe624;</i>-->
-<!--                <h3>-->
-<!--                  <span>第三步</span>-->
-<!--                </h3>-->
-<!--                <p><span>核算工资并<br/>生成工资表</span></p>-->
-<!--              </li>-->
-<!--            </router-link>-->
-<!--          </ul>-->
-<!--        </div>-->
-
-
         <div>
           <el-tabs type="card" @tab-click="handleClick">
-            <div style="display: inline-block;margin-left: 30px;">
-            <el-button type="primary">归档</el-button>
-            </div>
-            <div style="display: inline-block;margin-left: 750px;">
+
+            <div style="display: inline-block;margin-left: 840px;">
               <div class="demo-date-picker">
                 <div class="container">
                   <div class="block">
@@ -88,7 +47,12 @@
                   <el-table-column  label="操作" width="170">
                     <template #default>
                       <router-link :to="{path:this.wagesheet,query:{path: this.$route.query.path}}"><el-button type="text" size="small" @click="handleClick">查看工资表&nbsp;</el-button></router-link>
-                      <el-button type="text" size="small" @click="handleClick">提交</el-button>
+<!--                      <el-button type="text" size="small" @click="handleClick">归档</el-button>-->
+                      <el-popconfirm title="归档之后，数据一律不允许修改">
+                        <template #reference>
+                          <el-button type="text" size="small">归档 </el-button>
+                        </template>
+                      </el-popconfirm>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -101,13 +65,18 @@
               <div class="sub-Content__primary">
 
                 <el-table :data="tableData" stripe style="width: 100%">
-                  <el-table-column prop="name" label="部门" width="180" />
-                  <el-table-column prop="date" label="计薪人数" width="180" />
-                  <el-table-column prop="name" label="应发工资" width="180" />
-                  <el-table-column prop="name" label="实发工资" width="180" />
-                  <el-table-column prop="name" label="公司缴纳" width="180" />
-                  <el-table-column prop="name" label="员工成本" width="190" />
-                  <el-table-column prop="date" label="状态" width="190" />
+                  <el-table-column prop="name" label="部门" width="160" />
+                  <el-table-column prop="date" label="计薪人数" width="160" />
+                  <el-table-column prop="name" label="应发工资" width="160" />
+                  <el-table-column prop="name" label="实发工资" width="160" />
+                  <el-table-column prop="name" label="公司缴纳" width="160" />
+                  <el-table-column prop="name" label="员工成本" width="160" />
+                  <el-table-column prop="date" label="状态" width="160" />
+                  <el-table-column  label="操作" width="170">
+                    <template #default>
+                      <router-link :to="{path:this.wagesheet,query:{path: this.$route.query.path}}"><el-button type="text" size="small" @click="handleClick">查看工资表&nbsp;</el-button></router-link>
+                    </template>
+                  </el-table-column>
                 </el-table>
               </div>
             </el-tab-pane>

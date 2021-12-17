@@ -1,3 +1,4 @@
+<!--出差方案 -->
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -38,11 +39,11 @@
               <template #default>
                 <router-link :to="{path:this.insertevectionplan,query:{path: this.$route.query.path}}">
                   <el-button type="text" size="small" @click="handleClick"
-                  >编辑</el-button
+                  >编辑 </el-button
                   >
                 </router-link>&nbsp;
-                <el-button type="text" size="small" @click="handleClick">禁用</el-button>
-                <el-button type="text" size="small">删除</el-button>
+                <el-button type="text" size="small" @click="handleClick">禁用 </el-button>
+                <el-button type="text" size="small">删除 </el-button>
               </template>
             </el-table-column>
           </el-table>

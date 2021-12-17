@@ -49,7 +49,7 @@
 
 
             <!-- 弹出操作窗口 -->
-            <el-dialog width="650px"  v-model="outerVisible" >
+            <el-dialog width="670px"  v-model="outerVisible" >
               <span class="headline"> {{judge}}公告</span>
               <!-- form表单 -->
               <el-form class="announcement" v-model="affiche">
@@ -77,7 +77,7 @@
                 <el-form-item>
                   <div class="announcement-zt">
                     <el-radio v-model="affiche.radio1" label="正常">正常</el-radio>
-                    <el-radio v-model="affiche.radio1" label="2">关闭</el-radio>
+                    <el-radio v-model="affiche.radio1" label="2" style="margin-left: 16px">关闭</el-radio>
                   </div>
                 </el-form-item>
                 <!-- 公告内容 -->
@@ -169,7 +169,6 @@
 
 <script>
 import {
-  defineComponent,
   ref
 } from 'vue'
 
