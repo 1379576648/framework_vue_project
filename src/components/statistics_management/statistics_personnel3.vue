@@ -149,593 +149,477 @@ export default {
 
 
     /*  员工性别分布 */
+    var colors1 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data1 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data1.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony1 = {
+      title:{
+        text: "员工性别分布"
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      title: {
-        text: '员工性别分布'
-      },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony1.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      series: [{
-        name: '性别',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors1,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '40',
-            fontWeight: 'bold'
-          }
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
+          },
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data1,
         },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '男'
-        },
-          {
-            value: 735,
-            name: '女'
-          }
-
-        ]
-      }]
+      ],
     };
     /* 员工婚姻分布 */
+    var colors2 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data2 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data2.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony2 = {
+      title:{
+        text:"员工婚姻分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        //获取占比为多少
-        formatter: function(name) {
-          var data = optiony2.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '员工婚姻分布'
-      },
-      series: [{
-        name: '婚姻',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors2,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
-        },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '已婚'
-        },
-          {
-            value: 735,
-            name: '未婚'
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
           },
-          {
-            value: 580,
-            name: '未知'
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
           },
-
-        ]
-      }]
+          data: data2,
+        },
+      ],
     };
     /* 员工司龄分布 */
+    var colors3 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data3 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data3.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony3 = {
+      title:{
+        text:"员工司龄分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony3.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '员工司龄分布'
-      },
-      series: [{
-        name: '司龄',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors3,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
-
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
+          },
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data3,
         },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '未知'
-        },
-          {
-            value: 735,
-            name: '3个月内'
-          },
-          {
-            value: 580,
-            name: '3-6个月内'
-          },
-          {
-            value: 180,
-            name: '6个月-1年内'
-          },
-          {
-            value: 180,
-            name: '1年-3年'
-          },
-          {
-            value: 180,
-            name: '3年-5年'
-          },
-          {
-            value: 180,
-            name: '5年以上'
-          },
-        ]
-      }]
+      ],
     };
     /* 员工学历分布 */
+    var colors4 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data4 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data4.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony4 = {
+      title:{
+        text:"员工学历分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony4.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '员工学历分布'
-      },
-      series: [{
-        name: '学历',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors4,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
+          },
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data4,
         },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '未知'
-        },
-          {
-            value: 735,
-            name: '博士'
-          },
-          {
-            value: 580,
-            name: '硕士'
-          },
-          {
-            value: 380,
-            name: '本科'
-          },
-          {
-            value: 520,
-            name: '专科'
-          },
-          {
-            value: 530,
-            name: '高中'
-          },
-          {
-            value: 50,
-            name: '初中'
-          },
-          {
-            value: 510,
-            name: '小学'
-          },
-          {
-            value: 80,
-            name: '中专'
-          },
-        ]
-      }]
+      ],
     };
     /* 员工年龄段分布 */
+    var colors5 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data5 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data5.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony5 = {
+      title:{
+        text:"员工年龄段分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony5.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '员工司龄分布'
-      },
-      series: [{
-        name: '司龄',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors5,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
-
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
+          },
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data5,
         },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '18岁以下'
-        },
-          {
-            value: 735,
-            name: '19-25岁'
-          },
-          {
-            value: 580,
-            name: '26-30岁'
-          },
-          {
-            value: 180,
-            name: '31-35岁'
-          },
-          {
-            value: 180,
-            name: '36-40岁'
-          },
-          {
-            value: 180,
-            name: '41-45岁'
-          },
-          {
-            value: 180,
-            name: '46以上'
-          },
-        ]
-      }]
+      ],
     };
 
     /*  员工年代分布 */
+    var colors6 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data6 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data6.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony6 = {
+      title:{
+        text:"员工年代分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony6.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '员工年代分布'
-      },
-      series: [{
-        name: '年代',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors6,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
+          },
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data6,
         },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '未知'
-        },
-          {
-            value: 735,
-            name: '00后'
-          },
-          {
-            value: 580,
-            name: '90后'
-          },
-          {
-            value: 380,
-            name: '80后'
-          },
-          {
-            value: 520,
-            name: '70后'
-          },
-          {
-            value: 530,
-            name: '60后'
-          },
-          {
-            value: 50,
-            name: '50后'
-          },
-          {
-            value: 510,
-            name: '40后'
-          },
-
-        ]
-      }]
+      ],
     };
-
+     /* 员工星座分布*/
+    var colors7 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data7 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data7.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony7 = {
+      title:{
+        text:"员工星座分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony7.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '员工星座分布'
-      },
-      series: [{
-        name: '年代',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors7,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
+          },
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data7,
         },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '未知'
-        },
-          {
-            value: 735,
-            name: '天蝎座'
-          },
-          {
-            value: 580,
-            name: '白羊座'
-          },
-          {
-            value: 380,
-            name: '金牛座'
-          },
-          {
-            value: 520,
-            name: '双子座'
-          },
-          {
-            value: 530,
-            name: '巨蟹座'
-          },
-          {
-            value: 50,
-            name: '狮子座'
-          },
-          {
-            value: 510,
-            name: '处女座'
-          },
-          {
-            value: 515,
-            name: '天平座'
-          },
-          {
-            value: 315,
-            name: '射手座'
-          },
-          {
-            value: 515,
-            name: '魔蝎座'
-          },
-          {
-            value: 115,
-            name: '水平座'
-          },
-          {
-            value: 215,
-            name: '双鱼座'
-          },
-        ]
-      }]
+      ],
     };
-
+  /*  在职员工状态分布*/
+    var colors8 = [
+      '#5e81ec',
+      '#ffc855',
+      '#98e79b',
+      '#00d695',
+      '#00b29a',
+      '#5470c6',
+      '#91cc75',
+      '#fac858',
+      '#ee6666',
+      '#73c0de',
+      '#3ba272',
+      '#fc8452',
+      '#9a60b4',
+      '#ea7ccc',
+    ];
+    var data8 = [
+      { value: 55, name: '煤' },
+      { value: 38, name: '电' },
+      { value: 32, name: '油' },
+      { value: 30, name: '其他' },
+      { value: 28, name: '气' },
+    ];
+    var total = data8.reduce((p, v) => {
+      return p + v.value;
+    }, 0);
     optiony8 = {
+      title:{
+        text:"在职员工状态分布",
+      },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{b} : {c} ({d}%)',
       },
-      legend: {
-        top: '5%',
-        left: 'center',
-        formatter: function(name) {
-          var data = optiony8.series[0].data;
-          var total = 0;
-          var tarValue;
-          for (var i = 0, l = data.length; i < l; i++) {
-            total += data[i].value;
-            if (data[i].name == name) {
-              tarValue = data[i].value;
-            }
-          }
-          var p = (tarValue / total * 100).toFixed(2);
-          return name + ' ' + ' ' + '(' + p + '%)';
-        },
-      },
-      title: {
-        text: '在职员工状态分布'
-      },
-      series: [{
-        name: '年代',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
+      color: colors8,
+      calculable: true,
+      series: [
+        {
+          type: 'pie',
+          radius: ['30%', '65%'],
+          center: ['50%', '50%'],
+          roseType: 'radius',
           label: {
             show: true,
-            fontSize: '30',
-            fontWeight: 'bold'
-          }
-        },
-        labelLine: {
-          show: false
-        },
-        data: [{
-          value: 1048,
-          name: '正式'
-        },
-          {
-            value: 735,
-            name: '试用'
+            color: 'inherit',
+            position: 'outside',
+            fontSize: 14,
+            formatter:"{b} {d}%",
           },
-
-
-        ]
-      }]
+          labelLine: {
+            length: 1,
+            length2: 20,
+            smooth: true,
+          },
+          data: data8,
+        },
+      ],
     };
 
 
