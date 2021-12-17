@@ -1,4 +1,4 @@
-<!--招聘过程 人才库-->
+<!-- 简历赛选 -->
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -9,7 +9,7 @@
             <li @click="liback(1)">
               <div v-bind:class="{active:isActive1}">
                 <router-link :to="{path:this.one,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive1}">全部简历 (99)</span>
+                  <span v-bind:class="{sactive:isActive1}">候选人 (99)</span>
                 </router-link>
               </div>
             </li>
@@ -19,30 +19,10 @@
             <li @click="liback(2)">
               <div v-bind:class="{active:isActive2}">
                 <router-link :to="{path:this.two,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive2}">新简历 (99)</span>
+                  <span v-bind:class="{sactive:isActive2}">已邀约 (99)</span>
                 </router-link>
               </div>
             </li>
-
-
-            <li  @click="liback(3)">
-              <div v-bind:class="{active:isActive3}">
-                <router-link :to="{path:this.three,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive3}">候选人 (99)</span>
-                </router-link>
-              </div>
-            </li>
-
-
-
-            <li  @click="liback(4)">
-              <div v-bind:class="{active:isActive4}">
-                <router-link :to="{path:this.foue,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive4}">淘汰库 (99)</span>
-                </router-link>
-              </div>
-            </li>
-
 
           </ul>
         </div>
@@ -64,13 +44,9 @@ export default {
     return{
       isActive1:true,
       isActive2:false,
-      isActive3:false,
-      isActive4:false,
       //路由地址
-      one:'/recruitment/recruit/fullresume',
-      two:'/recruitment/recruit/newresume',
-      three:'/recruitment/recruit/candidate',
-      foue:'/recruitment/recruit/eliminate'
+      one:'/recruitment/candidate',
+      two:'/recruitment/Invited',
 
     }
   },
@@ -87,18 +63,6 @@ export default {
         this.isActive2=true;
         this.isActive3=false;
         this.isActive4=false;
-      }
-      if(n===3){
-        this.isActive1=false;
-        this.isActive2=false;
-        this.isActive3=true;
-        this.isActive4=false;
-      }
-      if(n===4){
-        this.isActive1=false;
-        this.isActive2=false;
-        this.isActive3=false;
-        this.isActive4=true;
       }
 
     }

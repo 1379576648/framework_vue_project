@@ -6,7 +6,7 @@
       <!--标题-->
       <div class="j-card-head">
         <div class="j-card-head-title">
-          <span>新增招聘计划</span>
+          <span>{{this.$route.query.name}}招聘计划</span>
         </div>
       </div>
       <!--内容-->
@@ -179,7 +179,6 @@ export default {
       this.$router.go('-1');
     }
   },
-
 }
 </script>
 
