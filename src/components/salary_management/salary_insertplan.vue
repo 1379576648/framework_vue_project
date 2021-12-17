@@ -4,7 +4,7 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-head">
         <div class="j-card-head-title" style="margin-left:20px;">
-          <span>加班方案</span>
+          <span>{{this.$route.query.name}}加班方案</span>
         </div>
       </div>
       <div class="j-card-body">
