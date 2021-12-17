@@ -46,8 +46,9 @@
                 </el-button>
               </div>
             </div>
-            <div class="j-set-top-bottom" @click="this.insertMenu=true">
-              <el-button type="primary">
+            <div class="j-set-top-bottom">
+              <el-button type="primary"
+                         @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目'">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
@@ -127,7 +128,8 @@
               <el-table-column prop="CREATED_TIME" label="创建时间" min-width="220"/>
               <el-table-column label="操作" min-width="180">
                 <template #default="scope">
-                  <el-button type="text">
+                  <el-button type="text"
+                             @click="this.insertMenu=true,this.boxName='修改菜单',this.ruleForm.previousMenu=scope.row.MENU_NAME">
                     <svg t="1639052797619" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="9054" width="12" height="12">
                       <path
@@ -136,7 +138,8 @@
                     </svg>
                     修改
                   </el-button>
-                  <el-button type="text">
+                  <el-button type="text"
+                             @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu=scope.row.MENU_NAME">
                     <svg t="1639053259858" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="11914" width="12" height="12">
                       <path
@@ -145,7 +148,7 @@
                     </svg>
                     新增
                   </el-button>
-                  <el-button type="text">
+                  <el-button type="text" @click="deleteMenu(scope.row.MENU_NAME)">
                     <svg t="1639053106665" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="10997" width="12" height="12">
                       <path
@@ -174,7 +177,7 @@
   <!--  新增菜单弹出框-->
   <el-dialog
       v-model="insertMenu"
-      title="添加菜单"
+      :title="this.boxName"
       width="50%"
       destroy-on-close
       left
@@ -187,11 +190,11 @@
         class="demo-ruleForm"
         inline="true"
     >
-      <el-form-item label="上级菜单" prop="name" style="margin-bottom: 10px">
-        <el-input v-model="ruleForm.name" style="width: 203px" disabled ></el-input>
+      <el-form-item label="上级菜单" prop="previousMenu" style="margin-bottom: 25px">
+        <el-input v-model="ruleForm.previousMenu" style="width: 203px" disabled></el-input>
       </el-form-item>
-      <el-form-item label="菜单名称" prop="name" style="margin-bottom: 10px">
-        <el-select v-model="one" slot="prepend" style="width: 203px"
+      <el-form-item label="菜单名称" prop="menuName" style="margin-bottom: 25px">
+        <el-select v-model="ruleForm.menuName" slot="prepend" style="width: 203px"
                    filterable
                    allow-create
                    default-first-option>
@@ -201,18 +204,18 @@
           <el-option label="其他" value="5"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="菜单类型" prop="region">
-        <el-radio-group v-model="ruleForm.resource">
+      <el-form-item label="菜单类型" prop="menuType" class="insert_menuType" style="margin-bottom: 25px">
+        <el-radio-group v-model="ruleForm.menuType">
           <el-radio label="目录" style="margin: 10px"></el-radio>
           <el-radio label="菜单" style="margin: 10px"></el-radio>
           <el-radio label="按钮" style="margin: 10px"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="菜单状态" prop="name" style="margin-bottom: 10px">
-        <el-switch v-model="one"  active-text="禁用" inactive-text="启用"/>
+      <el-form-item label="菜单状态" prop="menuState" class="insert_menuState" style="margin-bottom: 25px">
+        <el-switch v-model="ruleForm.menuState" active-text="禁用" inactive-text="启用"/>
       </el-form-item>
-      <el-form-item label="菜单图标" prop="name" style="margin-bottom: 10px">
-        <el-select v-model="one" slot="prepend" style="width: 535px"
+      <el-form-item label="菜单图标" prop="menuImage" style="margin-bottom: 25px">
+        <el-select v-model="ruleForm.menuImage" slot="prepend" style="width: 535px"
                    filterable
                    allow-create
                    default-first-option>
@@ -222,8 +225,8 @@
           <el-option label="其他" value="5"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="路由地址" prop="name" style="margin-bottom: 10px">
-        <el-select v-model="one" slot="prepend" style="width: 535px"
+      <el-form-item label="路由地址" prop="menuRouter" style="margin-bottom: 25px">
+        <el-select v-model="ruleForm.menuRouter" slot="prepend" style="width: 535px"
                    filterable
                    allow-create
                    default-first-option
@@ -234,11 +237,12 @@
           <el-option label="其他" value="5"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="组件地址" prop="name" style="margin-bottom: 10px">
-        <el-select v-model="one" slot="prepend" style="width: 535px"
+      <el-form-item label="组件地址" prop="menuModule" style="margin-bottom: 25px">
+        <el-select v-model="ruleForm.menuModule" slot="prepend" style="width: 535px"
                    filterable
                    allow-create
                    default-first-option
+                   max-height="100px"
         >
           <el-option label="公交" value="2"></el-option>
           <el-option label="地铁" value="3"></el-option>
@@ -249,50 +253,71 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="insertMenu = false,submitForm('ruleForm')">确认</el-button>
-        <el-button @click="insertMenu = false">取消</el-button
-        >
+        <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
+        <el-button @click="resetForm('ruleForm')">取消</el-button>
       </span>
     </template>
   </el-dialog>
-  {{ one }}
 </template>
 
 <script>
+import {ElMessageBox, ElMessage} from 'element-plus'
+
 export default {
   data() {
     return {
+      //弹出框名称
+      boxName: '',
       ruleForm: {
         //上级菜单名称
-        previousMenu:'',
+        previousMenu: '',
         //菜单名称
         menuName: '',
         //菜单类型
-        menuType: '',
+        menuType: '目录',
         //菜单状态
         menuState: false,
         //菜单图标
         menuImage: '',
         //菜单路由
-        menuRouter:'',
+        menuRouter: '',
         //菜单组件
         menuModule: ''
       },
       rules: {
-        //上级菜单名称
-        previousMenu:[],
+
         //菜单名称
-        menuName: [],
-        //菜单类型
-        menuType: [],
-        //菜单状态
-        menuState: [],
+        menuName: [
+          {
+            required: true,
+            message: '菜单名称不能为空',
+            trigger: 'change',
+          }
+        ],
         //菜单图标
-        menuImage: [],
+        menuImage: [
+          {
+            required: true,
+            message: '图标地址不能为空',
+            trigger: 'change',
+          }
+        ],
         //菜单路由
-        menuRouter:[],
+        menuRouter: [
+          {
+            required: true,
+            message: '路由地址不能为空',
+            trigger: 'change',
+          }
+        ],
         //菜单组件
-        menuModule: []
+        menuModule: [
+          {
+            required: true,
+            message: '组件地址不能为空',
+            trigger: 'change',
+          }
+        ]
       },
       //新增菜单弹出框
       insertMenu: false,
@@ -303,7 +328,7 @@ export default {
       refreshTable: true,
       //输入的菜单名称值
       menuName: '',
-      //日期组件
+      //日期选择组件
       shortcuts: [
         {
           text: '过去一周',
@@ -338,6 +363,7 @@ export default {
       date: [],
       //显示隐藏菜单
       menuShow: true,
+      //表格数据
       tableData: [
         {
           MENU_ID: 1,
@@ -463,19 +489,58 @@ export default {
       ],
     }
   }, methods: {
+    deleteMenu(value) {
+      ElMessageBox.confirm(
+          '是否确认删除名称为“' + value + '"的数据项?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        ElMessage({
+          type: 'success',
+          message: '删除成功',
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          if (this.boxName === '新增菜单') {
+
+          } else {
+
+          }
+          //清空表单
+          this.$refs[formName].resetFields();
+          //关闭弹出框
+          this.insertMenu = false;
+          ElMessage({
+            type: 'success',
+            message: this.boxName == '新增菜单' ? '新增成功' : '修改成功',
+          })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     },
     //清空表单数据
     resetForm(formName) {
-      this.$refs[formName].resetFields()
+      //清空表单数据
+      this.$refs[formName].resetFields();
+      //关闭弹出框
+      this.insertMenu = false;
+      ElMessage({
+        type: 'info',
+        message: '取消成功',
+      })
     },
     //展开操作/收起操作
     handle() {
@@ -494,13 +559,47 @@ export default {
 </script>
 <style scoped>
 @import url("../../css/navigation.css");
-.el-scrollbar__view .el-select-dropdown__item{
+
+/deep/ .el-input__suffix .el-input__validateIcon {
+  position: relative !important;
+  top: 13px;
+}
+
+/deep/ .el-scrollbar__wrap {
+  overflow-y: auto;
+  opacity: 1;
+}
+
+
+/deep/ .insert_menuType .el-form-item__label {
+  position: relative !important;
+  top: 10px;
+}
+
+/deep/ .insert_menuState .el-form-item__label {
+  position: relative;
+  top: 2px;
+  left: -13px
+}
+
+.cell span {
+  min-height: 0px;
+}
+
+/deep/ .el-form-item.is-error .el-input__validateIcon {
+  position: relative;
+  top: 13px;
+}
+
+.el-scrollbar__view .el-select-dropdown__item {
   text-align: center;
 }
-/deep/.el-input__suffix  .el-input__suffix-inner .el-icon svg{
+
+/deep/ .el-input__suffix .el-input__suffix-inner .el-icon svg {
   position: relative;
   top: 10px;
 }
+
 .dialog-footer .el-button {
   width: 100px;
   min-height: 33px;
