@@ -108,7 +108,6 @@ table *{
 .w{
      margin-top: 20px;
      border: 1px solid #e9e9e9;
-
 }
 .w:hover{
   	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
