@@ -1,4 +1,5 @@
 <template>
+<!--  考勤记录页面上导航栏-->
   <div class="head">
     <el-tabs v-model="activeName"  type="card" @tab-click="handleClick">
       
@@ -28,8 +29,6 @@
 
 
 <script lang="ts">
-// import abb from "../attendance_management/attendance_record.vue"
-
 export default {
   data() {
     return {

@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-    <!-- 工作台 -->
+    <!-- 显示视图 -->
     <router-view/>
   </div>
 </template>
@@ -159,6 +159,7 @@ export default {
       this.inquire_1();
       //将目前激活的路由存起来
       this.$store.state.activate_router = this.activate_router
+      //返回路由结果
       return this.activate_router;
     }
   }
