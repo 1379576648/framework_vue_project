@@ -67,10 +67,9 @@
           <el-table-column prop="name" label="实际出勤天数" width="100" />
           <el-table-column prop="name" label="月计薪天数" width="100" />
         </el-table-column>-->
-        <el-table-column label="固定工资" >
-          <el-table-column prop="name" label="基本工资" width="100" />
-          <el-table-column prop="name" label="实发固定工资" width="100" />
-        </el-table-column>
+
+          <el-table-column prop="name" label="基本工资" width="110" />
+<!--          <el-table-column prop="name" label="实发固定工资" width="100" />-->
         <el-table-column label="加班工资" >
           <el-table-column prop="name" label="工作日加班工资" width="110" />
           <el-table-column prop="name" label="休息日加班工资" width="110" />
