@@ -134,7 +134,7 @@
                 </el-dropdown>
               </el-col>
             </el-row>
-    </div>
+           </div>
 
           </template>
         </el-table-column>

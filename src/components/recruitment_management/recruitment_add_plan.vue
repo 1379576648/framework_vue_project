@@ -24,15 +24,19 @@
 
               <el-form-item label="需求部门" prop="zpdept">
                 <el-select v-model="ruleForm.zpdept" style="width:380px;">
-                  <el-option label="Zone one" value="shanghai"></el-option>
-                  <el-option label="Zone two" value="beijing"></el-option>
+                  <el-option label="市场部" value="市场部"></el-option>
+                  <el-option label="销售部" value="销售部"></el-option>
+                  <el-option label="秘书办" value="秘书办"></el-option>
+                  <el-option label="人才部" value="人才部"></el-option>
                 </el-select>
               </el-form-item>
 
               <el-form-item label="招聘职位" prop="zpzw">
                 <el-select v-model="ruleForm.zpzw" style="width:380px;">
-                  <el-option label="Zone one" value="shanghai"></el-option>
-                  <el-option label="Zone two" value="beijing"></el-option>
+                  <el-option label="客服主管" value="客服主管"></el-option>
+                  <el-option label="前端工程师" value="前端工程师"></el-option>
+                  <el-option label="生产主管" value="生产主管"></el-option>
+                  <el-option label="劳动关系专员" value="劳动关系专员"></el-option>
                 </el-select>
               </el-form-item>
 
@@ -47,9 +51,14 @@
               </el-form-item>
 
               <el-form-item label="最低学历" prop="zpxl">
-                <el-select v-model="ruleForm.zpxl" placeholder="Activity zone">
-                  <el-option label="Zone one" value="shanghai"></el-option>
-                  <el-option label="Zone two" value="beijing"></el-option>
+                <el-select v-model="ruleForm.zpxl" placeholder="请选择">
+                  <el-option label="不限" value="不限"></el-option>
+                  <el-option label="初中" value="初中"></el-option>
+                  <el-option label="高中" value="高中"></el-option>
+                  <el-option label="大专" value="大专"></el-option>
+                  <el-option label="本科" value="本科"></el-option>
+                  <el-option label="硕士" value="硕士"></el-option>
+                  <el-option label="博士" value="博士"></el-option>
                 </el-select>
               </el-form-item>
 
@@ -65,8 +74,10 @@
 
               <el-form-item label="月薪范围" prop="zpxqf">
                 <el-select v-model="ruleForm.zpxqf" placeholder="Activity zone">
-                  <el-option label="Zone one" value="shanghai"></el-option>
-                  <el-option label="Zone two" value="beijing"></el-option>
+                  <el-option label="3000-5000" value="3000-5000"></el-option>
+                  <el-option label="5000-8000" value="5000-8000"></el-option>
+                  <el-option label="8000-12000" value="8000-12000"></el-option>
+                  <el-option label="12000以上" value="12000以上"></el-option>
                 </el-select>
               </el-form-item>
 
@@ -103,7 +114,7 @@ export default {
         //职位
         zpzw:'',
         //人数
-        zpnum:'',
+        zpnum:1,
         //学历
         zpxl: '',
         //时间范围

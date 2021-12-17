@@ -1,6 +1,8 @@
 <template>
+  <!--  加班审批页面-->
   <div class="body_1">
     <el-tabs type="border-card">
+      <!-- 待办申请页面 -->
       <el-tab-pane label="待办申请">
         <el-button @click="resetDateFilter1">重置日期过滤</el-button>
         &nbsp;
@@ -11,7 +13,7 @@
         />
         &nbsp;
         <el-button type="success" plain>搜索</el-button>
-
+        <!--  表格 -->
         <el-table
           ref="filterTable1"
           row-key="date1"
@@ -46,9 +48,30 @@
 					</el-table-column> -->
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button type="success" plain>通过</el-button>
-
-              <el-button type="danger" plain>驳回</el-button>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定通过吗?"
+                  @confirm="through1()"
+              >
+                <template #reference>
+                  <el-button type="success" plain>通过</el-button>
+                </template>
+              </el-popconfirm>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定驳回吗?"
+                  @confirm="through2()"
+              >
+                <template #reference>
+                  <el-button type="danger" plain>驳回</el-button>
+                </template>
+              </el-popconfirm>
               <el-button
                 type="primary"
                 style="margin-left: 16px"
@@ -75,11 +98,11 @@
           </el-pagination>
         </div>
       </el-tab-pane>
-
+      <!-- 点击详情，弹出抽屉-->
       <el-drawer v-model="drawer" title="I am the title" :with-header="false">
         <span>Hi there!</span>
       </el-drawer>
-
+      <!-- 已办申请页面 -->
       <el-tab-pane label="已办申请">
         <el-button @click="resetDateFilter">重置日期过滤</el-button>
         &nbsp;
@@ -90,7 +113,6 @@
         />
         &nbsp;
         <el-button type="success" plain>搜索</el-button>
-
         <el-table
           ref="filterTable"
           row-key="date"
@@ -171,6 +193,7 @@ export default {
   },
   data() {
     return {
+      // 待办转正审批列表
       tableData: [
         {
           date: "2016-05-02",
@@ -233,6 +256,7 @@ export default {
           UPDATED_TIME: "2020-01-01",
         },
       ],
+      // 已办转正审批列表
       tableData1: [
         {
           date1: "2016-05-02",
@@ -295,7 +319,7 @@ export default {
           UPDATED_TIME: "2020-01-01",
         },
       ],
-
+      // 分页
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
@@ -305,30 +329,34 @@ export default {
     };
   },
   methods: {
+    // 重置日期过滤
     resetDateFilter1() {
       this.$refs.filterTable1.clearFilter("date1");
     },
+    // 重置日期过滤
     resetDateFilter() {
       this.$refs.filterTable.clearFilter("date");
     },
     clearFilter() {
       this.$refs.filterTable.clearFilter();
     },
-    // formatter(row, column) {
-    //   return row.address;
-    // },
-    // filterTag(value, row) {
-    //   return row.tag === value;
-    // },
+    // 筛选
     filterHandler(value, row, column) {
       const property = column["property"];
       return row[property] === value;
     },
+    // 点击通过确认按钮触发
+    through1(){
+      alert(1)
+    },
+    // 点击驳回确认按钮触发
+    through2(){
+      alert(1)
+    }
   },
 };
 </script>
 
 <style scoped>
 @import url("../../css/Examine_2.css");
-/* @import url("../css/Examine_3.css"); */
 </style>

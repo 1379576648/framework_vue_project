@@ -70,7 +70,7 @@
 						</span>
             <div class="header_message header_message_show">
               <div>
-                <el-tabs v-model="activeName" @tab-click="handleClick" stretch="true"
+                <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true"
                          style="margin-top: 10px;color: black">
                   <el-tab-pane label="未读消息" name="first">
                     <div style="width: 100px; height: 100px; background-color: #0c9c6e"></div>
@@ -84,21 +84,17 @@
         </div>
       </div>
     </div>
-    <!-- 工作台 -->
+    <!-- 显示视图 -->
     <router-view/>
   </div>
 </template>
 
 <script>
-// import {ArrowDown} from '@element-plus/icons';
-// import {
-//   defineComponent,
-//   ref
-// } from 'vue'
 
 export default {
   data() {
     return {
+      true:true,
       //默认激活的路由
       activate_router: this.$store.state.activate_router,
       activeName: 'second',
@@ -163,6 +159,7 @@ export default {
       this.inquire_1();
       //将目前激活的路由存起来
       this.$store.state.activate_router = this.activate_router
+      //返回路由结果
       return this.activate_router;
     }
   }

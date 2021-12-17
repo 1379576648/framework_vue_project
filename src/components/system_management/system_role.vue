@@ -44,7 +44,7 @@
               </el-date-picker>
             </el-form-item>
             <!-- 操作按钮 -->
-            <el-form-item  style="margin-left: 2px;margin-top: -14px;margin-bottom: 16px">
+            <el-form-item  style="margin-left: 1066px;margin-top: -14px;margin-bottom: -24px;">
               <el-button size="small" class="search-ss" type="primary" @click="onSubmit"><i
                   class="iconfont">&#xe61b</i>搜索</el-button>
               <el-button size="small" class="search-cz" type="primary"><i class="iconfont">&#xe6b8</i>重置</el-button>
@@ -72,16 +72,22 @@
               </el-form-item>
 
               <el-form-item class="announcement-zt" label="权限状态·">
-                <div >
+                <div class="normal">
                   <el-radio v-model="radio1" label="1">正常</el-radio>
+                </div>
+                <div class="shut">
                   <el-radio v-model="radio1" label="2">关闭</el-radio>
                 </div>
               </el-form-item>
 
               <el-form-item class="menu" label="菜单权限">
                 <div class="menus">
-                  <el-checkbox v-model="checked1" label="展开/折叠" >展开/折叠</el-checkbox>
-                  <el-checkbox v-model="checked2" label="全选/不全选" class="nbsp"></el-checkbox>
+                  <div class="a">
+                  <el-checkbox  v-model="checked1" label="展开/折叠" >展开/折叠</el-checkbox>
+                  </div>
+                  <div class="b">
+                  <el-checkbox  v-model="checked2" label="全选/不全选" ></el-checkbox>
+                  </div>
                   <div class="menuss">
                     <el-tree
                         ref="tree"
@@ -147,7 +153,7 @@
                     </el-icon>
                   </span>
                     <template #dropdown>
-                      <el-dropdown-menu>
+                      <el-dropdown-menu style="width: 80px;text-align: center">
                         <el-dropdown-item @click="data_permission=true">数据权限</el-dropdown-item>
                         <router-link :to="{path:this.two,query:{path: this.$route.query.path}}">
                           <el-dropdown-item >分配用户</el-dropdown-item>
@@ -451,8 +457,24 @@ export default {
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.woff?t=1638864192788') format('woff'),
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.ttf?t=1638864192788') format('truetype');
 }
-.el-form-item__content .menus .el-checkbox{
-  margin-left: 10px;
+.normal{
+
+}
+.shut{
+  margin-top: -40px;
+  margin-left: 84px;
+}
+.a{
+  width: 130px;
+  margin-left: -20px;
+}
+.b{
+  width: 130px;
+  margin-top: -40px;
+  margin-left: 114px;
+}
+.el-form-item__content .menus .el-checkbox {
+  margin-left: 20px;
 }
 /*数据权限样式*/
 .role-character{
@@ -543,7 +565,7 @@ export default {
   margin-top: 15px;
 }
 .button{
-  margin-top: -6px;
+  margin-top: -12px;
   margin-bottom: 12px;
   margin-left: 7px;
 }
@@ -630,6 +652,8 @@ export default {
 .form-time{
   width: 270px;
   margin-left: -20px;
+  margin-top: 5px;
+
 }
 /*角色状态搜索样式*/
 .form-state{
