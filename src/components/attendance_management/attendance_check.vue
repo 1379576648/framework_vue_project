@@ -30,11 +30,33 @@
         </el-table-column>
         <el-table-column prop="operate" label="操作">
           <template #default>
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small" @click="redact()">编辑</el-button>
             <span style="color:#e8e8e8">|</span>
-            <el-button type="text" size="small">禁用</el-button>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定禁用吗?"
+                @confirm="through1()"
+            >
+              <template #reference>
+                <el-button type="text" size="small">禁用</el-button>
+              </template>
+            </el-popconfirm>
             <span style="color:#e8e8e8">|</span>
-            <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定删除吗?"
+                @confirm="through2()"
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -98,6 +120,20 @@ export default {
       ],
     }
   },
+  methods: {
+    // 点击编辑跳转
+    redact() {
+      this.$router.replace('{path: this.one,query:{path:this.$route.query.path}}')
+    },
+    // 点击禁用确认按钮触发
+    through1() {
+      alert(1)
+    },
+    // 点击删除确认按钮触发
+    through2() {
+      alert(1)
+    },
+  }
 }
 </script>
 

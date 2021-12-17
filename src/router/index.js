@@ -323,7 +323,22 @@ const routes = [
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterviewPass.vue'}`],
                                 },
                             ]
-                        }
+                        },
+                        {//简历筛选
+                            path: '/recruitment/recruitment_screen',
+                            redirect: "/recruitment/candidate",
+                            component:modules[`${'../components/recruitment_management/recruitment_screen.vue'}`],
+                            children: [
+                                {//候选人
+                                    path: '/recruitment/candidate',
+                                    component:modules[`${'../components/recruitment_management/recruitment_candidate.vue'}`],
+                                },
+                                {//已邀约
+                                    path: '/recruitment/Invited',
+                                    component:modules[`${'../components/recruitment_management/recruitment_Invited.vue'}`],
+                                },
+                            ]
+                        },
                     ]
                 }
             ]
