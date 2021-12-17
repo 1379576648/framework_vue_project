@@ -58,6 +58,7 @@
                         type="date"
                         placeholder="请选择日期"
                         style="width: 100%"
+                        @change="difference1(ruleForm.date1)"
                       ></el-date-picker>
                     </el-form-item>
                   </el-col>
@@ -71,6 +72,7 @@
                         type="date"
                         placeholder="请选择日期"
                         style="width: 100%"
+                        @change="difference2(ruleForm.date2)"
                       ></el-date-picker>
                     </el-form-item>
                   </el-col>
@@ -98,6 +100,8 @@
 </template>
 
 <script lang="ts">
+import {ElMessage} from "element-plus";
+
 export default {
   data() {
     return {
@@ -141,9 +145,62 @@ export default {
     };
   },
   methods:{
+    //取消离职
     goblack(){
       this.$router.go('-1');
-    }
+    },
+    //提交离职
+    submitForm(){
+      if(this.ruleForm.region.length === 0){
+        ElMessage("请选择您的离职原因!");
+      }else if (this.ruleForm.date1.length === 0){
+        ElMessage("请选择您的最后工作时间!");
+      }else if (this.ruleForm.date2.length === 0){
+        ElMessage("请选择您的离职生效时间!");
+      }else {
+        alert(1);
+      }
+
+    },
+    difference1: function (endTime) {
+      var date = new Date();
+      if (endTime < date) {
+        ElMessage({
+          message: "最后工作时间小于当前时间，请重新选择!",
+          type: "warning",
+        });
+        this.cancel_date();
+      }
+    },
+    difference2: function (endTime) {
+      var date = new Date();
+      if (endTime < date) {
+        ElMessage({
+          message: "离职生效时间小于当前时间，请重新选择!",
+          type: "warning",
+        });
+        this.cancel_date();
+      }
+
+      // var stime =new Date(beginTime).getTime();
+      // var etime = new Date(endTime).getTime();
+      //
+      // var today=stime+2592000000;
+      // console.log("today " +today+"  stime: "+stime+"  etime: "+etime)
+      // if (etime<today){
+      //   ElMessage({
+      //     message: "离职生效时间不能小于办理离职时间加一个月，请重新选择!",
+      //     type: "warning",
+      //   });
+      //   this.cancel_date();
+      // }
+   },
+    cancel_date() {
+      this.ruleForm.date1 = "";
+      this.ruleForm.date2 = "";
+    },
+
+
   }
 };
 </script>
