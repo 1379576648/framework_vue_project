@@ -51,7 +51,7 @@
 				<el-table-column prop="thing" label="状态" />
 				<el-table-column prop="operate" label="操作">
 					<template #default>
-						<el-button size="small" style="color:darkorange" @click="open">申请删除</el-button>
+						<el-button size="small" style="color:darkorange" @click="open">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
