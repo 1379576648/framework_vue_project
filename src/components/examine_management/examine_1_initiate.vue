@@ -554,6 +554,7 @@
               <el-option label="休息日加班" value="休息日加班"></el-option>
               <el-option label="节假日加班" value="节假日加班"></el-option>
             </el-select>
+
           </el-form-item>
           <!-- 加班开始 -->
           <el-form-item label="加班开始时间">
@@ -1183,6 +1184,7 @@ export default defineComponent({
     },
     // 时间
     cancel_date() {
+      this.overtime_1.type_1="";
       this.overtime_1.date1 = "";
       this.overtime_1.date2 = "";
       this.overtime_1.date3 = "";
@@ -1296,8 +1298,16 @@ export default defineComponent({
     },
     // 判断加班开始时间
     difference1_1: function (beginTime) {
+      var jbtype=this.overtime_1.type_1; //获取加班类型
       var date = new Date();
-      if (beginTime < date) {
+      if (jbtype.length === 0){
+        ElMessage({
+          message: "请选择加班类型!",
+          type: "warning",
+        });
+        this.cancel_date();
+      }
+      else if (beginTime < date) {
         ElMessage({
           message: "加班开始时间小于当前时间，请重新选择!",
           type: "warning",
@@ -1307,12 +1317,23 @@ export default defineComponent({
     },
     // 计算加班天数
     difference1_2: function (beginTime, endTime) {
-      if (beginTime.length == 0) {
+      var jbtype=this.overtime_1.type_1; //获取加班类型
+      console.log(jbtype);
+      if (jbtype.length === 0){
+        ElMessage({
+          message: "请选择加班类型!",
+          type: "warning",
+        });
+        this.cancel_date();
+      }
+      // 判断是否选择加班时间
+      else if (beginTime.length == 0) {
         ElMessage({
           message: "请选择加班开始时间!",
           type: "warning",
         });
         this.cancel_date();
+        // 判断加班结束时间是否小于加班出差开始时间
       } else if (endTime < beginTime) {
         ElMessage({
           message: "加班结束时间小于加班出差开始时间，请重新选择!",
@@ -1320,8 +1341,6 @@ export default defineComponent({
         });
         this.cancel_date();
       } else {
-        console.log(beginTime);
-        console.log(endTime);
         var dateBegin = new Date(beginTime);
         var dateEnd = new Date(endTime);
         var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
@@ -1339,8 +1358,36 @@ export default defineComponent({
             type: "warning",
           });
           this.cancel_date();
-        } else {
-          this.overtime_1.date3 = hours + "小时";
+        }else if(jbtype === "工作日加班"){
+            if(hours > 3){
+              ElMessage({
+                message: "工作日加班时间不能大于3小时，请重新选择!",
+                type: "warning",
+              });
+              this.cancel_date();
+            }else {
+              this.overtime_1.date3 = hours + "小时";
+            }
+        }else if ( jbtype === "休息日加班"){
+          if(hours > 8){
+            ElMessage({
+              message: "休息日加班时间不能大于8小时，请重新选择!",
+              type: "warning",
+            });
+            this.cancel_date();
+          }else {
+            this.overtime_1.date3 = hours + "小时";
+          }
+        }else if ( jbtype === "节假日加班"){
+          if(hours > 8){
+            ElMessage({
+              message: "节假日加班时间不能大于8小时，请重新选择!",
+              type: "warning",
+            });
+            this.cancel_date();
+          }else {
+            this.overtime_1.date3 = hours + "小时";
+          }
         }
       }
     },
@@ -1399,7 +1446,7 @@ export default defineComponent({
         this.cancel_date3();
       }
     },
-    // 计算请假天数
+    // 计算请假时长
     difference3_2: function (beginTime, endTime) {
       if (beginTime.length == 0) {
         ElMessage({
