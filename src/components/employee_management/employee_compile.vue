@@ -4,6 +4,9 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
+        <button type="button" class="ant-btn ant-btn-primary ant-btn-two-chinese-chars" style="margin-left: 1100px;margin-top: 20px;width: 80px;" @click="goblack()">
+          <span>返回</span>
+        </button>
         <div style="text-align: center; margin-top: 60px">
           <el-upload
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -78,19 +81,11 @@ export default {
       dialogVisible: false,
     };
   },
-  methods: {
-    // handleRemove(file, fileList) {
-    //   console.log(file, fileList);
-    // },
-    // handlePictureCardPreview(file) {
-    //   this.dialogImageUrl = file.url;
-    //   this.dialogVisible = true;
-    // },
-    //
-    // handleClick(tab, event) {
-    //   console.log(tab, event)
-    // },
-  },
+  methods:{
+    goblack(){
+      this.$router.go('-1');
+    }
+  }
 };
 </script>
 
