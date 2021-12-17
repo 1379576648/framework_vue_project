@@ -7,7 +7,7 @@
       <el-date-picker v-model="value1" type="daterange" range-separator="到"
                       start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
       </el-date-picker>
-      <span class="demonstration" style="position: relative;top: -1px;left: 8px;">组织范围：</span>
+      <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
       <el-select v-model="valuee" placeholder="请选择">
         <el-option
             v-for="item in optionss"
@@ -178,6 +178,7 @@ export default ({
       title: {
         text: '每月员工新进率'
       },
+
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -192,8 +193,18 @@ export default ({
       },
       toolbox: {
         feature: {
-          saveAsImage: {},
-          title:'保存'
+          saveAsImage: {
+            show: true,
+            title:'保存'
+          }, magicType: {
+            show: true,
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
+          },
+
         }
       },
       grid: {
@@ -246,7 +257,19 @@ export default ({
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {
+            show:true,
+            title:"保存"
+          },
+          magicType: {
+            show: true,
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
+          },
+
         }
       },
       grid: {
@@ -313,7 +336,19 @@ export default ({
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {
+            show:true,
+            title:"保存"
+          },
+
+          magicType: {
+            show: true,
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
+          },
         }
       },
       grid: {
