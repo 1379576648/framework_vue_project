@@ -44,9 +44,30 @@
 
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button type="success" plain>通过</el-button>
-
-              <el-button type="danger" plain>驳回</el-button>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定通过吗?"
+                  @confirm="through1()"
+              >
+                <template #reference>
+                  <el-button type="success" plain>通过</el-button>
+                </template>
+              </el-popconfirm>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定驳回吗?"
+                  @confirm="through2()"
+              >
+                <template #reference>
+                  <el-button type="danger" plain>驳回</el-button>
+                </template>
+              </el-popconfirm>
               <el-button
                 type="primary"
                 style="margin-left: 16px"
@@ -322,6 +343,14 @@ export default {
       const property = column["property"];
       return row[property] === value;
     },
+    // 点击通过确认按钮触发
+    through1(){
+      alert(1)
+    },
+    // 点击驳回确认按钮触发
+    through2(){
+      alert(1)
+    }
   },
 };
 </script>

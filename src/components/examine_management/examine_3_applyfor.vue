@@ -41,7 +41,18 @@
           <el-table-column prop="name" label="最近处理" width="100"/>
           <el-table-column label="操作">
             <template #default="scope">
-              <el-button type="success" plain>撤销</el-button>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定撤销吗?"
+                  @confirm="through1()"
+              >
+                <template #reference>
+                  <el-button type="success" plain>撤销</el-button>
+                </template>
+              </el-popconfirm>
               <el-button
                   type="primary"
                   style="margin-left: 16px"
@@ -140,6 +151,10 @@ export default {
     filterHandler(value, row, column) {
       const property = column["property"];
       return row[property] === value;
+    },
+    // 点击撤销确认按钮触发
+    through1() {
+      alert(1)
     },
   },
 };

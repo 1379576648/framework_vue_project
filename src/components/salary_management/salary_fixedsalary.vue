@@ -84,7 +84,7 @@
 
         <!--  第二个隐藏框      -->
         <div class="body_3" v-show="disly_1">
-          <h3 style="margin-top:1px;">定薪</h3><br/>
+          <h3 style="margin-top:1px;">调薪</h3><br/>
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item>
               <template #label>
@@ -170,8 +170,8 @@
             <el-table-column prop="zip" label="岗位" width="120" />
             <el-table-column fixed="right" label="操作" width="120">
               <template #default>
-                <el-button type="text" size="small" @click="disly=true,disly_1=false">定薪</el-button>
-                <el-button type="text" size="small" @click="disly_1=true,disly=false">调薪</el-button>
+                <el-button type="text" size="small" @click="disly=true,disly_1=false">定薪 </el-button>
+                <el-button type="text" size="small" @click="disly_1=true,disly=false">调薪 </el-button>
 
               </template>
             </el-table-column>
