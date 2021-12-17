@@ -43,7 +43,7 @@
               </el-date-picker>
             </el-form-item>
             <!-- 操作按钮 -->
-            <el-form-item style="margin-left: -4px;margin-top: -11px;">
+            <el-form-item style="margin-left: 1071px;margin-top: -11px;">
               <el-button size="small" class="search-ss" type="primary" @click="onSubmit"><i
                   class="iconfont">&#xe61b</i>搜索</el-button>
               <el-button size="small" class="search-cz" type="primary"><i class="iconfont">&#xe6b8</i>重置</el-button>
@@ -203,8 +203,9 @@ export default {
 }
 
 .button{
-  margin-bottom: 20px;
-  margin-top: 15px;
+  margin-bottom: 17px;
+  margin-top: -36px;
+
 }
 /* 删除表格数据按钮 */
 .button-delete{
