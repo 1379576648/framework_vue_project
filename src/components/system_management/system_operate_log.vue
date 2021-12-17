@@ -339,7 +339,7 @@ export default {
 }
 .button{
   margin-top: -6px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 
 }
 /* 删除表格数据按钮 */

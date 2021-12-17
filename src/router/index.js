@@ -530,7 +530,7 @@ const routes = [
         {//统计分析
             path: '/statistics',
             component:modules[`${'../components/statistics_management/statistics_main.vue'}`],
-            redirect: "/statistics/staff_analyze",
+            redirect: "/statistics/remuneration_analyze/three",
             children:[
                 {//人员分析
                     path:'/statistics/staff_analyze',
@@ -613,8 +613,13 @@ const routes = [
                     },
 
                     ]
+                },{
+                    path:'/statistics/remuneration_analyze/three',
+                    component:modules[`${'../components/statistics_management/three.vue'}`]
                 }
-            ]
+            ],
+
+
         },
         {//系统管理
             path: '/system',
