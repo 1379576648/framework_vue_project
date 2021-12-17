@@ -79,10 +79,10 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="">确定</el-button>
+            <el-button type="primary" @click="" size="mini">确定</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="">重置</el-button>
+            <el-button type="primary" @click="" size="mini">重置</el-button>
           </el-form-item>
 
           <el-form-item>
@@ -217,13 +217,13 @@ export default {
 }
 
 .icon-s{
-  width: 715px;
-  height: 110px;
+  width: 955px;
+  height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;
   margin-top: 10px;
-  float: right;
   padding: 16px;
+  margin-left: 70px;
 }
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;

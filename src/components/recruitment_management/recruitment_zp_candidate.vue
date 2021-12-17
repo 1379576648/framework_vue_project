@@ -79,10 +79,10 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="">确定</el-button>
+            <el-button type="primary" @click="" size="mini">确定</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="">重置</el-button>
+            <el-button type="primary" @click="" size="mini">重置</el-button>
           </el-form-item>
 
           <el-form-item>
@@ -116,22 +116,8 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
-              <el-row class="block-col-2" style="float: right;">
-                <el-col :span="8">
-                  <el-dropdown trigger="click">
-                <span class="el-dropdown-link">
-                  <el-button type="text" size="small">更多<i class="iconfont" style="font-size: 10px">&#xe772;</i></el-button>
-                </span>
-                    <template #dropdown>
-                      <el-dropdown-menu>
-                        <el-dropdown-item >删除</el-dropdown-item>
-                        <el-dropdown-item >转入淘汰库</el-dropdown-item>
-                      </el-dropdown-menu>
-                    </template>
-                  </el-dropdown>
-                </el-col>
-              </el-row>
+              <el-button type="text" size="small" @click="">删除</el-button>
+              <el-button type="text" size="small" @click="">移出</el-button>
             </div>
 
           </template>
@@ -217,13 +203,13 @@ export default {
 }
 
 .icon-s{
-  width: 715px;
-  height: 110px;
+  width: 955px;
+  height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;
   margin-top: 10px;
-  float: right;
   padding: 16px;
+  margin-left: 70px;
 }
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;
