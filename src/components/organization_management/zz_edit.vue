@@ -17,7 +17,7 @@
 			        <el-input v-model="form.name" autocomplete="off"></el-input>
 			      </el-form-item>
 			      <el-form-item label="所属部门" :label-width="formLabelWidth">
-			        <el-select v-model="form.region" placeholder="Please select activity area">
+			        <el-select v-model="form.region" placeholder="请选择">
 			          <el-option label="Area1" value="shanghai"></el-option>
 			          <el-option label="Area2" value="beijing"></el-option>
 			        </el-select>
@@ -28,9 +28,9 @@
 				  </el-form-item>
 			    </el-form>
 			    <div class="demo-drawer__footer">
-			      <el-button @click="cancelForm">Cancel</el-button>
+			      <el-button @click="cancelForm">关闭</el-button>
 			      <el-button type="primary" :loading="loading"><!-- @click="$refs.drawer.closeDrawer() -->
-				  {{ loading ? 'Submitting ...' : 'Submit' }}
+				  {{ loading ? 'Submitting ...' : '确认' }}
 				  </el-button>
 			    </div>
 			  </div>
@@ -51,7 +51,7 @@
 				<el-table-column prop="thing" label="状态" />
 				<el-table-column prop="operate" label="操作">
 					<template #default>
-						<el-button type="text" size="small" style="color:darkorange">删除</el-button>
+						<el-button size="small" style="color:darkorange" @click="open">申请删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 export default defineComponent({
   data() {
 	const state = reactive({
@@ -100,7 +100,7 @@ export default defineComponent({
 	    if (state.loading) {
 	      return
 	    }
-	    ElMessageBox.confirm('Do you want to submit?')
+	    ElMessageBox.confirm('确认关闭?')
 	      .then(() => {
 	        state.loading = true
 	        state.timer = setTimeout(() => {
@@ -121,8 +121,29 @@ export default defineComponent({
 	    state.dialog = false
 	    clearTimeout(state.timer)
 	  }
-	  
-	
+    const open = () => {
+      ElMessageBox.confirm(
+          '是否提交删除申请?',
+          '提示',
+          {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '已提交',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '已取消',
+            })
+          })
+    }
 			
     return {
         pageInfo: {
@@ -171,11 +192,12 @@ export default defineComponent({
           
       ],
       value1: "", //日期
-	  value: ref(""), //选择
-	  ...toRefs(state),
-	  handleClose,
-	  cancelForm,
-	  radio1: ref('1'),
+	    value: ref(""), //选择
+	    ...toRefs(state),
+	    handleClose,
+      cancelForm,
+	    radio1: ref('1'),
+      open,
     };
   },
 })

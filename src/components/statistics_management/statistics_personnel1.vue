@@ -227,8 +227,6 @@ export default ({
     var option5;
 
     var option = {
-
-
       title: {
         text: '每月末在职人数',
         left:50
@@ -258,7 +256,9 @@ export default ({
         name: '增长率',
         type: 'line',
         data: [5, 20, 25, 10, 10, 20],
-      }]
+        smooth:true
+      }],
+
     };
 
 
@@ -292,6 +292,7 @@ export default ({
         name: '增长率',
         type: 'line',
         data: [5, 20, 25, 10, 10, 20],
+        smooth:true
       }]
     };
 
@@ -325,6 +326,7 @@ export default ({
         name: '增长率',
         type: 'line',
         data: [5, 20, 25, 10, 10, 20],
+        smooth:true
       }]
     };
     /* 当前月转正人数 */
@@ -359,6 +361,7 @@ export default ({
         name: '增长率',
         type: 'line',
         data: [5, 20, 25, 10, 10, 20],
+        smooth:true
       }]
     };
 
