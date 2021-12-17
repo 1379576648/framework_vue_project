@@ -60,7 +60,7 @@
 
           <!-- 下拉选择器 -->
           <div class="resume-operation">
-            <el-select size="small" v-model="empState" placeholder="员工状态">
+            <el-select clearable size="small" v-model="empState" placeholder="员工状态">
               <el-option
                 v-for="item in empState_options"
                 :key="item.value"
@@ -73,9 +73,9 @@
 
           <!-- 部门 树形选择框 -->
           <div class="resume-operation">
-            <el-select v-model="value1" multiple placeholder="选择部门">
+            <el-select clearable v-model="dept_name" multiple placeholder="选择部门">
               <el-option
-                v-for="item in options1"
+                v-for="item in depts"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -142,6 +142,14 @@ export default {
   data() {
     return {
       path:"/social/social_payment/someone_insured_particulars",
+      // 部门名称
+      dept_name: null,
+      // 选择部门 下拉选择器
+      depts: [
+        {value: "1", label: "部门1"},
+        {value: "2", label: "部门2"},
+        {value: "3", label: "部门3"},
+      ],
       // 员工姓名搜索框
       empName_search:"",
       //员工状态下拉选择器
