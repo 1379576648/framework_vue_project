@@ -1,27 +1,24 @@
-<!--待面试-->
+<!--面试中-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 新增招聘计划按钮 -->
-          <a style="margin-top: 4px;">
-            <button type="button" class="ant-btn ant-btn-primary">
-              <span>+ 新增</span>
-            </button>
-          </a>
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
-          <!-- 批量批量删除按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量删除</span>
-          </button>
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量设为候选人</span>
-          </button>
+          <!-- 批量操作 -->
+          <el-dropdown :hide-on-click="false">
+            <span class="el-dropdown-link">
+                <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
+                  <span>批量操作</span>
+                </button>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>淘汰/放弃</el-dropdown-item>
+                <el-dropdown-item>安排复试</el-dropdown-item>
+                <el-dropdown-item>面试通过</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
 
 
           <!--筛选框-->
@@ -79,10 +76,10 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="">确定</el-button>
+            <el-button type="primary" @click="" size="mini">确定</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="">重置</el-button>
+            <el-button type="primary" @click="" size="mini">重置</el-button>
           </el-form-item>
 
           <el-form-item>
@@ -116,7 +113,7 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
+              <el-button type="text" size="small" @click="">填写评价</el-button>
               <el-row class="block-col-2" style="float: right;">
                 <el-col :span="8">
                   <el-dropdown trigger="click">
@@ -125,8 +122,9 @@
                 </span>
                     <template #dropdown>
                       <el-dropdown-menu>
-                        <el-dropdown-item >删除</el-dropdown-item>
-                        <el-dropdown-item >转入淘汰库</el-dropdown-item>
+                        <el-dropdown-item >放弃/淘汰</el-dropdown-item>
+                        <el-dropdown-item >安排复试</el-dropdown-item>
+                        <el-dropdown-item >面试通过</el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
@@ -201,7 +199,6 @@ export default {
     }
   },
   methods:{
-
   }
 
 }
@@ -216,14 +213,14 @@ export default {
   margin-bottom: 30px;
 }
 
-.icon-s{
-  width: 715px;
-  height: 110px;
+.icon-s {
+  width: 955px;
+  height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;
   margin-top: 10px;
-  float: right;
   padding: 16px;
+  margin-left: 70px;
 }
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;
@@ -264,7 +261,7 @@ export default {
   content: '';
 }
 
-.abt:hover {
+.abt:hover{
   color: #0c9c6e;
   border: 1px solid #0c9c6e;
 }
