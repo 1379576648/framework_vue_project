@@ -19,7 +19,7 @@
                     label-width="150px"
                     class="demo-ruleForm"
                 >
-                  <el-form-item label="方案名称" prop="name" style="width:370px" required>
+                  <el-form-item label="方案名称" prop="name" style="width:370px">
                     <el-input v-model="ruleForm.name"></el-input>
                   </el-form-item>
 
@@ -59,15 +59,15 @@
 
 
 
-                  <el-form-item label="适用对象" prop="region">
-                    <el-select v-model="ruleForm.region4" placeholder="请选择">
+                  <el-form-item label="适用对象" prop="region2">
+                    <el-select v-model="ruleForm.region2" placeholder="请选择">
                       <el-option label="1" value="sydx" style="margin-left: 20px;"></el-option>
                       <el-option label="111" value="sydx2" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
 
-                  <el-form-item label="职位" prop="region">
+                  <el-form-item label="职位" prop="zw">
                     <el-select v-model="ruleForm.zw" placeholder="请选择">
                       <el-option label="212" value="zw" style="margin-left: 20px;"></el-option>
                       <el-option label="22222" value="zw1" style="margin-left: 20px;"></el-option>
@@ -112,6 +112,8 @@
 
 
 <script lang="ts">
+import {ElMessage} from "element-plus";
+
 export default {
   data() {
 
@@ -119,20 +121,9 @@ export default {
       ruleForm: {
         name: '',
         region: '',
-        delivery: false,
-        type: [],
-        resource: '',
+        region2: '',
+        zw: '',
         desc: '',
-      },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: '请输入姓名',
-            trigger: 'blur',
-          },
-
-        ],
       },
       num: '150',
     }
@@ -140,6 +131,31 @@ export default {
   methods:{
     goblack(){
       this.$router.go('-1');
+    },
+    submitForm(){
+      if(this.ruleForm.name.length==0){
+        ElMessage({
+          message: '请输入方案名称',
+          type: 'warning',
+        })
+      }else if(this.ruleForm.region.length==0){
+        ElMessage({
+          message: '请选择出差规则',
+          type: 'warning',
+        })
+      }else if(this.ruleForm.region2.length==0){
+        ElMessage({
+          message: '请选择适用对象',
+          type: 'warning',
+        })
+      }else if(this.ruleForm.zw.length==0){
+        ElMessage({
+          message: '请选择职位',
+          type: 'warning',
+        })
+      }else{
+        alert(1111)
+      }
     }
   }
 }
