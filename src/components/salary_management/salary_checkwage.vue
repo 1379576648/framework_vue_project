@@ -48,22 +48,6 @@ export default {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /deep/ .el-tabs__item {
   padding: 0px 10px;
   padding-left: 36px;
