@@ -50,7 +50,7 @@
 <!--                      <el-button type="text" size="small" @click="handleClick">归档</el-button>-->
                       <el-popconfirm title="归档之后，数据一律不允许修改">
                         <template #reference>
-                          <el-button type="text" size="small">归档</el-button>
+                          <el-button type="text" size="small">归档 </el-button>
                         </template>
                       </el-popconfirm>
                     </template>
