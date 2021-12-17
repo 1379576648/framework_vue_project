@@ -153,7 +153,7 @@
                     </el-icon>
                   </span>
                     <template #dropdown>
-                      <el-dropdown-menu>
+                      <el-dropdown-menu style="width: 80px;text-align: center">
                         <el-dropdown-item @click="data_permission=true">数据权限</el-dropdown-item>
                         <router-link :to="{path:this.two,query:{path: this.$route.query.path}}">
                           <el-dropdown-item >分配用户</el-dropdown-item>
