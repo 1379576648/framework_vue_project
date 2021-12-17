@@ -62,11 +62,11 @@
             <el-table-column   prop="name" label="职位" width="100" />
             <el-table-column   prop="name" label="本月变动" width="100" />
         </el-table-column>
-        <el-table-column label="考勤数据" >
+<!--        <el-table-column label="考勤数据" >
           <el-table-column prop="name" label="应出勤天数" width="100" />
           <el-table-column prop="name" label="实际出勤天数" width="100" />
           <el-table-column prop="name" label="月计薪天数" width="100" />
-        </el-table-column>
+        </el-table-column>-->
         <el-table-column label="固定工资" >
           <el-table-column prop="name" label="基本工资" width="100" />
           <el-table-column prop="name" label="实发固定工资" width="100" />
@@ -87,7 +87,6 @@
           <el-table-column prop="name" label="病假" width="100" />
           <el-table-column prop="name" label="不在职免发" width="100" />
         </el-table-column>
-        <el-table-column prop="name" label="应发工资" width="100" />
         <el-table-column label="社保" >
           <el-table-column prop="name" label="个人缴纳社保" width="100" />
           <el-table-column prop="name" label="公司缴纳社保" width="100" />
@@ -96,9 +95,8 @@
           <el-table-column prop="name" label="个人缴纳公积金" width="100" />
           <el-table-column prop="name" label="公司缴纳公积金" width="100" />
         </el-table-column>
-        <el-table-column prop="name" label="税后调整" width="100"/>
+        <el-table-column prop="name" label="应发工资" width="100" fixed="right"/>
         <el-table-column prop="name" label="实发工资" width="100" fixed="right"/>
-        <el-table-column prop="name" label="环比上月" width="100" fixed="right"/>
       </el-table>
     </div>
 
