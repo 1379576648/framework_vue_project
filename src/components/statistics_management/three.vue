@@ -45,7 +45,7 @@ export default {
       // 图表标题
       title: {
         show:true,//显示策略，默认值true,可选为：true（显示） | false（隐藏）
-        text: '"新时代"主题图谱',//主标题文本，'\n'指定换行
+        text: '此图现为测试阶段，能力有限可能会删掉或改掉',//主标题文本，'\n'指定换行
         x: 'center',        // 水平安放位置，默认为左对齐，可选为：
         // 'center' ¦ 'left' ¦ 'right'
         // ¦ {number}（x坐标，单位px）

@@ -184,7 +184,8 @@ export default ({
         emphasis: {
           focus: 'series'
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth:true
       }
 
 
@@ -252,7 +253,8 @@ export default ({
         emphasis: {
           focus: 'series'
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth:true
       }
 
 
@@ -318,7 +320,8 @@ export default ({
         emphasis: {
           focus: 'series'
         },
-        data: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth:true
       }
 
       ]
