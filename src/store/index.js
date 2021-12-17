@@ -997,7 +997,8 @@ const store = createStore({
             }
             //返回结果集
             return menus_outer;
-        }, //获取更多之内的菜单列表
+        },
+        //获取更多之内的菜单列表
         menus_within: (state) => {
             //定义数组
             let menus_within = [];
@@ -1011,7 +1012,8 @@ const store = createStore({
             }
             //返回结果集
             return menus_within;
-        }, //根据path动态获取store里面的菜单列表
+        },
+        //根据path动态获取store里面的菜单列表
         store_menuList: (state) => (path) => {
             //定义数组
             let store_menuList = [];
@@ -1025,6 +1027,11 @@ const store = createStore({
             }
             //返回结果集
             return store_menuList;
+        },
+        //根据path动态获取权限列表
+        permissionList:(state)=>(path)=>{
+            //定义数组
+            let permissionList =[];
         }
 
     }
