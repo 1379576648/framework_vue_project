@@ -76,10 +76,12 @@ export default {
 
 <style scoped>
 @import url("../../css/navigation.css");
+@import  url("../../css/Statistics.css");
 /deep/.mainContent .sub-Content__primary {
   padding: 12px 24px;
   background: #fff;
   border-radius: 4px;
 }
+
 
 </style>

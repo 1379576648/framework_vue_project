@@ -10,9 +10,13 @@
             @select="handleSelect"
         >
           <router-link :to="{path:this.statistics_work1,query:{path: this.$route.query.path}}" style="text-decoration: none">
-            <el-menu-item style="height: 50px;" index="1">
+
+            <el-menu-item  index="1">
               人员数量
             </el-menu-item>
+
+
+
           </router-link>
           <router-link :to="{path:this.statistics_work2,query:{path: this.$route.query.path}}" style="text-decoration: none">
             <el-menu-item style="height: 50px; " index="4"
@@ -83,5 +87,12 @@ export default {
   background: #fff;
   border-radius: 4px;
 }
+
+
+ .el-menu[data-v-34c4ed44] {
+   height: 55px;
+   font-weight: bold;
+ }
+
 
 </style>
