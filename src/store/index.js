@@ -428,7 +428,7 @@ const store = createStore({
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 1,//是否有叶子 0有 1没有
                 }]
-            },{
+            }, {
                 MENU_ID: 5,//菜单编号
                 MENU_NAME: '招聘统计',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -437,7 +437,7 @@ const store = createStore({
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
-                son:[
+                son: [
                     {
                         MENU_ID: 5,//菜单编号
                         MENU_NAME: '招聘进度',//菜单名称
@@ -929,56 +929,56 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    }, {
+                        MENU_ID: 6,//菜单编号
+                        MENU_NAME: '公告管理',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/system/announcement_management',//路由地址
+                        MENU_MODULE: 'menu_skip',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 0,//是否有叶子 0有 1没有
+                        son: [{
+                            MENU_ID: 7,//菜单编号
+                            MENU_NAME: '公告设置',//菜单名称
+                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            MENU_ROUTE: '/system/announcement_management/announcement_set',//路由地址
+                            MENU_MODULE: 'system_management/system_notice',//组件地址
+                            MENU_STATE: 0,//是否启用 0启用 1禁用
+                            MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                            MENU_LEAF: 1,//是否有叶子 0有 1没有
+                        }, {
+                            MENU_ID: 8,//菜单编号
+                            MENU_NAME: '日志管理',//菜单名称
+                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            MENU_ROUTE: '/system/log_management',//路由地址
+                            MENU_MODULE: 'menu_skip',//组件地址
+                            MENU_STATE: 0,//是否启用 0启用 1禁用
+                            MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                            MENU_LEAF: 0,//是否有叶子 0有 1没有
+                            son: [{
+                                MENU_ID: 8,//菜单编号
+                                MENU_NAME: '登录日志',//菜单名称
+                                PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                                MENU_ROUTE: '/system/log_management/register_log',//路由地址
+                                MENU_MODULE: 'system_management/system_login_log',//组件地址
+                                MENU_STATE: 0,//是否启用 0启用 1禁用
+                                MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                                MENU_LEAF: 1,//是否有叶子 0有 1没有
+                            }, {
+                                MENU_ID: 9,//菜单编号
+                                MENU_NAME: '操作日志',//菜单名称
+                                PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                                MENU_ROUTE: '/system/log_management/operation_log',//路由地址
+                                MENU_MODULE: 'system_management/system_operate_log',//组件地址
+                                MENU_STATE: 0,//是否启用 0启用 1禁用
+                                MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                                MENU_LEAF: 1,//是否有叶子 0有 1没有
+                            }]
+
+                        }]
                     }]
             }]
-        }, {
-            MENU_ID: 6,//菜单编号
-            MENU_NAME: '公告管理',//菜单名称
-            PICTURE_ADDRESS: '&#xe64c;',//图片地址
-            MENU_ROUTE: '/system/announcement_management',//路由地址
-            MENU_MODULE: 'menu_skip',//组件地址
-            MENU_STATE: 0,//是否启用 0启用 1禁用
-            MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-            MENU_LEAF: 0,//是否有叶子 0有 1没有
-            son: [{
-                MENU_ID: 7,//菜单编号
-                MENU_NAME: '公告设置',//菜单名称
-                PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/system/announcement_management/announcement_set',//路由地址
-                MENU_MODULE: 'system_management/system_notice',//组件地址
-                MENU_STATE: 0,//是否启用 0启用 1禁用
-                MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }]
-        }, {
-            MENU_ID: 8,//菜单编号
-            MENU_NAME: '日志管理',//菜单名称
-            PICTURE_ADDRESS: '&#xe64c;',//图片地址
-            MENU_ROUTE: '/system/log_management',//路由地址
-            MENU_MODULE: 'menu_skip',//组件地址
-            MENU_STATE: 0,//是否启用 0启用 1禁用
-            MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-            MENU_LEAF: 0,//是否有叶子 0有 1没有
-            son: [{
-                MENU_ID: 8,//菜单编号
-                MENU_NAME: '登录日志',//菜单名称
-                PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/system/log_management/register_log',//路由地址
-                MENU_MODULE: 'system_management/system_login_log',//组件地址
-                MENU_STATE: 0,//是否启用 0启用 1禁用
-                MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }, {
-                MENU_ID: 9,//菜单编号
-                MENU_NAME: '操作日志',//菜单名称
-                PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/system/log_management/operation_log',//路由地址
-                MENU_MODULE: 'system_management/system_operate_log',//组件地址
-                MENU_STATE: 0,//是否启用 0启用 1禁用
-                MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                MENU_LEAF: 1,//是否有叶子 0有 1没有
-            }]
-
         }], //默认激活的一级菜单
         activate_router: '', //默认激活的二级菜单
         default_route: '',
@@ -997,7 +997,8 @@ const store = createStore({
             }
             //返回结果集
             return menus_outer;
-        }, //获取更多之内的菜单列表
+        },
+        //获取更多之内的菜单列表
         menus_within: (state) => {
             //定义数组
             let menus_within = [];
@@ -1011,7 +1012,8 @@ const store = createStore({
             }
             //返回结果集
             return menus_within;
-        }, //根据path动态获取store里面的菜单列表
+        },
+        //根据path动态获取store里面的菜单列表
         store_menuList: (state) => (path) => {
             //定义数组
             let store_menuList = [];
@@ -1025,6 +1027,23 @@ const store = createStore({
             }
             //返回结果集
             return store_menuList;
+        },
+        //根据path动态获取权限列表
+        permissionList: (state) => (data) => {
+            //定义数组
+            let permissionList = [];
+            //循环菜单列表
+            for (let i = 0; i < state.memuList.length; i++) {
+                //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
+                if ((state.memuList[i].MENU_ROUTE) == (data.path2) && state.memuList[i].MENU_STATE == 0) {
+                    //添加至数组
+                    alert(state.memuList[i].son);
+                    this.one(data)
+                }
+            }
+            return null;
+        }, one(data) {
+            alert(data)
         }
 
     }
