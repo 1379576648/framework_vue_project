@@ -114,9 +114,10 @@
                 </el-select>
               </el-form-item><br/>
 
-
-              <el-form-item label="身份证：" prop="sfz">
-                <el-input v-model="aa.sfz" style="width:240px"></el-input>
+              <el-form-item label="身份证：" prop="legalIdNumber">
+                <el-input v-model="aa.sfz" style="width:240px"
+                          onkeyup="this.value = this.value.replace(/[^\w\.\/]/ig,'');"
+                          ></el-input>
               </el-form-item><br/>
 
               <el-form-item label="政治面貌：" prop="zzmm">
@@ -133,7 +134,13 @@
 
 
               <el-form-item label="血型：" prop="xx">
-                <el-input v-model="aa.xx" style="width:240px;"></el-input>
+                <el-select style="width:240px;" v-model="aa.xx">
+                  <el-option label="A" value="A"></el-option>
+                  <el-option label="B" value="B"></el-option>
+                  <el-option label="AB" value="AB"></el-option>
+                  <el-option label="O" value="O"></el-option>
+                  <el-option label="RH" value="RH"></el-option>
+                </el-select>
               </el-form-item><br/>
 
 
@@ -156,7 +163,9 @@
 
 
                 <el-form-item label="年龄：" prop="age">
-                  <el-input v-model="aa.age" style="width:240px;"></el-input>
+                  <el-input v-model="aa.age" style="width:240px;"
+                            onkeyup="this.value = this.value.replace(/[^\d.]/g,'');"
+                            @change="verification"></el-input>
                 </el-form-item><br/>
 
 
@@ -193,7 +202,20 @@
 
 
               <el-form-item label="星座：" prop="xz">
-                  <el-input v-model="aa.xz" style="width:240px;"></el-input>
+                <el-select v-model="aa.xz" placeholder="请选择星座" style="width:240px;">
+                  <el-option label="白羊座" value="白羊座"></el-option>
+                  <el-option label="金牛座" value="金牛座"></el-option>
+                  <el-option label="双子座" value="双子座"></el-option>
+                  <el-option label="巨蟹座" value="巨蟹座"></el-option>
+                  <el-option label="狮子座" value="狮子座"></el-option>
+                  <el-option label="处女座" value="处女座"></el-option>
+                  <el-option label="天秤座" value="天秤座"></el-option>
+                  <el-option label="天蝎座" value="天蝎座"></el-option>
+                  <el-option label="射手座" value="射手座"></el-option>
+                  <el-option label="摩羯座" value="摩羯座"></el-option>
+                  <el-option label="水瓶座" value="水瓶座"></el-option>
+                  <el-option label="双鱼座" value="双鱼座"></el-option>
+                </el-select>
                 </el-form-item>
               </div>
 
@@ -202,7 +224,7 @@
             <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
                 <el-button @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1">取消</el-button>
-                <el-button type="primary">保存</el-button>
+                <el-button type="primary" @click="submitForm1">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -259,7 +281,9 @@
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
 
               <el-form-item label="手机号" prop="phone" >
-                  <el-input v-model="aa.phone" style="width:240px;"></el-input>
+                  <el-input v-model="aa.phone" style="width:240px;"
+                            onkeyup="this.value = this.value.replace(/^[1-9]\d{11}$/,'');"
+                            @change="verification2"></el-input>
               </el-form-item><br/>
 
               <el-form-item label="微信：" prop="wx">
@@ -289,7 +313,9 @@
 
 
               <el-form-item label="紧急联系人：" prop="jjphone">
-                <el-input v-model="aa.jjphone" style="width:240px;"></el-input>
+                <el-input v-model="aa.jjphone" style="width:240px;"
+                          onkeyup="this.value = this.value.replace(/^[1-9]\d{11}$/,'');"
+                          @change="verification3"></el-input>
               </el-form-item><br/>
 
 
@@ -299,7 +325,7 @@
               <div style="width:20%;height:50px;margin:auto;">
 
                 <el-button @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2">取消</el-button>
-                <el-button type="primary">保存</el-button>
+                <el-button type="primary" @click="submitForm2">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -376,9 +402,10 @@
 
             <el-form-item label="入职日期：" prop="">
                     <el-date-picker
-                              v-model="value1"
+                              v-model="aa.rzdate"
                               type="date"
-                              placeholder="选择日期" style="width: 240px">
+                              placeholder="选择日期" style="width: 240px"
+                              @change="judgedate1">
                     </el-date-picker>
               </el-form-item><br/>
 
@@ -391,9 +418,10 @@
 
               <el-form-item label="转正日期：" >
                 <el-date-picker
-                    v-model="value1"
+                    v-model="aa.zzdate"
                     type="date"
-                    placeholder="选择日期" style="width: 240px">
+                    placeholder="选择日期" style="width: 240px"
+                    @change="judgedate2">
                 </el-date-picker>
               </el-form-item><br/>
 
@@ -405,7 +433,7 @@
               <div style="width:20%;height:50px;margin:auto;">
 
                 <el-button @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3">取消</el-button>
-                <el-button type="primary">保存</el-button>
+                <el-button type="primary" @click="submitForm3">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -422,6 +450,9 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
 import { defineComponent, ref } from 'vue'
+
+import {ElMessage} from "element-plus/es";
+
 export default defineComponent({
   setup() {
     const state = reactive({
@@ -465,6 +496,7 @@ export default defineComponent({
         {
           id:'',
           name:'',
+          date2:"",
           age:'',
           state:'',
           xl:'',
@@ -486,8 +518,9 @@ export default defineComponent({
           jjphone:'',
           dept:'',
           zw:'',
-          gl:''
-
+          gl:'',
+          rzdate:'',
+          zzdate:''
         }
 
       ],
@@ -504,10 +537,9 @@ export default defineComponent({
           message: '编号不能为空',
           trigger: 'blur' },
           { min: 11,  message: '电话号码要11位数', trigger: 'blur' }
-        ]
-
-
+        ],
       },
+
       informations_1:true,
       informations_edit_1:false,
       informations_bj_1:true,
@@ -519,7 +551,103 @@ export default defineComponent({
       informations_bj_3:true
     }
 
- }
+ },
+  methods: {
+    verification(){
+      if(this.aa.age.length > 2){
+        this.$message.error('年龄输入错误，不能超过两位数!');
+        this.aa.age=" ";
+      }
+    },
+    verification2(){
+      if(this.aa.phone.length != 11){
+        this.$message.error('电话号码不足11位数，请输入正确的手机号码!');
+      }
+    },
+    verification3(){
+      if(this.aa.jjphone.length != 11){
+        this.$message.error('电话号码不足11位数，请输入正确的手机号码!');
+      }
+    },
+    judgedate1(){
+      var date = new Date();
+      if (this.aa.rzdate > date){
+        this.$message.error('入职日期不能大于当前时间!');
+        this.aa.rzdate=" ";
+      }
+    },
+    judgedate2(){
+      if (this.aa.rzdate.length === 0 ){
+        this.$message.error('请选择入职日期!');
+      }else if (this.aa.zzdate < this.aa.rzdate){
+        this.$message.error('转正日期不能小于入职日期!');
+        this.aa.zzdate=" ";
+      }
+    },
+    submitForm1(){
+      if (this.aa.id.length === 0){
+        ElMessage({
+          message:"请输入编号",
+          type:"warning"
+        });
+      }else if (this.aa.date2.length === 0){
+        ElMessage({
+          message:"请输入生日!",
+          type:"warning"
+        });
+      }else if (this.aa.sex.length === 0){
+        ElMessage({
+          message:"请选择性别!",
+          type:"warning"
+        });
+      }else if (this.aa.zzmm.length === 0){
+        ElMessage({
+          message:"请选择政治面貌!",
+          type:"warning"
+        });
+      }else if (this.aa.xl.length === 0){
+        ElMessage({
+          message:"请选择学历!",
+          type:"warning"
+        });
+      }else {
+        alert(1);
+      }
+
+    },
+    submitForm2(){
+      if (this.aa.phone.length === 0){
+        ElMessage({
+          message:"手机号码不能为空，请输入手机号码!",
+          type:"warning"
+        });
+      }else {
+        alert(1)
+      }
+    },
+    submitForm3(){
+      if (this.aa.dept.length === 0){
+        ElMessage({
+          message:"部门名称为空，请输入部门名称!",
+          type:"warning"
+        });
+      }else if (this.aa.rzdate.length === 0){
+        ElMessage({
+          message:"入职日期为空，请选择入职日期!",
+          type:"warning"
+        });
+      }else if (this.aa.zw.length === 0 ){
+        ElMessage({
+          message:"职位为空，请选择职位!",
+          type:"warning"
+        });
+      }
+      else {
+        alert(1)
+      }
+    },
+
+  }
 
 })
 </script>
