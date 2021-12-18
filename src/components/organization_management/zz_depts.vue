@@ -143,7 +143,7 @@ export default defineComponent({
     const direction = ref('rtl')
 
     return {
-      menuList:[],
+      menuList:this.$store.getters.permissionList({"path1":"11","path2":this.$route.query.path}),
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
