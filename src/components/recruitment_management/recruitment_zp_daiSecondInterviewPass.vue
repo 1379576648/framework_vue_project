@@ -218,13 +218,13 @@ export default {
 }
 
 .icon-s{
-  width: 715px;
-  height: 110px;
+  width: 75%;
+  height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;
   margin-top: 10px;
-  float: right;
   padding: 16px;
+  margin-left: 70px;
 }
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;
