@@ -428,7 +428,7 @@ const store = createStore({
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 1,//是否有叶子 0有 1没有
                 }]
-            },{
+            }, {
                 MENU_ID: 5,//菜单编号
                 MENU_NAME: '招聘统计',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -437,7 +437,7 @@ const store = createStore({
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
-                son:[
+                son: [
                     {
                         MENU_ID: 5,//菜单编号
                         MENU_NAME: '招聘进度',//菜单名称
@@ -929,7 +929,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '公告管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -947,7 +947,7 @@ const store = createStore({
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
-                        },{
+                        }, {
                             MENU_ID: 8,//菜单编号
                             MENU_NAME: '日志管理',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -1029,19 +1029,21 @@ const store = createStore({
             return store_menuList;
         },
         //根据path动态获取权限列表
-        permissionList:(state)=>(data)=>{
-
+        permissionList: (state) => (data) => {
             //定义数组
-            let permissionList =[];
+            let permissionList = [];
             //循环菜单列表
             for (let i = 0; i < state.memuList.length; i++) {
                 //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
                 if ((state.memuList[i].MENU_ROUTE) == (data.path2) && state.memuList[i].MENU_STATE == 0) {
                     //添加至数组
                     alert(state.memuList[i].son);
+                    this.one(data)
                 }
             }
             return null;
+        }, one(data) {
+            alert(data)
         }
 
     }
