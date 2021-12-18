@@ -567,7 +567,7 @@ export default defineComponent({
           {
             min:11,
             max: 11,
-            message: '手机号码最多只能是11位',
+            message: '手机号码只能是11位',
             trigger: 'blur'
           }
         ]
