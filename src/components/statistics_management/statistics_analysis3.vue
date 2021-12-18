@@ -376,7 +376,7 @@ export default defineComponent({
         name: '人力成本',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, ]
     };
 
@@ -428,7 +428,7 @@ export default defineComponent({
         name: '平均工资',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, ]
     };
     //3d地球

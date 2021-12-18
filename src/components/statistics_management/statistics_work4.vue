@@ -223,7 +223,7 @@ export default {
         type: 'bar',
         data: [
           20, 49, 70, 232, 256, 135.6, 200
-        ]
+        ],barWidth:'25%',
       },
 
         {
@@ -320,7 +320,7 @@ export default {
         type: 'bar',
         data: [
           20, 49, 70, 232, 256, 135.6, 200
-        ]
+        ],barWidth:'25%',
       },
 
         {

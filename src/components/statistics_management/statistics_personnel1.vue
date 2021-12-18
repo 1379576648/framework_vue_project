@@ -306,12 +306,13 @@ export default ({
         name: '在职人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+         barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
         data: [5, 20, 25, 10, 10, 20],
-        smooth:true
+        smooth:true,
+
       }],
 
     };
@@ -368,7 +369,7 @@ export default ({
         name: '入职人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
@@ -427,7 +428,7 @@ export default ({
         name: '离职人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
@@ -487,7 +488,7 @@ export default ({
         name: '转正人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
@@ -546,7 +547,7 @@ export default ({
         name: '人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       },]
     };
 
@@ -600,7 +601,7 @@ export default ({
         name: '人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       },]
     };
     //3d地球
