@@ -1,4 +1,5 @@
 <template>
+  <input v-model="menuList">
 	<div class="w">
 		<div class="head">
 			<el-button type="primary" style="margin-left: 16px" @click="dialog = true"
@@ -142,6 +143,7 @@ export default defineComponent({
     const direction = ref('rtl')
 
     return {
+      menuList:[],
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
@@ -205,7 +207,8 @@ export default defineComponent({
       drawer,
       direction,
     };
-  },
+  }
+
 })
 </script>
 

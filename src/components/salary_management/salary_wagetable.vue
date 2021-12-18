@@ -29,25 +29,25 @@
         <el-col :span="4">
           <el-card shadow="never" style="background-color: rgb(57, 146, 193);font-size:14px;color: white">
             <p>22</p>
-            <p>全部</p>
+            <p>试用员工</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(233, 143, 39);font-size:14px;color: white">
             <p>22</p>
-            <p>全部</p>
+            <p>本月新入职</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(35, 102, 167);font-size:14px;color: white">
             <p>22</p>
-            <p>全部</p>
+            <p>本月调薪</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(73, 167, 130);font-size:14px;color: white">
             <p>22</p>
-            <p>全部</p>
+            <p>本月离职</p>
           </el-card>
         </el-col>
       </el-row>
@@ -60,7 +60,7 @@
             <el-table-column     prop="name" label="姓名" width="100" />
             <el-table-column   prop="name" label="部门" width="100" />
             <el-table-column   prop="name" label="职位" width="100" />
-            <el-table-column   prop="name" label="本月变动" width="100" />
+<!--            <el-table-column   prop="name" label="本月变动" width="100" />-->
         </el-table-column>
 <!--        <el-table-column label="考勤数据" >
           <el-table-column prop="name" label="应出勤天数" width="100" />
@@ -84,7 +84,7 @@
           <el-table-column prop="name" label="旷工" width="100" />
           <el-table-column prop="name" label="事假" width="100" />
           <el-table-column prop="name" label="病假" width="100" />
-          <el-table-column prop="name" label="不在职免发" width="100" />
+<!--          <el-table-column prop="name" label="不在职免发" width="100" />-->
         </el-table-column>
         <el-table-column label="社保" >
           <el-table-column prop="name" label="个人缴纳社保" width="100" />
