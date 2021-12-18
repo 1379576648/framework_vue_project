@@ -217,7 +217,7 @@ export default {
 }
 
 .icon-s{
-  width: 955px;
+  width: 75%;
   height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;
