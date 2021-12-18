@@ -5,23 +5,23 @@
         <!-- 表格按钮部分 -->
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增参保方案按钮 -->
-          <router-link :to="{path:this.path,query:{path:this.$route.query.path}}">
-            <el-button size="small" type="primary"> +新增 </el-button>
+          <router-link :to="{path:this.path,query:{path:this.$route.query.path,name:'新增'}}">
+            <el-button size="small" type="primary"> +新增</el-button>
           </router-link>
 
           <!-- 下拉选择器 -->
           <div class="resume-operation">
             <el-select
-              v-model="state"
-              size="small"
-              clearable
-              placeholder="请选择"
+                v-model="state"
+                size="small"
+                clearable
+                placeholder="请选择"
             >
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
               >
               </el-option>
             </el-select>
@@ -30,20 +30,32 @@
 
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
-          <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="date" label="方案编号" />
-            <el-table-column prop="name" label="方案名称" />
-            <el-table-column prop="address" label="参保人数" />
-            <el-table-column prop="state" label="状态" />
-            <el-table-column prop="cz" label="操作">
-              <template #default
-                ><router-link to="sb1_1new">
+          <el-table :data="scheme_table" stripe style="width: 100%">
+            <el-table-column prop="scheme_id" label="方案编号"/>
+            <el-table-column prop="scheme_name" label="方案名称"/>
+            <el-table-column prop="insured_number" label="参保人数"/>
+            <el-table-column prop="scheme_state" label="状态"/>
+            <el-table-column label="操作">
+              <template #default="scope"
+              >
+                <router-link :to="{path:this.path,query:{path:this.$route.query.path,name:'修改'}}">
                   <el-button size="small" type="text">
-                    编辑 
-                  </el-button></router-link
+                    编辑
+                  </el-button>
+                </router-link
                 >&nbsp;
-                <el-button type="text" size="small">启用 </el-button>
-                <el-button type="text" size="small">删除 </el-button>
+
+                <el-button type="text" size="small"> {{ scope.row.scheme_state === '启用' ? '禁用 ' : '启用 ' }}</el-button>
+
+                <!-- 删除行确认框 -->
+                <el-popconfirm v-if="scope.row.scheme_state==='禁用'"
+                               @confirm="deleteRow(scope.$index, scheme_table)" title="删除此方案?">
+                  <template #reference>
+                    <el-button style="color:red" type="text" size="small">删除 </el-button>
+                  </template>
+                </el-popconfirm>
+
+
               </template>
             </el-table-column>
           </el-table>
@@ -52,16 +64,16 @@
         <!-- 分页插件 -->
         <div class="demo-pagination-block">
           <el-pagination
-            v-model:currentPage="pageInfo.currentPage"
-            :page-sizes="[3, 5, 10, 50]"
-            v-model:page-size="pageInfo.pagesize"
-            :default-page-size="pageInfo.pagesize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="pageInfo.total"
-            :pager-count="5"
-            background
-            @size-change="selectUsers"
-            @current-change="selectUsers"
+              v-model:currentPage="pageInfo.currentPage"
+              :page-sizes="[3, 5, 10, 50]"
+              v-model:page-size="pageInfo.pagesize"
+              :default-page-size="pageInfo.pagesize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="pageInfo.total"
+              :pager-count="5"
+              background
+              @size-change="selectUsers"
+              @current-change="selectUsers"
           >
           </el-pagination>
         </div>
@@ -72,12 +84,23 @@
 </template>
 
 <script>
-import { ref, defineComponent } from "vue";
+import {ref, defineComponent} from "vue";
+import { ElMessage } from 'element-plus'
 
 export default {
+  methods: {
+    // 删除行
+    deleteRow(index, rows) {
+      rows.splice(index, 1);
+      ElMessage({
+        message: '删除成功',
+        type: 'success',
+      })
+    },
+  },
   data() {
     return {
-      path:"/social/basic_setup/new_insured_scheme",
+      path: "/social/basic_setup/new_insured_scheme",
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
@@ -86,46 +109,42 @@ export default {
       },
       //下拉选择器
       options: [
-        { value: "0", label: "启用" },
-        { value: "1", label: "禁用" },
+        {value: "0", label: "启用"},
+        {value: "1", label: "禁用"},
       ],
-      state: "", // 下拉框的值
-      tableData: [
+      // 下拉框的值
+      state: "",
+      // 参保方案表数据
+      scheme_table: [
         {
-          date: "2016-05-03",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
+          scheme_id: 1, // 方案id
+          scheme_name: "方案1", // 方案名称
+          insured_number: 10, // 参保人数
+          scheme_state: "启用", // 方案状态
         },
         {
-          date: "2016-05-02",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
+          scheme_id: 2, // 方案id
+          scheme_name: "方案2", // 方案名称
+          insured_number: 20, // 参保人数
+          scheme_state: "禁用", // 方案状态
         },
         {
-          date: "2016-05-04",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
+          scheme_id: 3, // 方案id
+          scheme_name: "方案3", // 方案名称
+          insured_number: 30, // 参保人数
+          scheme_state: "启用", // 方案状态
         },
         {
-          date: "2016-05-01",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
+          scheme_id: 4, // 方案id
+          scheme_name: "方案4", // 方案名称
+          insured_number: 40, // 参保人数
+          scheme_state: "禁用", // 方案状态
+        },
+        {
+          scheme_id: 5, // 方案id
+          scheme_name: "方案5", // 方案名称
+          insured_number: 50, // 参保人数
+          scheme_state: "启用", // 方案状态
         },
       ],
     };
@@ -168,10 +187,12 @@ export default {
   margin-top: 8px;
   min-height: 100%;
 }
+
 .j-card:hover {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   border-color: transparent;
 }
+
 .j-card-bordered {
   border: 1px solid #e9e9e9;
   border-top-color: rgb(233, 233, 233);
@@ -179,6 +200,7 @@ export default {
   border-bottom-color: rgb(233, 233, 233);
   border-left-color: rgb(233, 233, 233);
 }
+
 .j-card {
   background: #fff;
   border-radius: 4px;
@@ -190,11 +212,11 @@ export default {
   min-height: 100%;
 }
 
-.j-card-body{
-  padding:2%;
+.j-card-body {
+  padding: 2%;
 }
 
-table *{
+table * {
   text-align: center;
 }
 

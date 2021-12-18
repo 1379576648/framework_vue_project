@@ -7,7 +7,7 @@
       <el-date-picker v-model="value1" type="daterange" range-separator="到"
                       start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
       </el-date-picker>
-      <span class="demonstration" style="position: relative;top: -1px;left: 8px;">组织范围：</span>
+      <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
       <el-select v-model="valuee" placeholder="请选择">
         <el-option
             v-for="item in optionss"
@@ -306,12 +306,13 @@ export default ({
         name: '在职人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+         barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
         data: [5, 20, 25, 10, 10, 20],
-        smooth:true
+        smooth:true,
+
       }],
 
     };
@@ -368,7 +369,7 @@ export default ({
         name: '入职人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
@@ -427,7 +428,7 @@ export default ({
         name: '离职人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
@@ -487,7 +488,7 @@ export default ({
         name: '转正人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, {
         name: '增长率',
         type: 'line',
@@ -546,7 +547,7 @@ export default ({
         name: '人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       },]
     };
 
@@ -600,7 +601,7 @@ export default ({
         name: '人数',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       },]
     };
     //3d地球

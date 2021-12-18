@@ -126,6 +126,8 @@ export default {
       })
     }
 
+  },mounted() {
+    alert(this.default_route)
   }
 }
 </script>

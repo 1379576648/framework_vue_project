@@ -6,7 +6,7 @@
       <el-date-picker v-model="value1" type="daterange" range-separator="到"
                       start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
       </el-date-picker>
-      <span class="demonstration" style="position: relative;top: -1px;left: 8px;">组织范围：</span>
+      <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
       <el-select v-model="valuee" placeholder="请选择">
         <el-option
             v-for="item in optionss"
@@ -271,7 +271,7 @@ export default {
         type: 'bar',
         data: [
           2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2,
-        ]
+        ],barWidth:'25%',
       },
 
 
@@ -347,7 +347,7 @@ export default {
         type: 'bar',
         data: [
           2.0, 4.9, 7.0, 23.2, 15.6, 86.7, 125.6
-        ]
+        ],barWidth:'25%',
       },
 
       ]
