@@ -146,7 +146,7 @@ export default defineComponent({
       //通过path获取二级菜单下面所有的菜单
       menuList:this.$store.getters.store_menuList(this.$route.query.path)[0],
       //权限列表
-      permissionList:"",
+      permissionList:[],
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
@@ -213,6 +213,7 @@ export default defineComponent({
   },computed:{
     permission(){
       this.inquire_1();
+      return this.permissionList;
     }
 
   },methods:{
@@ -221,10 +222,33 @@ export default defineComponent({
       if (this.menuList) {
         //循环菜单列表
         for (let i of this.menuList) {
-         alert(i)
+          //如果菜单有叶子 并且状态为启用
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            if (i.MENU_ROUTE==window.location.pathname){
+              this.permissionList.push(i.son);
+            }else{
+              this.inquire_2(i.son)
+            }
+          }
+        }
+      }
+    },inquire_2(value){
+      //如果菜单列表有值
+      if (value) {
+        //循环菜单列表
+        for (let i of value) {
+          //如果菜单有叶子 并且状态为启用
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            if (i.MENU_ROUTE==window.location.pathname){
+              this.permissionList.push(i.son);
+            }else{
+              this.inquire_2(i.son)
+            }
+          }
         }
       }
     }
+
   }
 
 
