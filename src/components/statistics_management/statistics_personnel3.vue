@@ -179,6 +179,19 @@ export default {
       title:{
         text: "员工性别分布"
       },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
@@ -237,6 +250,19 @@ export default {
     optiony2 = {
       title:{
         text:"员工婚姻分布",
+      },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
       },
       tooltip: {
         trigger: 'item',
@@ -297,6 +323,19 @@ export default {
       title:{
         text:"员工司龄分布",
       },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
@@ -356,6 +395,19 @@ export default {
       title:{
         text:"员工学历分布",
       },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
@@ -414,6 +466,19 @@ export default {
     optiony5 = {
       title:{
         text:"员工年龄段分布",
+      },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
       },
       tooltip: {
         trigger: 'item',
@@ -475,6 +540,19 @@ export default {
       title:{
         text:"员工年代分布",
       },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
@@ -534,6 +612,19 @@ export default {
       title:{
         text:"员工星座分布",
       },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
@@ -592,6 +683,19 @@ export default {
     optiony8 = {
       title:{
         text:"在职员工状态分布",
+      },
+      toolbox: {
+        feature: {
+          dataView: {
+            show: true,
+            readOnly: false,
+            title:"数据视图"
+          },
+          saveAsImage: {
+            show: true,
+            title:"保存"
+          }
+        }
       },
       tooltip: {
         trigger: 'item',

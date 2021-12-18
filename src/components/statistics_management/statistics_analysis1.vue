@@ -252,7 +252,7 @@ export default {
         type: 'bar',
         data: [
           135.6, 162.2, 32.6, 20.0, 6.4, 3.3, 44
-        ]
+        ],barWidth:'25%',
       },
 
         {
@@ -349,7 +349,7 @@ export default {
         type: 'bar',
         data: [
           7.0, 23.2, 25.6, 135.6, 162.2, 32.6, 20.0, 6.4,
-        ]
+        ],barWidth:'25%',
       },
 
         {
@@ -446,7 +446,7 @@ export default {
         type: 'bar',
         data: [
           44, 23, 56, 77, 88, 44, 33, 66
-        ]
+        ],barWidth:'25%',
       },
 
         {
@@ -543,7 +543,7 @@ export default {
         type: 'bar',
         data: [
           2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6,
-        ]
+        ],barWidth:'25%',
       },
 
         {
