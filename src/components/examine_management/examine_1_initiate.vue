@@ -1461,19 +1461,13 @@ export default defineComponent({
         });
         this.cancel_date3();
       } else {
-        console.log("beginTime " + beginTime);
-        console.log("endTime " + endTime);
         var dateBegin = new Date(beginTime);
         var dateEnd = new Date(endTime);
         var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
-        var hours = Math.floor(dateDiff / (3600 * 1000)); //计算出小时数
-        var leave1 = dateDiff % (3600 * 1000); //计算小时数后剩余的分钟数
-        //计算相差分钟数
-        var minutes = Math.floor(leave1 / (60 * 1000)); //计算相差分钟数
-        console.log("minutes " + minutes);
-        if (minutes >= 40) {
-          var hours = hours + 1;
-        }
+        var days = Math.floor(dateDiff / (24 * 60 * 60 * 1000));
+        console.log("天数：" + days);
+        var hours = Math.floor(days * 8);
+        console.log("时间差：" + hours);
         if (hours == 0) {
           ElMessage({
             message: "开始时间与结束时间相同，请重新选择!",
