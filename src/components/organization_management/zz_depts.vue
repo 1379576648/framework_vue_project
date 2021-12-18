@@ -1,9 +1,9 @@
 <template>
-  <input v-model="permission">
+  <input v-model="permission" style="display: none">
 	<div class="w">
 		<div class="head">
 			<el-button type="primary" style="margin-left: 16px" @click="dialog = true"
-			  >+ 新增
+			  >新增
 			</el-button>&nbsp;&nbsp;
 			<el-drawer ref="drawer" v-model="dialog" :before-close="handleClose" direction="ltr" custom-class="demo-drawer">
 			  <div class="demo-drawer__content">
@@ -211,6 +211,7 @@ export default defineComponent({
       direction,
     };
   },computed:{
+    //初始化权限列表
     permission(){
       this.inquire_1();
       return this.permissionList;
@@ -224,9 +225,12 @@ export default defineComponent({
         for (let i of this.menuList) {
           //如果菜单有叶子 并且状态为启用
           if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            //如果匹配到路由地址跟浏览器地址一样
             if (i.MENU_ROUTE==window.location.pathname){
+              //添加到菜单权限列表中
               this.permissionList.push(i.son);
             }else{
+              //执行梯归
               this.inquire_2(i.son)
             }
           }
@@ -239,15 +243,23 @@ export default defineComponent({
         for (let i of value) {
           //如果菜单有叶子 并且状态为启用
           if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            //如果匹配到路由地址跟浏览器地址一样
             if (i.MENU_ROUTE==window.location.pathname){
+              //添加到菜单权限列表中
               this.permissionList.push(i.son);
             }else{
+              //执行梯归
               this.inquire_2(i.son)
             }
           }
         }
       }
+    },
+    //新增按钮操作
+    insert(){
+
     }
+
 
   }
 
