@@ -144,6 +144,7 @@
             v-model="become_1.date1"
             type="date"
             placeholder="选择时间"
+            @change="judgeDate"
         >
         </el-date-picker>
       </el-form-item>
@@ -176,6 +177,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import {ElMessage} from "element-plus/es";
 export default defineComponent({
 
   data() {
@@ -234,6 +236,33 @@ export default defineComponent({
     const become = ref(false)
     return{
       become,
+    }
+  },
+  methods:{
+    judgeDate(){
+      var date = new Date();
+      if (this.become_1.date1 < date){
+        ElMessage({
+          message:"转正时间不能小于当前时间，请重新选择!",
+          type:"warning",
+        });
+        this.become_1.date1 = " ";
+      }
+    },
+    submitForm(){
+      if (this.become_1.type.length === 0){
+        ElMessage({
+          message:"转正类型为空，请选择转正类型!",
+          type:"warning",
+        });
+      }else if (this.become_1.date1.length === 0){
+        ElMessage({
+          message:"转正时间为空，请选择转正时间!",
+          type:"warning",
+        });
+      }else {
+        alert(1);
+      }
     }
   }
 })
