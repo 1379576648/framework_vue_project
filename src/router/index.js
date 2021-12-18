@@ -340,7 +340,25 @@ const routes = [
                             ]
                         },
                     ]
-                }
+                },
+                {//招聘统计
+                        path: '/recruitment/zptresume',
+                        component:modules[`${'../components/menu_skip.vue'}`],
+                        children:[
+                                    {//招聘进度
+                                        path: '/recruitment/recruit/speed_progress',
+                                        component:modules[`${'../components/recruitment_management/recruitment_speed_progress.vue'}`],
+                                    },
+                                    {//计划统计
+                                        path: '/recruitment/recruit/statistics',
+                                        component:modules[`${'../components/recruitment_management/recruitment_statistics.vue'}`],
+                                    },
+                                    {//业绩统计
+                                        path: '/recruitment/recruit/achievement',
+                                        component:modules[`${'../components/recruitment_management/recruitment_achievement.vue'}`],
+                                    },
+                                 ]
+                },
             ]
         },
         {//审批管理

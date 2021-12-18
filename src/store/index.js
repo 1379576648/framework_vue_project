@@ -442,8 +442,8 @@ const store = createStore({
                         MENU_ID: 5,//菜单编号
                         MENU_NAME: '招聘进度',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/3',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/recruitment/recruit/speed_progress',//路由地址
+                        MENU_MODULE: 'recruitment_management/recruitment_speed_progress.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -453,18 +453,18 @@ const store = createStore({
                         MENU_ID: 5,//菜单编号
                         MENU_NAME: '计划统计',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/32',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/recruitment/recruit/statistics',//路由地址
+                        MENU_MODULE: 'recruitment_management/recruitment_statistics.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     },
                     {
                         MENU_ID: 5,//菜单编号
-                        MENU_NAME: '业绩业绩',//菜单名称
+                        MENU_NAME: '业绩统计',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/33',//路由地址
-                        MENU_MODULE: '',//组件地址
+                        MENU_ROUTE: '/recruitment/recruit/achievement',//路由地址
+                        MENU_MODULE: 'recruitment_management/recruitment_achievement.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
