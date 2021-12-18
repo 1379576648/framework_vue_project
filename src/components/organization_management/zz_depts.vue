@@ -1,5 +1,5 @@
 <template>
-  <input v-model="menuList">
+  <input v-model="permission">
 	<div class="w">
 		<div class="head">
 			<el-button type="primary" style="margin-left: 16px" @click="dialog = true"
@@ -143,7 +143,10 @@ export default defineComponent({
     const direction = ref('rtl')
 
     return {
-      menuList:this.$store.getters.permissionList({"path1":"11","path2":this.$route.query.path}),
+      //通过path获取二级菜单下面所有的菜单
+      menuList:this.$store.getters.store_menuList(this.$route.query.path)[0],
+      //权限列表
+      permissionList:"",
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
@@ -207,20 +210,32 @@ export default defineComponent({
       drawer,
       direction,
     };
+  },computed:{
+    permission(){
+      this.inquire_1();
+    }
+
+  },methods:{
+    inquire_1() {
+      //如果菜单列表有值
+      if (this.menuList) {
+        //循环菜单列表
+        for (let i of this.menuList) {
+         alert(i)
+        }
+      }
+    }
   }
+
 
 })
 </script>
 
 <style scoped>
 	table * {
-
 		text-align: center;
-
 	}
-
 	.w {
-
 		margin-top: 20px;
 
 		border: 1px solid #e9e9e9;

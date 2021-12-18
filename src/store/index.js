@@ -1021,31 +1021,16 @@ const store = createStore({
             for (let i = 0; i < state.memuList.length; i++) {
                 //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
                 if ((state.memuList[i].MENU_ROUTE) == (path) && state.memuList[i].MENU_STATE == 0) {
-                    //添加至数组
-                    store_menuList.push(state.memuList[i].son);
+                    //如果叶子下面有数据
+                    if (state.memuList[i].son){
+                        //添加至数组
+                        store_menuList.push(state.memuList[i].son);
+                    }
                 }
             }
             //返回结果集
             return store_menuList;
-        },
-        //根据path动态获取权限列表
-        permissionList: (state) => (data) => {
-            //定义数组
-            let permissionList = [];
-            //循环菜单列表
-            for (let i = 0; i < state.memuList.length; i++) {
-                //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
-                if ((state.memuList[i].MENU_ROUTE) == (data.path2) && state.memuList[i].MENU_STATE == 0) {
-                    //添加至数组
-                    alert(state.memuList[i].son);
-                    this.one(data)
-                }
-            }
-            return null;
-        }, one(data) {
-            alert(data)
         }
-
     }
 })
 export default store
