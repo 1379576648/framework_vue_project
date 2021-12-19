@@ -1,3 +1,4 @@
+<!--打卡记录-->
 <template>
   <div class="w">
     <div class="head">
@@ -56,7 +57,18 @@
         <el-table-column prop="record" label="记录时间"/>
         <el-table-column prop="operate" label="操作">
           <template #default>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定删除吗?"
+                @confirm="through1()"
+            >
+              <template #reference>
             <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -193,6 +205,12 @@ export default {
       value: ref(""), //选择
     };
   },
+  methods:{
+    // 点击删除确认按钮触发
+    through1() {
+      alert(1)
+    },
+  }
 };
 </script>
 

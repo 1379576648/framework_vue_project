@@ -16,7 +16,10 @@
 				 <el-empty description="暂无数据" style="height: 250px;"></el-empty>
 
 			</ul>
-			<div style="text-align: center;">
+
+
+
+			<div style="text-align: center; margin-bottom: 0px">
 				<button style="width: 80%; font-size: 14px; margin-bottom: 14px; overflow: hidden;" type="button"
 					class="ant-btn ant-btn-primary ant-btn-background-ghost">
 				    <span>期待您宝贵的意见</span>

@@ -1,26 +1,13 @@
-<!--简历：全部简历-->
+<!-- 已邀约 -->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 新增招聘计划按钮 -->
-          <a style="margin-top: 4px;">
-            <button type="button" class="ant-btn ant-btn-primary">
-              <span>+ 新增</span>
-            </button>
-          </a>
-          <!-- 批量导入按钮 -->
+
+          <!-- 批量面试签到 -->
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
-          <!-- 批量批量删除按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量删除</span>
-          </button>
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量设为候选人</span>
+            <span>批量签到</span>
           </button>
 
 
@@ -97,9 +84,8 @@
     <br/>
     <!-- 表格数据 -->
     <div class="ant-table-wrapper j_statistics_layout">
-      <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
-                :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-        <el-table-column fixed="left" align="center" type="selection" width="80"/>
+      <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+        <el-table-column fixed="left"  align="center" type="selection" width="80" />
         <el-table-column fixed="left" prop="name" label="姓名" width="150"/>
         <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
         <el-table-column prop="gender" label="性别" width="140"/>
@@ -117,8 +103,22 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
-              <el-button type="text" size="small" @click="open()">删除</el-button>
+              <el-button type="text" size="small" @click="">填写评论</el-button>
+              <el-row class="block-col-2" style="float: right;">
+                <el-col :span="8">
+                  <el-dropdown trigger="click">
+                <span class="el-dropdown-link">
+                  <el-button type="text" size="small">更多<i class="iconfont" style="font-size: 10px">&#xe772;</i></el-button>
+                </span>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item >面试签到</el-dropdown-item>
+                        <el-dropdown-item >淘汰/放弃</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </el-col>
+              </el-row>
             </div>
 
           </template>
@@ -144,6 +144,8 @@
     </div>
 
 
+
+
   </div>
 
 </template>
@@ -152,11 +154,9 @@
 import {
   ref
 } from 'vue'
-import {ElMessageBox, ElMessage} from 'element-plus'
 
 export default {
   data() {
-
     return {
       pageInfo: {
         currenPage: 1,
@@ -165,106 +165,45 @@ export default {
         total: 0,
       },
       //筛选框显示隐藏
-      icons: false,
+      icons:false,
       //搜索框
       input: "",
       //表格数据
       tableData: [
-        {
-          name: 'tom',
-          departm: 'tom',
-          gender: 'tom',
-          schoolli: 'tom',
-          phone: 'tom',
-          age: 'tom',
-          email: 'tom',
-          professional: 'tom',
-          birth: 'tom',
-          face: 'tom',
-          gradschool: 'tom   ',
-          invitation: 'tom',
-          state: 'tom'
-        },
-        {
-          name: 'tom',
-          departm: 'tom',
-          gender: 'tom',
-          schoolli: 'tom',
-          phone: 'tom',
-          age: 'tom',
-          email: 'tom',
-          professional: 'tom',
-          birth: 'tom',
-          face: 'tom',
-          gradschool: 'tom   ',
-          invitation: 'tom',
-          state: 'tom'
-        },
-        {
-          name: 'tom',
-          departm: 'tom',
-          gender: 'tom',
-          schoolli: 'tom',
-          phone: 'tom',
-          age: 'tom',
-          email: 'tom',
-          professional: 'tom',
-          birth: 'tom',
-          face: 'tom',
-          gradschool: 'tom   ',
-          invitation: 'tom',
-          state: 'tom'
-        }
+        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
+        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
+        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'}
       ],
       //筛选框数据
-      formInline: {
-        vlues1: '',
-        vlues2: '',
-        vlues3: '',
-        vlues4: '',
-        user: ''
+      formInline:{
+        vlues1:'',
+        vlues2:'',
+        vlues3:'',
+        vlues4:'',
+        user:''
+
       }
+
+
     }
   },
-  methods: {
-    //删除按钮消息提示框 事件
-    open() {
-      ElMessageBox.confirm(
-          '是否删除该数据?',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-          })
-          .then(() => {
-            //删除事件
-            console.log("123")
-            ElMessage({
-              type: 'success',
-              message: '删除成功',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '已取消操作',
-            })
-          })
-    },
+  methods:{
+
   }
+
 }
+
 </script>
 <style type="text/css" scoped>
 /*@import url("../../css/navigation.css");*/
 @import url("../../css/zpdaohang.css");
-
-.demo-pagination-block {
-  margin-left: 850px;
+.demo-pagination-block{
+  margin-left:850px ;
   margin-top: 20px;
   margin-bottom: 30px;
 }
 
-.icon-s {
+.icon-s{
   width: 75%;
   height: 45px;
   border-radius: 4px;
@@ -273,13 +212,12 @@ export default {
   padding: 16px;
   margin-left: 70px;
 }
-
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;
   border-color: #085fc3 !important;
 }
 
-.el-button--primary:hover { /* el-input 悬浮时 */
+.el-button--primary:hover {/* el-input 悬浮时 */
   background: #297ccf !important;
   border-color: #297ccf !important;
   color: #FFF !important;
@@ -318,4 +256,3 @@ export default {
   border: 1px solid #0c9c6e;
 }
 </style>
-

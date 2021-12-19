@@ -1,4 +1,5 @@
 <template>
+  <input v-model="menuList">
 	<div class="w">
 		<div class="head">
 			<el-button type="primary" style="margin-left: 16px" @click="dialog = true"
@@ -11,7 +12,7 @@
 			        <el-input v-model="form.name" autocomplete="off"></el-input>
 			      </el-form-item>
 			      <el-form-item label="负责人" :label-width="formLabelWidth">
-			        <el-select v-model="form.region" placeholder="Please select activity area">
+			        <el-select v-model="form.region" placeholder="请选择">
 			          <el-option label="Area1" value="shanghai"></el-option>
 			          <el-option label="Area2" value="beijing"></el-option>
 			        </el-select>
@@ -22,9 +23,9 @@
 				  </el-form-item>
 			    </el-form>
 			    <div class="demo-drawer__footer">
-			      <el-button @click="cancelForm">Cancel</el-button>
+			      <el-button @click="cancelForm">关闭</el-button>
 			      <el-button type="primary" :loading="loading"><!-- @click="$refs.drawer.closeDrawer() -->
-				  {{ loading ? 'Submitting ...' : 'Submit' }}
+				  {{ loading ? 'Submitting ...' : '确认' }}
 				  </el-button>
 			    </div>
 			  </div>
@@ -55,7 +56,7 @@
 			        <el-input v-model="form.name" autocomplete="off"></el-input>
 			      </el-form-item>
 			      <el-form-item label="负责人" :label-width="formLabelWidth">
-			        <el-select v-model="form.region" placeholder="Please select activity area">
+			        <el-select v-model="form.region" placeholder="请选择">
 			          <el-option label="Area1" value="shanghai"></el-option>
 			          <el-option label="Area2" value="beijing"></el-option>
 			        </el-select>
@@ -67,7 +68,7 @@
 			    </el-form>
 				<div class="demo-drawer__footer">&nbsp;
 				  <el-button type="primary" :loading="loading"><!-- @click="$refs.drawer.closeDrawer() -->
-				  {{ loading ? 'Submitting ...' : 'Submit' }}
+				  {{ loading ? 'Submitting ...' : '确认' }}
 				  </el-button>
 				</div>
 			  </el-drawer>
@@ -94,134 +95,120 @@
 import { defineComponent, reactive, toRefs, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 export default defineComponent({
-  data() {
-	const state = reactive({
-	    dialog: false,
-	    loading: false,
-	    form: {
-	      name: '',
-	      region: '',
-	      date1: '',
-	      date2: '',
-	      delivery: false,
-	      type: [],
-	      resource: '',
-	      desc: '',
-	    },
-	    formLabelWidth: '80px',
-	    timer: null,
-	  })
-	  
-	const handleClose = (done) => {
-	    if (state.loading) {
-	      return
-	    }
-	    ElMessageBox.confirm('Do you want to submit?')
-	      .then(() => {
-	        state.loading = true
-	        state.timer = setTimeout(() => {
-	          done()
-	          // 动画关闭需要一定的时间
-	          setTimeout(() => {
-	            state.loading = false
-	          }, 400)
-	        })
-	      })
-	      .catch(() => {
-	        // catch error
-	      })
-	  }
-	  
-	const cancelForm = () => {
-	    state.loading = false
-	    state.dialog = false
-	    clearTimeout(state.timer)
-	  }
-	  
-	const drawer = ref(false)
-	const direction = ref('rtl')
-			
+  data: function () {
+    const state = reactive({
+      dialog: false,
+      loading: false,
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: '',
+      },
+      formLabelWidth: '80px',
+      timer: null,
+    })
+
+    const handleClose = (done) => {
+      if (state.loading) {
+        return
+      }
+      ElMessageBox.confirm('确认关闭?')
+          .then(() => {
+            state.loading = true
+            state.timer = setTimeout(() => {
+              done()
+              // 动画关闭需要一定的时间
+              setTimeout(() => {
+                state.loading = false
+              }, 400)
+            })
+          })
+          .catch(() => {
+            // catch error
+          })
+    }
+
+    const cancelForm = () => {
+      state.loading = false
+      state.dialog = false
+      clearTimeout(state.timer)
+    }
+
+    const drawer = ref(false)
+    const direction = ref('rtl')
+
     return {
-        pageInfo: {
+      menuList:this.$store.getters.permissionList({"path1":"11","path2":this.$route.query.path}),
+      pageInfo: {
         currenPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
       },
-	  options: ref([
-	          {
-	            value: "Option1",
-	            label: "Option1",
-	          },
-	    ]),
+      options: ref([
+        {
+          value: "Option1",
+          label: "Option1",
+        },
+      ]),
       tableData: [
-          {
-            date: '01',
-            name: '行政部',
-            state: '琴',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
-          {
-            date: '02',
-            name: '人事部',
-            state: '凯亚',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
-          {
-            date: '03',
-            name: '财务部',
-            state: '丽莎',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
-          {
-            date: '04',
-            name: '技术部',
-            state: '阿贝多',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
-          {
-            date: '05',
-            name: '市场部',
-            state: '优菈',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
-          {
-            date: '06',
-            name: '运输部',
-            state: '安伯',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
-          {
-            date: '07',
-            name: '预算部',
-            state: '迪卢克',
-            city: 'Los Angeles',
-            address: 'No. 189, Grove St, Los Angeles',
-            zip: 'CA 90036',
-          },
+        {
+          date: '01',
+          name: '行政部',
+          state: '琴',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+        },
+        {
+          date: '02',
+          name: '人事部',
+          state: '凯亚',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+        },
+        {
+          date: '03',
+          name: '财务部',
+          state: '丽莎',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+        },
+        {
+          date: '04',
+          name: '技术部',
+          state: '阿贝多',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+        },
+        {
+          date: '05',
+          name: '市场部',
+          state: '优菈',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+        },
       ],
       value1: "", //日期
-	  value: ref(""), //选择
-	  ...toRefs(state),
-	  handleClose,
-	  cancelForm,
-	  radio1: ref('1'),
-	  drawer,
-	  direction,
+      value: ref(""), //选择
+      ...toRefs(state),
+      handleClose,
+      cancelForm,
+      radio1: ref('1'),
+      drawer,
+      direction,
     };
-  },
+  }
+
 })
 </script>
 

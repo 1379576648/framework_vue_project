@@ -9,7 +9,7 @@
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增招聘计划按钮 -->
           <a style="margin-top: 4px;">
-            <router-link :to="{path:this.one,query:{path:this.$route.query.path}}">
+            <router-link :to="{path:this.one,query:{path:this.$route.query.path,name:'新增'}}">
               <button type="button" class="ant-btn ant-btn-primary">
                 <span>新增招聘计划</span>
               </button>
@@ -65,12 +65,26 @@
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
                 <div v-if="tableData[scope.$index].zpzt=='招聘中'">
-                  <el-button type="text" size="small" @click="a(tableData[scope.$index].zpzt)">编辑</el-button>
-                  <el-button type="text" size="small">关闭</el-button>
+                  <router-link :to="{path:this.one,query:{path:this.$route.query.path,name: '修改'}}">
+                  <el-button type="text" size="small" >编辑</el-button>
+                  </router-link>
+                  &nbsp;
+                  <el-popconfirm title="是否确定关闭?" @confirm="confirmgb()" @cancel="cancelgb()">
+                    <template #reference>
+                      <el-button type="text" size="small">关闭</el-button>
+                    </template>
+                  </el-popconfirm>
+
                 </div>
                 <div v-else-if="tableData[scope.$index].zpzt=='已结束'">
                   <el-button type="text" size="small" @click="">查看</el-button>
-                  <el-button type="text" size="small">删除</el-button>
+
+                  <el-popconfirm title="是否确认删除该招聘计划?" @confirm="confirmsc()" @cancel="cancelsc()">
+                    <template #reference>
+                       <el-button type="text" size="small">删除</el-button>
+                    </template>
+                  </el-popconfirm>
+
                 </div>
               </template>
             </el-table-column>
@@ -78,16 +92,42 @@
 
         </div>
       </div>
+      <div class="demo-pagination-block">
+        <!-- <span class="demonstration">All combined</span> -->
+        <el-pagination
+            v-model:currentPage="pageInfo.currenPage"
+            :page-sizes="[3, 5, 10, 50]"
+            v-model:page-size="pageInfo.pagesize"
+            :default-page-size="pageInfo.pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageInfo.total"
+            :pager-count="5"
+            background
+            @size-change="sele"
+            @current-change="sele"
+            prev-text="上一页"
+            next-text="下一页"
+        >
+        </el-pagination>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
-
+import { ElMessage } from 'element-plus'
 export default {
   data() {
     return {
       one: '/recruitment/addplan/addplan',
+      //分页
+      pageInfo: {
+        currenPage: 3,
+        /* 当前的页 */
+        pagesize: 3,
+        total: 3,
+      },
       //下拉选择器
       options1: [
         {value: '人力资源师', label: '人力资源师'},
@@ -101,6 +141,15 @@ export default {
       ],
       value1: "",
       value2: "",
+      row1:{
+        ID: null,
+        zpname: null,
+        zpzw: null,
+        zpdept: null,
+        zpnum: null,
+        statetime: null,
+        zpzt: null
+      },
       //输入框数据
       input: "",
       tableData: [
@@ -126,8 +175,33 @@ export default {
     }
   },
   methods:{
-    a(value){
-      alert(value);
+    //消息提示框确认按钮事件
+    confirmgb(){
+      ElMessage({
+        message: '操作成功',
+        type: 'success',
+      })
+    },
+    //消息提示框取消按钮事件
+    cancelgb(){
+      ElMessage({
+        message: '已取消该操作',
+        type: 'warning',
+      })
+    },
+    //消息提示框确认按钮事件
+    confirmsc(){
+      ElMessage({
+        message: '操作成功',
+        type: 'success',
+      })
+    },
+    //消息提示框取消按钮事件
+    cancelsc(){
+      ElMessage({
+        message: '已取消该操作',
+        type: 'warning',
+      })
     }
   }
 }
@@ -137,7 +211,11 @@ export default {
 
 <style type="text/css" scoped>
 @import url("../../css/zpdaohang.css");
-
+.demo-pagination-block{
+  margin-left:850px ;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 .saas-main-content {
   padding-top: 12px;
   min-height: 500px;

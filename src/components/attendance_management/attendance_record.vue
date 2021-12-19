@@ -1,3 +1,4 @@
+<!--考勤记录-->
 <template>
   <!--  考勤记录页面-->
   <div class="head">
@@ -6,13 +7,12 @@
       <el-input v-model="input3" placeholder="填写需要查询的！" style="width: 300px;margin-left: 10px;">
         <template #prepend>
           <el-select v-model="select" placeholder="查询" style="width: 80px">
-            <el-option label="名称" value="1"></el-option>
-            <el-option label="电话" value="2"></el-option>
-            <el-option label="编号" value="3"></el-option>
+            <el-option label="名称" value="名称"></el-option>
+            <el-option label="编号" value="编号"></el-option>
           </el-select>
         </template>
         <template #append>
-          <el-button>
+          <el-button>02
             <el-icon style="font-size: 16px">
               <i-search/>
             </el-icon>

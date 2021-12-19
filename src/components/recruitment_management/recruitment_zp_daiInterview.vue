@@ -1,67 +1,145 @@
-<!--待面试-->
+<!--面试中-->
 <template>
-  <div class="saas-main-content">
-    <div class="j-card-body ">
-      <span></span>
-
-      <!-- 表格按钮部分 -->
-      <div>
-        <!-- 下拉选择器 -->
-        <div class="resume-operation">
-          <el-select v-model="value1" clearable placeholder="专业">
-            <el-option
-                v-for="item in options1"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          &nbsp;&nbsp;&nbsp;
-          <el-select v-model="value2" clearable placeholder="手机号码">
-            <el-option
-                v-for="item in options2"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            >
-            </el-option>
-          </el-select>
-          <!--搜索输入框-->
-          &nbsp;&nbsp;&nbsp;
-          <el-input style="width: 200px;" v-model="input" placeholder="面试人名称" clearable />
-          <!--搜索按钮-->
-          &nbsp;&nbsp;&nbsp;
-          <el-button style="background-color: #085fc3; color: white;" size="small">搜索</el-button>
-        </div>
-
-
-      </div>
-
-      <!-- 表格内容部分 -->
-      <div class="sub-Content__primary">
-
-        <el-table :data="tableData" style="width: 100%" size="mini">
-          <el-table-column prop="names" label="名字" width="100"/>
-          <el-table-column prop="sex" label="性别" width="100" />
-          <el-table-column prop="phone" label="手机号码" width="150" />
-          <el-table-column prop="education" label="学历" width="120" />
-          <el-table-column prop="mailbox" label="邮箱" width="200" />
-          <el-table-column prop="major" label="专业" width="150" />
-          <el-table-column prop="birthday" label="出生日期" width="150" />
-          <el-table-column prop="politics" label="政治面貌" width="100"/>
-          <el-table-column fixed="right" label="操作" width="200">
-            <template #default>
-              <el-button type="text" size="small" @click="">Detail</el-button>
-              <el-button type="text" size="small">Edit</el-button>
+  <div class="sub-Content__primary">
+    <div class="ant-spin-nested-loading">
+      <div class="ant-spin-container">
+        <div class="mt-20 ml-20 mr-20">
+          <!-- 批量操作 -->
+          <el-dropdown :hide-on-click="false">
+            <span class="el-dropdown-link">
+                <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
+                  <span>批量操作</span>
+                </button>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>淘汰/放弃</el-dropdown-item>
+                <el-dropdown-item>安排复试</el-dropdown-item>
+                <el-dropdown-item>面试通过</el-dropdown-item>
+              </el-dropdown-menu>
             </template>
-          </el-table-column>
-        </el-table>
+          </el-dropdown>
+
+
+          <!--筛选框-->
+          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt" @click="icons =! icons">
+            <span>筛选</span>
+          </button>
+          <!--搜索框-->
+          <div style="float: right;">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+
+              <el-form-item>
+                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+              </el-form-item>
+
+              <el-form-item>
+                <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+
+        </div>
       </div>
-      <!-- 分页插件 -->
-      <div class="demo-pagination-block" style="float:right">
+      <!--
+        筛选框
+      -->
+      <div class="icon-s" v-show="icons">
+
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+
+          <el-form-item>
+            <el-select v-model="formInline.vlues1" placeholder="Activity zone">
+              <el-option label="Zone one" value="shanghai"></el-option>
+              <el-option label="Zone two" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="formInline.vlues2" placeholder="Activity zone">
+              <el-option label="Zone one" value="shanghai"></el-option>
+              <el-option label="Zone two" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item>
+            <el-select v-model="formInline.vlues3" placeholder="Activity zone">
+              <el-option label="Zone one" value="shanghai"></el-option>
+              <el-option label="Zone two" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item>
+            <el-select v-model="formInline.vlues4" placeholder="Activity zone">
+              <el-option label="Zone one" value="shanghai"></el-option>
+              <el-option label="Zone two" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="" size="mini">确定</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="" size="mini">重置</el-button>
+          </el-form-item>
+
+          <el-form-item>
+            <span style="cursor: pointer" @click="icons =! icons"> 收起 <i class="iconfont">&#xe76e;</i></span>
+          </el-form-item>
+
+        </el-form>
+
+
+      </div>
+    </div>
+    <br/>
+    <!-- 表格数据 -->
+    <div class="ant-table-wrapper j_statistics_layout">
+      <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+        <el-table-column fixed="left"  align="center" type="selection" width="80" />
+        <el-table-column fixed="left" prop="name" label="姓名" width="150"/>
+        <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
+        <el-table-column prop="gender" label="性别" width="140"/>
+        <el-table-column prop="schoolli" label="学历" width="140"/>
+        <el-table-column prop="phone" label="手机号" width="140"/>
+        <el-table-column prop="age" label="年龄" width="140"/>
+        <el-table-column prop="email" label="邮箱" width="140"/>
+        <el-table-column prop="professional" label="专业" width="140"/>
+        <el-table-column prop="birth" label="出生日期" width="140"/>
+        <el-table-column prop="face" label="政治面貌" width="140"/>
+        <el-table-column prop="gradschool" label="毕业学校" width="140"/>
+        <el-table-column prop="invitation" label="是否邀约" width="140"/>
+        <el-table-column prop="state" label="状态" width="140"/>
+
+        <el-table-column fixed="right" label="操作" width="180">
+          <template #default>
+            <div style="width: 110px">
+              <el-button type="text" size="small" @click="">填写评价</el-button>
+              <el-row class="block-col-2" style="float: right;">
+                <el-col :span="8">
+                  <el-dropdown trigger="click">
+                <span class="el-dropdown-link">
+                  <el-button type="text" size="small">更多<i class="iconfont" style="font-size: 10px">&#xe772;</i></el-button>
+                </span>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item >放弃/淘汰</el-dropdown-item>
+                        <el-dropdown-item >安排复试</el-dropdown-item>
+                        <el-dropdown-item >面试通过</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </el-col>
+              </el-row>
+            </div>
+
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div class="demo-pagination-block">
+        <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currentPage"
+            v-model:currentPage="pageInfo.currenPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -69,53 +147,122 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
+            @size-change="sele"
+            @current-change="sele"
         >
-          <!--  @size-change="selectUsers" @current-change="selectUsers" -->
         </el-pagination>
       </div>
     </div>
+
+
+
+
   </div>
+
 </template>
 
 <script>
-import { ref } from 'vue'
+import {
+  ref
+} from 'vue'
+
 export default {
-  data(){
+  data() {
     return {
       pageInfo: {
-        // 分页参数
-        currentPage: 1, //当前页
-        pagesize: 3, // 页大小
-        total: 0, // 总页数
+        currenPage: 1,
+        /* 当前的页 */
+        pagesize: 3,
+        total: 0,
       },
+      //筛选框显示隐藏
+      icons:false,
+      //搜索框
+      input: "",
+      //表格数据
+      tableData: [
+        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
+        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
+        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'}
+      ],
+      //筛选框数据
+      formInline:{
+        vlues1:'',
+        vlues2:'',
+        vlues3:'',
+        vlues4:'',
+        user:''
+
+      }
+
 
     }
+  },
+  methods:{
   }
-}
-</script>
 
+}
+
+</script>
 <style type="text/css" scoped>
-@import url("../../css/navigation.css");
+/*@import url("../../css/navigation.css");*/
 @import url("../../css/zpdaohang.css");
+.demo-pagination-block{
+  margin-left:850px ;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.icon-s {
+  width: 75%;
+  height: 45px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 16px;
+  margin-left: 70px;
+}
+.el-button--primary { /* el-input 显示时 */
+  background: #085fc3 !important;
+  border-color: #085fc3 !important;
+}
+
+.el-button--primary:hover {/* el-input 悬浮时 */
+  background: #297ccf !important;
+  border-color: #297ccf !important;
+  color: #FFF !important;
+}
+
+.j-tabs {
+  border-bottom: 1px solid #d9d9d9;
+}
+
 .mainContent .sub-Content__primary {
   padding: 12px 24px;
   background: #fff;
   border-radius: 4px;
 }
-.abt:hover{
-  border: 1px solid #085FC3;
-  color: #085FC3;
-}
 
-
-/deep/.el-table th.el-table__cell > .cell {
-  display: inline-block;
-  box-sizing: border-box;
+.ant-spin-nested-loading {
   position: relative;
-  vertical-align: middle;
-  width: 100%;
-  font-weight: initial;
-  color: black;
 }
 
+.ant-spin-container {
+  position: relative;
+  transition: opacity 0.3s;
+}
+
+.ant-table-wrapper::after {
+  clear: both;
+}
+
+.ant-table-wrapper::before, .ant-table-wrapper::after {
+  display: table;
+  content: '';
+}
+
+.abt:hover{
+  color: #0c9c6e;
+  border: 1px solid #0c9c6e;
+}
 </style>

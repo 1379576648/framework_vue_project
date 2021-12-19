@@ -40,8 +40,6 @@
                 <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
-
-
           </div>
 
         </div>
@@ -81,10 +79,10 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="">确定</el-button>
+            <el-button type="primary" @click="" size="mini">确定</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="">重置</el-button>
+            <el-button type="primary" @click="" size="mini">重置</el-button>
           </el-form-item>
 
           <el-form-item>
@@ -100,7 +98,7 @@
     <!-- 表格数据 -->
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-
+        <el-table-column fixed="left"  align="center" type="selection" width="80" />
         <el-table-column fixed="left" prop="name" label="姓名" width="150"/>
         <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
         <el-table-column prop="gender" label="性别" width="140"/>
@@ -115,32 +113,40 @@
         <el-table-column prop="invitation" label="是否邀约" width="140"/>
         <el-table-column prop="state" label="状态" width="140"/>
 
-        <el-table-column fixed="right" label="操作" width="180">
+        <el-table-column fixed="right" label="操作" width="130">
           <template #default>
-            <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
-              <el-row class="block-col-2" style="float: right;">
-                <el-col :span="8">
-                  <el-dropdown trigger="click">
-                <span class="el-dropdown-link">
-                  <el-button type="text" size="small">更多<i class="iconfont" style="font-size: 10px">&#xe772;</i></el-button>
-                </span>
-                    <template #dropdown>
-                      <el-dropdown-menu>
-                        <el-dropdown-item>删除</el-dropdown-item>
-                        <el-dropdown-item>转入淘汰库</el-dropdown-item>
-                      </el-dropdown-menu>
-                    </template>
-                  </el-dropdown>
-                </el-col>
-              </el-row>
+            <div style="width: 10px">
+              <el-button type="text" size="small" @click="">删除</el-button>
+
             </div>
 
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="demo-pagination-block">
+        <!-- <span class="demonstration">All combined</span> -->
+        <el-pagination
+            v-model:currentPage="pageInfo.currenPage"
+            :page-sizes="[3, 5, 10, 50]"
+            v-model:page-size="pageInfo.pagesize"
+            :default-page-size="pageInfo.pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pageInfo.total"
+            :pager-count="5"
+            background
+            @size-change="sele"
+            @current-change="sele"
+        >
+        </el-pagination>
+      </div>
     </div>
+
+
+
+
   </div>
+
 </template>
 
 <script>
@@ -151,6 +157,12 @@ import {
 export default {
   data() {
     return {
+      pageInfo: {
+        currenPage: 1,
+        /* 当前的页 */
+        pagesize: 3,
+        total: 0,
+      },
       //筛选框显示隐藏
       icons:false,
       //搜索框
@@ -184,23 +196,21 @@ export default {
 <style type="text/css" scoped>
 /*@import url("../../css/navigation.css");*/
 @import url("../../css/zpdaohang.css");
+.demo-pagination-block{
+  margin-left:850px ;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 
 .icon-s{
-  width: 715px;
-  height: 110px;
+  width: 75%;
+  height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;
   margin-top: 10px;
-  float: right;
   padding: 16px;
+  margin-left: 70px;
 }
-/deep/.el-input__inner {
-  width: 228px;
-}
-
-
-
-
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;
   border-color: #085fc3 !important;
@@ -245,4 +255,3 @@ export default {
   border: 1px solid #0c9c6e;
 }
 </style>
-
