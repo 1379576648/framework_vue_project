@@ -91,7 +91,7 @@
                 <div class="el-form-item__label">生效日期</div>
               </template>
               <div class="block" >
-                <el-date-picker style="width: 210px;" v-model="takedate" type="date" placeholder="请选择">
+                <el-date-picker style="width: 210px;" v-model="takedate" type="date" @change="takedates()" placeholder="请选择">
 
                 </el-date-picker>
               </div>
@@ -368,6 +368,15 @@ export default {
           this.takedate= '',
           this.cause= '',
           this.remark2= ''
+    },
+    takedates(){
+      var date = new Date();
+      if(this.takedate<date){
+        ElMessage({
+          message:'生效日期不能小于当前日期',
+          type:'warning',
+        })
+      }
     }
   }
 }
