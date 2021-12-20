@@ -132,7 +132,7 @@ const store = createStore({
                     son: [
                         {
                             MENU_ID: 2.21,//菜单编号
-                            MENU_NAME: '新增',//菜单名称
+                            MENU_NAME: '新',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
                             MENU_ROUTE: '',//路由地址
                             MENU_MODULE: '',//组件地址

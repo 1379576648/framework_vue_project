@@ -894,8 +894,7 @@
 </template>
 
 <script lang="js">
-import {reactive, toRefs} from "vue";
-import {defineComponent, ref} from "vue";
+import {defineComponent, reactive, toRefs} from "vue";
 import {ElMessage} from "element-plus";
 import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
 export default defineComponent({
