@@ -18,16 +18,16 @@
         <div style="margin-top:-32px;">
           <!--搜索输入框-->
           <el-row style="width:140px;float:right;">
-            <el-input v-model="input3" placeholder="方案名称">
+            <el-input v-model="seek" placeholder="方案名称">
               <template #suffix>
                 <el-icon class="el-input__icon"><i-search/></el-icon>
               </template>
             </el-input>
           </el-row>
         </div>
+
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary" style="margin-top: 50px">
-
           <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column prop="name" label="方案名称" width="180" />
             <el-table-column prop="name" label="核算规则" width="180" />
@@ -47,7 +47,7 @@
                 <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"
                                title="确认要删除此方案吗?">
                   <template #reference>
-                    <el-button type="text" size="small">删除</el-button>
+                    <el-button type="text" size="small" style="color: orange">删除 </el-button>
                   </template>
                 </el-popconfirm>
 
@@ -87,8 +87,9 @@ import {ElMessage} from "element-plus";
 export default {
   data(){
     return{
+      //新增编辑考勤扣款方案
       insertattendanceplan:'/salary/insertattendanceplan',
-      input3:"",
+      seek:"",
       tableData: [
         {
           date: '2016-05-03',
