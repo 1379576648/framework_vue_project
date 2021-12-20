@@ -111,6 +111,7 @@ import {ElMessageBox, ElMessage} from 'element-plus'
 import {defineComponent, reactive, toRefs, ref} from 'vue'
 import {export_json_to_excel} from '/src/excal/Export2Excel.js'
 import XLSX from 'xlsx/dist/xlsx.core.min.js'
+
 export default defineComponent({
   data: function () {
     const state = reactive({
@@ -174,7 +175,7 @@ export default defineComponent({
       },
       formLabelWidth: '80px',
       timer: null,
-      fileData:"",
+      fileData: "",
       //通过path获取二级菜单下面所有的菜单
       menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
       //权限列表
@@ -436,7 +437,8 @@ table * {
   margin-bottom: 30px;
 
 }
-.upload-demo{
+
+.upload-demo {
   display: inline-block;
   margin-left: 10px;
 }
