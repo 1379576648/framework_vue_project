@@ -59,7 +59,7 @@
             <br>
             <!-- 按钮 -->
             <div style="margin-top: 30px;">
-              <el-button @click="disly=!disly">取消</el-button>
+              <el-button @click="disly=!disly,RestForm()">取消</el-button>
               <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
             </div>
           </el-form>
@@ -91,7 +91,7 @@
                 <div class="el-form-item__label">生效日期</div>
               </template>
               <div class="block" >
-                <el-date-picker style="width: 210px;" v-model="takedate" type="date" placeholder="请选择">
+                <el-date-picker style="width: 210px;" v-model="takedate" type="date" @change="takedates()" placeholder="请选择">
 
                 </el-date-picker>
               </div>
@@ -115,7 +115,7 @@
             <br>
             <!-- 按钮 -->
             <div style="margin-top: 30px;">
-              <el-button @click="disly_1=!disly_1">取消</el-button>
+              <el-button @click="disly_1=!disly_1,RestForm()">取消</el-button>
               <el-button type="primary" @click="submitForm2('ruleForm')">保存</el-button>
             </div>
           </el-form>
@@ -192,9 +192,9 @@
               <el-date-picker
                   v-model="seek2"
                   type="datetimerange"
-                  range-separator="To"
-                  start-placeholder="Start date"
-                  end-placeholder="End date"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
               >
               </el-date-picker>
             </div>
@@ -268,15 +268,6 @@ export default {
           takedate: '',
           cause: '',
           remark2: '',
-      rules: {
-        duepay: [
-          {
-            required: true,
-            message: '请输入正式基本工资',
-            trigger: 'blur',
-          },
-        ],
-      },
       seek:'',
       dept2:'',
       seek2:'',
@@ -363,6 +354,28 @@ export default {
         })
       } else {
         alert(1111)
+      }
+    },
+    RestForm(){
+      this.periodpay='',
+          this.duepay= '',
+          this.periodfixed= '',
+          this.duefixed= '',
+          this.postdate= '',
+          this.remark= '',
+          this.increasepay= '',
+          this.range='',
+          this.takedate= '',
+          this.cause= '',
+          this.remark2= ''
+    },
+    takedates(){
+      var date = new Date();
+      if(this.takedate<date){
+        ElMessage({
+          message:'生效日期不能小于当前日期',
+          type:'warning',
+        })
       }
     }
   }

@@ -7,7 +7,7 @@
         <br />
         <!--搜索输入框-->
         <el-row style="width: 200px; margin-left: 1090px">
-          <el-input v-model="input3" placeholder="搜索">
+          <el-input v-model="seek" placeholder="搜索">
             <template #suffix>
               <el-icon class="el-input__icon"><i-search /></el-icon>
             </template>
@@ -139,12 +139,11 @@
           <el-option label="提前转正" value="tqzz" style="margin-left: 20px"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="转正日期 :">
+      <el-form-item label="转正日期 :" prop="becomedate">
         <el-date-picker
-            v-model="become_1.date1"
+            v-model="become_1.becomedate"
             type="date"
             placeholder="选择时间"
-            @change="judgeDate"
         >
         </el-date-picker>
       </el-form-item>
@@ -164,7 +163,7 @@
             <el-button style="width: 60px" type="primary" @click="submitForm('form_1')"
             >确定</el-button
             >
-            <el-button style="width: 60px" @click="become = false">取消</el-button>
+            <el-button style="width: 60px" @click="become = false,RestForm()">取消</el-button>
           </span>
     </template>
   </el-dialog>
@@ -181,14 +180,14 @@ import {ElMessage} from "element-plus/es";
 export default defineComponent({
 
   data() {
+    const one = (rule, value, callback) => {
+      if (new Date()>value){
+        callback(new Error("转正日期不能小于当前时间"));
+      }else {
+        callback();
+      }
+    };
     return {
-      type: [
-        {
-          required: true,
-          message: "请选择",
-          trigger: "change",
-        },
-      ],
       tableData: [
         {
           date: '2016-05-03',
@@ -212,7 +211,7 @@ export default defineComponent({
         },
 
       ],
-      input3:"",
+      seek:"",
       become_1:{
         name:'',
         dept:'',
@@ -221,7 +220,7 @@ export default defineComponent({
         tryoutdate:'',
         type:'',
         remarks:'',
-        date1:''
+        becomedate:''
       },
       pageInfo: {
         // 分页参数
@@ -229,8 +228,26 @@ export default defineComponent({
         pagesize: 3, // 页大小
         total: 0, // 总页数
       },
-
-    }
+      rules: {
+        type: [
+          {
+            required: true,
+            message: '请选择转正类型',
+            trigger: 'change',
+          },
+        ],
+        becomedate:[
+          {
+            required:true,
+            message:'请选择转正日期',
+            trigger:'change'
+          },
+          {
+            validator: one, trigger: "change"
+          },
+        ],
+      }
+    };
   },
   setup() {
     const become = ref(false)
@@ -239,29 +256,26 @@ export default defineComponent({
     }
   },
   methods:{
-    judgeDate(){
-      var date = new Date();
-      if (this.become_1.date1 < date){
-        ElMessage({
-          message:"转正时间不能小于当前时间，请重新选择!",
-          type:"warning",
-        });
-        this.become_1.date1 = " ";
-      }
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
-    submitForm(){
-      if (this.become_1.type.length === 0){
-        ElMessage({
-          message:"转正类型为空，请选择转正类型!",
-          type:"warning",
-        });
-      }else if (this.become_1.date1.length === 0){
-        ElMessage({
-          message:"转正时间为空，请选择转正时间!",
-          type:"warning",
-        });
-      }else {
-        alert(1);
+    RestForm(){
+      this.become_1={
+        name:'',
+            dept:'',
+            post:'',
+            entrydate:'',
+            tryoutdate:'',
+            type:'',
+            remarks:'',
+            becomedate:''
       }
     }
   }
