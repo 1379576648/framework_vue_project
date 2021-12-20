@@ -31,18 +31,27 @@
         </div>
       </el-drawer>
 
-      <el-button size="medium">
+      <el-button size="medium" @click="outExe">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
         导出
       </el-button>
-      <el-button size="medium">
-        <el-icon style="font-size: 18px">
-          <i-folder-opened/>
-        </el-icon>
-        导入
-      </el-button>
+      <el-upload
+          class="upload-demo"
+          action
+          :on-change="importfxx"
+          accept=".xls, .xlsx"
+          :auto-upload="false"
+          :show-file-list="false"
+      >
+        <el-button size="medium">
+          <el-icon style="font-size: 18px">
+            <i-folder-opened/>
+          </el-icon>
+          导入
+        </el-button>
+      </el-upload>
     </div>
     <div class="y">
       <el-table :data="tableData" stripe style="width: 100%">
@@ -98,9 +107,10 @@
 </template>
 
 <script lang="ts">
+import {ElMessageBox, ElMessage} from 'element-plus'
 import {defineComponent, reactive, toRefs, ref} from 'vue'
-import {ElMessageBox} from 'element-plus'
-import { ElMessage } from 'element-plus'
+import {export_json_to_excel} from '/src/excal/Export2Excel.js'
+import XLSX from 'xlsx/dist/xlsx.core.min.js'
 export default defineComponent({
   data: function () {
     const state = reactive({
@@ -164,6 +174,7 @@ export default defineComponent({
       },
       formLabelWidth: '80px',
       timer: null,
+      fileData:"",
       //通过path获取二级菜单下面所有的菜单
       menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
       //权限列表
@@ -239,6 +250,63 @@ export default defineComponent({
     }
 
   }, methods: {
+    //导出操作
+    outExe() {
+      //如果有这个导出按钮的权限
+      if (this.permissionQuery("导出")) {
+        ElMessageBox.confirm(
+            '此操作将导出excel文件, 是否继续?',
+            '提示',
+            {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+            }
+        ).then(() => {
+          this.export2Excel();
+        }).catch(() => {
+          ElMessage({
+            type: 'info',
+            message: '取消成功',
+          })
+        })
+      } else {
+        ElMessage({
+          message: '权限不足',
+          type: 'warning',
+        })
+      }
+    },
+    // 导出方法
+    export2Excel() {
+      var that = this;
+      let tHeader = ["ID", "部门名称", "部门负责人", "状态"]; // 导出的表头名
+
+      let filterVal = ["date", "name", "state", "city"];
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      })
+          .then(({value}) => {
+            let data = that.formatJson(filterVal, that.tableData);
+            export_json_to_excel(tHeader, data, value);
+            ElMessage({
+              type: 'success',
+              message: `生成成功`,
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '取消成功',
+            })
+          })
+    },
+
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
+
     inquire_1() {
       //如果菜单列表有值
       if (this.menuList) {
@@ -367,5 +435,9 @@ table * {
 
   margin-bottom: 30px;
 
+}
+.upload-demo{
+  display: inline-block;
+  margin-left: 10px;
 }
 </style>
