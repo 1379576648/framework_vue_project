@@ -11,12 +11,14 @@
       </div>
 
 
-        <div class="information">
-          <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">基本信息</h3>
-          <div style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
-          <h3 @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1" v-show="informations_bj_1" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>
-        </div>
-
+      <div class="information">
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">基本信息</h3>
+        <div
+            style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
+        <h3 @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1"
+            v-show="informations_bj_1" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">
+          <i class="iconfont">&#xe600;</i>编辑</h3>
+      </div>
 
 
       <div style="width: 100%;margin-top: 20px;">
@@ -88,22 +90,25 @@
         </div>
 
         <div class="information_from" v-show="informations_edit_1">
-          <el-form style="width: 90%;margin: auto; " :rules="rules">
+          <el-form style="width: 90%;margin: auto; " :model="aa" :rules="rules">
 
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
-              <el-form-item label="员工编号：" prop="id" >
-                 <el-input v-model="aa.id" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              <el-form-item label="员工编号：" prop="id">
+                <el-input v-model="aa.id" style="width:240px;"></el-input>
+              </el-form-item>
+              <br/>
 
 
-              <el-form-item label="出生日期：" >
+              <el-form-item label="出生日期：">
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;position: absolute;left:10px">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="aa.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="aa.date2"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="婚姻状态：" prop="state">
                 <el-select style="width:240px;" v-model="aa.state">
@@ -112,13 +117,15 @@
                   <el-option label="离异" value="ly"></el-option>
 
                 </el-select>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="身份证：" prop="legalIdNumber">
                 <el-input v-model="aa.sfz" style="width:240px"
                           onkeyup="this.value = this.value.replace(/[^\w\.\/]/ig,'');"
-                          ></el-input>
-              </el-form-item><br/>
+                ></el-input>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="政治面貌：" prop="zzmm">
                 <el-select style="width:240px;" v-model="aa.zzmm">
@@ -126,11 +133,13 @@
                   <el-option label="党员" value="dy"></el-option>
                   <el-option label="群众" value="qz"></el-option>
                 </el-select>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="毕业学校：" prop="school">
                 <el-input v-model="aa.school" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="血型：" prop="xx">
@@ -141,9 +150,8 @@
                   <el-option label="O" value="O"></el-option>
                   <el-option label="RH" value="RH"></el-option>
                 </el-select>
-              </el-form-item><br/>
-
-
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="专业：" prop="zy">
@@ -152,53 +160,55 @@
             </div>
 
 
-
-              <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
-                <br/>
-                <el-form-item prop="name" >
-                  <template #label >姓名：</template>
-                   <el-input v-model="aa.name" style="width:240px;" disabled></el-input>
-                </el-form-item><br/>
-
-
-
-                <el-form-item label="年龄：" prop="age">
-                  <el-input v-model="aa.age" style="width:240px;"
-                            onkeyup="this.value = this.value.replace(/[^\d.]/g,'');"
-                            @change="verification"></el-input>
-                </el-form-item><br/>
+            <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
+              <br/>
+              <el-form-item prop="name">
+                <template #label>姓名：</template>
+                <el-input v-model="aa.name" style="width:240px;" disabled></el-input>
+              </el-form-item>
+              <br/>
 
 
-
-                <el-form-item label="最高学历：" prop="xl">
-                  <el-select v-model="aa.xl" placeholder="请选择活动区域" style="width:240px;">
-                    <el-option label="硕士" value="ss"></el-option>
-                    <el-option label="本科" value="bk"></el-option>
-                    <el-option label="大专" value="dz"></el-option>
-                    <el-option label="中专" value="zz"></el-option>
-                    <el-option label="高中" value="gz"></el-option>
-                    <el-option label="其他" value="qt"></el-option>
-                  </el-select>
-                </el-form-item><br/>
+              <el-form-item label="年龄：" prop="age">
+                <el-input v-model="aa.age" style="width:240px;"
+                          onkeyup="this.value = this.value.replace(/[^\d.]/g,'');"
+                          @change="verification"></el-input>
+              </el-form-item>
+              <br/>
 
 
-                <el-form-item label="性别：" prop="sex">
-                  <el-radio-group v-model="aa.sex" style="position: absolute;left:47px">
-                    <el-radio label="男"></el-radio>
-                    <el-radio label="女"></el-radio>
-                  </el-radio-group>
-                </el-form-item><br/>
+              <el-form-item label="最高学历：" prop="xl">
+                <el-select v-model="aa.xl" placeholder="请选择活动区域" style="width:240px;">
+                  <el-option label="硕士" value="ss"></el-option>
+                  <el-option label="本科" value="bk"></el-option>
+                  <el-option label="大专" value="dz"></el-option>
+                  <el-option label="中专" value="zz"></el-option>
+                  <el-option label="高中" value="gz"></el-option>
+                  <el-option label="其他" value="qt"></el-option>
+                </el-select>
+              </el-form-item>
+              <br/>
 
 
+              <el-form-item label="性别：" prop="sex">
+                <el-radio-group v-model="aa.sex" style="position: absolute;left:47px">
+                  <el-radio label="男"></el-radio>
+                  <el-radio label="女"></el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <br/>
 
-                <el-form-item label="户口所在地：" prop="szd">
-                  <el-input v-model="aa.szd" style="width:240px;"></el-input>
-                </el-form-item><br/>
+
+              <el-form-item label="户口所在地：" prop="szd">
+                <el-input v-model="aa.szd" style="width:240px;"></el-input>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="银行卡号：" prop="yhk">
-                  <el-input v-model="aa.yhk" style="width:240px;"></el-input>
-                </el-form-item><br/>
+                <el-input v-model="aa.yhk" style="width:240px;"></el-input>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="星座：" prop="xz">
@@ -216,14 +226,16 @@
                   <el-option label="水瓶座" value="水瓶座"></el-option>
                   <el-option label="双鱼座" value="双鱼座"></el-option>
                 </el-select>
-                </el-form-item>
-              </div>
-
+              </el-form-item>
+            </div>
 
 
             <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1">取消</el-button>
+                <el-button
+                    @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1">
+                  取消
+                </el-button>
                 <el-button type="primary" @click="submitForm1">保存</el-button>
               </div>
             </div>
@@ -232,15 +244,15 @@
       </div>
 
 
-
-
       <div class="information">
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">联系方式</h3>
-        <div style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
-        <h3 @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2" v-show="informations_bj_2" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>
+        <div
+            style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
+        <h3 @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2"
+            v-show="informations_bj_2" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">
+          <i class="iconfont">&#xe600;</i>编辑</h3>
 
       </div>
-
 
 
       <div style="width: 100%;margin-top: 20px;">
@@ -275,48 +287,53 @@
         </div>
 
         <div class="information_from" v-show="informations_edit_2">
-          <el-form style="width: 90%;margin: auto; " :rules="rules">
+          <el-form style="width: 90%;margin: auto; " :model="aa" :rules="rules">
 
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
 
-              <el-form-item label="手机号" prop="phone" >
-                  <el-input v-model="aa.phone" style="width:240px;"
-                            onkeyup="this.value = this.value.replace(/^[1-9]\d{11}$/,'');"
-                            @change="verification2"></el-input>
-              </el-form-item><br/>
+              <el-form-item label="手机号" prop="phone">
+                <el-input v-model="aa.phone" style="width:240px;"
+                          onkeyup="this.value = this.value.replace(/^[1-9]\d{11}$/,'');"
+                          @change="verification2"></el-input>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="微信：" prop="wx">
                 <el-input v-model="aa.wx" style="width:240px"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="现住地址：" prop="redss">
                 <el-input v-model="aa.redss" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
             </div>
 
 
-
             <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
               <br/>
-              <el-form-item  prop="eamil">
-                <template #label >个人邮箱：</template>
+              <el-form-item prop="eamil">
+                <template #label>个人邮箱：</template>
                 <el-input v-model="aa.eamil" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="QQ：" prop="qq">
                 <el-input v-model="aa.qq" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="紧急联系人：" prop="jjphone">
                 <el-input v-model="aa.jjphone" style="width:240px;"
                           onkeyup="this.value = this.value.replace(/^[1-9]\d{11}$/,'');"
                           @change="verification3"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
 
             </div>
@@ -324,7 +341,10 @@
             <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
 
-                <el-button @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2">取消</el-button>
+                <el-button
+                    @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2">
+                  取消
+                </el-button>
                 <el-button type="primary" @click="submitForm2">保存</el-button>
               </div>
             </div>
@@ -335,11 +355,13 @@
 
       <div class="information">
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">在职信息</h3>
-        <div style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
-        <h3 @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3" v-show="informations_bj_3" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>
+        <div
+            style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
+        <h3 @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3"
+            v-show="informations_bj_3" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">
+          <i class="iconfont">&#xe600;</i>编辑</h3>
 
       </div>
-
 
 
       <div style="width: 100%;margin-top: 20px;">
@@ -380,51 +402,55 @@
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
 
               <el-form-item label="部门：" prop="dept">
-                <el-input v-model="aa.dept"  style="width:240px;"></el-input>
-              </el-form-item><br/>
+                <el-input v-model="aa.dept" style="width:240px;"></el-input>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="职位：" prop="zw">
                 <el-input v-model="aa.zw" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
 
               <el-form-item label="工龄：" prop="gl">
                 <el-input v-model="aa.gl" style="width:240px;"></el-input>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
             </div>
-
 
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
               <br/>
 
 
-            <el-form-item label="入职日期：" prop="">
-                    <el-date-picker
-                              v-model="aa.rzdate"
-                              type="date"
-                              placeholder="选择日期" style="width: 240px"
-                              @change="judgedate1">
-                    </el-date-picker>
-              </el-form-item><br/>
+              <el-form-item label="入职日期：" prop="">
+                <el-date-picker
+                    v-model="aa.rzdate"
+                    type="date"
+                    placeholder="选择日期" style="width: 240px"
+                    @change="judgedate1">
+                </el-date-picker>
+              </el-form-item>
+              <br/>
 
               <el-form-item label="员工状态：" prop="ygstate`1">
                 <el-radio-group v-model="aa.ygstate" style="position: absolute;left:4px">
                   <el-radio label="实习"></el-radio>
                   <el-radio label="正式"></el-radio>
                 </el-radio-group>
-              </el-form-item><br/>
+              </el-form-item>
+              <br/>
 
-              <el-form-item label="转正日期：" >
+              <el-form-item label="转正日期：">
                 <el-date-picker
                     v-model="aa.zzdate"
                     type="date"
                     placeholder="选择日期" style="width: 240px"
                     @change="judgedate2">
                 </el-date-picker>
-              </el-form-item><br/>
-
+              </el-form-item>
+              <br/>
 
 
             </div>
@@ -432,7 +458,10 @@
             <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
 
-                <el-button @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3">取消</el-button>
+                <el-button
+                    @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3">
+                  取消
+                </el-button>
                 <el-button type="primary" @click="submitForm3">保存</el-button>
               </div>
             </div>
@@ -444,12 +473,11 @@
   </div>
 
 
-
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import { defineComponent, ref } from 'vue'
+import {defineComponent, reactive, toRefs} from 'vue'
+import {defineComponent, ref} from 'vue'
 
 import {ElMessage} from "element-plus/es";
 
@@ -490,245 +518,165 @@ export default defineComponent({
       ...toRefs(state),
     }
   },
- data(){
-    return{
-      aa:[
+  data() {
+    return {
+      aa: [
         {
-          id:'',
-          name:'',
-          date2:"",
-          age:'',
-          state:'',
-          xl:'',
-          sfz:'',
-          sex:'',
-          zzmm:'',
-          szd:'',
-          school:'',
-          yhk:'',
-          xx:'',
-          xz:'',
-          zy:'',
-          ygstate:'',
-          phone:'',
-          eamil:'',
-          wx:'',
-          qq:'',
-          redss:'',
-          jjphone:'',
-          dept:'',
-          zw:'',
-          gl:'',
-          rzdate:'',
-          zzdate:''
+          id: '',
+          name: '',
+          date2: "",
+          age: '',
+          state: '',
+          xl: '',
+          sfz: '',
+          sex: '',
+          zzmm: '',
+          szd: '',
+          school: '',
+          yhk: '',
+          xx: '',
+          xz: '',
+          zy: '',
+          ygstate: '',
+          phone: '',
+          eamil: '',
+          wx: '',
+          qq: '',
+          redss: '',
+          jjphone: '',
+          dept: '',
+          zw: '',
+          gl: '',
+          rzdate: '',
+          zzdate: ''
         }
 
       ],
-      rules:{
-        name:
-
-          { required: true,
-            message: '请输入活动名称',
-            trigger: 'blur' },
-        id:  { required: true,
-               message: '编号不能为空',
-               trigger: 'blur' },
-        phone: [ { required: true,
+      rules: {
+        id: {
+          required: true,
           message: '编号不能为空',
-          trigger: 'blur' },
-          { min: 11,  message: '电话号码要11位数', trigger: 'blur' }
-        ],
+          trigger: 'blur'
+        },
+        phone: [
+          {
+            required: true,
+            message: '手机号码不能为空',
+            trigger: 'blur'
+          },
+          {
+            min:11,
+            max: 11,
+            message: '手机号码只能是11位',
+            trigger: 'blur'
+          }
+        ]
       },
 
-      informations_1:true,
-      informations_edit_1:false,
-      informations_bj_1:true,
-      informations_2:true,
-      informations_edit_2:false,
-      informations_bj_2:true,
-      informations_3:true,
-      informations_edit_3:false,
-      informations_bj_3:true
+      informations_1: true,
+      informations_edit_1: false,
+      informations_bj_1: true,
+      informations_2: true,
+      informations_edit_2: false,
+      informations_bj_2: true,
+      informations_3: true,
+      informations_edit_3: false,
+      informations_bj_3: true
     }
 
- },
-  methods: {
-    verification(){
-      if(this.aa.age.length > 2){
-        this.$message.error('年龄输入错误，不能超过两位数!');
-        this.aa.age=" ";
-      }
-    },
-    verification2(){
-      if(this.aa.phone.length != 11){
-        this.$message.error('电话号码不足11位数，请输入正确的手机号码!');
-      }
-    },
-    verification3(){
-      if(this.aa.jjphone.length != 11){
-        this.$message.error('电话号码不足11位数，请输入正确的手机号码!');
-      }
-    },
-    judgedate1(){
-      var date = new Date();
-      if (this.aa.rzdate > date){
-        this.$message.error('入职日期不能大于当前时间!');
-        this.aa.rzdate=" ";
-      }
-    },
-    judgedate2(){
-      if (this.aa.rzdate.length === 0 ){
-        this.$message.error('请选择入职日期!');
-      }else if (this.aa.zzdate < this.aa.rzdate){
-        this.$message.error('转正日期不能小于入职日期!');
-        this.aa.zzdate=" ";
-      }
-    },
-    submitForm1(){
-      if (this.aa.id.length === 0){
-        ElMessage({
-          message:"请输入编号",
-          type:"warning"
-        });
-      }else if (this.aa.date2.length === 0){
-        ElMessage({
-          message:"请输入生日!",
-          type:"warning"
-        });
-      }else if (this.aa.sex.length === 0){
-        ElMessage({
-          message:"请选择性别!",
-          type:"warning"
-        });
-      }else if (this.aa.zzmm.length === 0){
-        ElMessage({
-          message:"请选择政治面貌!",
-          type:"warning"
-        });
-      }else if (this.aa.xl.length === 0){
-        ElMessage({
-          message:"请选择学历!",
-          type:"warning"
-        });
-      }else {
-        alert(1);
-      }
+  },
 
-    },
-    submitForm2(){
-      if (this.aa.phone.length === 0){
-        ElMessage({
-          message:"手机号码不能为空，请输入手机号码!",
-          type:"warning"
-        });
-      }else {
-        alert(1)
-      }
-    },
-    submitForm3(){
-      if (this.aa.dept.length === 0){
-        ElMessage({
-          message:"部门名称为空，请输入部门名称!",
-          type:"warning"
-        });
-      }else if (this.aa.rzdate.length === 0){
-        ElMessage({
-          message:"入职日期为空，请选择入职日期!",
-          type:"warning"
-        });
-      }else if (this.aa.zw.length === 0 ){
-        ElMessage({
-          message:"职位为空，请选择职位!",
-          type:"warning"
-        });
-      }
-      else {
-        alert(1)
-      }
-    },
-
-  }
 
 })
 </script>
 
 <style scoped>
 /*@import url("../../css/EditingStaff.css");*/
-  .basicfile_big{
-    width:100%;
-    /*border:1px solid red;*/
-    margin-top:20px;
-  }
-  .basicfile_big_auto{
-    width:80%;
-    /*border:1px solid yellow;*/
-    margin: auto;
-  }
-  .information{
-    margin-top: 20px;
-    width:100%;
-  }
-
-  .information_text{
-    width:870px;
-
-    margin: auto;
-  }
-  .information_text li{
-    /*float: left;*/
-    display: inline-block;
-    width:50%;
-    padding: 4px 0px;
-
-  }
-  .information_text li label{
-    width: 200px;
-    display: inline-block;
-    text-align: right;
-    vertical-align: middle;
-    position: relative;
-    color: #969799;
-    font-size: 14px;
-    padding: 0 24px 0 0;
-    box-sizing: border-box;
-  }
-  .information_text li p{
-    display: inline-block;
-  }
-  .iconfont{
-    color: #085fc3;
-  }
-  .information_from{
-    width:100%;
-    background: #e8edf2;
-    position: relative;
-
-  }
-  .information_ul li{
-    display: inline-block;
-    width:50%;
-    padding: 20px 64px 20px;
-    text-align: right;
-
-  }
-  .information_ul li label{
-    /*width:100px;*/
-    text-align: right;
-    vertical-align: middle;
-    position: relative;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    /*padding: 0 24px 0 0;*/
-    box-sizing: border-box;
+.basicfile_big {
+  width: 100%;
+  /*border:1px solid red;*/
+  margin-top: 20px;
 }
 
-  .information_ul{
-    list-style-type: none;
-    position: relative;
-  }
-  .information_input{
-    width:240px;
-    display: inline-block;
-  }
+.basicfile_big_auto {
+  width: 80%;
+  /*border:1px solid yellow;*/
+  margin: auto;
+}
+
+.information {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.information_text {
+  width: 870px;
+
+  margin: auto;
+}
+
+.information_text li {
+  /*float: left;*/
+  display: inline-block;
+  width: 50%;
+  padding: 4px 0px;
+
+}
+
+.information_text li label {
+  width: 200px;
+  display: inline-block;
+  text-align: right;
+  vertical-align: middle;
+  position: relative;
+  color: #969799;
+  font-size: 14px;
+  padding: 0 24px 0 0;
+  box-sizing: border-box;
+}
+
+.information_text li p {
+  display: inline-block;
+}
+
+.iconfont {
+  color: #085fc3;
+}
+
+.information_from {
+  width: 100%;
+  background: #e8edf2;
+  position: relative;
+
+}
+
+.information_ul li {
+  display: inline-block;
+  width: 50%;
+  padding: 20px 64px 20px;
+  text-align: right;
+
+}
+
+.information_ul li label {
+  /*width:100px;*/
+  text-align: right;
+  vertical-align: middle;
+  position: relative;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  /*padding: 0 24px 0 0;*/
+  box-sizing: border-box;
+}
+
+.information_ul {
+  list-style-type: none;
+  position: relative;
+}
+
+.information_input {
+  width: 240px;
+  display: inline-block;
+}
 
 </style>

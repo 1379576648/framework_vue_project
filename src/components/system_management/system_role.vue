@@ -6,22 +6,22 @@
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
           <!-- 搜索角色数据部分 -->
-          <el-form :inline="true">
+          <el-form style="margin-top: 20px;" :inline="true" v-model="search">
             <!-- 角色名册搜索 -->
             <el-form-item class="form-name" label="角色名称">
-              <el-input  size="small" placeholder="请输入角色名称"></el-input>
+              <el-input  size="small" v-model="search.role_name" placeholder="请输入角色名称"></el-input>
             </el-form-item>
 
             <!-- 权限字符搜索 -->
             <el-form-item class="form-jurisdiction" label="权限字符">
-              <el-input size="small" placeholder="请输入权限字符"></el-input>
+              <el-input size="small" v-model="search.character" placeholder="请输入权限字符"></el-input>
             </el-form-item>
 
             <!-- 角色状态搜索 -->
             <el-form-item class="form-state" label="角色状态">
-              <el-select style="width: 190px" size="small" v-model="value" placeholder="请选择角色状态">
+              <el-select style="width: 190px" size="small" v-model="search.state" placeholder="请选择角色状态">
                 <el-option
-                    v-for="item in options"
+                    v-for="item in state"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -35,7 +35,7 @@
               <el-date-picker
                   style="width: 325px"
                   size="small"
-                  v-model="value1"
+                  v-model="search.value1"
                   type="daterange"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
@@ -44,18 +44,30 @@
               </el-date-picker>
             </el-form-item>
             <!-- 操作按钮 -->
-            <el-form-item  style="margin-left: 1066px;margin-top: -14px;margin-bottom: -24px;">
-              <el-button size="small" class="search-ss" type="primary" @click="onSubmit"><i
-                  class="iconfont">&#xe61b</i>搜索</el-button>
-              <el-button size="small" class="search-cz" type="primary"><i class="iconfont">&#xe6b8</i>重置</el-button>
+            <el-form-item  style="margin-left: 1066px;margin-top: -43px;margin-bottom: -24px;">
+              <el-button size="mini" class="search-ss" type="primary" >
+                <i class="iconfont">
+                  &#xe61b
+                </i>
+                搜索
+              </el-button>
+              <el-button size="mini" class="search-cz" type="primary" @click="reset()">
+                <i class="iconfont">
+                  &#xe6b8
+                </i>
+                重置
+              </el-button>
             </el-form-item>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
           <div class="button">
             <el-button class="button-new" size="mini"  @click="outerVisible = true,judge='新增'">+ 新增</el-button>
-            <el-button class="button-delete" size="mini">删除</el-button>
+            <el-button class="button-delete" size="mini" v-bind:disabled="disableds" @click="remove">删除</el-button>
           </div>
+
+
+
 
           <!-- 角色新增修改对话框-->
           <el-dialog width="500px" v-model="outerVisible" >
@@ -126,6 +138,7 @@
                       :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
                       :cell-style="{ textAlign: 'center' }"
                       :default-sort="{ prop: 'date', order: 'descending' }"
+                      @selection-change="deletepl"
             >
               <!-- 全选操作按钮 -->
               <el-table-column type="selection" width="50" />
@@ -141,8 +154,8 @@
                     <i class="iconfont" style="font-size: 13px;color: #5aaaff">&#xe606</i>
                     修改&nbsp;&nbsp;&nbsp;
                   </span>
-                  <span style="font-size: 13px;color: #5aaaff">
-                    <i class="iconfont" style="font-size: 13px;color: #5aaaff">&#xe61c</i>
+                  <span style="font-size: 13px;color: #5aaaff" @click="open">
+                    <i class="iconfont"  style="font-size: 13px;color: #5aaaff">&#xe61c</i>
                     删除&nbsp;&nbsp;&nbsp;
                   </span>
                   <!-- 更多-->
@@ -153,7 +166,7 @@
                     </el-icon>
                   </span>
                     <template #dropdown>
-                      <el-dropdown-menu style="width: 80px;text-align: center">
+                      <el-dropdown-menu style="width: 96px;text-align: center">
                         <el-dropdown-item @click="data_permission=true">数据权限</el-dropdown-item>
                         <router-link :to="{path:this.two,query:{path: this.$route.query.path}}">
                           <el-dropdown-item >分配用户</el-dropdown-item>
@@ -210,17 +223,22 @@
 
             <!-- 分页 -->
             <div class="demo-pagination-block">
+              <!-- <span class="demonstration">All combined</span> -->
               <el-pagination
-                  v-model:currentPage="currentPage4"
-                  :page-sizes="[1, 2, 3, 4]"
-                  :page-size="1"
+                  v-model:currentPage="pageInfo.currenPage"
+                  :page-sizes="[3, 5, 10, 50]"
+                  v-model:page-size="pageInfo.pagesize"
+                  :default-page-size="pageInfo.pagesize"
                   layout="total, sizes, prev, pager, next, jumper"
-                  :total="10"
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
+                  :total="pageInfo.total"
+                  :pager-count="5"
+                  background
+                  @size-change="sele"
+                  @current-change="sele"
               >
               </el-pagination>
             </div>
+
           </div>
         </div>
       </div>
@@ -230,6 +248,7 @@
 
 <script>
 import {defineComponent,ref} from 'vue'
+import {ElMessage, ElMessageBox} from "element-plus";
 export default {
 
   data() {
@@ -237,17 +256,90 @@ export default {
     //时间
     const value1 = ref('')
 
-    //表格里时间顺序
-    const handleSizeChange = (val) => {
-      console.log(`${val} items per page`)
+
+    //删除提示框
+    const open = () => {
+      ElMessageBox.confirm(
+          '是否确定删除！！！',
+          '友情提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: '友情提示',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '删除成功！！',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              message: '感谢你的参与',
+              type: 'warning',
+            })
+          })
     }
-    const handleCurrentChange = (val) => {
-      console.log(`current page: ${val}`)
+
+    //批量删除提示框
+    const remove = () => {
+      ElMessageBox.confirm(
+          '是否确定删除！！！',
+          '友情提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: '友情提示',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '删除成功！！',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              message: '感谢你的参与',
+              type: 'warning',
+            })
+          })
     }
+
     return {
+      //跳转界面
       two:'/system/authority_management/allot_user',
+
+      // 分页
+      pageInfo: {
+        currenPage: 1,
+        /* 当前的页 */
+        pagesize: 3,
+        total: 0,
+      },
+
+      //批量删除
+      remove,
+
+      //弹出框删除
+      open,
+
+      //搜索重置form
+      search:{
+        //角色名称
+        role_name :'',
+        //权限字符
+        character:'',
+        //角色状态
+        type:'',
+        //登录状态
+        state:'',
+        //登录时间
+        value1:'',
+      },
       // 搜索登录状态下拉框
-      options: ref([
+      state: ref([
         {
           value: '正常',
           label: '正常',
@@ -257,9 +349,6 @@ export default {
           label: '停用',
         },
       ]),
-      value: ref(''),
-      //返回时间
-      value1,
 
       //表格数据
       tableData: [{
@@ -287,14 +376,6 @@ export default {
           date:"2002-4-04 13:16:41"
         },
       ],
-
-      // 分页
-      currentPage1: ref(5),
-      currentPage2: ref(5),
-      currentPage3: ref(5),
-      currentPage4: ref(4),
-      handleSizeChange,
-      handleCurrentChange,
 
       //显示添加还是有修改的状态
       outerVisible: ref(false),
@@ -437,18 +518,45 @@ export default {
 
       /*数据权限*/
       data_permission:false,
+
+
+      //按钮是否被禁用
+      disableds:true,
+      //接收表格数据
+      table:[],
     }
   },
   methods: {
     loadNode(node, resolve) {
       resolve(this.menuList)
     },
+    deletepl(val){
+      this.table = val
+      if(this.table != ''){
+        this.disableds=false
+      }else {
+        this.disableds=true
+      }
+    },
+    reset(){
+      this.search={
+        //角色名称
+        role_name :'',
+            //权限字符
+            character:'',
+            //角色状态
+            type:'',
+            //登录状态
+            state:'',
+            //登录时间
+            value1:'',
+      }
+    }
   },
 }
 </script>
 
 <style type="text/css" scoped>
-@import url("../../css/navigation.css");
 @import url("../../css/zpdaohang.css");
 @font-face {
   font-family: 'iconfont';
@@ -481,7 +589,7 @@ export default {
   font-weight:bold;
   size:14px;
   margin-left:15px;
-  margin-top: 5px;
+  margin-top: -15px;
 }
 .role-name{
   font-weight:bold;
@@ -491,7 +599,6 @@ export default {
 }
 .from-data-cz{
   margin-bottom:-7px;
-  margin-top: 10px;
 }
 .from-data{
   margin-top: 15px;
@@ -520,12 +627,12 @@ export default {
   font-weight:bold;
   size:14px;
   margin-left:15px;
-  margin-top: -5px;
+  margin-top: -21px;
 }
 .announcement-zt {
   margin-left: 15px;
   font-weight:bold;
-  margin-top: 5px;
+  margin-top: -17px;
   size:14px;
 }
 .name{
@@ -538,7 +645,7 @@ export default {
   font-weight:bold;
   size:14px;
   margin-left:15px;
-  margin-top: 5px;
+  margin-top: -15px;
 }
 .headline{
   font-size: 18px;
@@ -560,13 +667,13 @@ export default {
 
 /* 分页 */
 .demo-pagination-block{
-  margin-left: 572px;
+  margin-left: 810px;
   margin-bottom: 20px;
   margin-top: 15px;
 }
 .button{
-  margin-top: -12px;
-  margin-bottom: 12px;
+  margin-top: -21px;
+  margin-bottom: 14px;
   margin-left: 7px;
 }
 /*新增按钮样式*/
@@ -586,19 +693,11 @@ export default {
 }
 /* 删除表格数据按钮 */
 .button-delete{
-  color: #ff4949;
-  background: #ffeded;
-  border-color: #ffb6b6;
+
   border: none;
   width: 90px;
 }
-.button-delete:hover{
-  background: #ff4949;
-  border-color: #ff4949;
-  color: #fff;
-  border: none;
-  width: 90px;
-}
+
 
 
 /* 搜索按钮 */
@@ -669,5 +768,166 @@ export default {
 .form-name{
   width: 270px;
 }
+
+
+
+
+
+
+
+
+
+
+.saas-main-content {
+  padding-top: 12px;
+  min-height: 500px;
+}
+
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+}
+
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
+}
+
+.j-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  border-color: transparent;
+}
+
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+  border-top-color: rgb(233, 233, 233);
+  border-right-color: rgb(233, 233, 233);
+  border-bottom-color: rgb(233, 233, 233);
+  border-left-color: rgb(233, 233, 233);
+}
+
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+.ml-20 {
+  margin-left: 20px;
+}
+
+.mt-20 {
+  margin-top: 0px;
+}
+
+a {
+  color: #085fc3;
+  background-color: transparent;
+}
+
+a, area, button, [role="button"], input:not([type="range"]), label, select, summary, textarea {
+  touch-action: manipulation;
+}
+
+a {
+  color: #366cb3;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  -webkit-text-decoration-skip: objects;
+}
+
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  border-style: none;
+}
+
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+
+.ant-btn::before {
+  background: #fff;
+  border-radius: inherit;
+}
+
+.ant-btn::before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  z-index: 1;
+  display: none;
+  background: #fff;
+  border-radius: inherit;
+  opacity: 0.35;
+  transition: opacity 0.2s;
+  content: '';
+  pointer-events: none;
+}
+
+button, html [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  background-color: #085fc3;
+  border-color: #085fc3;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.ant-btn-primary {
+  color: #fff;
+  background-color: #366cb3;
+  border-color: #366cb3;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.ant-btn, .ant-btn:active, .ant-btn:focus {
+  outline: 0;
+}
+
+.ant-btn {
+  line-height: 1.499;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 3px;
+  color: #606c82;
+  background-color: #fff;
+  border-color: #d3dae2;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  background-color: #085fc3;
+  border-color: #085fc3;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+
+
+
 
 </style>
