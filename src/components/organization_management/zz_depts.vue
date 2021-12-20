@@ -110,7 +110,8 @@
 import {ElMessageBox, ElMessage} from 'element-plus'
 import {defineComponent, reactive, toRefs, ref} from 'vue'
 import {export_json_to_excel} from '/src/excal/Export2Excel.js'
-import XLSX from 'xlsx/dist/xlsx.core.min.js'
+import XLSX from 'xlsx'
+
 export default defineComponent({
   data: function () {
     const state = reactive({
@@ -174,7 +175,6 @@ export default defineComponent({
       },
       formLabelWidth: '80px',
       timer: null,
-      fileData:"",
       //通过path获取二级菜单下面所有的菜单
       menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
       //权限列表
@@ -248,8 +248,68 @@ export default defineComponent({
       this.inquire_1();
       return this.permissionList;
     }
-
   }, methods: {
+    //导入操作
+    importfxx(obj) {
+      if (this.permissionQuery("导出")) {
+        console.log(obj);
+        let _this = this;
+        // 通过DOM取文件数据
+        this.file = obj.raw;
+        var rABS = false; //是否将文件读取为二进制字符串
+        var f = this.file;
+        var reader = new FileReader();
+        FileReader.prototype.readAsBinaryString = function (f) {
+          var binary = "";
+          var rABS = false; //是否将文件读取为二进制字符串
+          var pt = this;
+          var wb; //读取完成的数据
+          var outdata;
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var bytes = new Uint8Array(reader.result);
+            var length = bytes.byteLength;
+            for (var i = 0; i < length; i++) {
+              binary += String.fromCharCode(bytes[i]);
+            }
+            if (rABS) {
+              wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
+                type: 'base64'
+              });
+            } else {
+              wb = XLSX.read(binary, {
+                type: 'binary'
+              });
+            }
+            // outdata就是你想要的东西 excel导入的数据
+            outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+            // excel 数据再处理
+            let arr = []
+            outdata.map(v => {
+              let obj = {}
+              obj.date = v.ID
+              obj.name = v.部门名称
+              obj.state = v.部门负责人
+              obj.city = v.状态
+              arr.push(obj)
+              _this.tableData.push(obj)
+            })
+          }
+          reader.readAsArrayBuffer(f);
+        }
+
+        if (rABS) {
+          reader.readAsArrayBuffer(f);
+        } else {
+          reader.readAsBinaryString(f);
+        }
+      } else {
+        ElMessage({
+          message: '权限不足',
+          type: 'warning',
+        })
+      }
+    },
     //导出操作
     outExe() {
       //如果有这个导出按钮的权限
@@ -306,7 +366,6 @@ export default defineComponent({
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
-
     inquire_1() {
       //如果菜单列表有值
       if (this.menuList) {
@@ -436,7 +495,8 @@ table * {
   margin-bottom: 30px;
 
 }
-.upload-demo{
+
+.upload-demo {
   display: inline-block;
   margin-left: 10px;
 }
