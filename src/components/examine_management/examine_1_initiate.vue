@@ -259,7 +259,9 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理二号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  管理二号
+                </div>
               </div>
             </el-col>
             <el-col :span="12">
@@ -267,7 +269,9 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理三号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  管理三号
+                 </div>
               </div>
             </el-col>
           </el-form-item>
@@ -755,7 +759,7 @@
             ></el-date-picker>
           </el-form-item>
           <!-- 出差总时长 -->
-          <el-form-item label="出差总时长">
+          <el-form-item label="请假总时长">
             <el-input v-model="travel_1.date3" disabled></el-input>
           </el-form-item>
           <!-- 头像（审批人） -->
@@ -1183,7 +1187,7 @@ export default defineComponent({
     },
     // 时间
     cancel_date() {
-      this.overtime_1.type_1="";
+      this.overtime_1.type_1 = "";
       this.overtime_1.date1 = "";
       this.overtime_1.date2 = "";
       this.overtime_1.date3 = "";
@@ -1297,16 +1301,15 @@ export default defineComponent({
     },
     // 判断加班开始时间
     difference1_1: function (beginTime) {
-      var jbtype=this.overtime_1.type_1; //获取加班类型
+      var jbtype = this.overtime_1.type_1; //获取加班类型
       var date = new Date();
-      if (jbtype.length === 0){
+      if (jbtype.length === 0) {
         ElMessage({
           message: "请选择加班类型!",
           type: "warning",
         });
         this.cancel_date();
-      }
-      else if (beginTime < date) {
+      } else if (beginTime < date) {
         ElMessage({
           message: "加班开始时间小于当前时间，请重新选择!",
           type: "warning",
@@ -1316,9 +1319,9 @@ export default defineComponent({
     },
     // 计算加班天数
     difference1_2: function (beginTime, endTime) {
-      var jbtype=this.overtime_1.type_1; //获取加班类型
+      var jbtype = this.overtime_1.type_1; //获取加班类型
       console.log(jbtype);
-      if (jbtype.length === 0){
+      if (jbtype.length === 0) {
         ElMessage({
           message: "请选择加班类型!",
           type: "warning",
@@ -1357,34 +1360,34 @@ export default defineComponent({
             type: "warning",
           });
           this.cancel_date();
-        }else if(jbtype === "工作日加班"){
-            if(hours > 3){
-              ElMessage({
-                message: "工作日加班时间不能大于3小时，请重新选择!",
-                type: "warning",
-              });
-              this.cancel_date();
-            }else {
-              this.overtime_1.date3 = hours + "小时";
-            }
-        }else if ( jbtype === "休息日加班"){
-          if(hours > 8){
+        } else if (jbtype === "工作日加班") {
+          if (hours > 3) {
+            ElMessage({
+              message: "工作日加班时间不能大于3小时，请重新选择!",
+              type: "warning",
+            });
+            this.cancel_date();
+          } else {
+            this.overtime_1.date3 = hours + "小时";
+          }
+        } else if (jbtype === "休息日加班") {
+          if (hours > 8) {
             ElMessage({
               message: "休息日加班时间不能大于8小时，请重新选择!",
               type: "warning",
             });
             this.cancel_date();
-          }else {
+          } else {
             this.overtime_1.date3 = hours + "小时";
           }
-        }else if ( jbtype === "节假日加班"){
-          if(hours > 8){
+        } else if (jbtype === "节假日加班") {
+          if (hours > 8) {
             ElMessage({
               message: "节假日加班时间不能大于8小时，请重新选择!",
               type: "warning",
             });
             this.cancel_date();
-          }else {
+          } else {
             this.overtime_1.date3 = hours + "小时";
           }
         }
@@ -1452,7 +1455,7 @@ export default defineComponent({
           message: "请选择请假开始时间!",
           type: "warning",
         });
-        this.cancel_date();
+        this.cancel_date3();
       } else if (endTime < beginTime) {
         ElMessage({
           message: "请假结束时间小于请假开始时间，请重新选择!",

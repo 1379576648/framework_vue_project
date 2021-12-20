@@ -6,9 +6,11 @@
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增招聘计划按钮 -->
           <a style="margin-top: 4px;">
+            <router-link :to="{path:this.addresume,query:{path:this.$route.query.path}}">
             <button type="button" class="ant-btn ant-btn-primary">
               <span>+ 新增</span>
             </button>
+            </router-link>
           </a>
           <!-- 批量导入按钮 -->
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
@@ -158,6 +160,8 @@ export default {
   data() {
 
     return {
+      //路由地址
+      addresume:'/recruitment/recruit/addresume',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */

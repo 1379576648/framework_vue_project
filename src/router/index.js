@@ -295,6 +295,10 @@ const routes = [
                                 },
                             ]
                         },
+                        {//新增简历
+                            path: '/recruitment/recruit/addresume',
+                            component:modules[`${'../components/recruitment_management/recruitment_addresume.vue'}`],
+                        },
                     ]
                 },
                 {//招聘过程
