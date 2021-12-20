@@ -59,7 +59,7 @@
             <br>
             <!-- 按钮 -->
             <div style="margin-top: 30px;">
-              <el-button @click="disly=!disly">取消</el-button>
+              <el-button @click="disly=!disly,RestForm()">取消</el-button>
               <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
             </div>
           </el-form>
@@ -115,7 +115,7 @@
             <br>
             <!-- 按钮 -->
             <div style="margin-top: 30px;">
-              <el-button @click="disly_1=!disly_1">取消</el-button>
+              <el-button @click="disly_1=!disly_1,RestForm()">取消</el-button>
               <el-button type="primary" @click="submitForm2('ruleForm')">保存</el-button>
             </div>
           </el-form>
@@ -268,15 +268,6 @@ export default {
           takedate: '',
           cause: '',
           remark2: '',
-      rules: {
-        duepay: [
-          {
-            required: true,
-            message: '请输入正式基本工资',
-            trigger: 'blur',
-          },
-        ],
-      },
       seek:'',
       dept2:'',
       seek2:'',
@@ -364,6 +355,19 @@ export default {
       } else {
         alert(1111)
       }
+    },
+    RestForm(){
+      this.periodpay='',
+          this.duepay= '',
+          this.periodfixed= '',
+          this.duefixed= '',
+          this.postdate= '',
+          this.remark= '',
+          this.increasepay= '',
+          this.range='',
+          this.takedate= '',
+          this.cause= '',
+          this.remark2= ''
     }
   }
 }
