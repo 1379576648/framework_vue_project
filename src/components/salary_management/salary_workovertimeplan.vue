@@ -18,7 +18,7 @@
     <div style="margin-top:-32px;">
       <!--搜索输入框-->
       <el-row style="width:140px;float:right;">
-        <el-input v-model="input3" placeholder="方案名称">
+        <el-input v-model="seek" placeholder="方案名称">
           <template #suffix>
             <el-icon class="el-input__icon"><i-search/></el-icon>
           </template>
@@ -94,8 +94,9 @@ export default {
   },
   data(){
     return{
+      //新增编辑加班方案
       insertcallbackpay:'/salary/insertcallbackpay',
-      input3:"",
+      seek:"",
       tableData: [
         {
           date: '2016-05-03',

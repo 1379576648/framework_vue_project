@@ -15,16 +15,18 @@
             </button>
           </router-link>
         </div>
+
         <div style="margin-top:-32px;">
           <!--搜索输入框-->
           <el-row style="width:140px;float:right;">
-            <el-input v-model="input3" placeholder="方案名称">
+            <el-input v-model="seek" placeholder="方案名称">
               <template #suffix>
                 <el-icon class="el-input__icon"><i-search/></el-icon>
               </template>
             </el-input>
           </el-row>
         </div>
+
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary" style="margin-top: 50px">
 
@@ -86,8 +88,9 @@ import {ElMessage} from "element-plus";
 export default {
   data(){
     return{
+      //新增编辑出差方案
       insertevectionplan:'/salary/insertevectionplan',
-      input3:"",
+      seek:"",
       tableData: [
         {
           date: '2016-05-03',
