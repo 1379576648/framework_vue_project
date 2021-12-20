@@ -152,11 +152,20 @@ export default {
     //提交离职
     submitForm(){
       if(this.ruleForm.region.length === 0){
-        ElMessage("请选择您的离职原因!");
+        ElMessage({
+          message:"请选择您的离职原因!",
+          type:"warning",
+        });
       }else if (this.ruleForm.date1.length === 0){
-        ElMessage("请选择您的最后工作时间!");
+        ElMessage({
+          message:"请选择您的最后工作时间!",
+          type:"warning",
+        });
       }else if (this.ruleForm.date2.length === 0){
-        ElMessage("请选择您的离职生效时间!");
+        ElMessage({
+          message:"请选择您的离职生效时间!",
+          type:"warning",
+        });
       }else {
         alert(1);
       }
