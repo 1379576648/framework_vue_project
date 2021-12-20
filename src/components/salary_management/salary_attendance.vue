@@ -47,7 +47,7 @@
                 <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"
                                title="确认要删除此方案吗?">
                   <template #reference>
-                    <el-button type="text" size="small">删除</el-button>
+                    <el-button type="text" size="small" style="color: orange">删除 </el-button>
                   </template>
                 </el-popconfirm>
 
