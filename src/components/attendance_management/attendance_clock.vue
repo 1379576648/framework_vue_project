@@ -2,7 +2,7 @@
 <template>
   <div class="w">
     <div class="head">
-      <el-button size="medium">
+      <el-button size="medium" @click="derive()">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
@@ -66,7 +66,7 @@
                 @confirm="through1()"
             >
               <template #reference>
-            <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -95,6 +95,8 @@
 
 <script lang="ts">
 import {ref, defineComponent} from "vue";
+import {ElMessage, ElMessageBox} from "element-plus";
+import {export_json_to_excel} from '/src/excal/Export2Excel.js'
 
 export default {
   data() {
@@ -205,10 +207,55 @@ export default {
       value: ref(""), //选择
     };
   },
-  methods:{
+  methods: {
     // 点击删除确认按钮触发
     through1() {
       alert(1)
+    },
+    // 点击导出操作
+    derive() {
+      ElMessageBox.confirm(
+          '此操作将导出excel文件, 是否继续?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.deriveExcel();
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    // 导出方法
+    deriveExcel() {
+      var _this = this;
+      let tHeader = ["员工名称", "部门名称", "早上打卡时间", "下午打卡时间", "记录时间"]; // 导出的表头名
+      let filterVal = ["staff", "department", "morning", "afternoon", "record"];//导出其prop属性
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      }).then(({value}) => {
+            let data = _this.formatJson(filterVal, _this.tableData);
+            export_json_to_excel(tHeader, data, value);
+            ElMessage({
+              type: 'success',
+              message: `生成成功`,
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '取消成功',
+            })
+          })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
   }
 };

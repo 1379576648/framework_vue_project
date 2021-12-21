@@ -52,8 +52,11 @@
 export default {
   data(){
     return{
+      //薪酬结构
       flat:'/salary/flat',
+      //核算方案
       scheme:'/salary/scheme',
+      //工资表
       paysheet:'/salary/paysheet',
     }
   }
