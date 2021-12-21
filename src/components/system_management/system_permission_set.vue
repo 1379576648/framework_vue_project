@@ -109,9 +109,9 @@
             <el-table
                 v-if="refreshTable"
                 :data="tableData"
-                style="width: 100%; margin-bottom: 20px"
+                style="width: 100%; margin-bottom: 20px;"
+                :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
                 row-key="MENU_ID"
-                border
                 :default-expand-all="expands"
                 @expand-change="expands=true"
             >

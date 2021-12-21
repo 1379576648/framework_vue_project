@@ -15,7 +15,7 @@
         <div class="container" >
           <div class="block" style="margin-left: 1095px">
             <span class="demonstration"></span>
-            <el-date-picker v-model="value3" type="year" placeholder="请选择年份">
+            <el-date-picker v-model="months" type="year" placeholder="请选择年份">
             </el-date-picker>
           </div>
           </div>
@@ -34,21 +34,32 @@
                 <span style="margin-left: 150px">员工成本：22</span>
               </template>
               <div style="background-color:  #e8edf2">
-                <el-table :data="tableData" style="width: 1275px; margin: auto" size="mini">
-                  <el-table-column fixed prop="date" label="Date" width="150" />
-                  <el-table-column prop="name" label="Name" width="120" />
-                  <el-table-column prop="state" label="State" width="120" />
-                  <el-table-column prop="city" label="City" width="120" />
-                  <el-table-column prop="address" label="Address" width="600" />
-                  <el-table-column prop="zip" label="Zip" width="120" />
-                  <el-table-column fixed="right" label="Operations" width="120">
-                    <template #default>
-                      <el-button type="text" size="small" @click="handleClick"
-                      >Detail</el-button
-                      >
-                      <el-button type="text" size="small">Edit</el-button>
-                    </template>
-                  </el-table-column>
+                <el-table
+                    :data="tableData"
+                    style="width: 1275px; margin: auto"
+                    size="mini"
+                    height="250">
+                  <el-table-column fixed prop="dept" label="部门" width="120" />
+                  <el-table-column prop="number" label="人数" width="120" />
+                  <el-table-column prop="state" label="固定工资" width="120" />
+                  <el-table-column prop="city" label="加班工资" width="120" />
+                  <el-table-column prop="address" label="工资合计" width="120" />
+                  <el-table-column prop="zip" label="考勤扣款" width="120" />
+                  <el-table-column prop="state" label="应发工资" width="120" />
+                  <el-table-column prop="city" label="个人缴社保" width="120" />
+                  <el-table-column prop="address" label="个人缴公积金" width="120" />
+                  <el-table-column prop="zip" label="实发工资" width="120" />
+                  <el-table-column prop="state" label="公司缴社保" width="120" />
+                  <el-table-column prop="city" label="公司缴公积金" width="120" />
+                  <el-table-column prop="address" label="公司缴纳" width="120" />
+<!--                  <el-table-column fixed="right" label="Operations" width="120">-->
+<!--                    <template #default>-->
+<!--                      <el-button type="text" size="small" @click="handleClick"-->
+<!--                      >Detail</el-button-->
+<!--                      >-->
+<!--                      <el-button type="text" size="small">Edit</el-button>-->
+<!--                    </template>-->
+<!--                  </el-table-column>-->
                 </el-table>
 
               </div>
@@ -66,23 +77,26 @@
                 <span style="margin-left: 150px">员工成本：22</span>
               </template>
               <div style="background-color:  #e8edf2">
-                <el-table :data="tableData" style="width: 1275px; margin: auto" size="mini">
-                  <el-table-column fixed prop="date" label="Date" width="150" />
-                  <el-table-column prop="name" label="Name" width="120" />
-                  <el-table-column prop="state" label="State" width="120" />
-                  <el-table-column prop="city" label="City" width="120" />
-                  <el-table-column prop="address" label="Address" width="600" />
-                  <el-table-column prop="zip" label="Zip" width="120" />
-                  <el-table-column fixed="right" label="Operations" width="120">
-                    <template #default>
-                      <el-button type="text" size="small" @click="handleClick"
-                      >Detail</el-button
-                      >
-                      <el-button type="text" size="small">Edit</el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
 
+                <el-table
+                    :data="tableData"
+                    style="width: 1275px; margin: auto"
+                    size="mini"
+                    height="250">
+                  <el-table-column fixed prop="dept" label="部门" width="120" />
+                  <el-table-column prop="number" label="人数" width="120" />
+                  <el-table-column prop="state" label="固定工资" width="120" />
+                  <el-table-column prop="city" label="加班工资" width="120" />
+                  <el-table-column prop="address" label="工资合计" width="120" />
+                  <el-table-column prop="zip" label="考勤扣款" width="120" />
+                  <el-table-column prop="state" label="应发工资" width="120" />
+                  <el-table-column prop="city" label="个人缴社保" width="120" />
+                  <el-table-column prop="address" label="个人缴公积金" width="120" />
+                  <el-table-column prop="zip" label="实发工资" width="120" />
+                  <el-table-column prop="state" label="公司缴社保" width="120" />
+                  <el-table-column prop="city" label="公司缴公积金" width="120" />
+                  <el-table-column prop="address" label="公司缴纳" width="120" />
+                </el-table>
               </div>
 
             </el-collapse-item>
@@ -101,6 +115,8 @@ export default {
     return {
       tableData: [
         {
+          dept:'研发部',
+          number:23,
           date: '2016-05-03',
           name: 'Tom',
           state: 'California',
@@ -110,6 +126,8 @@ export default {
           tag: 'Home',
         },
         {
+          dept:'研发部',
+          number:23,
           date: '2016-05-02',
           name: 'Tom',
           state: 'California',
@@ -119,6 +137,8 @@ export default {
           tag: 'Office',
         },
         {
+          dept:'研发部',
+          number:23,
           date: '2016-05-04',
           name: 'Tom',
           state: 'California',
@@ -128,6 +148,19 @@ export default {
           tag: 'Home',
         },
         {
+          dept:'研发部',
+          number:23,
+          date: '2016-05-01',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036',
+          tag: 'Office',
+        },
+        {
+          dept:'研发部',
+          number:23,
           date: '2016-05-01',
           name: 'Tom',
           state: 'California',
@@ -137,10 +170,7 @@ export default {
           tag: 'Office',
         },
       ],
-      value1: '',
-      value2: '',
-      value3: '',
-      value4: '',
+      months: '',
     }
   },
   methods: {
@@ -164,8 +194,6 @@ export default {
   align-items: center;
   height: var(--el-collapse-header-height);
   line-height: var(--el-collapse-header-height);
-  background-color: var(--el-collapse-header-bg-color);
-  color: var(--el-collapse-header-text-color);
   cursor: pointer;
   border-bottom: 1px solid var(--el-collapse-border-color);
   font-size: var(--el-collapse-header-font-size);

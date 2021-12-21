@@ -5,7 +5,7 @@
   <div class="j-card-body">
     <span></span>
     <div style="margin-top: 20px">
-      <router-link :to="{path:this.insertcallbackpay,query:{path: this.$route.query.path}}">
+      <router-link :to="{path:this.insertcallbackpay,query:{path: this.$route.query.path,name:'新增'}}">
       <button type="button" class="ant-btn ant-btn-primary">
         <i aria-label="图标: plus" class="anticon anticon-plus">
           <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="plus" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"></path>
@@ -18,7 +18,7 @@
     <div style="margin-top:-32px;">
       <!--搜索输入框-->
       <el-row style="width:140px;float:right;">
-        <el-input v-model="input3" placeholder="方案名称">
+        <el-input v-model="seek" placeholder="方案名称">
           <template #suffix>
             <el-icon class="el-input__icon"><i-search/></el-icon>
           </template>
@@ -36,14 +36,20 @@
         <el-table-column prop="name" label="备注" width="180" />
         <el-table-column prop="name" label="状态" width="180" />
         <el-table-column fixed="right" label="操作" width="180">
-          <template #default>
-            <router-link :to="{path:this.insertcallbackpay,query:{path: this.$route.query.path}}">
+          <template #default="scope">
+            <router-link :to="{path:this.insertcallbackpay,query:{path: this.$route.query.path,name:'编辑'}}">
             <el-button type="text"  size="small" @click="handleClick"
             >编辑 </el-button
             >
             </router-link>&nbsp;
             <el-button type="text" size="small" @click="handleClick">禁用 </el-button>
-              <el-button type="text" size="small">删除 </el-button>
+<!--              <el-button type="text" size="small">删除 </el-button>-->
+            <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"
+                           title="确认要删除此方案吗?">
+              <template #reference>
+                <el-button type="text" size="small" style="color: orange">删除 </el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -74,11 +80,23 @@
 </template>
 
 <script>
+import {ElMessage} from "element-plus";
 export default {
+  methods:{
+    // 删除行
+    deleteRow(index, rows) {
+      rows.splice(index, 1);
+      ElMessage({
+        message: '删除成功',
+        type: 'success',
+      })
+    },
+  },
   data(){
     return{
+      //新增编辑加班方案
       insertcallbackpay:'/salary/insertcallbackpay',
-      input3:"",
+      seek:"",
       tableData: [
         {
           date: '2016-05-03',

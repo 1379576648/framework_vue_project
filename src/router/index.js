@@ -264,6 +264,10 @@ const routes = [
                             {//新增招聘计划
                                 path: '/recruitment/addplan/addplan',
                                 component: modules[`${'../components/recruitment_management/recruitment_add_plan.vue'}`],
+                            },
+                            {//招聘计划详情页面
+                                path:'/recruitment/plan/details',
+                                component: modules[`${'../components/recruitment_management/recruitment_plan_details.vue'}`],
                             }
 
                     ]
@@ -294,6 +298,14 @@ const routes = [
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
                                 },
                             ]
+                        },
+                        {//简历详情页面
+                            path: '/recruitment/resume/details',
+                            component:modules[`${'../components/recruitment_management/recruitment_resume_details.vue'}`],
+                        },
+                        {//新增简历
+                            path: '/recruitment/recruit/addresume',
+                            component:modules[`${'../components/recruitment_management/recruitment_addresume.vue'}`],
                         },
                     ]
                 },
@@ -340,7 +352,25 @@ const routes = [
                             ]
                         },
                     ]
-                }
+                },
+                {//招聘统计
+                        path: '/recruitment/zptresume',
+                        component:modules[`${'../components/menu_skip.vue'}`],
+                        children:[
+                                    {//招聘进度
+                                        path: '/recruitment/recruit/speed_progress',
+                                        component:modules[`${'../components/recruitment_management/recruitment_speed_progress.vue'}`],
+                                    },
+                                    {//计划统计
+                                        path: '/recruitment/recruit/statistics',
+                                        component:modules[`${'../components/recruitment_management/recruitment_statistics.vue'}`],
+                                    },
+                                    {//业绩统计
+                                        path: '/recruitment/recruit/achievement',
+                                        component:modules[`${'../components/recruitment_management/recruitment_achievement.vue'}`],
+                                    },
+                                 ]
+                },
             ]
         },
         {//审批管理
@@ -547,15 +577,9 @@ const routes = [
             component:modules[`${'../components/statistics_management/statistics_main.vue'}`],
             redirect: "/statistics/remuneration_analyze/three",
             children:[
-                {//人员分析
-                    path:'/statistics/staff_analyze',
-                    redirect: "/statistics/staff_analyze/statistics_personnel1",
-                    component:modules[`${'../components/menu_skip.vue'}`],
-                    children:[
-                        {
-                            path: '/statistics/staff_analyze/statistics_personnel',
-                            component:modules[`${'../components/statistics_management/statistics_personnel.vue'}`],
-                            children:[
+
+
+
                                 {//人员数量分析
                                     path:'/statistics/staff_analyze/statistics_personnel1',
                                     component:modules[`${'../components/statistics_management/statistics_personnel1.vue'}`],
@@ -567,19 +591,14 @@ const routes = [
                                 {//员工概况
                                     path:'/statistics/staff_analyze/statistics_personnel3',
                                     component:modules[`${'../components/statistics_management/statistics_personnel3.vue'}`],
-                                }
-                            ]
-                        },
+                                },
 
-                    ]
-                },
+
+
                 {//考勤分析
                     path:'/statistics/attendance_analyze',
                     component:modules[`${'../components/menu_skip.vue'}`],
-                    children:[{
-                        path:'/statistics/attendance_analyze/statistics_work',
-                        component:modules[`${'../components/statistics_management/statistics_work.vue'}`],
-                        children: [
+                    children:[
 
                             {//出勤分析
                                 path:'/statistics/attendance_analyze/statistics_work1',
@@ -597,17 +616,13 @@ const routes = [
                                 path:'/statistics/attendance_analyze/statistics_work4',
                                 component:modules[`${'../components/statistics_management/statistics_work4.vue'}`],
                             }
-                        ]
-                    },
+
                     ]
                 },
                 {//薪酬分析
                     path:'/statistics/remuneration_analyze',
                     component:modules[`${'../components/menu_skip.vue'}`],
-                    children:[{
-                        path:'/statistics/remuneration_analyze/statistics_analysis',
-                        component:modules[`${'../components/statistics_management/statistics_analysis.vue'}`],
-                        children: [
+                    children:[
                             {//工资成本分析
                                 path:'/statistics/remuneration_analyze/statistics_analysis1',
                                 component:modules[`${'../components/statistics_management/statistics_analysis1.vue'}`],
@@ -624,8 +639,6 @@ const routes = [
                                 path:'/statistics/remuneration_analyze/statistics_analysis4',
                                 component:modules[`${'../components/statistics_management/statistics_analysis4.vue'}`],
                             }
-                        ]
-                    },
 
                     ]
                 },{

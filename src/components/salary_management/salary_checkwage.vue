@@ -6,9 +6,9 @@
       <div class="j-card-body">
         <span></span>
         <div>
-  <el-tabs v-model="activeName" @tab-click="handleClick">
+  <el-tabs v-model="wagetable" @tab-click="handleClick">
 
-    <el-tab-pane name="first">
+    <el-tab-pane name="wages">
 
       <template #label>
         <div style="width: 100px; text-align: center;">  <router-link :to="{path:this.selectwagetable,query:{path: this.$route.query.path}}">工资表</router-link></div>
@@ -29,8 +29,9 @@
 export default {
   data() {
     return {
+      //查看工资表
       selectwagetable:'/salary/selectwagetable',
-      activeName: 'first',
+      wagetable: 'wages',
     }
   },
 }
@@ -42,22 +43,6 @@ export default {
   text-align: center;
   color: black;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

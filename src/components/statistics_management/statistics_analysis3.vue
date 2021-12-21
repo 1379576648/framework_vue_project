@@ -1,26 +1,35 @@
 <template>
-  <div class="demo-date-picker" style="width: 100%;height: 55px;">
-    <div class="" style="width: 850px;height: 55px; float: right;">
-      <span class="demonstration" style="position: relative;top: 15px;">时间范围：</span>
+  <div class="demo-date-picker" style="width: 100%;height: 49px;">
+    <div class="" style="width: 850px;height: 49px; float: right;">
+      <span class="demonstration" style="position: relative;top: -1px;">时间范围：</span>
 
-      <el-date-picker v-model="value1" type="daterange" range-separator="To"
-                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 15px;">
+      <el-date-picker v-model="value1" type="daterange" range-separator="到"
+                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
       </el-date-picker>
-      <span class="demonstration" style="position: relative;top: 15px;left: 10px;">组织范围：</span>
-      <el-cascader v-model="value" :options="options" :props="{ expandTrigger: 'hover' }"
-                   @change="handleChange" style="position: relative;top: 15px;"></el-cascader>
-      <el-button type="primary" style="position: relative;top: 12px;">搜索</el-button>
+      <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
+      <el-select v-model="valuee" placeholder="请选择">
+        <el-option
+            v-for="item in optionss"
+            :key="item.valuee"
+            :label="item.labell"
+            :value="item.valuee"
+            style="position: relative;top: -1px;"
+        >
+        </el-option>
+      </el-select>
+      <el-button type="primary" style="position: relative;top: -2px;">搜索</el-button>
     </div>
+
   </div>
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
     <div style="border-right: 1px #000000 dashed; width: 50%;height: 480px;border-left: 1px #000000 dashed;">
 
       <!-- 固定工资分布 -->
-      <div id="mainy1" style="width: 655px;height:425px; float: left;"></div>
+      <div id="mainy1" style="width: 630px;height:405px; float: left;"></div>
     </div>
     <div style="  width: 50%;height: 480px; position: absolute;top: 0px;right: 2px; ">
       <!-- 薪酬结构分布 -->
-      <div id="mainy2" style="width: 655px;height:425px; float: right;"></div>
+      <div id="mainy2" style="width: 630px;height:405px; float: right;"></div>
     </div>
   </div>
 
@@ -61,7 +70,7 @@
 <script>
 import {
   defineComponent,
-  reactive,
+  reactive, ref,
   toRefs
 } from 'vue'
 import * as echarts from 'echarts'
@@ -105,6 +114,30 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      optionss: ref([
+        {
+          valuee: 'Option1',
+          labell: 'Option1',
+        },
+        {
+          valuee: 'Option2',
+          labell: 'Option2',
+        },
+        {
+          valuee: 'Option3',
+          labell: 'Option3',
+        },
+        {
+          valuee: 'Option4',
+          labell: 'Option4',
+        },
+        {
+          valuee: 'Option5',
+          labell: 'Option5',
+        },
+      ]),
+      valuee: ref(''),
+
     }
   },
 
@@ -140,37 +173,7 @@ export default defineComponent({
     var option5;
 
 
-    var option = {
 
-      title: {
-        text: '每月末在职人数'
-      },
-      tooltip: {},
-      legend: {
-        data: ['在职人数', '增长率']
-      },
-      xAxis: {
-        data: ['2021-07', '2021-07', '2021-07', '2021-07', '2021-07', '2021-07']
-      },
-      yAxis: {
-        type: 'value',
-
-        min: 0,
-        max: 25,
-        interval: 5,
-        formatter: '{value} 人'
-      },
-      series: [{
-        name: '在职人数',
-        type: 'bar',
-        data: [5, 20, 25, 10, 10, 20],
-
-      }, {
-        name: '增长率',
-        type: 'line',
-        data: [5, 20, 25, 10, 10, 20],
-      }]
-    };
 
 
     /*    固定工资分布 */
@@ -183,10 +186,16 @@ export default defineComponent({
       },
       toolbox: {
         feature: {
-
+          dataView:{
+            show:true,
+            readOnly:false,
+            title:"数据视图"
+          },
           saveAsImage: {
-            show: true
-          }
+            show: true,
+            title:"保存"
+          },
+
         }
       },
       legend: {
@@ -244,9 +253,14 @@ export default defineComponent({
       },
       toolbox: {
         feature: {
-
+           dataView:{
+             show:true,
+             readOnly:false,
+             title:"数据视图"
+           },
           saveAsImage: {
-            show: true
+            show: true,
+            title:"保存"
           }
         }
       },
@@ -323,17 +337,24 @@ export default defineComponent({
         feature: {
           dataView: {
             show: true,
-            readOnly: false
+            readOnly: false,
+            title:"数据视图"
           },
           magicType: {
             show: true,
-            type: ['line', 'bar']
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
           },
           restore: {
-            show: true
+            show: true,
+            title:"还原"
           },
           saveAsImage: {
-            show: true
+            show: true,
+            title:"保存"
           }
         }
       },
@@ -355,7 +376,7 @@ export default defineComponent({
         name: '人力成本',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, ]
     };
 
@@ -369,17 +390,24 @@ export default defineComponent({
         feature: {
           dataView: {
             show: true,
-            readOnly: false
+            readOnly: false,
+            title:"数据视图"
           },
           magicType: {
             show: true,
-            type: ['line', 'bar']
+            type: ['line', 'bar'],
+            title:{
+              line:"折线图",
+              bar:"柱状图",
+            }
           },
           restore: {
-            show: true
+            show: true,
+            title:"还原"
           },
           saveAsImage: {
-            show: true
+            show: true,
+            title:"保存"
           }
         }
       },
@@ -400,7 +428,7 @@ export default defineComponent({
         name: '平均工资',
         type: 'bar',
         data: [5, 20, 25, 10, 10, 20],
-
+        barWidth:'25%',
       }, ]
     };
     //3d地球
@@ -418,4 +446,8 @@ export default defineComponent({
 
 <style scoped>
 @import url("../../css/Statistics.css");
+.el-menu[data-v-244d4530] {
+  height: 57px;
+  font-weight: bold;
+}
 </style>

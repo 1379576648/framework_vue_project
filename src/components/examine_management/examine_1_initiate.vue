@@ -259,7 +259,9 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理二号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  管理二号
+                </div>
               </div>
             </el-col>
             <el-col :span="12">
@@ -267,7 +269,9 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理三号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  管理三号
+                 </div>
               </div>
             </el-col>
           </el-form-item>
@@ -554,6 +558,7 @@
               <el-option label="休息日加班" value="休息日加班"></el-option>
               <el-option label="节假日加班" value="节假日加班"></el-option>
             </el-select>
+
           </el-form-item>
           <!-- 加班开始 -->
           <el-form-item label="加班开始时间">
@@ -754,7 +759,7 @@
             ></el-date-picker>
           </el-form-item>
           <!-- 出差总时长 -->
-          <el-form-item label="出差总时长">
+          <el-form-item label="请假总时长">
             <el-input v-model="travel_1.date3" disabled></el-input>
           </el-form-item>
           <!-- 头像（审批人） -->
@@ -893,8 +898,7 @@
 </template>
 
 <script lang="js">
-import {reactive, toRefs} from "vue";
-import {defineComponent, ref} from "vue";
+import {defineComponent, reactive, ref, toRefs} from "vue";
 import {ElMessage} from "element-plus";
 import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
 export default defineComponent({
@@ -1183,6 +1187,7 @@ export default defineComponent({
     },
     // 时间
     cancel_date() {
+      this.overtime_1.type_1 = "";
       this.overtime_1.date1 = "";
       this.overtime_1.date2 = "";
       this.overtime_1.date3 = "";
@@ -1296,8 +1301,15 @@ export default defineComponent({
     },
     // 判断加班开始时间
     difference1_1: function (beginTime) {
+      var jbtype = this.overtime_1.type_1; //获取加班类型
       var date = new Date();
-      if (beginTime < date) {
+      if (jbtype.length === 0) {
+        ElMessage({
+          message: "请选择加班类型!",
+          type: "warning",
+        });
+        this.cancel_date();
+      } else if (beginTime < date) {
         ElMessage({
           message: "加班开始时间小于当前时间，请重新选择!",
           type: "warning",
@@ -1307,12 +1319,23 @@ export default defineComponent({
     },
     // 计算加班天数
     difference1_2: function (beginTime, endTime) {
-      if (beginTime.length == 0) {
+      var jbtype = this.overtime_1.type_1; //获取加班类型
+      console.log(jbtype);
+      if (jbtype.length === 0) {
+        ElMessage({
+          message: "请选择加班类型!",
+          type: "warning",
+        });
+        this.cancel_date();
+      }
+      // 判断是否选择加班时间
+      else if (beginTime.length == 0) {
         ElMessage({
           message: "请选择加班开始时间!",
           type: "warning",
         });
         this.cancel_date();
+        // 判断加班结束时间是否小于加班出差开始时间
       } else if (endTime < beginTime) {
         ElMessage({
           message: "加班结束时间小于加班出差开始时间，请重新选择!",
@@ -1320,8 +1343,6 @@ export default defineComponent({
         });
         this.cancel_date();
       } else {
-        console.log(beginTime);
-        console.log(endTime);
         var dateBegin = new Date(beginTime);
         var dateEnd = new Date(endTime);
         var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
@@ -1339,8 +1360,36 @@ export default defineComponent({
             type: "warning",
           });
           this.cancel_date();
-        } else {
-          this.overtime_1.date3 = hours + "小时";
+        } else if (jbtype === "工作日加班") {
+          if (hours > 3) {
+            ElMessage({
+              message: "工作日加班时间不能大于3小时，请重新选择!",
+              type: "warning",
+            });
+            this.cancel_date();
+          } else {
+            this.overtime_1.date3 = hours + "小时";
+          }
+        } else if (jbtype === "休息日加班") {
+          if (hours > 8) {
+            ElMessage({
+              message: "休息日加班时间不能大于8小时，请重新选择!",
+              type: "warning",
+            });
+            this.cancel_date();
+          } else {
+            this.overtime_1.date3 = hours + "小时";
+          }
+        } else if (jbtype === "节假日加班") {
+          if (hours > 8) {
+            ElMessage({
+              message: "节假日加班时间不能大于8小时，请重新选择!",
+              type: "warning",
+            });
+            this.cancel_date();
+          } else {
+            this.overtime_1.date3 = hours + "小时";
+          }
         }
       }
     },
@@ -1399,14 +1448,14 @@ export default defineComponent({
         this.cancel_date3();
       }
     },
-    // 计算请假天数
+    // 计算请假时长
     difference3_2: function (beginTime, endTime) {
       if (beginTime.length == 0) {
         ElMessage({
           message: "请选择请假开始时间!",
           type: "warning",
         });
-        this.cancel_date();
+        this.cancel_date3();
       } else if (endTime < beginTime) {
         ElMessage({
           message: "请假结束时间小于请假开始时间，请重新选择!",
@@ -1414,19 +1463,13 @@ export default defineComponent({
         });
         this.cancel_date3();
       } else {
-        console.log("beginTime " + beginTime);
-        console.log("endTime " + endTime);
         var dateBegin = new Date(beginTime);
         var dateEnd = new Date(endTime);
         var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
-        var hours = Math.floor(dateDiff / (3600 * 1000)); //计算出小时数
-        var leave1 = dateDiff % (3600 * 1000); //计算小时数后剩余的分钟数
-        //计算相差分钟数
-        var minutes = Math.floor(leave1 / (60 * 1000)); //计算相差分钟数
-        console.log("minutes " + minutes);
-        if (minutes >= 40) {
-          var hours = hours + 1;
-        }
+        var days = Math.floor(dateDiff / (24 * 60 * 60 * 1000));
+        console.log("天数：" + days);
+        var hours = Math.floor(days * 8);
+        console.log("时间差：" + hours);
         if (hours == 0) {
           ElMessage({
             message: "开始时间与结束时间相同，请重新选择!",

@@ -4,7 +4,7 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-head">
         <div class="j-card-head-title" style="margin-left:20px;">
-          <span>出差方案</span>
+          <span>{{this.$route.query.name}}出差方案</span>
         </div>
       </div>
       <div class="j-card-body">
@@ -19,19 +19,19 @@
                     label-width="150px"
                     class="demo-ruleForm"
                 >
-                  <el-form-item label="方案名称" prop="name" style="width:370px" required>
-                    <el-input v-model="ruleForm.name"></el-input>
+                  <el-form-item label="方案名称" prop="schemename" style="width:370px">
+                    <el-input v-model="ruleForm.schemename"></el-input>
                   </el-form-item>
 
-                  <el-form-item label="出差工资" prop="region">
-                    <el-select v-model="ruleForm.region" placeholder="请选择">
-                      <el-option label="按出差时长" value="shanghai" style="margin-left: 20px;"></el-option>
-                      <el-option label="按固定金额" value="beijing" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="出差工资" prop="businesswage">
+                    <el-select v-model="ruleForm.businesswage" placeholder="请选择">
+                      <el-option label="按出差时长" value="wagebyhour" style="margin-left: 20px;"></el-option>
+                      <el-option label="按固定金额" value="wagebyfixed" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="发放："  style="width:500px"
-                                v-if="ruleForm.region=='shanghai'">
+                                v-if="ruleForm.businesswage=='wagebyhour'">
                     <el-input-number
                         v-model="num"
                         :min="1"
@@ -59,18 +59,18 @@
 
 
 
-                  <el-form-item label="适用对象" prop="region">
-                    <el-select v-model="ruleForm.region4" placeholder="请选择">
-                      <el-option label="1" value="sydx" style="margin-left: 20px;"></el-option>
-                      <el-option label="111" value="sydx2" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="适用对象" prop="suitableusers">
+                    <el-select v-model="ruleForm.suitableusers" placeholder="请选择">
+                      <el-option label="1" value="suitableusers1" style="margin-left: 20px;"></el-option>
+                      <el-option label="111" value="suitableusers2" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
 
-                  <el-form-item label="职位" prop="region">
-                    <el-select v-model="ruleForm.zw" placeholder="请选择">
-                      <el-option label="212" value="zw" style="margin-left: 20px;"></el-option>
-                      <el-option label="22222" value="zw1" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="职位" prop="post">
+                    <el-select v-model="ruleForm.post" placeholder="请选择">
+                      <el-option label="212" value="post1" style="margin-left: 20px;"></el-option>
+                      <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
@@ -87,8 +87,8 @@
 
 
 
-                  <el-form-item label="备注" prop="desc" style="width:500px">
-                    <el-input v-model="ruleForm.desc" type="textarea"></el-input>
+                  <el-form-item label="备注" prop="remark" style="width:500px">
+                    <el-input v-model="ruleForm.remark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
@@ -112,35 +112,52 @@
 
 
 <script lang="ts">
+import {ElMessage} from "element-plus";
+
 export default {
   data() {
 
     return {
       ruleForm: {
-        name: '',
-        region: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
-      },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: '请输入姓名',
-            trigger: 'blur',
-          },
-
-        ],
+        schemename: '',
+        businesswage: '',
+        suitableusers: '',
+        post: '',
+        remark: '',
       },
       num: '150',
+      rules: {
+        schemename:[
+          {
+            required: true,
+            message: '请输入方案名称',
+            trigger: 'blur',
+          }
+        ],
+        businesswage: [
+          {
+            required: true,
+            message: '请选择出差工资规则',
+            trigger: 'change',
+          },
+        ],
+      }
     }
   },
   methods:{
     goblack(){
       this.$router.go('-1');
-    }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
   }
 }
 </script>

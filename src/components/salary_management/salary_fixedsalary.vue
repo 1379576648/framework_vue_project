@@ -12,42 +12,30 @@
         <!-- body_3 隐藏的那个框 -->
         <div class="body_3" v-show="disly">
           <h3 style="margin-top:1px;">定薪</h3><br/>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true" ref="formInline" :model="formInline" :rules="rules" class="demo-form-inline">
             <el-form-item>
               <template #label>
                 <div class="el-form-item__label">试用期基本工资</div>
               </template>
-              <el-input v-model="input2"  placeholder="Please Input" />
+              <el-input v-model="periodpay"  placeholder="请输入" />
             </el-form-item>
             <el-form-item>
               <template #label>
-                <div class="el-form-item__label">试用期基本工资</div>
+                <div class="el-form-item__label">正式基本工资</div>
               </template>
-              <el-input v-model="input3"  placeholder="Please Input" />
-            </el-form-item><br>
-            <el-form-item>
-              <template #label>
-                <div class="el-form-item__label">使用岗位工资</div>
-              </template>
-              <el-input v-model="input4"  placeholder="Please Input" />
-            </el-form-item>
-            <el-form-item>
-              <template #label>
-                <div class="el-form-item__label">正式岗位工资</div>
-              </template>
-              <el-input v-model="input5"  placeholder="Please Input" />
+              <el-input v-model="duepay"  placeholder="请输入" />
             </el-form-item><br>
             <el-form-item>
               <template #label>
                 <div class="el-form-item__label">试用期固定工资</div>
               </template>
-              <el-input v-model="input6"  placeholder="Please Input" />
+              <el-input v-model="periodfixed"  placeholder="请输入" />
             </el-form-item>
             <el-form-item>
               <template #label>
                 <div class="el-form-item__label">正式固定工资</div>
               </template>
-              <el-input v-model="input7"  placeholder="Please Input" />
+              <el-input v-model="duefixed"  placeholder="请输入" />
             </el-form-item><br>
             <!-- 转正日期输入框 -->
             <el-form-item>
@@ -56,7 +44,7 @@
                 <div class="el-form-item__label">转正日期</div>
               </template>
               <div class="block" >
-                <el-date-picker style="width: 210px;" v-model="value1" type="date" placeholder="">
+                <el-date-picker style="width: 210px;" v-model="postdate" type="date" placeholder="请选择" disabled>
 
                 </el-date-picker>
               </div>
@@ -65,14 +53,14 @@
               <template #label>
                 <div class="el-form-item__label">备注</div>
               </template>
-              <el-input v-model="input8"  placeholder="Please Input" />
+              <el-input v-model="remark"  placeholder="请输入" />
             </el-form-item>
 
             <br>
             <!-- 按钮 -->
             <div style="margin-top: 30px;">
-              <el-button @click="disly=!disly">取消</el-button>
-              <el-button type="primary">保存</el-button>
+              <el-button @click="disly=!disly,RestForm()">取消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
             </div>
           </el-form>
         </div>
@@ -85,57 +73,50 @@
         <!--  第二个隐藏框      -->
         <div class="body_3" v-show="disly_1">
           <h3 style="margin-top:1px;">调薪</h3><br/>
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true" :model="formInline"  :rules="rules" class="demo-form-inline">
             <el-form-item>
               <template #label>
                 <div class="el-form-item__label">调薪后基本工资</div>
               </template>
-              <el-input v-model="input2"  placeholder="Please Input" />
+              <el-input v-model="increasepay"  placeholder="请输入" />
             </el-form-item>
-            <el-form-item>
-              <template #label>
-                <div class="el-form-item__label">调薪后岗位</div>
-              </template>
-              <el-input v-model="input3"  placeholder="Please Input" />
-            </el-form-item><br>
             <el-form-item>
               <template #label>
                 <div class="el-form-item__label">调薪幅度</div>
               </template>
-              <el-input v-model="input4"  placeholder="Please Input" />
-            </el-form-item>
-            <!-- 转正日期输入框 -->
+              <el-input v-model="range"   disabled />
+            </el-form-item><br>
             <el-form-item>
               <template #label>
                 <div class="el-form-item__label">生效日期</div>
               </template>
               <div class="block" >
-                <el-date-picker style="width: 210px;" v-model="value1" type="date" placeholder="">
+                <el-date-picker style="width: 210px;" v-model="takedate" type="date" @change="takedates()" placeholder="请选择">
 
                 </el-date-picker>
               </div>
-            </el-form-item><br>
+            </el-form-item>
             <el-form-item label="调薪原因">
-              <el-select v-model="form.region" placeholder="please select your zone">
-                <el-option label="1" value="shanghai"></el-option>
-                <el-option label="2" value="beijing"></el-option>
+              <el-select v-model="cause" placeholder="请选择">
+                <el-option label="1" value="cause1"></el-option>
+                <el-option label="2" value="cause2"></el-option>
               </el-select>
             </el-form-item>
 
-
-
-            <el-form-item>
+            <div style="margin-left: -430px;">
+            <el-form-item >
               <template #label>
                 <div class="el-form-item__label">备注</div>
               </template>
-              <el-input v-model="input8"  placeholder="Please Input" />
+              <el-input v-model="remark2"  placeholder="请输入" />
             </el-form-item>
+            </div>
             <br>
             <br>
             <!-- 按钮 -->
             <div style="margin-top: 30px;">
-              <el-button @click="disly_1=!disly_1">取消</el-button>
-              <el-button type="primary">保存</el-button>
+              <el-button @click="disly_1=!disly_1,RestForm()">取消</el-button>
+              <el-button type="primary" @click="submitForm2('ruleForm')">保存</el-button>
             </div>
           </el-form>
         </div>
@@ -152,7 +133,7 @@
           <!-- 测试下拉按钮 -->
 
           <div style="float: right;">
-            <el-input v-model="input4" style="width: 168px;" size="small" placeholder="姓名/工号" />
+            <el-input v-model="seek" style="width: 168px;" size="small" placeholder="姓名/工号" />
           </div>
           <br />
           <br />
@@ -201,19 +182,19 @@
           <template #label>
               <span @click="disly=false,disly_1=false">调薪查询</span>
           </template>
-          <el-select v-model="form.region" placeholder="please select your zone">
-            <el-option label="什么什么部门" value="shanghai"></el-option>
-            <el-option label="上山不" value="beijing"></el-option>
+          <el-select v-model="dept2" placeholder="请选择">
+            <el-option label="什么什么部门" value="dept1"></el-option>
+            <el-option label="上山不" value="dept2"></el-option>
           </el-select>
           <div style="float: right;">
             <div class="block">
               <span class="demonstration"></span>
               <el-date-picker
-                  v-model="value2"
+                  v-model="seek2"
                   type="datetimerange"
-                  range-separator="To"
-                  start-placeholder="Start date"
-                  end-placeholder="End date"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
               >
               </el-date-picker>
             </div>
@@ -266,6 +247,7 @@ import {
   defineComponent,
   ref
 } from 'vue'
+import {ElMessage} from "element-plus";
 
 
 
@@ -275,27 +257,25 @@ export default {
       disly: false,
       disly_1:false,
       activeName: 'first',
-      input2:'',
-      input6:'',
-      input7:'',
-      input8:'',
-      input5:'',
-      input3: '', //input输入框的值
-      input4: '', //input输入框的值
-      value1:'',//日期的值
-      value2:'',//调薪 日期的值
-      formInline: {
-        user: '',
-        region: '',
-      },
+          periodpay: '',
+          duepay: '',
+          periodfixed: '',
+          duefixed: '',
+          postdate: '',
+          remark: '',
+          increasepay: '',
+          range: '',
+          takedate: '',
+          cause: '',
+          remark2: '',
+      seek:'',
+      dept2:'',
+      seek2:'',
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
         pagesize: 3, // 页大小
         total: 0, // 总页数
-      },
-      form: {
-        region: '',
       },
       tableData: [{
         date: '2016-05-03',
@@ -341,11 +321,64 @@ export default {
       console.log(tab, event)
 
     },
-    onSubmit() {
-      console.log('submit!')
+    submitForm() {
+       if (this.duepay.length == 0) {
+        ElMessage({
+          message: '请输入正式基本工资',
+          type: 'warning',
+        })
+      } else if (this.duefixed.length == 0) {
+        ElMessage({
+          message: '请输入正式固定工资',
+          type: 'warning',
+        })
+      } else {
+        alert(1111)
+      }
     },
-  },
-
+    submitForm2(){
+      if (this.increasepay.length == 0) {
+        ElMessage({
+          message: '请输入调薪后基本工资',
+          type: 'warning',
+        })
+      } else if (this.takedate.length == 0) {
+        ElMessage({
+          message: '请输入生效日期',
+          type: 'warning',
+        })
+      } else if (this.cause.length == 0) {
+        ElMessage({
+          message: '请输入调薪原因',
+          type: 'warning',
+        })
+      } else {
+        alert(1111)
+      }
+    },
+    RestForm(){
+      this.periodpay='',
+          this.duepay= '',
+          this.periodfixed= '',
+          this.duefixed= '',
+          this.postdate= '',
+          this.remark= '',
+          this.increasepay= '',
+          this.range='',
+          this.takedate= '',
+          this.cause= '',
+          this.remark2= ''
+    },
+    takedates(){
+      var date = new Date();
+      if(this.takedate<date){
+        ElMessage({
+          message:'生效日期不能小于当前日期',
+          type:'warning',
+        })
+      }
+    }
+  }
 }
 </script>
 

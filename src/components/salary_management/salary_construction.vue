@@ -4,12 +4,13 @@
     <div style="width: 95%;margin: auto">
     <div class="">
 <!--      <span style="font-size: 14px;">1、选择一个部门</span>&nbsp;-->
+      <!--选择部门的下拉框-->
       <el-form>
-      <el-form-item label="1、选择一个部门：" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="请选择部门" style="width:240px;">
-          <el-option label="11" value="shanghai1" style="margin-left: 20px;"></el-option>
-          <el-option label="02465" value="beijing" style="margin-left: 20px;"></el-option>
-          <el-option label="333" value="shanghai" style="margin-left: 20px;"></el-option>
+      <el-form-item label="1、选择一个部门：" prop="dept">
+        <el-select v-model="ruleForm.dept" placeholder="请选择部门" style="width:240px;">
+          <el-option label="11" value="dept1" style="margin-left: 20px;"></el-option>
+          <el-option label="02465" value="dept2" style="margin-left: 20px;"></el-option>
+          <el-option label="333" value="dept3" style="margin-left: 20px;"></el-option>
         </el-select>
       </el-form-item>
       </el-form><br>
@@ -41,37 +42,11 @@
       <div class="">
         <el-collapse v-model="activeNames" @change="handleChange">
 
-          <el-collapse-item name="2"  >
+          <el-collapse-item name="2">
             <template #title >
               <h3 style="margin-left: 20px;">固定工资</h3>
               <span class="span_1_zhe" >【加项】针对员工定薪、调薪等，可设置固定工资方案 <router-link :to="{path:this.regular,query:{path: this.$route.query.path}}">去设置</router-link> </span>
             </template>
-            <div class="ant-row" >
-              基本工资 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value1" />
-            </div>
-            <div class="ant-row">
-              岗位<div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <el-switch v-model="value2" />
-            </div>
-            <div class="ant-row">
-              业绩提成 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7);font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value3" />
-            </div>
-
           </el-collapse-item>
           <br />
 
@@ -80,31 +55,6 @@
               <h3 style="margin-left: 20px;">加班工资</h3>
               <span class="span_1_zhe" >【加项】针对员工定薪、调薪等，可设置固定工资方案 <router-link :to="{path:this.callbackpay,query:{path: this.$route.query.path}}">去设置</router-link> </span>
             </template>
-            <div class="ant-row" >
-              加班工资 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value4" />
-            </div>
-            <div class="ant-row">
-              岗位<div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <el-switch v-model="value5" />
-            </div>
-            <div class="ant-row">
-              业绩提成 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7);font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value6" />
-            </div>
 
           </el-collapse-item>
           <br />
@@ -115,31 +65,6 @@
               <h3 style="margin-left: 20px;">考勤扣款</h3>
               <span class="span_1_zhe" >【加项】针对员工定薪、调薪等，可设置固定工资方案 <router-link :to="{path:this.attendanceplan,query:{path: this.$route.query.path}}">去设置</router-link> </span>
             </template>
-            <div class="ant-row" >
-              加班工资 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value4" />
-            </div>
-            <div class="ant-row">
-              岗位<div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <el-switch v-model="value5" />
-            </div>
-            <div class="ant-row">
-              业绩提成 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7);font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value6" />
-            </div>
           </el-collapse-item>
 
           <br/>
@@ -149,31 +74,7 @@
               <h3 style="margin-left: 20px;">出差工资</h3>
               <span class="span_1_zhe" >【加项】针对员工定薪、调薪等，可设置固定工资方案 <router-link :to="{path:this.evectionplan,query:{path: this.$route.query.path}}">去设置</router-link> </span>
             </template>
-            <div class="ant-row" >
-              出差工资 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value4" />
-            </div>
-            <div class="ant-row">
-              岗位<div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7); font-size: 16px;">删除</span>
-            </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <el-switch v-model="value5" />
-            </div>
-            <div class="ant-row">
-              业绩提成 <div style="float: right;">
-              <span style="color:#00439C; font-size: 16px;">编辑</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <span style="color: rgba(255, 140, 0, 0.7);font-size: 16px;">删除</span>
-            </div>
-              <el-switch v-model="value6" />
-            </div>
+
           </el-collapse-item>
 
         </el-collapse>
@@ -193,18 +94,19 @@ import {
 export default defineComponent({
   data() {
     return {
+      //固定工资
       regular:'/salary/regular',
+      //加班工资
       callbackpay:'/salary/callbackpay',
+      //考勤扣款
       attendanceplan:'/salary/attendanceplan',
+      //出差方案
       evectionplan:'/salary/evectionplan',
-      value1: true,
-      value2: true,
-      value3: true,
-      value4: true,
-      value5: true,
-      value6: true,
+
+      checkList:'',
+      activeNames:'',
       ruleForm:{
-        region:'',
+        dept:'',
       }
 
     }
