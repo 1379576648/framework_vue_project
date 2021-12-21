@@ -1,4 +1,4 @@
-<!-- 招聘导航栏 -->
+<!-- 招聘计划 -->
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -56,7 +56,11 @@
         <div class="sub-Content__primary">
           <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
             <el-table-column prop="ID" label="序号" width="150"/>
-            <el-table-column prop="zpname" label="招聘计划名称" width="200"/>
+            <el-table-column label="招聘计划名称" width="200">
+              <template #default="scope">
+                <router-link :to="{path:this.two,query:{path:this.$route.query.path,name:scope.row.zpname}}">{{scope.row.zpname}}</router-link>
+              </template>
+            </el-table-column>
             <el-table-column prop="zpzw" label="招聘职位" width="200"/>
             <el-table-column prop="zpdept" label="需求部门" width="200"/>
             <el-table-column prop="zpnum" label="招聘人数" width="200"/>
@@ -121,6 +125,7 @@ export default {
   data() {
     return {
       one: '/recruitment/addplan/addplan',
+      two:'/recruitment/plan/details',
       //分页
       pageInfo: {
         currenPage: 3,

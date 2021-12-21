@@ -6,9 +6,11 @@
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增招聘计划按钮 -->
           <a style="margin-top: 4px;">
+            <router-link :to="{path:this.addresume,query:{path:this.$route.query.path}}">
             <button type="button" class="ant-btn ant-btn-primary">
               <span>+ 新增</span>
             </button>
+            </router-link>
           </a>
           <!-- 批量导入按钮 -->
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
@@ -100,7 +102,11 @@
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
                 :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left" align="center" type="selection" width="80"/>
-        <el-table-column fixed="left" prop="name" label="姓名" width="150"/>
+        <el-table-column fixed="left" prop="name" label="姓名" width="150">
+          <template #default="scope">
+            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
+          </template>
+        </el-table-column>
         <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
         <el-table-column prop="gender" label="性别" width="140"/>
         <el-table-column prop="schoolli" label="学历" width="140"/>
@@ -158,6 +164,9 @@ export default {
   data() {
 
     return {
+      //路由地址
+      addresume:'/recruitment/recruit/addresume',
+      details:'/recruitment/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
@@ -265,7 +274,7 @@ export default {
 }
 
 .icon-s {
-  width: 955px;
+  width: 75%;
   height: 45px;
   border-radius: 4px;
   border: 1px solid #ddd;

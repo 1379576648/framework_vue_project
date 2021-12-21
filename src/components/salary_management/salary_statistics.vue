@@ -15,7 +15,7 @@
         <div class="container" >
           <div class="block" style="margin-left: 1095px">
             <span class="demonstration"></span>
-            <el-date-picker v-model="value3" type="year" placeholder="请选择年份">
+            <el-date-picker v-model="months" type="year" placeholder="请选择年份">
             </el-date-picker>
           </div>
           </div>
@@ -170,10 +170,7 @@ export default {
           tag: 'Office',
         },
       ],
-      value1: '',
-      value2: '',
-      value3: '',
-      value4: '',
+      months: '',
     }
   },
   methods: {
@@ -197,8 +194,6 @@ export default {
   align-items: center;
   height: var(--el-collapse-header-height);
   line-height: var(--el-collapse-header-height);
-  background-color: var(--el-collapse-header-bg-color);
-  color: var(--el-collapse-header-text-color);
   cursor: pointer;
   border-bottom: 1px solid var(--el-collapse-border-color);
   font-size: var(--el-collapse-header-font-size);

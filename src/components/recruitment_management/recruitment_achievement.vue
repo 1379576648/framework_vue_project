@@ -6,7 +6,7 @@
       <div class="j-card-head">
         <div class="sub-Content__primary">
           <div class="j-operation-block">
-            <p style="padding-top: 20px; font-size: 20px;">
+            <span style="padding-top: 20px; font-size: 20px;">
               <b class="total">
                 <span>招聘中</span>
                 &nbsp;&nbsp;&nbsp;
@@ -17,7 +17,7 @@
                 <span>已结束</span>
                 &nbsp;&nbsp;&nbsp;4
               </b>
-            </p>
+            </span>
             <span style="display: block;float: right">
                 <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label="" style="width: 300px">

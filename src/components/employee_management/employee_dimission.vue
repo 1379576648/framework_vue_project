@@ -27,9 +27,9 @@
                   <el-input v-model="ruleForm.state" disabled></el-input>
                 </el-form-item>
 
-                <el-form-item label="离职原因" prop="region" style="width:500px;">
+                <el-form-item label="离职原因" prop="cause" style="width:500px;">
                   <el-select
-                    v-model="ruleForm.region"
+                    v-model="ruleForm.cause"
                     placeholder="请选择"
                   >
                     <el-option label="家庭原因" value="jtyy" style="margin-left: 20px"></el-option>
@@ -50,36 +50,34 @@
                   </el-select>
                 </el-form-item>
 
-                <el-form-item label="最后工作时间" required style="width:500px;height: 40.8px;">
+                <el-form-item label="最后工作时间" required style="width:600px;height: 40.8px;">
                   <el-col :span="11">
-                    <el-form-item prop="date1">
+                    <el-form-item prop="workdate">
                       <el-date-picker
-                        v-model="ruleForm.date1"
+                        v-model="ruleForm.workdate"
                         type="date"
                         placeholder="请选择日期"
                         style="width: 100%"
-                        @change="difference1(ruleForm.date1)"
                       ></el-date-picker>
                     </el-form-item>
                   </el-col>
                 </el-form-item>
 
-                 <el-form-item label="离职生效时间" required style="width:500px;height: 40.8px;">
+                 <el-form-item label="离职生效时间" required style="width:600px;height: 40.8px;">
                   <el-col :span="11">
-                    <el-form-item prop="date2">
+                    <el-form-item prop="dimisiondate">
                       <el-date-picker
-                        v-model="ruleForm.date2"
+                        v-model="ruleForm.dimisiondate"
                         type="date"
                         placeholder="请选择日期"
                         style="width: 100%"
-                        @change="difference2(ruleForm.date2)"
                       ></el-date-picker>
                     </el-form-item>
                   </el-col>
                 </el-form-item>
 
-                <el-form-item label="备注" style="width:500px">
-                  <el-input v-model="ruleForm.desc" type="textarea"></el-input>
+                <el-form-item label="备注" style="width:500px" prop="remark">
+                  <el-input v-model="ruleForm.remark" type="textarea"></el-input>
                 </el-form-item>
                 <el-form-item>
                   <el-button style="width: 80px" type="primary" @click="submitForm('ruleForm')"
@@ -104,103 +102,85 @@ import {ElMessage} from "element-plus";
 
 export default {
   data() {
+    const one = (rule, value, callback) => {
+        if (new Date()>value){
+          callback(new Error("最后工作时间不能小于当前时间"));
+        }else if(this.ruleForm.dimisiondate<value){
+          callback(new Error("最后工作时间不能大于离职生效时间"));
+        }else {
+          callback();
+        }
+
+    };
+    // var date1=this.ruleForm.workdate;
+    const two = (rule, value,callback) => {
+      if (this.ruleForm.workdate>value){
+        callback(new Error("离职生效时间不能小于最后工作时间"));
+      }else if(new Date()>value){
+        callback(new Error("离职生效时间不能小于当前时间"));
+      }else {
+        callback();
+      }
+    };
     return {
-      book:'/employee/message/employee_roster/book',
+      //员工花名册
+      book: '/employee/message/employee_roster/book',
       ruleForm: {
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
+        name: "",
+        state: "",
+        cause: "",
+        workdate: '',
+        dimisiondate: '',
+        remark: "",
       },
       rules: {
-        name: [
-        ],
-        region: [
+        cause: [
           {
             required: true,
-            message: "请选择",
+            message: "请选择离职原因",
             trigger: "change",
           },
         ],
-        date1: [
+        workdate: [
           {
             type: "date",
             required: true,
-            message: "请选择时间",
+            message: "请选择最后工作时间",
             trigger: "change",
           },
+          {
+            validator: one, trigger: "change"
+          }
         ],
-        date2: [
+        dimisiondate: [
           {
             type: "date",
             required: true,
-            message: "请选择时间",
+            message: "请选择离职生效时间",
             trigger: "change",
           },
+          {
+            validator: two, trigger: "change"
+          }
         ],
       },
     };
   },
-  methods:{
+  methods: {
     //取消离职
-    goblack(){
+    goblack() {
       this.$router.go('-1');
     },
-    //提交离职
-    submitForm(){
-      if(this.ruleForm.region.length === 0){
-        ElMessage("请选择您的离职原因!");
-      }else if (this.ruleForm.date1.length === 0){
-        ElMessage("请选择您的最后工作时间!");
-      }else if (this.ruleForm.date2.length === 0){
-        ElMessage("请选择您的离职生效时间!");
-      }else {
-        alert(1);
-      }
-
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
-    difference1: function (endTime) {
-      var date = new Date();
-      if (endTime < date) {
-        ElMessage({
-          message: "最后工作时间小于当前时间，请重新选择!",
-          type: "warning",
-        });
-        this.cancel_date();
-      }
-    },
-    difference2: function (endTime) {
-      var date = new Date();
-      if (endTime < date) {
-        ElMessage({
-          message: "离职生效时间小于当前时间，请重新选择!",
-          type: "warning",
-        });
-        this.cancel_date();
-      }
-
-      // var stime =new Date(beginTime).getTime();
-      // var etime = new Date(endTime).getTime();
-      //
-      // var today=stime+2592000000;
-      // console.log("today " +today+"  stime: "+stime+"  etime: "+etime)
-      // if (etime<today){
-      //   ElMessage({
-      //     message: "离职生效时间不能小于办理离职时间加一个月，请重新选择!",
-      //     type: "warning",
-      //   });
-      //   this.cancel_date();
-      // }
-   },
-    cancel_date() {
-      this.ruleForm.date1 = "";
-      this.ruleForm.date2 = "";
-    },
-
-
   }
 };
 </script>

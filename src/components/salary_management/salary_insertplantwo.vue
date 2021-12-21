@@ -19,22 +19,22 @@
                     label-width="150px"
                     class="demo-ruleForm"
                 >
-                  <el-form-item label="方案名称：" prop="name" style="width:370px">
-                    <el-input v-model="ruleForm.name"></el-input>
+                  <el-form-item label="方案名称：" prop="schemename" style="width:370px">
+                    <el-input v-model="ruleForm.schemename"></el-input>
                   </el-form-item>
 
 
 
-                  <el-form-item label="迟到：" prop="region">
-                    <el-select v-model="ruleForm.region" placeholder="请选择">
-                      <el-option label="按固定金额扣款" value="gdje" style="margin-left: 20px;"></el-option>
-                      <el-option label="按迟到时长扣款" value="gdje2" style="margin-left: 20px;"></el-option>
-                      <el-option label="按迟到次数扣款" value="gdje3" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="迟到：" prop="late">
+                    <el-select v-model="ruleForm.late" placeholder="请选择">
+                      <el-option label="按固定金额扣款" value="latebyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按迟到时长扣款" value="latebyhour" style="margin-left: 20px;"></el-option>
+                      <el-option label="按迟到次数扣款" value="latebynumber" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-if="ruleForm.region=='gdje'">
+                                v-if="ruleForm.late=='latebyfixed'">
                     <el-input-number
                         v-model="num"
                         :min="0"
@@ -47,7 +47,7 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else-if="ruleForm.region=='gdje2'">
+                                v-else-if="ruleForm.late=='latebyhour'">
                     <el-input-number
                         v-model="num"
                         :min="0"
@@ -60,7 +60,7 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else="ruleForm.region=='gdje3'">
+                                v-else="ruleForm.late=='latebynumber'">
                     <el-input-number
                         v-model="num"
                         :min="0"
@@ -74,18 +74,18 @@
 
 
 
-                  <el-form-item label="早退：" prop="region2">
-                    <el-select v-model="ruleForm.region2" placeholder="请选择">
-                      <el-option label="按固定金额扣款" value="zt" style="margin-left: 20px;"></el-option>
-                      <el-option label="按早退时长扣款" value="zt2" style="margin-left: 20px;"></el-option>
-                      <el-option label="按早退次数扣款" value="zt3" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="早退：" prop="early">
+                    <el-select v-model="ruleForm.early" placeholder="请选择">
+                      <el-option label="按固定金额扣款" value="earlybyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按早退时长扣款" value="earlybyhour" style="margin-left: 20px;"></el-option>
+                      <el-option label="按早退次数扣款" value="earlybynumber" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-if="ruleForm.region2=='zt'">
+                                v-if="ruleForm.early=='earlybyfixed'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num2"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -96,9 +96,9 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else-if="ruleForm.region2=='zt2'">
+                                v-else-if="ruleForm.early=='earlybyhour'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num2"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -109,9 +109,9 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else="ruleForm.region=='zt3'">
+                                v-else="ruleForm.early=='earlybynumber'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num2"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -124,18 +124,18 @@
 
 
 
-                  <el-form-item label="未签到：" prop="region3">
-                    <el-select v-model="ruleForm.region3" placeholder="请选择">
-                      <el-option label="按固定金额扣款" value="wqd" style="margin-left: 20px;"></el-option>
-                      <el-option label="按未签到时长扣款" value="wqd2" style="margin-left: 20px;"></el-option>
-                      <el-option label="按未签到次数扣款" value="wqd3" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="未签到：" prop="notsignin">
+                    <el-select v-model="ruleForm.notsignin" placeholder="请选择">
+                      <el-option label="按固定金额扣款" value="inbyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按未签到时长扣款" value="inbyhour" style="margin-left: 20px;"></el-option>
+                      <el-option label="按未签到次数扣款" value="inbynumber" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-if="ruleForm.region3=='wqd'">
+                                v-if="ruleForm.notsignin=='inbyfixed'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num3"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -146,9 +146,9 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else-if="ruleForm.region3=='wqd2'">
+                                v-else-if="ruleForm.notsignin=='inbyhour'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num3"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -159,9 +159,9 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else="ruleForm.region3=='wqd3'">
+                                v-else="ruleForm.notsignin=='inbynumber'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num3"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -173,18 +173,18 @@
 
 
 
-                  <el-form-item label="未签退：" prop="region4">
-                    <el-select v-model="ruleForm.region4" placeholder="请选择">
-                      <el-option label="按固定金额扣款" value="wqt" style="margin-left: 20px;"></el-option>
-                      <el-option label="按未签退时长扣款" value="wqt2" style="margin-left: 20px;"></el-option>
-                      <el-option label="按未签退次数扣款" value="wqt3" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="未签退：" prop="notsignback">
+                    <el-select v-model="ruleForm.notsignback" placeholder="请选择">
+                      <el-option label="按固定金额扣款" value="backbyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按未签退时长扣款" value="backbyhour" style="margin-left: 20px;"></el-option>
+                      <el-option label="按未签退次数扣款" value="backbynumber" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-if="ruleForm.region4=='wqt'">
+                                v-if="ruleForm.notsignback=='backbyfixed'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num4"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -195,9 +195,9 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else-if="ruleForm.region4=='wqt2'">
+                                v-else-if="ruleForm.notsignback=='backbyhour'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num4"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -208,9 +208,9 @@
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-else="ruleForm.region4=='wqt3'">
+                                v-else="ruleForm.notsignback=='backbynumber'">
                     <el-input-number
-                        v-model="num"
+                        v-model="num4"
                         :min="0"
                         :max="10000"
                         controls-position="right"
@@ -223,17 +223,17 @@
 
 
 
-                  <el-form-item label="旷工：" prop="region5">
-                    <el-select v-model="ruleForm.region5" placeholder="请选择">
-                      <el-option label="按小时工资比例扣款" value="xiuxi" style="margin-left: 20px;"></el-option>
-                      <el-option label="按月累计旷工时长扣款" value="xiuxigd" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="旷工：" prop="absent">
+                    <el-select v-model="ruleForm.absent" placeholder="请选择">
+                      <el-option label="按小时工资比例扣款" value="absentbyhour" style="margin-left: 20px;"></el-option>
+                      <el-option label="按月累计旷工时长扣款" value="absentbytime" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="扣款："  style="width:500px"
-                                v-if="ruleForm.region5=='xiuxigd'">
+                                v-if="ruleForm.absent=='absentbytime'">
                     <el-input-number
-                        v-model="num2"
+                        v-model="num5"
                         :min="1"
                         :max="10000"
                         controls-position="right"
@@ -246,7 +246,7 @@
                   <el-form-item label="扣款：小时工资 X"  style="width:500px"
                                 v-else="">
                     <el-input-number
-                        v-model="num2"
+                        v-model="num5"
                         :min="1"
                         :max="10000"
                         controls-position="right"
@@ -261,18 +261,18 @@
 
 
 
-                  <el-form-item label="适用对象" prop="region6">
-                    <el-select v-model="ruleForm.region6" placeholder="请选择">
-                      <el-option label="1" value="sydx" style="margin-left: 20px;"></el-option>
-                      <el-option label="111" value="sydx2" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="适用对象" prop="suitableusers">
+                    <el-select v-model="ruleForm.suitableusers" placeholder="请选择">
+                      <el-option label="1" value="suitableusers1" style="margin-left: 20px;"></el-option>
+                      <el-option label="111" value="suitableusers2" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
 
-                  <el-form-item label="职位" prop="zw">
-                    <el-select v-model="ruleForm.zw" placeholder="请选择">
-                      <el-option label="212" value="zw" style="margin-left: 20px;"></el-option>
-                      <el-option label="22222" value="zw1" style="margin-left: 20px;"></el-option>
+                  <el-form-item label="职位" prop="post">
+                    <el-select v-model="ruleForm.post" placeholder="请选择">
+                      <el-option label="212" value="post1" style="margin-left: 20px;"></el-option>
+                      <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
@@ -289,8 +289,8 @@
 
 
 
-                  <el-form-item label="备注" prop="desc" style="width:500px">
-                    <el-input v-model="ruleForm.desc" type="textarea"></el-input>
+                  <el-form-item label="备注" prop="remark" style="width:500px">
+                    <el-input v-model="ruleForm.remark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
@@ -321,69 +321,82 @@ export default {
 
     return {
       ruleForm: {
-        name: '',
-        region: '',
-        region2: '',
-        region3: '',
-        region4: '',
-        region5: '',
-        region6: '',
-        zw: '',
-        desc: '',
+        schemename: '',
+        late: '',
+        early: '',
+        notsignin: '',
+        notsignback: '',
+        absent: '',
+        suitableusers: '',
+        post: '',
+        remark: '',
       },
       num: '0',
-      num2:300,
+      num2:'0',
+      num3:'0',
+      num4:'0',
+      num5:'300',
+      rules: {
+        schemename:[
+          {
+            required: true,
+            message: '请输入方案名称',
+            trigger: 'blur',
+          }
+        ],
+        late: [
+          {
+            required: true,
+            message: '请选择迟到规则',
+            trigger: 'change',
+          },
+        ],
+        early: [
+          {
+            required: true,
+            message: '请选择早退规则',
+            trigger: 'change',
+          },
+        ],
+        notsignin: [
+          {
+            required: true,
+            message: '请选择未签到规则',
+            trigger: 'change',
+          },
+        ],
+        notsignback: [
+          {
+            required: true,
+            message: '请选择未签退规则',
+            trigger: 'change',
+          },
+        ],
+        absent: [
+          {
+            required: true,
+            message: '请选择旷工规则',
+            trigger: 'change',
+          },
+        ],
+
+      }
     }
   },
   methods:{
     goblack(){
       this.$router.go('-1');
     },
-    submitForm(){
-      if(this.ruleForm.name.length==0){
-        ElMessage({
-          message: '请输入方案名称',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.region.length==0){
-        ElMessage({
-          message: '请选择迟到规则',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.region2.length==0){
-        ElMessage({
-          message: '请选择早退规则',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.region3.length==0){
-        ElMessage({
-          message: '请选择未签到规则',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.region4.length==0){
-        ElMessage({
-          message: '请选择未签退规则',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.region5.length==0){
-        ElMessage({
-          message: '请选择旷工规则',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.region6.length==0){
-        ElMessage({
-          message: '请选择适用对象',
-          type: 'warning',
-        })
-      }else if(this.ruleForm.zw.length==0){
-        ElMessage({
-          message: '请选择职位',
-          type: 'warning',
-        })
-      }else{
-        alert(1111)
-      }
-    }
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
   }
 }
 </script>

@@ -11,11 +11,11 @@
       </div>
 
 
-        <div class="information">
-          <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">基本信息</h3>
-          <div style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
-          <h3 @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1" v-show="informations_bj_1" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>
-        </div>
+      <div class="information">
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">基本信息</h3>
+        <div style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
+        <h3 @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1" v-show="informations_bj_1" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>
+      </div>
 
 
 
@@ -94,7 +94,7 @@
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
               <el-form-item label="员工编号：" prop="emp_id" >
-                 <el-input v-model="essentialForm.emp_id" style="width:240px;"></el-input>
+                <el-input v-model="essentialForm.emp_id" style="width:240px;"></el-input>
               </el-form-item><br/>
 
 
@@ -147,56 +147,56 @@
 
 
 
-              <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
-                <br/>
-                <el-form-item prop="emp_name" >
-                  <template #label >姓名：</template>
-                   <el-input v-model="essentialForm.emp_name" style="width:240px;" disabled></el-input>
-                </el-form-item><br/>
+            <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
+              <br/>
+              <el-form-item prop="emp_name" >
+                <template #label >姓名：</template>
+                <el-input v-model="essentialForm.emp_name" style="width:240px;" disabled></el-input>
+              </el-form-item><br/>
 
 
 
-                <el-form-item label="年龄：" prop="emp_age">
-                  <el-input v-model="essentialForm.emp_age" style="width:240px;"></el-input>
-                </el-form-item><br/>
+              <el-form-item label="年龄：" prop="emp_age">
+                <el-input v-model="essentialForm.emp_age" style="width:240px;"></el-input>
+              </el-form-item><br/>
 
 
 
-                <el-form-item label="最高学历：" prop="official">
-                  <el-select v-model="essentialForm.official" placeholder="请选择活动区域" style="width:240px;">
-                    <el-option label="硕士" value="ss"></el-option>
-                    <el-option label="本科" value="bk"></el-option>
-                    <el-option label="大专" value="dz"></el-option>
-                    <el-option label="中专" value="zz"></el-option>
-                    <el-option label="高中" value="gz"></el-option>
-                    <el-option label="其他" value="qt"></el-option>
-                  </el-select>
-                </el-form-item><br/>
+              <el-form-item label="最高学历：" prop="official">
+                <el-select v-model="essentialForm.official" placeholder="请选择活动区域" style="width:240px;">
+                  <el-option label="硕士" value="ss"></el-option>
+                  <el-option label="本科" value="bk"></el-option>
+                  <el-option label="大专" value="dz"></el-option>
+                  <el-option label="中专" value="zz"></el-option>
+                  <el-option label="高中" value="gz"></el-option>
+                  <el-option label="其他" value="qt"></el-option>
+                </el-select>
+              </el-form-item><br/>
 
 
-                <el-form-item label="性别：" prop="emp_sex">
-                  <el-radio-group v-model="essentialForm.emp_sex" style="position: absolute;left:47px">
-                    <el-radio label="男"></el-radio>
-                    <el-radio label="女"></el-radio>
-                  </el-radio-group>
-                </el-form-item><br/>
+              <el-form-item label="性别：" prop="emp_sex">
+                <el-radio-group v-model="essentialForm.emp_sex" style="position: absolute;left:47px">
+                  <el-radio label="男"></el-radio>
+                  <el-radio label="女"></el-radio>
+                </el-radio-group>
+              </el-form-item><br/>
 
 
 
-                <el-form-item label="户口所在地：" prop="registered">
-                  <el-input v-model="essentialForm.registered" style="width:240px;"></el-input>
-                </el-form-item><br/>
+              <el-form-item label="户口所在地：" prop="registered">
+                <el-input v-model="essentialForm.registered" style="width:240px;"></el-input>
+              </el-form-item><br/>
 
 
               <el-form-item label="银行卡号：" prop="credit">
-                  <el-input v-model="essentialForm.credit" style="width:240px;"></el-input>
-                </el-form-item><br/>
+                <el-input v-model="essentialForm.credit" style="width:240px;"></el-input>
+              </el-form-item><br/>
 
 
               <el-form-item label="星座：" prop="constellation">
-                  <el-input v-model="essentialForm.constellation" style="width:240px;"></el-input>
-                </el-form-item>
-              </div>
+                <el-input v-model="essentialForm.constellation" style="width:240px;"></el-input>
+              </el-form-item>
+            </div>
 
 
 
@@ -260,7 +260,7 @@
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
 
               <el-form-item label="手机号" prop="phone" >
-                  <el-input v-model="contactForm.phone" style="width:240px;"></el-input>
+                <el-input v-model="contactForm.phone" style="width:240px;"></el-input>
               </el-form-item><br/>
 
               <el-form-item label="微信：" prop="WeChat">
@@ -375,12 +375,12 @@
               <br/>
 
 
-            <el-form-item label="入职日期：" prop="boardDate">
-                    <el-date-picker
-                              v-model="informationForm.boardDate"
-                              type="date"
-                              placeholder="选择日期" style="width: 240px">
-                    </el-date-picker>
+              <el-form-item label="入职日期：" prop="boardDate">
+                <el-date-picker
+                    v-model="informationForm.boardDate"
+                    type="date"
+                    placeholder="选择日期" style="width: 240px">
+                </el-date-picker>
               </el-form-item><br/>
 
               <el-form-item label="员工状态：" prop="state">
@@ -460,7 +460,7 @@ export default defineComponent({
       ...toRefs(state),
     }
   },
- data(){
+  data(){
     return{
       //基本信息
       essentialForm:{
@@ -499,17 +499,17 @@ export default defineComponent({
       },
       //联系方式
       contactForm:{
-          //手机号
-          phone:"",
-          //个人邮箱
-          eamil:"",
-          //微信
-          WeChat:"",
-          //QQ
-          qq:"",
-          //现住地址
-         address:"",
-          //紧急联系人
+        //手机号
+        phone:"",
+        //个人邮箱
+        eamil:"",
+        //微信
+        WeChat:"",
+        //QQ
+        qq:"",
+        //现住地址
+        address:"",
+        //紧急联系人
         emergency:"",
       },
 
@@ -532,12 +532,12 @@ export default defineComponent({
       rules:{
         name:
 
-          { required: true,
-            message: '请输入活动名称',
-            trigger: 'blur' },
+            { required: true,
+              message: '请输入活动名称',
+              trigger: 'blur' },
         id:  { required: true,
-               message: '编号不能为空',
-               trigger: 'blur' },
+          message: '编号不能为空',
+          trigger: 'blur' },
         phone: [ { required: true,
           message: '编号不能为空',
           trigger: 'blur' },
@@ -557,88 +557,88 @@ export default defineComponent({
       informations_bj_3:true
     }
 
- }
+  }
 
 })
 </script>
 
 <style scoped>
 /*@import url("../../css/EditingStaff.css");*/
-  .basicfile_big{
-    width:100%;
-    /*border:1px solid red;*/
-    margin-top:20px;
-  }
-  .basicfile_big_auto{
-    width:80%;
-    /*border:1px solid yellow;*/
-    margin: auto;
-  }
-  .information{
-    margin-top: 20px;
-    width:100%;
-  }
-
-  .information_text{
-    width:870px;
-
-    margin: auto;
-  }
-  .information_text li{
-    /*float: left;*/
-    display: inline-block;
-    width:50%;
-    padding: 4px 0px;
-
-  }
-  .information_text li label{
-    width: 200px;
-    display: inline-block;
-    text-align: right;
-    vertical-align: middle;
-    position: relative;
-    color: #969799;
-    font-size: 14px;
-    padding: 0 24px 0 0;
-    box-sizing: border-box;
-  }
-  .information_text li p{
-    display: inline-block;
-  }
-  .iconfont{
-    color: #085fc3;
-  }
-  .information_from{
-    width:100%;
-    background: #e8edf2;
-    position: relative;
-
-  }
-  .information_ul li{
-    display: inline-block;
-    width:50%;
-    padding: 20px 64px 20px;
-    text-align: right;
-
-  }
-  .information_ul li label{
-    /*width:100px;*/
-    text-align: right;
-    vertical-align: middle;
-    position: relative;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    /*padding: 0 24px 0 0;*/
-    box-sizing: border-box;
+.basicfile_big{
+  width:100%;
+  /*border:1px solid red;*/
+  margin-top:20px;
+}
+.basicfile_big_auto{
+  width:80%;
+  /*border:1px solid yellow;*/
+  margin: auto;
+}
+.information{
+  margin-top: 20px;
+  width:100%;
 }
 
-  .information_ul{
-    list-style-type: none;
-    position: relative;
-  }
-  .information_input{
-    width:240px;
-    display: inline-block;
-  }
+.information_text{
+  width:870px;
+
+  margin: auto;
+}
+.information_text li{
+  /*float: left;*/
+  display: inline-block;
+  width:50%;
+  padding: 4px 0px;
+
+}
+.information_text li label{
+  width: 200px;
+  display: inline-block;
+  text-align: right;
+  vertical-align: middle;
+  position: relative;
+  color: #969799;
+  font-size: 14px;
+  padding: 0 24px 0 0;
+  box-sizing: border-box;
+}
+.information_text li p{
+  display: inline-block;
+}
+.iconfont{
+  color: #085fc3;
+}
+.information_from{
+  width:100%;
+  background: #e8edf2;
+  position: relative;
+
+}
+.information_ul li{
+  display: inline-block;
+  width:50%;
+  padding: 20px 64px 20px;
+  text-align: right;
+
+}
+.information_ul li label{
+  /*width:100px;*/
+  text-align: right;
+  vertical-align: middle;
+  position: relative;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  /*padding: 0 24px 0 0;*/
+  box-sizing: border-box;
+}
+
+.information_ul{
+  list-style-type: none;
+  position: relative;
+}
+.information_input{
+  width:240px;
+  display: inline-block;
+}
 
 </style>

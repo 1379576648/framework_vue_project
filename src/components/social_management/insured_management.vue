@@ -146,16 +146,16 @@
 
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
-          <el-table :data="tableData" stripe style="width: 100%">
+          <el-table :data="emps_table" stripe style="width: 100%">
             <!-- 多选框 -->
             <el-table-column type="selection" width="55"/>
-            <el-table-column prop="date" label="编号"/>
+            <el-table-column prop="id" label="编号"/>
             <el-table-column prop="name" label="姓名"/>
-            <el-table-column prop="address" label="部门"/>
-            <el-table-column prop="state" label="职位"/>
-            <el-table-column prop="address" label="电话号码"/>
-            <el-table-column prop="state" label="入职日期"/>
-            <el-table-column prop="state" label="转正日期"/>
+            <el-table-column prop="dept" label="部门"/>
+            <el-table-column prop="post" label="职位"/>
+            <el-table-column prop="phone" label="电话号码"/>
+            <el-table-column prop="hiredate" label="入职日期"/>
+            <el-table-column prop="positive_dates" label="转正日期"/>
           </el-table>
         </div>
 
@@ -215,44 +215,55 @@ export default {
       ],
       // 表格上的 搜索框
       search: null,
-      tableData: [
+      // 未参保人员表数据
+      emps_table: [
         {
-          date: "2016-05-03",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
+          id: 1, // 员工id
+          name: "员工1", // 员工名称
+          dept: "部门1", // 员工所属部门
+          post: "职位1", // 员工职位
+          phone: "11111", // 员工手机号
+          hiredate: "1999-12-11", // 员工入职日期
+          positive_dates: "2000-02-11", // 员工转正日期
         },
         {
-          date: "2016-05-02",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
+          id: 2, // 员工id
+          name: "Tom", // 员工名称
+          dept: "California", // 员工所属部门
+          post: "2", // 员工职位
+          phone: "2", // 员工手机号
+          hiredate: "2", // 员工入职日期
+          positive_dates: "2", // 员工转正日期
         },
         {
-          date: "2016-05-04",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
+          id: 3, // 员工id
+          name: "3", // 员工名称
+          dept: "3", // 员工所属部门
+          post: "3", // 员工职位
+          phone: "3", // 员工手机号
+          hiredate: "3", // 员工入职日期
+          positive_dates: "3", // 员工转正日期
         },
         {
-          date: "2016-05-01",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
+          id: 4, // 员工id
+          name: "4", // 员工名称
+          dept: "4", // 员工所属部门
+          post: "4", // 员工职位
+          phone: "4", // 员工手机号
+          hiredate: "4", // 员工入职日期
+          positive_dates: "4", // 员工转正日期
+        },
+        {
+          id: 5, // 员工id
+          name: "5", // 员工名称
+          dept: "5", // 员工所属部门
+          post: "5", // 员工职位
+          phone: "5", // 员工手机号
+          hiredate: "5", // 员工入职日期
+          positive_dates: "5", // 员工转正日期
         },
       ],
+      // 表单验证
       rules: {
         name: [
           {required: true, message: '请输入活动名称', trigger: 'blur'},

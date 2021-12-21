@@ -20,7 +20,7 @@
             <p>Zip: {{ props.row.zip }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="ID" prop="date" />
+        <el-table-column label="ID" prop="id" />
         <el-table-column label="部门" prop="name" />
 		<el-table-column label="部门负责人" prop="state" />
 		<el-table-column label="状态" prop="city" />
@@ -37,7 +37,7 @@ export default {
     return {
         tableData: [
                 {
-                  date: '01',
+                  id: '01',
                   name: '行政部',
                   state: '琴',
                   city: 'Los Angeles',
@@ -45,7 +45,7 @@ export default {
                   zip: 'CA 90036',
                 },
                 {
-                  date: '02',
+                  id: '02',
                   name: '人事部',
                   state: '凯亚',
                   city: 'Los Angeles',
@@ -53,7 +53,7 @@ export default {
                   zip: 'CA 90036',
                 },
                 {
-                  date: '03',
+                  id: '03',
                   name: '财务部',
                   state: '丽莎',
                   city: 'Los Angeles',
@@ -61,7 +61,7 @@ export default {
                   zip: 'CA 90036',
                 },
                 {
-                  date: '04',
+                  id: '04',
                   name: '技术部',
                   state: '阿贝多',
                   city: 'Los Angeles',
@@ -69,7 +69,7 @@ export default {
                   zip: 'CA 90036',
                 },
                 {
-                  date: '05',
+                  id: '05',
                   name: '市场部',
                   state: '优菈',
                   city: 'Los Angeles',

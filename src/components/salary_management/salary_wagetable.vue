@@ -4,7 +4,7 @@
   <div style="width:100%;height:10px;">
     <!--搜索输入框-->
     <el-row style="width:200px;float:right;">
-      <el-input v-model="input3" placeholder="搜索">
+      <el-input v-model="seek" placeholder="搜索">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -178,7 +178,7 @@ export default {
         },
 
       ],
-      input3:"",
+      seek:"",
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
