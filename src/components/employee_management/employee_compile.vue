@@ -10,15 +10,29 @@
         </button>
         </router-link>
         <div style="text-align: center; margin-top: 60px">
-          <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            shape="circle"
-          >
-            <el-icon><plus /></el-icon>
-          </el-upload>
+
+          <!-- 用户照片 -->
+          <div style="width: 170px;margin: auto;margin-top: -42px;padding-bottom: 37px;">
+            <div class="upload-btn common mb_10" v-if="!isShow">
+              <div style="margin-top: 65px;">
+              <i class="iconfont">&#xe636;</i>
+              </div>
+              <label>
+                <input type="file" @change="uploadImg"/>
+              </label>
+            </div>
+            <div class="img-list-item common mb_10" v-if="isShow">
+              <img :src="src" class="common">
+              <i class="del-img" @click="forkImage">
+              </i>
+            </div>
+          </div>
+
+
+
+
+
+
           <el-dialog v-model="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="" />
           </el-dialog>
@@ -77,6 +91,8 @@ export default {
   },
   data() {
     return {
+      src: '',
+      isShow: false,
       book:'/employee/message/employee_roster/book',
       basicfile:'/employee/message/employee_roster/basicfile',
       information:'/employee/message/employee_roster/information',
@@ -87,7 +103,23 @@ export default {
   methods:{
     goblack(){
       this.$router.go('-1');
-    }
+    },
+    uploadImg(e) {
+      let _this = this;
+      let files = e.target.files[0];
+      if (!e || !window.FileReader) return; // 看支持不支持FileReader
+      let reader = new FileReader();
+      reader.readAsDataURL(files); // 这里是最关键的一步，转换就在这里
+      reader.onloadend = function () {
+        _this.src = this.result;
+        _this.isShow = true;
+      }
+    },
+
+    forkImage() {
+      this.src = '';
+      this.isShow = false;
+    },
   }
 };
 </script>
@@ -102,6 +134,50 @@ export default {
 }
 ul{
   border-button:none;
+}
+
+.common {
+  width: 170px;
+  height: 170px;
+  border: 1px solid #d8d8d9;
+}
+
+.img-list-item {
+  position: relative;
+}
+
+.img-list-item img {
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 0;
+}
+
+.img-list-item i.del-img {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background: rgba(0, 0, 0, .6);
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+input[type="file"] {
+  color: transparent;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#wrapper:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
 }
 
 </style>
