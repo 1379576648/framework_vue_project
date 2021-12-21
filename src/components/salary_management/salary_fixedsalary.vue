@@ -17,7 +17,7 @@
               <template #label>
                 <div class="el-form-item__label">试用期基本工资</div>
               </template>
-              <el-input v-model="periodpay"  placeholder="请输入" />
+              <el-input v-model="periodpay"  placeholder="请输入"/>
             </el-form-item>
             <el-form-item>
               <template #label>
