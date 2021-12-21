@@ -2,18 +2,27 @@
 <template>
   <div class="w">
     <div class="head">
-      <el-button size="medium">
+      <el-button size="medium" @click="derive()">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
         导出
       </el-button>
+      <el-upload
+          class="upload-demo"
+          action
+          :on-change="channel"
+          accept=".xls, .xlsx"
+          :auto-upload="false"
+          :show-file-list="false"
+      >
       <el-button size="medium">
         <el-icon style="font-size: 18px">
           <i-folder-opened/>
         </el-icon>
         导入
       </el-button>
+      </el-upload>
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="value1"
@@ -66,7 +75,7 @@
                 @confirm="through1()"
             >
               <template #reference>
-            <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -95,6 +104,9 @@
 
 <script lang="ts">
 import {ref, defineComponent} from "vue";
+import {ElMessage, ElMessageBox} from "element-plus";
+import {export_json_to_excel} from '/src/excal/Export2Excel.js'
+import XLSX from "xlsx";
 
 export default {
   data() {
@@ -205,11 +217,109 @@ export default {
       value: ref(""), //选择
     };
   },
-  methods:{
+  methods: {
     // 点击删除确认按钮触发
     through1() {
       alert(1)
     },
+    // 点击导出操作
+    derive() {
+      ElMessageBox.confirm(
+          '此操作将导出excel文件, 是否继续?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.deriveExcel();
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    // 导出方法
+    deriveExcel() {
+      var _this = this;
+      let tHeader = ["员工名称", "部门名称", "早上打卡时间", "下午打卡时间", "记录时间"]; // 导出的表头名
+      let filterVal = ["staff", "department", "morning", "afternoon", "record"];//导出其prop属性
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      }).then(({value}) => {
+            let data = _this.formatJson(filterVal, _this.tableData);
+            export_json_to_excel(tHeader, data, value);
+            ElMessage({
+              type: 'success',
+              message: `生成成功`,
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '取消成功',
+            })
+          })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
+    // 导入方法
+    channel(obj){
+      let _this = this;
+      // 通过DOM取文件数据
+      this.file = obj.raw;
+      var rABS = false; //是否将文件读取为二进制字符串
+      var f = this.file;
+      var reader = new FileReader();
+      FileReader.prototype.readAsBinaryString = function (f) {
+        var binary = "";
+        var rABS = false; //是否将文件读取为二进制字符串
+        var pt = this;
+        var wb; //读取完成的数据
+        var outdata;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var bytes = new Uint8Array(reader.result);
+          var length = bytes.byteLength;
+          for (var i = 0; i < length; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          if (rABS) {
+            wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
+              type: 'base64'
+            });
+          } else {
+            wb = XLSX.read(binary, {
+              type: 'binary'
+            });
+          }
+          // outdata就是你想要的东西 excel导入的数据
+          outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+          // excel 数据再处理
+          let arr = []
+          outdata.map(v => {
+            let obj = {}
+            obj.staff = v.员工名称
+            obj.department = v.部门名称
+            obj.morning = v.早上打卡时间
+            obj.afternoon = v.下午打卡时间
+            obj.record = v.记录时间
+            arr.push(obj)
+            _this.tableData.push(obj)
+          })
+        }
+        reader.readAsArrayBuffer(f);
+      }
+      if (rABS) {
+        reader.readAsArrayBuffer(f);
+      } else {
+        reader.readAsBinaryString(f);
+      }
+    }
   }
 };
 </script>
@@ -244,6 +354,9 @@ table * {
   margin-top: 20px;
   margin-bottom: 30px;
 }
-
+.upload-demo {
+  display: inline-block;
+  margin-left: 10px;
+}
 </style>
 

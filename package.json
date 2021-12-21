@@ -13,6 +13,7 @@
     "echarts-gl": "^2.0.8",
     "element-china-area-data": "^5.0.2",
     "element-plus": "^1.2.0-beta.3",
+    "file-saver": "^2.0.5",
     "particles.js": "^2.0.0",
     "print-js": "^1.6.0",
     "qs": "^6.10.1",
@@ -20,12 +21,14 @@
     "vue-axios": "^3.4.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2",
-    "x-particles": "^1.0.9"
+    "x-particles": "^1.0.9",
+    "xlsx": "^0.17.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
     "dart-sass": "^1.25.0",
     "sass": "^1.43.4",
+    "script-loader": "^0.7.2",
     "vite": "^2.6.4",
     "vue-particles": "^1.0.9"
   }

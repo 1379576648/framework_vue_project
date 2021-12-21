@@ -1,4 +1,5 @@
-<!-- 新增简历 -->
+<!-- 新增简历-->
+
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -10,199 +11,214 @@
       </div>
       <!--内容-->
       <div class="j-card-body ">
+        <div style="padding: 25px; height: 1000px">
+          <div>
+            <!-- 用户照片 -->
+            <div style="width: 170px;">
+              <div class="upload-btn common mb_10" v-if="!isShow">
+                <label>
+                  <input type="file" @change="uploadImg"/>
+                </label>
+              </div>
+              <div class="img-list-item common mb_10" v-if="isShow">
+                <img :src="src" class="common">
+                <i class="del-img" @click="forkImage">
+                </i>
+              </div>
+            </div>
 
-        <el-container>
+            <!-- 用 户 基 本 消 息 -->
+            <el-form :inline="true" :model="formInline" class="demo-form-inline"
+                     style="width: 78%; margin-top: -225px; margin-left: 19%;">
+              <h3>基本信息</h3>
 
-          <el-main>
-            <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-              <div style="float: left">
-                <div>
-                  <el-upload
-                      class="avatar-uploader"
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      :show-file-list="true"
-                      :on-success="handleAvatarSuccess"
-                      :before-upload="beforeAvatarUpload"
-                  >
-                    122323
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-                    <el-icon v-else class="avatar-uploader-icon"><plus /></el-icon>
-                  </el-upload>
-                </div>
+              <br>
+              <el-form-item label="姓 名：">
+                <el-input v-model="formInline.user"></el-input>
+              </el-form-item>
+              <el-form-item label="性 别：">
+                <el-select v-model="formInline.region" placeholder="请选择">
+                  <el-option label="男" value="男"></el-option>
+                  <el-option label="女" value="女"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="出生日期：">
+                <el-col :span="11">
+                  <el-date-picker
+                      v-model="formInline.date1"
+                      type="date"
+                      placeholder="请选择日期"
+                      style="width: 200px"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
 
-                <el-form-item label="姓名：" prop="name">
-                  <el-input
-                      v-model="form.name"
-                      style="width: 225px"
-                      clearable
-                  ></el-input>
+              <div style="display: block;">
+                <el-form-item label="手机号：">
+                  <el-input v-model="formInline.user"></el-input>
                 </el-form-item>
-
-                <el-form-item label="性别：" prop="sex">
-                  <el-radio-group v-model="form.sex">
-                    <el-radio label="男"></el-radio>
-                    <el-radio label="女"></el-radio>
-                  </el-radio-group>
+                <el-form-item label="邮 箱：">
+                  <el-input v-model="formInline.user"></el-input>
                 </el-form-item>
-
-                <el-form-item label="电话：" prop="phone">
-                  <el-input
-                      v-model="form.phone"
-                      placeholder="请输入手机号"
-                      maxlength="11"
-                      style="width: 225px"
-                      clearable
-                  ></el-input>
+                <el-form-item label="所在地：">
+                  <el-input v-model="formInline.user"></el-input>
                 </el-form-item>
+              </div>
 
-                <el-form-item label="学历：">
-                  <el-select v-model="form.region" placeholder="请选择你的学历">
-                    <el-option label="家里蹲" value="shanghai"></el-option>
-                    <el-option label="茅斯坑" value="beijing"></el-option>
+
+              <div style="display: block;">
+
+
+                <el-form-item label="学 历：">
+                  <el-select v-model="formInline.region" placeholder="请选择">
+                    <el-option label="初中" value="初中"></el-option>
+                    <el-option label="高中" value="高中"></el-option>
+                    <el-option label="大专" value="大专"></el-option>
+                    <el-option label="本科" value="本科"></el-option>
+                    <el-option label="硕士" value="硕士"></el-option>
+                    <el-option label="博士" value="博士"></el-option>
                   </el-select>
                 </el-form-item>
 
-                <el-form-item label="邮箱：" prop="email">
-                  <el-input
-                      v-model="form.email"
-                      style="width: 225px"
-                      placeholder="请输入Email"
-                  >
-                  </el-input>
+                <el-form-item label="政治面貌：">
+                  <el-select v-model="formInline.region" placeholder="请选择">
+                    <el-option label="群众" value="群众"></el-option>
+                    <el-option label="共青团" value="共青团"></el-option>
+                    <el-option label="党员" value="党员"></el-option>
+                  </el-select>
                 </el-form-item>
 
-
-                <div style="display: inline-block">
-                  <el-form-item label="出生日期：" prop="birthday">
-                    <el-date-picker
-                        v-model="form.birthday"
-                        type="date"
-                        placeholder="请选择您的出生日期"
-                    >
-                    </el-date-picker>
-                  </el-form-item>
-                </div>
+                <el-form-item label="招聘计划：">
+                  <el-select v-model="formInline.region" placeholder="请选择">
+                    <el-option label="Hr人力资源专员" value="Hr人力资源专员"></el-option>
+                  </el-select>
+                </el-form-item>
               </div>
-              <div>
-                <div style="display: inline-block">
-                  <el-form-item label="专业：" prop="quit">
-                    <el-input
-                        v-model="form.zhuanye"
-                        style="width: 225px"
-                        clearable
-                    ></el-input>
-                  </el-form-item>
-                </div>
-                <div style="display: inline-block">
-                  <el-form-item label="户口所在地:" prop="address">
-                    <el-cascader
-                        placeholder="请选择您的地址"
-                        size="large"
-                        :options="options"
-                        v-model="form.address"
-                        @change="handleChange"
-                    >
-                    </el-cascader>
-                  </el-form-item>
-                </div>
-              </div>
-              <div style="margin-top: -72px">
-                <div style="display: inline-block">
-                  <el-form-item label="政治面貌：" prop="face">
-                    <el-select
-                        v-model="form.face"
-                        placeholder="请选择你的政治面貌"
-                    >
-                      <el-option label="群众" value="shanghai"></el-option>
-                      <el-option label="团员" value="beijing"></el-option>
-                      <el-option label="党员" value="xiboliya"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </div>
-                <div style="display: inline-block">
-                  <el-form-item label="婚姻状况：">
-                    <el-radio-group v-model="form.resource">
-                      <el-radio label="未婚"></el-radio>
-                      <el-radio label="已婚"></el-radio>
-                    </el-radio-group>
-                  </el-form-item>
-                </div>
-              </div>
-              <el-form-item label="受教育经历：">
-                <el-date-picker
-                    v-model="form.education"
-                    type="monthrange"
-                    range-separator="To"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
-                >
-                </el-date-picker>
-                <el-divider direction="vertical"></el-divider>
-                <el-input
-                    v-model="form.school"
-                    style="width: 225px"
-                    placeholder="学校名称"
-                    clearable
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="工作经历：">
-                <el-date-picker
-                    v-model="form.value1"
-                    type="monthrange"
-                    range-separator="To"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
-                >
-                </el-date-picker>
-                <el-divider direction="vertical"></el-divider>
-                <el-input
-                    v-model="form.company"
-                    style="width: 225px"
-                    placeholder="公司名称"
-                    clearable
-                ></el-input>
-                &nbsp;&nbsp;
-                <el-input
-                    v-model="form.position"
-                    style="width: 225px"
-                    placeholder="职位名称"
-                    clearable
-                ></el-input>
-                &nbsp;&nbsp;
+            </el-form>
 
-                <el-input
-                    v-model="form.quit"
-                    maxlength="200"
-                    :autosize="{ minRows: 5, maxRows: 10 }"
-                    show-word-limit
-                    type="textarea"
-                    placeholder="离职原因"
-                    clearable
-                ></el-input>
+          </div>
+          <br>
+          <div style="border: 1px solid #ebebeb; width: 100%; height: 0px ;"></div>
+          <br>
+
+
+          <div>
+            <span>
+              <h3>教育消息</h3>
+              <br>
+            </span>
+
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+
+              <el-form-item label="学校名称：">
+                <el-input v-model="formInline.user"></el-input>
               </el-form-item>
 
-              <el-form-item label="自我介绍：">
-                <el-input
-                    v-model="form.textarea"
-                    maxlength="2000"
-                    :autosize="{ minRows: 10, maxRows: 20 }"
-                    placeholder="请输入内容"
-                    show-word-limit
-                    type="textarea"
-                ></el-input>
+              <el-form-item label="所学专业：">
+                <el-input v-model="formInline.user"></el-input>
               </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="onSubmit">提交</el-button>
-                <el-button>取消</el-button>
+
+              <el-form-item label="开始时间：">
+                <el-col :span="11">
+                  <el-date-picker
+                      v-model="formInline.date1"
+                      type="date"
+                      placeholder="请选择日期"
+                      style="width: 200px"
+                  ></el-date-picker>
+                </el-col>
               </el-form-item>
-            </el-form></el-main
-          >
-        </el-container>
+
+              <el-form-item label="结束时间：">
+                <el-col :span="11">
+                  <el-date-picker
+                      v-model="formInline.date1"
+                      type="date"
+                      placeholder="请选择日期"
+                      style="width: 200px"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="是否全日制：">
+                <el-radio-group v-model="formInline.radio">
+                  <el-radio :label="0">是</el-radio>
+                  <el-radio :label="1">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-form>
+          </div>
+
+
+          <br>
+          <div style="border: 1px solid #ebebeb; width: 100%; height: 0px ;"></div>
+          <br>
+
+          <div>
+            <span>
+              <h3>工作经历</h3>
+              <br>
+            </span>
+
+
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+              <el-form-item label="公司名称：">
+                <el-input v-model="formInline.user"></el-input>
+              </el-form-item>
+
+              <el-form-item label="职位名称：">
+                <el-input v-model="formInline.user"></el-input>
+              </el-form-item>
+
+
+              <el-form-item label="开始时间：">
+                <el-col :span="11">
+                  <el-date-picker
+                      v-model="formInline.date1"
+                      type="date"
+                      placeholder="请选择日期"
+                      style="width: 200px"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="结束时间：">
+                <el-col :span="11">
+                  <el-date-picker
+                      v-model="formInline.date1"
+                      type="date"
+                      placeholder="请选择日期"
+                      style="width: 200px"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="所属行业：">
+                <el-input v-model="formInline.user"></el-input>
+              </el-form-item>
+
+              <el-form-item label="税前月薪：">
+                <el-input v-model="formInline.user"></el-input>
+              </el-form-item>
+
+              <el-form-item label="工作描述：" style="display: block">
+              <el-input
+                  v-model="formInline.textarea"
+                  :rows="2"
+                  type="textarea"
+              />
+              </el-form-item>
 
 
 
+            </el-form>
 
+            <el-button type="primary" @click="">提交</el-button>
+            <el-button>重置</el-button>
+            <el-button @click="goblack()">取消</el-button>
+          </div>
 
+        </div>
       </div>
 
     </div>
@@ -210,165 +226,118 @@
 </template>
 
 <script>
-import { Plus } from '@element-plus/icons'
-import { regionData, CodeToText } from "element-china-area-data";
-import { defineComponent, reactive, toRefs } from "vue";
+import {ref} from 'vue'
+
 export default {
-  components: {
-    Plus,
-  },
   data() {
-
     return {
-      imageUrl: '',
-      options: regionData,
-      selectedOptions: [],
-      form: {
-
-        name: "",
-        sex: "",
-        phone: "",
-        region: "",
-        email: "",
-        major: "",
-        birthday: "",
-        address: "",
-        face: "",
-        company: "",
-        quit: "",
-        position: "",
-        value1: "",
-        resource: "",
-        desc: "",
-        textarea: "",
-        education: "",
-        school: "",
-      },
-
-      rules: {
-        hone: [
-          {
-            required: true,
-            message: "请输入手机号",
-            trigger: "blur",
-          },
-          {
-            pattern: /^1(3|4|5|7|8|9)\d{9}$/,
-            message: "手机号格式错误",
-            trigger: "blur",
-          },
-        ],
-        email: [
-          {
-            required: true,
-            message: "请输入Email",
-            trigger: "blur",
-          },
-          {
-            pattern:
-                /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-            message: "邮箱格式错误",
-            trigger: "blur",
-          },
-        ],
-        name: {
-          required: true,
-          message: "姓名不为空",
-          trigger: "blur",
-        },
-        quit: {
-          required: true,
-          message: "专业不为空",
-          trigger: "blur",
-        },
-        birthday: {
-          required: true,
-          message: "生日不为空",
-          trigger: "blur",
-        },
-        address: {
-          required: true,
-          message: "地址不为空",
-          trigger: "blur",
-        },
-        sex: {
-          required: true,
-          message: "请选择你的性别",
-          trigger: "blur",
-        },
+      src: '',
+      isShow: false,
+      formInline: {
+        value1: '',
+        user: '',
+        region: '',
+        date1: '',
+        radio: ref(0),
+        textarea: ref(''),
       },
     }
   },
   methods: {
+    uploadImg(e) {
+      let _this = this;
+      let files = e.target.files[0];
+      if (!e || !window.FileReader) return; // 看支持不支持FileReader
+      let reader = new FileReader();
+      reader.readAsDataURL(files); // 这里是最关键的一步，转换就在这里
+      reader.onloadend = function () {
+        _this.src = this.result;
+        _this.isShow = true;
+      }
+    },
 
-    onSubmit() {
-      this.$refs["form"].validate((valid) => {
-        if (!valid) return;
-        // TODO 提交表单
-      });
+    forkImage() {
+      this.src = '';
+      this.isShow = false;
     },
-    handleChange() {
-      for (let i = 0; i < this.selectedOptions.length; i++) {
-        let CodeToText;
-        this.form.address += CodeToText[this.selectedOptions[i]];
-      }
-      // alert(this.form.address);
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
 
-      if (!isJPG) {
-        this.$message.error('Avatar picture must be JPG format!')
-      }
-      if (!isLt2M) {
-        this.$message.error('Avatar picture size can not exceed 2MB!')
-      }
-      return isJPG && isLt2M
-    },
+
+    //取消按钮事件：返回上一级
+    goblack(){
+      this.$router.go('-1');
+    }
   },
-
 }
+
+
 </script>
 
 
-
 <style type="text/css" scoped>
-@import url("../../css/navigation.css");
-@import url("../../css/zpdaohang.css");
-
-.el-aside {
-  background-color: #bcdcf7;
-  color: var(--el-text-color-primary);
-  text-align: center;
-  line-height: 200px;
-}
-.el-main {
-  background-color: #ebedf0;
-  color: var(--el-text-color-primary);
-
-  line-height: 160px;
-}
-body > .el-container {
-  margin-bottom: 40px;
+/deep/ .el-form-item__content {
+  padding: 0 35px 0 0;
 }
 
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
+
+.common {
+  width: 170px;
+  height: 170px;
+  border: 1px solid #d8d8d9;
 }
 
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
+.img-list-item {
+  position: relative;
 }
 
-/deep/.el-form-item {
-  display: flex;
-  margin-bottom: 35px;
+.img-list-item img {
+  box-sizing: border-box;
+  vertical-align: middle;
+  border: 0;
 }
+
+.img-list-item i.del-img {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background: rgba(0, 0, 0, .6);
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+input[type="file"] {
+  color: transparent;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#wrapper:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.mb_10 {
+  margin-bottom: 10px;
+  margin-top: 35px;
+}
+
+.j-card-head {
+  height: 48px;
+  line-height: 48px;
+  background: #fff;
+  border-bottom: 1px solid #e9e9e9;
+  margin: 0 24px;
+  overflow: hidden;
+}
+
+
 .j-card-head-title {
   float: left;
   font-size: 18px;
@@ -386,29 +355,48 @@ body > .el-container {
   background: #fff;
   border-radius: 4px;
 }
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
+
+.saas-main-content {
+  padding-top: 12px;
+  min-height: 500px;
+}
+
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+}
+
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
 }
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
+
+.j-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  border-color: transparent;
 }
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
+
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+  border-top-color: rgb(233, 233, 233);
+  border-right-color: rgb(233, 233, 233);
+  border-bottom-color: rgb(233, 233, 233);
+  border-left-color: rgb(233, 233, 233);
 }
-.avatar-uploader-icon svg {
-  margin-top: 74px; /* (178px - 28px) / 2 - 1px */
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
+
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
 }
 </style>

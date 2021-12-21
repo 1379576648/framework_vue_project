@@ -4,6 +4,7 @@
         <div>
           <el-tabs type="card" @tab-click="handleClick">
 
+            <!--月份选择框·-->
             <div style="display: inline-block;margin-left: 840px;">
               <div class="demo-date-picker">
                 <div class="container">
@@ -11,7 +12,7 @@
                     <span class="demonstration"></span>
 
                     <el-date-picker
-                        v-model="value2"
+                        v-model="months"
                         type="month"
                         placeholder="请选择月份"
                     >
@@ -20,10 +21,11 @@
                 </div>
               </div>
             </div>
+
             <div style="margin-top: -40px">
               <!--搜索输入框-->
               <el-row style="width:200px;margin-left: 1090px">
-                <el-input v-model="input3" placeholder="搜索" :prefix-icon="Search">
+                <el-input v-model="seek" placeholder="搜索" :prefix-icon="Search">
                   <template #suffix>
                     <el-icon class="el-input__icon"><i-search/></el-icon>
                   </template>
@@ -35,7 +37,6 @@
 
               <!-- 表格内容部分 -->
               <div class="sub-Content__primary">
-
                 <el-table :data="tableData" stripe style="width: 100%">
                   <el-table-column prop="name" label="部门" width="160" />
                   <el-table-column prop="date" label="计薪人数" width="160" />
@@ -61,6 +62,7 @@
 
             </el-tab-pane>
             <el-tab-pane label="已归档">
+
               <!-- 表格内容部分 -->
               <div class="sub-Content__primary">
 
@@ -82,6 +84,7 @@
             </el-tab-pane>
           </el-tabs>
         </div>
+
   <!-- 分页插件 -->
   <div class="demo-pagination-block">
     <el-pagination
@@ -105,6 +108,7 @@ export default {
 
   data() {
     return {
+      //工资表
       wagesheet:'/salary/wagesheet',
       tableData: [
         {
@@ -118,11 +122,8 @@ export default {
           address: 'No. 189, Grove St, Los Angeles',
         },
       ],
-      input3:"",
-      value1: '',
-      value2: '',
-      value3: '',
-      value4: '',
+      months:'',
+      seek:'',
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页

@@ -23,42 +23,42 @@
                     </div>
                   </el-form-item><br/>
 
-                  <el-form-item label="调动前部门：">
-                    <el-input v-model="ruleForm.name" style="width:240px"></el-input>
+                  <el-form-item label="调动前部门：" prop="formerdept">
+                    <el-input v-model="ruleForm.formerdept" style="width:240px"></el-input>
                   </el-form-item><br/>
 
-                  <el-form-item label="调动前职位：">
-                    <el-input v-model="ruleForm.name" style="width:240px"></el-input>
+                  <el-form-item label="调动前职位：" prop="formerpost">
+                    <el-input v-model="ruleForm.formerpost" style="width:240px"></el-input>
                   </el-form-item><br/>
 
-                  <el-form-item label="生效日期：">
+                  <el-form-item label="生效日期：" prop="takedate">
                     <el-col :span="11">
-                      <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 240px;"></el-date-picker>
+                      <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.takedate" style="width: 240px;"></el-date-picker>
                     </el-col>
                   </el-form-item>
                 </div>
                 <div style="display: inline-block;position: absolute;left:500px;" >
-                  <el-form-item label="异动类型：" prop="region">
-                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域" style="width:240px;">
+                  <el-form-item label="异动类型：" prop="type">
+                    <el-select v-model="ruleForm.type" placeholder="请选择活动区域" style="width:240px;">
                       <el-option label="调岗" value="tg" style="margin-left: 20px;"></el-option>
                       <el-option label="普升" value="ps" style="margin-left: 20px;"></el-option>
                       <el-option label="降职" value="jj" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item><br/>
 
-                  <el-form-item label="调动后部门：">
-                    <el-input v-model="ruleForm.name" style="width:240px"></el-input>
+                  <el-form-item label="调动后部门：" prop="transferdept">
+                    <el-input v-model="ruleForm.transferdept" style="width:240px"></el-input>
                   </el-form-item><br/>
 
-                  <el-form-item label="调动后职位：">
-                    <el-input v-model="ruleForm.name" style="width:240px"></el-input>
+                  <el-form-item label="调动后职位：" prop="transferpost">
+                    <el-input v-model="ruleForm.transferpost" style="width:240px"></el-input>
                   </el-form-item>
 
                 </div>
 
                 <div style="width:25%;height: 50px;margin: auto;margin-top: 20px;">
-                  <el-button @click="changesadd=!changesadd" style="width: 60px;">取消</el-button>
-                  <el-button  type="primary" style="width: 60px;">提交</el-button>
+                  <el-button @click="RestForm(),changesadd=!changesadd" style="width: 60px;">取消</el-button>
+                  <el-button  type="primary" style="width: 60px;" @click="submitForm('ruleForm')">提交</el-button>
                 </div>
 
               </el-form>
@@ -77,7 +77,7 @@
 
           <!--搜索输入框-->
           <el-row style="width: 200px;position: absolute;left:1090px;top:30px;">
-            <el-input v-model="input3" placeholder="搜索">
+            <el-input v-model="seek" placeholder="搜索">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
@@ -125,7 +125,7 @@
 
           <!--搜索输入框-->
           <el-row style="width: 200px;margin-left:528px;">
-            <el-input v-model="input3" placeholder="搜索">
+            <el-input v-model="seek2" placeholder="搜索">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
@@ -177,8 +177,17 @@
 import { defineComponent, ref } from 'vue'
 export default defineComponent({
   data(){
+    const one = (rule, value, callback) => {
+      if (new Date()>value){
+        callback(new Error("生效日期不能小于当前时间"));
+      }else{
+        callback();
+      }
+
+    };
     return{
-      input3:"",
+      seek:"",
+      seek2:'',
       changesadd:false,
       pageInfo: {
         // 分页参数
@@ -188,37 +197,30 @@ export default defineComponent({
       },
       ruleForm: {
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        formerdept: '',
+        formerpost: '',
+        takedate: '',
+        type: '',
+        transferdept: '',
+        transferpost: ''
       },
-
       rules: {
-        name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        takedate: [
+          {
+            required: true,
+            message: '请选择生效日期',
+            trigger: 'change',
+          },
+          {
+            validator: one, trigger: "change"
+          }
         ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
-        ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-        ],
-        date2: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-        ],
-        type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        type:[
+          {
+            required:true,
+            message:'请选择异动类型',
+            trigger:'change',
+          }
         ]
       },
       radio:"",
@@ -252,6 +254,27 @@ export default defineComponent({
   methods: {
     getCurrentRow(row){ //获取选中数据this.templateSelection = row;
     },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    RestForm(){
+      this.ruleForm= {
+        name: '',
+            formerdept: '',
+            formerpost: '',
+            takedate: '',
+            type: '',
+            transferdept: '',
+            transferpost: ''
+      }
+    }
   },
   setup() {
     const become = ref(false)
