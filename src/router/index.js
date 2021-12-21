@@ -264,6 +264,10 @@ const routes = [
                             {//新增招聘计划
                                 path: '/recruitment/addplan/addplan',
                                 component: modules[`${'../components/recruitment_management/recruitment_add_plan.vue'}`],
+                            },
+                            {//招聘计划详情页面
+                                path:'/recruitment/plan/details',
+                                component: modules[`${'../components/recruitment_management/recruitment_plan_details.vue'}`],
                             }
 
                     ]
@@ -294,6 +298,10 @@ const routes = [
                                     component:modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
                                 },
                             ]
+                        },
+                        {//简历详情页面
+                            path: '/recruitment/resume/details',
+                            component:modules[`${'../components/recruitment_management/recruitment_resume_details.vue'}`],
                         },
                         {//新增简历
                             path: '/recruitment/recruit/addresume',
