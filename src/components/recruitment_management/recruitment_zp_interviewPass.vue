@@ -79,7 +79,11 @@
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left"  align="center" type="selection" width="80" />
-        <el-table-column fixed="left" prop="name" label="姓名" width="150"/>
+        <el-table-column fixed="left" prop="name" label="姓名" width="150">
+          <template #default="scope">
+            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
+          </template>
+        </el-table-column>
         <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
         <el-table-column prop="gender" label="性别" width="140"/>
         <el-table-column prop="schoolli" label="学历" width="140"/>
@@ -138,6 +142,7 @@ import {
 export default {
   data() {
     return {
+      details:'/recruitment/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
