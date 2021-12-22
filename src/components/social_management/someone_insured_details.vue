@@ -195,12 +195,12 @@ export default {
 
 /* 外层div */
 .outer-div {
-  padding: 10px 1%;
+  padding: 10px 1% ;
 }
 
 /* 标题 */
 .big-title {
-  width: 100%;
+  width: 98%;
   //height: 45px;
   background-color: #f2f4fa;
   font-size: 16px;
