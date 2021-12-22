@@ -109,6 +109,27 @@ export default {
               //显示正在识别
               setTimeout(this.update, 1000);
             } else {
+              //获取后台传过来的数据
+              let value = response.data.data.succeed;
+              //读取需要的数据形成对象
+              let obj = {
+                //员工编号
+                "staffId": value.staffId,
+                //员工名称
+                "staffName": value.staffName,
+                //员工手机号
+                "staffPhone": value.staffPhone,
+                //员工性别
+                "staffSex": value.staffSex,
+                //员工照片地址
+                 "staffPicture":value.staffPicture,
+                //员工学历
+                "staffEducation":value.staffEducation,
+                //员工政治面貌
+                "staffOutlook":value.staffOutlook
+              }
+              //将形成的对象存放起来
+              this.$store.commit("staffInfo", obj)
               //跳转到主页面 并且不能回退
               this.$router.push({path: '/home', replace: true})
             }
