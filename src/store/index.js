@@ -2,6 +2,8 @@ import {createStore} from 'vuex'
 
 const store = createStore({
     state: {
+        //员工信息
+        staffMessage: {},
         //动态菜单
         memuList: [
             {
@@ -134,7 +136,7 @@ const store = createStore({
                         son: [
                             {
                                 MENU_ID: 2.21,//菜单编号
-                                MENU_NAME: '新',//菜单名称
+                                MENU_NAME: '新增',//菜单名称
                                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                                 MENU_ROUTE: '',//路由地址
                                 MENU_MODULE: '',//组件地址
@@ -998,6 +1000,14 @@ const store = createStore({
         activate_router: '',
         //默认激活的二级菜单
         default_route: '',
+    },
+    /* 同步修改值 */
+    mutations: {
+        //修改用户数据
+        staffInfo(state, obj) {
+            // 通过传过来的值进行修改
+            state.staffMessage = obj;
+        }
     },
     getters: {
         //获取更多之外的菜单列表

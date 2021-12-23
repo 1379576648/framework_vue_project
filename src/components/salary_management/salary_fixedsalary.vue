@@ -17,7 +17,7 @@
               <template #label>
                 <div class="el-form-item__label">试用期基本工资</div>
               </template>
-              <el-input v-model="periodpay"  placeholder="请输入" />
+              <el-input v-model="periodpay"  placeholder="请输入"/>
             </el-form-item>
             <el-form-item>
               <template #label>
@@ -76,15 +76,15 @@
           <el-form :inline="true" :model="formInline"  :rules="rules" class="demo-form-inline">
             <el-form-item>
               <template #label>
-                <div class="el-form-item__label">调薪后基本工资</div>
+                <div class="el-form-item__label">调薪前基本工资</div>
               </template>
-              <el-input v-model="increasepay"  placeholder="请输入" />
+              <el-input v-model="afterpay" disabled />
             </el-form-item>
             <el-form-item>
               <template #label>
-                <div class="el-form-item__label">调薪幅度</div>
+                <div class="el-form-item__label">调薪后基本工资</div>
               </template>
-              <el-input v-model="range"   disabled />
+              <el-input v-model="increasepay"    />
             </el-form-item><br>
             <el-form-item>
               <template #label>
@@ -98,8 +98,10 @@
             </el-form-item>
             <el-form-item label="调薪原因">
               <el-select v-model="cause" placeholder="请选择">
-                <el-option label="1" value="cause1"></el-option>
-                <el-option label="2" value="cause2"></el-option>
+                <el-option label="晋升" value="cause1"></el-option>
+                <el-option label="调岗" value="cause2"></el-option>
+                <el-option label="降级" value="cause3"></el-option>
+                <el-option label="其他" value="cause4"></el-option>
               </el-select>
             </el-form-item>
 
@@ -120,11 +122,6 @@
             </div>
           </el-form>
         </div>
-
-
-
-
-
 
 
 
@@ -264,7 +261,7 @@ export default {
           postdate: '',
           remark: '',
           increasepay: '',
-          range: '',
+           afterpay: '',
           takedate: '',
           cause: '',
           remark2: '',
