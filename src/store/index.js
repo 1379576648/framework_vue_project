@@ -988,8 +988,8 @@ const store = createStore({
                 MENU_ID: 10,//菜单编号
                 MENU_NAME: '系统管理',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/system',//路由地址
-                MENU_MODULE: 'system_management/system_main',//组件地址
+                MENU_ROUTE: '/lineage',//路由地址
+                MENU_MODULE: 'lineage_management/lineage_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -997,7 +997,7 @@ const store = createStore({
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '权限管理',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/system/authority_management',//路由地址
+                    MENU_ROUTE: '/lineage/authority_management',//路由地址
                     MENU_MODULE: 'menu_skip',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -1007,8 +1007,8 @@ const store = createStore({
                             MENU_ID: 2,//菜单编号
                             MENU_NAME: '权限设置',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/authority_management/authority_set',//路由地址
-                            MENU_MODULE: 'system_management/system_permission_set',//组件地址
+                            MENU_ROUTE: '/lineage/authority_management/authority_set',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_permission_set',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1016,8 +1016,8 @@ const store = createStore({
                             MENU_ID: 3,//菜单编号
                             MENU_NAME: '角色设置',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/authority_management/role',//路由地址
-                            MENU_MODULE: 'system_management/system_role',//组件地址
+                            MENU_ROUTE: '/lineage/authority_management/role',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_role',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1027,7 +1027,7 @@ const store = createStore({
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '公告管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/system/announcement_management',//路由地址
+                        MENU_ROUTE: '/lineage/announcement_management',//路由地址
                         MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -1036,8 +1036,8 @@ const store = createStore({
                             MENU_ID: 7,//菜单编号
                             MENU_NAME: '公告设置',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/announcement_management/announcement_set',//路由地址
-                            MENU_MODULE: 'system_management/system_notice',//组件地址
+                            MENU_ROUTE: '/lineage/announcement_management/announcement_set',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_notice',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1047,7 +1047,7 @@ const store = createStore({
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '日志管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/system/log_management',//路由地址
+                        MENU_ROUTE: '/lineage/log_management',//路由地址
                         MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -1056,8 +1056,8 @@ const store = createStore({
                             MENU_ID: 8,//菜单编号
                             MENU_NAME: '登录日志',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/log_management/register_log',//路由地址
-                            MENU_MODULE: 'system_management/system_login_log',//组件地址
+                            MENU_ROUTE: '/lineage/log_management/register_log',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_login_log',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1065,8 +1065,8 @@ const store = createStore({
                             MENU_ID: 9,//菜单编号
                             MENU_NAME: '操作日志',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/log_management/operation_log',//路由地址
-                            MENU_MODULE: 'system_management/system_operate_log',//组件地址
+                            MENU_ROUTE: '/lineage/log_management/operation_log',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_operate_log',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有

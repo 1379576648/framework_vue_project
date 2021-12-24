@@ -693,53 +693,53 @@ const routes = [
                 ],
             },
             {//系统管理
-                path: '/system',
-                redirect: "/system/authority_management",
-                component: modules[`${'../components/system_management/system_main.vue'}`],
+                path: '/lineage',
+                redirect: "/lineage/authority_management",
+                component: modules[`${'../components/lineage_management/lineage_main.vue'}`],
                 children: [
                     {//权限管理
-                        path: '/system/authority_management',
-                        redirect: "/system/authority_management/authority_set",
+                        path: '/lineage/authority_management',
+                        redirect: "/lineage/authority_management/authority_set",
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//权限设置
-                                path: '/system/authority_management/authority_set',
-                                component: modules[`${'../components/system_management/system_permission_set.vue'}`],
+                                path: '/lineage/authority_management/authority_set',
+                                component: modules[`${'../components/lineage_management/lineage_permission_set.vue'}`],
                             },
                             {//角色设置
-                                path: '/system/authority_management/role',
-                                component: modules[`${'../components/system_management/system_role.vue'}`],
+                                path: '/lineage/authority_management/role',
+                                component: modules[`${'../components/lineage_management/lineage_role.vue'}`],
 
                             },
                             {//设置
-                                path: '/system/authority_management/allot_user',
-                                component: modules[`${'../components/system_management/system_allot_user.vue'}`],
+                                path: '/lineage/authority_management/allot_user',
+                                component: modules[`${'../components/lineage_management/lineage_allot_user.vue'}`],
 
                             }
                         ]
 
                     },
                     {//公告管理
-                        path: '/system/announcement_management',
+                        path: '/lineage/announcement_management',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//公告设置
-                                path: '/system/announcement_management/announcement_set',
-                                component: modules[`${'../components/system_management/system_notice.vue'}`],
+                                path: '/lineage/announcement_management/announcement_set',
+                                component: modules[`${'../components/lineage_management/lineage_notice.vue'}`],
                             }
                         ]
                     },
                     {//日志管理
-                        path: '/system/log_management',
+                        path: '/lineage/log_management',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//登录日志
-                                path: '/system/log_management/register_log',
-                                component: modules[`${'../components/system_management/system_login_log.vue'}`],
+                                path: '/lineage/log_management/register_log',
+                                component: modules[`${'../components/lineage_management/lineage_login_log.vue'}`],
                             },
                             {//操作日志
-                                path: '/system/log_management/operation_log',
-                                component: modules[`${'../components/system_management/system_operate_log.vue'}`],
+                                path: '/lineage/log_management/operation_log',
+                                component: modules[`${'../components/lineage_management/lineage_operate_log.vue'}`],
                             }
                         ]
                     }
@@ -751,12 +751,12 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(), routes
 })
-//全局前置守卫，可用作前端权限验证的简单实现
-router.beforeEach(function(to, from, next) {
-    if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
-         next({path: '/beginIndex'})
-    }else{
-        next()
-    }
-})
+// //全局前置守卫，可用作前端权限验证的简单实现
+// router.beforeEach(function(to, from, next) {
+//     if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
+//          next({path: '/beginIndex'})
+//     }else{
+//         next()
+//     }
+// })
 export default router
