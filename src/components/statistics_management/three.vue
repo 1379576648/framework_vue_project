@@ -1,13 +1,60 @@
 <template>
+  <input v-model="default_route">
   <div id="main" style="width: 100%;height:650px; float: left;"></div>
+  {{ one }}
 </template>
 <script>
 import * as echarts from 'echarts';
+
 export default {
   data() {
-    return {}
+    return {
+      //根据path动态获取store里面的菜单列表
+      menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
+      one: []
+    }
+  }, computed: {
+    //默认激活路由
+    default_route() {
+      this.inquire_1();
+      //返回结果
+      return this.activate_router;
+    },
+  }, methods: {
+    inquire_1() {
+      //如果有数据
+      if (this.menuList) {
+        //迭代循环
+        for (let i of this.menuList) {
+          //如果菜单有叶子 并且状态为启用
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            console.log(i.MENU_NAME)
+            //梯归
+            this.inquire_2(i.son);
+            //如果菜单没有叶子 并且状态为禁用
+          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+
+          }
+        }
+      }
+    }, inquire_2(value) {
+      //如果有数据
+      if (value) {
+        //迭代器循环
+        for (let i of value) {
+          //如果菜单有叶子 并且状态为启用
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+              this.one.push(i)
+            //梯归
+            this.inquire_2(i.son);
+            //如果菜单没有叶子 并且状态为禁用
+          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+            console.log(i.MENU_NAME)
+          }
+        }
+      }
+    }
   },
-  computed: {},
   mounted() {
     var chartDom = document.getElementById('main');
     var myChart = echarts.init(chartDom);
@@ -271,7 +318,6 @@ export default {
                   console.log(params);
                   let percent = params.data.percent;
                   let name = params.name.substring(0, 11) + '\n' + params.name.substring(11);
-
                   return [`{percent|${percent}}`, `{name|${name}}`].join('\n');
                 },
                 rich: {
