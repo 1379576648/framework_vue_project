@@ -586,10 +586,84 @@ const store = createStore({
                     MENU_NAME: '我的申请',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
                     MENU_ROUTE: '/examine/my_application',//路由地址
-                    MENU_MODULE: 'examine_management/examine_3_applyfor',//组件地址
+                    MENU_MODULE: '/examine',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                    MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    MENU_LEAF: 0,//是否有叶子 0有 1没有
+                    son: [{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的转正申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/mypositive',//路由地址
+                        MENU_MODULE: 'examine_management/examine_3_mypositive.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    }, {
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的异动申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/mymove',//路由地址
+                        MENU_MODULE: 'examine_management/examine_11_mymove.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的调薪申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/mychange',//路由地址
+                        MENU_MODULE: 'examine_management/examine_12_mychange.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的离职申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/myquit',//路由地址
+                        MENU_MODULE: 'examine_management/examine_13_myquit.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的加班申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/mywork',//路由地址
+                        MENU_MODULE: 'examine_management/examine_14_mywork.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的补打卡申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/mypunch',//路由地址
+                        MENU_MODULE: 'examine_management/examine_15_mypunch.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的出差申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/mytravul',//路由地址
+                        MENU_MODULE: 'examine_management/examine_16_mytravul.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },{
+                        MENU_ID: 3,//菜单编号
+                        MENU_NAME: '我的请假申请',//菜单名称
+                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_ROUTE: '/examine/my_application/myleave',//路由地址
+                        MENU_MODULE: 'examine_management/examine_17_myleave.vue',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    },
+                    ]
                 }]
             },
             {
