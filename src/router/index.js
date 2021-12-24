@@ -32,30 +32,30 @@ const routes = [
     {//首页
         path: "/home",
         component: modules[`${'../components/navigation.vue'}`],
-        redirect: '/workbench',
+        redirect: '/interface',
         children: [
             {/* 工作台 */
-                path: '/workbench',
-                redirect: "/workbench/leader",
-                component: modules[`${'../components/workbench_management/workbench_main.vue'}`],
+                path: '/interface',
+                redirect: "/interface/leader",
+                component: modules[`${'../components/interface_management/interface_main.vue'}`],
                 children: [
                     {
-                        path: "/workbench/leader",
+                        path: "/interface/leader",
                         components: {
                             //统计公司情况
-                            "workbench_time": modules[`${'../components/workbench_management/workbench_time.vue'}`],
+                            "interface_time": modules[`${'../components/interface_management/interface_time.vue'}`],
                             //待办事项
-                            "workbench_db": modules[`${'../components/workbench_management/workbench_db.vue'}`],
+                            "interface_db": modules[`${'../components/interface_management/interface_db.vue'}`],
                             //工作日历
-                            "workbench_calendar": modules[`${'../components/workbench_management/workbench_calendar.vue'}`],
+                            "interface_calendar": modules[`${'../components/interface_management/interface_calendar.vue'}`],
                             //统计分析
-                            "workbench_statistics": modules[`${'../components/workbench_management/workbench_statistics.vue'}`],
+                            "interface_statistics": modules[`${'../components/interface_management/interface_statistics.vue'}`],
                             //招聘进度
-                            "workbench_zpprogress": modules[`${'../components/workbench_management/workbench_zpprogress.vue'}`],
+                            "interface_zpprogress": modules[`${'../components/interface_management/interface_zpprogress.vue'}`],
                             //快捷功能入口
-                            "workbench_quick": modules[`${'../components/workbench_management/workbench_quick.vue'}`],
+                            "interface_quick": modules[`${'../components/interface_management/interface_quick.vue'}`],
                             //公司系统公告
-                            "workbench_notice": modules[`${'../components/workbench_management/workbench_notice.vue'}`],
+                            "interface_notice": modules[`${'../components/interface_management/interface_notice.vue'}`],
                         }
                     }
                 ]
