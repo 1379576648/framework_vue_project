@@ -1,34 +1,34 @@
 <!--花名册页面-->
 <template>
 <div class="saas-main-content">
-<div class="icon-p">
 
+<div class="icon-p" style="width: 100%;float: left">
 <el-row :gutter="20">
-    <el-col :span="4">
+    <el-col :span="5">
       <el-card shadow="always" style="background-color: rgb(35, 102, 167);color:white;font-size:14px;">
         <p>在职</p>
         <p>24</p>
       </el-card>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="5">
       <el-card shadow="hover" style="background-color: rgb(73, 167, 130);color:white;font-size:14px;">
         <p>本月离职</p>
         <p>0</p>
       </el-card>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="5">
 	  <el-card shadow="never" style="background-color: rgb(233, 143, 39);color:white;font-size:14px;">
       <p>正式</p>
       <p>21</p>
     </el-card>
     </el-col>
-	<el-col :span="4">
-      <el-card shadow="never" style="background-color: rgb(35, 102, 167);color:white;font-size:14px;">
-        <p>试用</p>
-        <p>3</p>
-      </el-card>
-    </el-col>
-	<el-col :span="4">
+<!--	<el-col :span="4">-->
+<!--      <el-card shadow="never" style="background-color: rgb(35, 102, 167);color:white;font-size:14px;">-->
+<!--        <p>试用</p>-->
+<!--        <p>3</p>-->
+<!--      </el-card>-->
+<!--    </el-col>-->
+	<el-col :span="5">
       <el-card shadow="never" style="background-color: rgb(73, 167, 130);color:white;font-size:14px;">
         <p>实习</p>
         <p>0</p>
@@ -43,20 +43,23 @@
   </el-row>
 </div>
 
+
 <div style="margin-top:10px;">
 		<!--搜索输入框-->
-    <el-row style="width:200px;float:right;">
-      <el-input v-model="input3" placeholder="搜索">
+    <el-row style="width:150px;float:right;">
+      <el-input size="small" v-model="input3" placeholder="搜索" style="margin-top: 20px;margin-right: 2px;">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
       </el-input>
     </el-row>
 </div>
+
 <br/>
-<div style="margin-top:30px;">
- <el-table :data="tableData" style="width: 100%">
-    <el-table-column fixed prop="date" label="姓名" width="150" />
+<div style="margin-top:95px;">
+ <el-table :data="tableData" style="width: 100%;">
+   <el-table-column type="selection"></el-table-column>
+    <el-table-column fixed="left" prop="date" label="姓名" width="150"/>
     <el-table-column prop="name" label="工号" width="150" />
     <el-table-column prop="state" label="所属公司/中心" width="150" />
     <el-table-column prop="city" label="部门" width="150" />
@@ -147,7 +150,7 @@ export default {
         },
 		{
           date: '2016-06-07',
-          name: 'Tom',
+          name: '小花',
           state: 'California',
           city: 'Los Angeles',
           address: 'No. 189, Grove St, Los Angeles',
@@ -172,6 +175,7 @@ export default {
   padding-left: 10px;
   text-align: center;
   color: black;
+  font-size: 12px;
 }
 /deep/.el-card__body {
   /* padding: var(--el-card-padding); */
