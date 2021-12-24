@@ -423,7 +423,41 @@ const routes = [
                     },
                     {//我的申请
                         path: '/examine/my_application',
-                        component: modules[`${'../components/examine_management/examine_3_applyfor.vue'}`],
+                        component: modules[`${'../components/menu_skip.vue'}`],
+                        children: [
+                            {//我的转正申请
+                                path: '/examine/my_application/mypositive',
+                                component: modules[`${'../components/examine_management/examine_3_mypositive.vue'}`],
+                            },
+                            {//我的异动申请
+                                path: '/examine/my_application/mymove',
+                                component: modules[`${'../components/examine_management/examine_11_mymove.vue'}`],
+                            },
+                            {//我的调薪申请
+                                path: '/examine/my_application/mychange',
+                                component: modules[`${'../components/examine_management/examine_12_mychange.vue'}`],
+                            },
+                            {//我的离职申请
+                                path: '/examine/my_application/myquit',
+                                component: modules[`${'../components/examine_management/examine_13_myquit.vue'}`],
+                            },
+                            {//我的加班申请
+                                path: '/examine/my_application/mywork',
+                                component: modules[`${'../components/examine_management/examine_14_mywork.vue'}`],
+                            },
+                            {//我的补打卡申请
+                                path: '/examine/my_application/mypunch',
+                                component: modules[`${'../components/examine_management/examine_15_mypunch.vue'}`],
+                            },
+                            {//我的出差申请
+                                path: '/examine/my_application/mytravul',
+                                component: modules[`${'../components/examine_management/examine_16_mytravul.vue'}`],
+                            },
+                            {//我的请假申请
+                                path: '/examine/my_application/myleave',
+                                component: modules[`${'../components/examine_management/examine_17_myleave.vue'}`],
+                            },
+                        ]
                     }
                 ]
             },
@@ -705,12 +739,12 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(), routes
 })
-//全局前置守卫，可用作前端权限验证的简单实现
-router.beforeEach(function(to, from, next) {
-    if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
-         next({path: '/beginIndex'})
-    }else{
-        next()
-    }
-})
+// //全局前置守卫，可用作前端权限验证的简单实现
+// router.beforeEach(function(to, from, next) {
+//     if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
+//          next({path: '/beginIndex'})
+//     }else{
+//         next()
+//     }
+// })
 export default router
