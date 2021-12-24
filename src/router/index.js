@@ -504,8 +504,20 @@ const routes = [
                     },
                     //固定工资方案
                     {
-                        path: '/salary/regular',
-                        component: modules[`${'../components/salary_management/salary_fixedsalary.vue'}`]
+                        path: '/salary/regular/',
+                        component: modules[`${'../components/salary_management/salary_fixedwage.vue'}`],
+                        redirect: "/salary/regular/regularearn",
+                        children: [
+                            //固定工资
+                            {
+                                path: '/salary/regular/regularearn',
+                                component: modules[`${'../components/salary_management/salary_regularearn.vue'}`],
+                            },
+                            {
+                                path: '/salary/regular/raisequery',
+                                component: modules[`${'../components/salary_management/salary_raisequery.vue'}`],
+                            }
+                        ]
                     },
                     //加班工资方案
                     {
@@ -519,12 +531,12 @@ const routes = [
                     },
                     //考勤扣款方案
                     {
-                        path: '/salary/clockinginplan',
-                        component: modules[`${'../components/salary_management/salary_clockingin.vue'}`]
+                        path: '/salary/attendanceplan',
+                        component: modules[`${'../components/salary_management/salary_attendance.vue'}`]
                     },
                     //新增编辑考勤扣款方案
                     {
-                        path: '/salary/insertclockinginplan',
+                        path: '/salary/insertattendanceplan',
                         component: modules[`${'../components/salary_management/salary_insertplantwo.vue'}`]
                     },
                     //出差方案
