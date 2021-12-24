@@ -67,10 +67,10 @@ export default {
       isActive3:false,
       isActive4:false,
       //路由地址
-      one:'/recruitment/recruit/fullresume',
-      two:'/recruitment/recruit/newresume',
-      three:'/recruitment/recruit/candidate',
-      foue:'/recruitment/recruit/eliminate'
+      one:'/recruit/recruit/fullresume',
+      two:'/recruit/recruit/newresume',
+      three:'/recruit/recruit/candidate',
+      foue:'/recruit/recruit/eliminate'
 
     }
   },

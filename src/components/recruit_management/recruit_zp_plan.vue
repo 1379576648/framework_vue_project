@@ -124,8 +124,8 @@ import { ElMessage } from 'element-plus'
 export default {
   data() {
     return {
-      one: '/recruitment/addplan/addplan',
-      two:'/recruitment/plan/details',
+      one: '/recruit/addplan/addplan',
+      two:'/recruit/plan/details',
       //分页
       pageInfo: {
         currenPage: 3,

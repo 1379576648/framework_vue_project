@@ -45,8 +45,8 @@ export default {
       isActive1:true,
       isActive2:false,
       //路由地址
-      one:'/recruitment/candidate',
-      two:'/recruitment/Invited',
+      one:'/recruit/candidate',
+      two:'/recruit/Invited',
 
     }
   },
