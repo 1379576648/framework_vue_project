@@ -3,8 +3,8 @@
   <div class="saas-main-content">
 
     <!--搜索输入框-->
-    <el-row style="width:200px;float:right;">
-      <el-input v-model="input3" placeholder="搜索">
+    <el-row style="width:150px;float:right;">
+      <el-input v-model="input3" placeholder="搜索" size="small">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -47,13 +47,13 @@
     </div>
 
     <!--  弹框  -->
-    <div >
+    <div style="text-align: center;">
       <el-dialog
           v-model="become"
           width="30%"
           :close-on-click-modal="false" >
         放弃原因：<el-input type="textarea" style="width:240px;"></el-input>
-        <div style="margin-top:30px;margin-left: 120px;">
+        <div style="margin-top:30px;margin-left: 30px;">
           <el-button @click="become=false">取消</el-button>
           <el-button type="primary">确定</el-button></div>
 
@@ -149,6 +149,5 @@ export default defineComponent({
   float: right;
   margin: 20px;
 }
-
 
 </style>

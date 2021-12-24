@@ -38,23 +38,37 @@
           </el-dialog>
           <h1>12345</h1>
 
-         <div class="j-tabs2">
-           <el-menu
-               :default-active="activeIndex"
-               class="el-menu-demo"
-               mode="horizontal"
-               @select="handleSelect">
+<!--         <div class="j-tabs2">-->
+<!--           <el-menu-->
+<!--               :default-active="activeIndex"-->
+<!--               class="el-menu-demo"-->
+<!--               mode="horizontal"-->
+<!--               @select="handleSelect">-->
 
-             <router-link :to="{path:this.basicfile,query:{path: this.$route.query.path}}" style="text-decoration: none;">
-             <el-menu-item index="1">基本档案</el-menu-item>
-             </router-link>
+<!--             <router-link :to="{path:this.basicfile,query:{path: this.$route.query.path}}" style="text-decoration: none;">-->
+<!--             <el-menu-item index="1">基本档案</el-menu-item>-->
+<!--             </router-link>-->
 
-             <router-link :to="{path:this.information,query:{path: this.$route.query.path}}" style="text-decoration: none;">
-             <el-menu-item index="4">个人信息</el-menu-item>
-             </router-link>
-           </el-menu>
+<!--             <router-link :to="{path:this.information,query:{path: this.$route.query.path}}" style="text-decoration: none;">-->
+<!--             <el-menu-item index="4">个人信息</el-menu-item>-->
+<!--             </router-link>-->
+<!--           </el-menu>-->
 
-          </div>
+<!--          </div>-->
+
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane  name="book">
+              <template #label>
+                <router-link :to="{path:this.basicfile,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">基本档案</div></router-link>
+              </template>
+            </el-tab-pane>
+
+            <el-tab-pane  name="second">
+              <template #label>
+                <router-link :to="{path:this.information,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">个人信息</div></router-link>
+              </template>
+            </el-tab-pane>
+          </el-tabs>
 
 
             
