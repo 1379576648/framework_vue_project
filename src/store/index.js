@@ -614,7 +614,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的调薪申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -623,7 +623,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的离职申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -632,7 +632,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的加班申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -641,7 +641,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的补打卡申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -650,7 +650,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的出差申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -659,7 +659,7 @@ const store = createStore({
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    },{
+                    }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的请假申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
@@ -1137,7 +1137,25 @@ const store = createStore({
             }
             //返回结果集
             return store_menuList;
+        },
+        chart_menuList: (state) => (path) => {
+            //定义数组
+            let chart_menuList=[];
+            //循环菜单列表
+            for (let i = 0; i < state.memuList.length; i++) {
+                //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
+                if ((state.memuList[i].MENU_ROUTE) == (path) && state.memuList[i].MENU_STATE == 0) {
+                    //如果叶子下面有数据
+                    if (state.memuList[i].son) {
+                        //添加至数组
+                        chart_menuList.push(state.memuList[i]);
+                    }
+                }
+            }
+            //返回结果集
+            return chart_menuList;
         }
+
     }
 })
 export default store
