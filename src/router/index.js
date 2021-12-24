@@ -531,12 +531,12 @@ const routes = [
                     },
                     //考勤扣款方案
                     {
-                        path: '/salary/clockinginplan',
-                        component: modules[`${'../components/salary_management/salary_clockingin.vue'}`]
+                        path: '/salary/attendanceplan',
+                        component: modules[`${'../components/salary_management/salary_attendance.vue'}`]
                     },
                     //新增编辑考勤扣款方案
                     {
-                        path: '/salary/insertclockinginplan',
+                        path: '/salary/insertattendanceplan',
                         component: modules[`${'../components/salary_management/salary_insertplantwo.vue'}`]
                     },
                     //出差方案
