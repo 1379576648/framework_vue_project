@@ -29,3 +29,6 @@ table * {
 .demo-input-suffix {
   margin-bottom: 16px;
 }
+/deep/.el-table .el-table__cell{
+  text-align: center;
+}
