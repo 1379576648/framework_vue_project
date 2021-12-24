@@ -375,87 +375,87 @@ const routes = [
                 ]
             },
             {//审批管理
-                path: '/examine',
-                component: modules[`${'../components/examine_management/examine_main.vue'}`],
-                redirect: "/examine/sponsor_examine",
+                path: '/approval',
+                component: modules[`${'../components/approval_management/approval_main.vue'}`],
+                redirect: "/approval/sponsor_approval",
                 children: [
                     {//发起审批
-                        path: '/examine/sponsor_examine',
-                        component: modules[`${'../components/examine_management/examine_1_initiate.vue'}`],
+                        path: '/approval/sponsor_approval',
+                        component: modules[`${'../components/approval_management/approval_1_initiate.vue'}`],
                     },
                     {//审批中心
-                        path: '/examine/examine_centre',
+                        path: '/approval/approval_centre',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//转正审批
-                                path: '/examine/examine_centre/sponsor_examine',
-                                component: modules[`${'../components/examine_management/examine_2_positive.vue'}`],
+                                path: '/approval/approval_centre/sponsor_approval',
+                                component: modules[`${'../components/approval_management/approval_2_positive.vue'}`],
                             },
                             {//异动审批
-                                path: '/examine/examine_centre/transaction_examine',
-                                component: modules[`${'../components/examine_management/examine_4_move.vue'}`],
+                                path: '/approval/approval_centre/transaction_approval',
+                                component: modules[`${'../components/approval_management/approval_4_move.vue'}`],
                             },
                             {//调薪审批
-                                path: '/examine/examine_centre/wage_examine',
-                                component: modules[`${'../components/examine_management/examine_5_change.vue'}`],
+                                path: '/approval/approval_centre/wage_approval',
+                                component: modules[`${'../components/approval_management/approval_5_change.vue'}`],
                             },
                             {//离职审批
-                                path: '/examine/examine_centre/dimission_examine',
-                                component: modules[`${'../components/examine_management/examine_6_quit.vue'}`],
+                                path: '/approval/approval_centre/dimission_approval',
+                                component: modules[`${'../components/approval_management/approval_6_quit.vue'}`],
                             },
                             {//加班审批
-                                path: '/examine/examine_centre/overtime_examine',
-                                component: modules[`${'../components/examine_management/examine_7_work.vue'}`],
+                                path: '/approval/approval_centre/overtime_approval',
+                                component: modules[`${'../components/approval_management/approval_7_work.vue'}`],
                             },
                             {//补打卡审批
-                                path: '/examine/examine_centre/fill_clock_examine',
-                                component: modules[`${'../components/examine_management/examine_8_punch.vue'}`],
+                                path: '/approval/approval_centre/fill_clock_approval',
+                                component: modules[`${'../components/approval_management/approval_8_punch.vue'}`],
                             },
                             {//出差审批
-                                path: '/examine/examine_centre/evection_examine',
-                                component: modules[`${'../components/examine_management/examine_9_travel.vue'}`],
+                                path: '/approval/approval_centre/evection_approval',
+                                component: modules[`${'../components/approval_management/approval_9_travel.vue'}`],
                             },
                             {//请假审批
-                                path: '/examine/examine_centre/leave_examine',
-                                component: modules[`${'../components/examine_management/examine_10_leave.vue'}`],
+                                path: '/approval/approval_centre/leave_approval',
+                                component: modules[`${'../components/approval_management/approval_10_leave.vue'}`],
                             }
                         ]
                     },
                     {//我的申请
-                        path: '/examine/my_application',
+                        path: '/approval/my_application',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//我的转正申请
-                                path: '/examine/my_application/mypositive',
-                                component: modules[`${'../components/examine_management/examine_3_mypositive.vue'}`],
+                                path: '/approval/my_application/mypositive',
+                                component: modules[`${'../components/approval_management/approval_3_mypositive.vue'}`],
                             },
                             {//我的异动申请
-                                path: '/examine/my_application/mymove',
-                                component: modules[`${'../components/examine_management/examine_11_mymove.vue'}`],
+                                path: '/approval/my_application/mymove',
+                                component: modules[`${'../components/approval_management/approval_11_mymove.vue'}`],
                             },
                             {//我的调薪申请
-                                path: '/examine/my_application/mychange',
-                                component: modules[`${'../components/examine_management/examine_12_mychange.vue'}`],
+                                path: '/approval/my_application/mychange',
+                                component: modules[`${'../components/approval_management/approval_12_mychange.vue'}`],
                             },
                             {//我的离职申请
-                                path: '/examine/my_application/myquit',
-                                component: modules[`${'../components/examine_management/examine_13_myquit.vue'}`],
+                                path: '/approval/my_application/myquit',
+                                component: modules[`${'../components/approval_management/approval_13_myquit.vue'}`],
                             },
                             {//我的加班申请
-                                path: '/examine/my_application/mywork',
-                                component: modules[`${'../components/examine_management/examine_14_mywork.vue'}`],
+                                path: '/approval/my_application/mywork',
+                                component: modules[`${'../components/approval_management/approval_14_mywork.vue'}`],
                             },
                             {//我的补打卡申请
-                                path: '/examine/my_application/mypunch',
-                                component: modules[`${'../components/examine_management/examine_15_mypunch.vue'}`],
+                                path: '/approval/my_application/mypunch',
+                                component: modules[`${'../components/approval_management/approval_15_mypunch.vue'}`],
                             },
                             {//我的出差申请
-                                path: '/examine/my_application/mytravul',
-                                component: modules[`${'../components/examine_management/examine_16_mytravul.vue'}`],
+                                path: '/approval/my_application/mytravul',
+                                component: modules[`${'../components/approval_management/approval_16_mytravul.vue'}`],
                             },
                             {//我的请假申请
-                                path: '/examine/my_application/myleave',
-                                component: modules[`${'../components/examine_management/examine_17_myleave.vue'}`],
+                                path: '/approval/my_application/myleave',
+                                component: modules[`${'../components/approval_management/approval_17_myleave.vue'}`],
                             },
                         ]
                     }

@@ -485,8 +485,8 @@ const store = createStore({
                 MENU_ID: 6,//菜单编号
                 MENU_NAME: '审批管理',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/examine',//路由地址
-                MENU_MODULE: 'examine_management/examine_main',//组件地址
+                MENU_ROUTE: '/approval',//路由地址
+                MENU_MODULE: 'approval_management/approval_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -494,8 +494,8 @@ const store = createStore({
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '发起审批',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/examine/sponsor_examine',//路由地址
-                    MENU_MODULE: 'examine_management/examine_1_initiate',//组件地址
+                    MENU_ROUTE: '/approval/sponsor_approval',//路由地址
+                    MENU_MODULE: 'approval_management/approval_1_initiate',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -503,7 +503,7 @@ const store = createStore({
                     MENU_ID: 2,//菜单编号
                     MENU_NAME: '审批中心',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/examine/examine_centre',//路由地址
+                    MENU_ROUTE: '/approval/approval_centre',//路由地址
                     MENU_MODULE: 'menu_skip',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -512,8 +512,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '转正审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/sponsor_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_2_positive',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/sponsor_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_2_positive',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -521,8 +521,8 @@ const store = createStore({
                         MENU_ID: 4,//菜单编号
                         MENU_NAME: '异动审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/transaction_examine', //路由地址
-                        MENU_MODULE: 'examine_management/examine_4_move',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/transaction_approval', //路由地址
+                        MENU_MODULE: 'approval_management/approval_4_move',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -530,8 +530,8 @@ const store = createStore({
                         MENU_ID: 5,//菜单编号
                         MENU_NAME: '调薪审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/wage_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_5_change',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/wage_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_5_change',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -539,8 +539,8 @@ const store = createStore({
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '离职审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/dimission_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_6_quit',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/dimission_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_6_quit',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -548,8 +548,8 @@ const store = createStore({
                         MENU_ID: 7,//菜单编号
                         MENU_NAME: '加班审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/overtime_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_7_work',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/overtime_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_7_work',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -557,8 +557,8 @@ const store = createStore({
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '补打卡审批审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/fill_clock_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_8_punch',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/fill_clock_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_8_punch',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -566,8 +566,8 @@ const store = createStore({
                         MENU_ID: 9,//菜单编号
                         MENU_NAME: '出差审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/evection_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_9_travel',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/evection_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_9_travel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -575,8 +575,8 @@ const store = createStore({
                         MENU_ID: 10,//菜单编号
                         MENU_NAME: '请假审批',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/examine_centre/leave_examine',//路由地址
-                        MENU_MODULE: 'examine_management/examine_10_leave',//组件地址
+                        MENU_ROUTE: '/approval/approval_centre/leave_approval',//路由地址
+                        MENU_MODULE: 'approval_management/approval_10_leave',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -585,8 +585,8 @@ const store = createStore({
                     MENU_ID: 11,//菜单编号
                     MENU_NAME: '我的申请',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/examine/my_application',//路由地址
-                    MENU_MODULE: '/examine',//组件地址
+                    MENU_ROUTE: '/approval/my_application',//路由地址
+                    MENU_MODULE: '/approval',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -594,8 +594,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的转正申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/mypositive',//路由地址
-                        MENU_MODULE: 'examine_management/examine_3_mypositive.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/mypositive',//路由地址
+                        MENU_MODULE: 'approval_management/approval_3_mypositive.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -603,8 +603,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的异动申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/mymove',//路由地址
-                        MENU_MODULE: 'examine_management/examine_11_mymove.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/mymove',//路由地址
+                        MENU_MODULE: 'approval_management/approval_11_mymove.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -612,8 +612,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的调薪申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/mychange',//路由地址
-                        MENU_MODULE: 'examine_management/examine_12_mychange.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/mychange',//路由地址
+                        MENU_MODULE: 'approval_management/approval_12_mychange.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -621,8 +621,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的离职申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/myquit',//路由地址
-                        MENU_MODULE: 'examine_management/examine_13_myquit.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/myquit',//路由地址
+                        MENU_MODULE: 'approval_management/approval_13_myquit.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -630,8 +630,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的加班申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/mywork',//路由地址
-                        MENU_MODULE: 'examine_management/examine_14_mywork.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/mywork',//路由地址
+                        MENU_MODULE: 'approval_management/approval_14_mywork.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -639,8 +639,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的补打卡申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/mypunch',//路由地址
-                        MENU_MODULE: 'examine_management/examine_15_mypunch.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/mypunch',//路由地址
+                        MENU_MODULE: 'approval_management/approval_15_mypunch.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -648,8 +648,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的出差申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/mytravul',//路由地址
-                        MENU_MODULE: 'examine_management/examine_16_mytravul.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/mytravul',//路由地址
+                        MENU_MODULE: 'approval_management/approval_16_mytravul.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -657,8 +657,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '我的请假申请',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/examine/my_application/myleave',//路由地址
-                        MENU_MODULE: 'examine_management/examine_17_myleave.vue',//组件地址
+                        MENU_ROUTE: '/approval/my_application/myleave',//路由地址
+                        MENU_MODULE: 'approval_management/approval_17_myleave.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
