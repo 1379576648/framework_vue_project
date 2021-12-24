@@ -95,7 +95,7 @@ export default defineComponent({
   data() {
     return {
       //固定工资
-      regular:'/salary/regular',
+      regular:'/salary/regular/regularearn',
       //加班工资
       callbackpay:'/salary/callbackpay',
       //考勤扣款

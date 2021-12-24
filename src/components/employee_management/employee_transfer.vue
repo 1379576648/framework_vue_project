@@ -136,13 +136,8 @@
               :data="deptData"
               height="250"
               style="width: 100%;margin-top: 20px;">
-            <el-table-column
-                width="50">
+            <el-table-column width="50" type="selection">
 
-
-              <template #default>
-                <el-radio v-model="radio"></el-radio>
-              </template>
             </el-table-column>
 
             <el-table-column

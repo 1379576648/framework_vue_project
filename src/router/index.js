@@ -504,8 +504,20 @@ const routes = [
                     },
                     //固定工资方案
                     {
-                        path: '/salary/regular',
-                        component: modules[`${'../components/salary_management/salary_fixedsalary.vue'}`]
+                        path: '/salary/regular/',
+                        component: modules[`${'../components/salary_management/salary_fixedwage.vue'}`],
+                        redirect: "/salary/regular/regularearn",
+                        children: [
+                            //固定工资
+                            {
+                                path: '/salary/regular/regularearn',
+                                component: modules[`${'../components/salary_management/salary_regularearn.vue'}`],
+                            },
+                            {
+                                path: '/salary/regular/raisequery',
+                                component: modules[`${'../components/salary_management/salary_raisequery.vue'}`],
+                            }
+                        ]
                     },
                     //加班工资方案
                     {
