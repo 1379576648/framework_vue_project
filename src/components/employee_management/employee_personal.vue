@@ -13,17 +13,20 @@
       <div class="information">
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">工作经历<i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe604;</i></h3>
         <div style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="jianjia" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;"><el-button type="text" @click="gzjlhs=!gzjlhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button></h3>
+        <!-- 添加按钮 -->
+        <h3 v-show="jianjia" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
+          <el-button type="text" @click="gzjlhs=!gzjlhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
+        </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
-
+        <!--添加工作经历按钮-->
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="tianjiagzjl">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
             <el-button type="text" @click="gzjlhs=!gzjlhs,tianjiagzjl=!tianjiagzjl"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;工作经历</el-button>
           </div>
         </div>
-
+        <!--已添加工作经历表单-->
         <div style="width:100%;position: relative;margin-top: 20px;" v-show="gzjlwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
@@ -54,7 +57,7 @@
             <el-button type="text" style="color: red;">删除</el-button>
           </div>
         </div>
-
+        <!--添加工作经历表单-->
         <div class="information_from" v-show="gzjlhs">
           <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
             <br/>
@@ -620,6 +623,8 @@ export default {
       lzwhite:true,
       lzhs:false,
       lzbj:true
+
+
 
     };
   },
