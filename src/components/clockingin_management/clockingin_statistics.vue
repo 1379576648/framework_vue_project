@@ -35,9 +35,9 @@ export default {
     return {
       activeName: 'first',
       // 考勤记录/考勤月报表/历史归档路由
-      one:'/attendance/statistics/record',
-      two:'/attendance/statistics/report',
-      three:'/attendance/statistics/archive',
+      one:'/clockingin/statistics/record',
+      two:'/clockingin/statistics/report',
+      three:'/clockingin/statistics/archive',
     };
   },
   methods: {

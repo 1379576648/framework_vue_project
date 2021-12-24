@@ -182,67 +182,67 @@ const routes = [
                 ]
             },
             {//考勤管理
-                path: '/attendance',
-                component: modules[`${'../components/attendance_management/attendance_main.vue'}`],
-                redirect: "/attendance/check",
+                path: '/clockingin',
+                component: modules[`${'../components/clockingin_management/clockingin_main.vue'}`],
+                redirect: "/clockingin/check",
                 children: [
                     {//基础设置
-                        path: '/attendance/check',
+                        path: '/clockingin/check',
                         component: modules[`${'../components/menu_skip.vue'}`],
-                        redirect: "/attendance/check/classes",
+                        redirect: "/clockingin/check/classes",
                         children: [
                             {//班次管理
-                                path: '/attendance/check/classes',
-                                component: modules[`${'../components/attendance_management/attendance_check.vue'}`],
+                                path: '/clockingin/check/classes',
+                                component: modules[`${'../components/clockingin_management/clockingin_check.vue'}`],
                             },
                             {//添加班次
-                                path: '/attendance/check/classes/addclass',
-                                component: modules[`${'../components/attendance_management/attendance_classes.vue'}`],
+                                path: '/clockingin/check/classes/addclass',
+                                component: modules[`${'../components/clockingin_management/clockingin_classes.vue'}`],
                             }
                         ]
                     },
                     {//考勤记录
-                        path: '/attendance/checking',
+                        path: '/clockingin/checking',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//打卡记录
-                                path: '/attendance/checking/clock',
-                                component: modules[`${'../components/attendance_management/attendance_clock.vue'}`],
+                                path: '/clockingin/checking/clock',
+                                component: modules[`${'../components/clockingin_management/clockingin_clock.vue'}`],
                             },
                             {//加班记录
-                                path: '/attendance/checking/overtime',
-                                component: modules[`${'../components/attendance_management/attendance_overtime.vue'}`],
+                                path: '/clockingin/checking/overtime',
+                                component: modules[`${'../components/clockingin_management/clockingin_overtime.vue'}`],
                             },
                             {//请假记录
-                                path: '/attendance/checking/leave',
-                                component: modules[`${'../components/attendance_management/attendance_leave.vue'}`],
+                                path: '/clockingin/checking/leave',
+                                component: modules[`${'../components/clockingin_management/clockingin_leave.vue'}`],
                             },
                             {//出差记录
-                                path: '/attendance/checking/evection',
-                                component: modules[`${'../components/attendance_management/attendance_evection.vue'}`],
+                                path: '/clockingin/checking/evection',
+                                component: modules[`${'../components/clockingin_management/clockingin_evection.vue'}`],
                             },
                             {//补打卡记录
-                                path: '/attendance/checking/fillclock',
-                                component: modules[`${'../components/attendance_management/attendance_reissue.vue'}`],
+                                path: '/clockingin/checking/fillclock',
+                                component: modules[`${'../components/clockingin_management/clockingin_reissue.vue'}`],
                             },
                         ]
                     },
                     {// 考勤记录、考勤月报表、历史归档
-                        path: '/attendance/statistics',
-                        component: modules[`${'../components/attendance_management/attendance_statistics.vue'}`],
-                        redirect: "/attendance/statistics/record",
+                        path: '/clockingin/statistics',
+                        component: modules[`${'../components/clockingin_management/clockingin_statistics.vue'}`],
+                        redirect: "/clockingin/statistics/record",
                         children: [
                             {// 考勤记录
-                                path: '/attendance/statistics/record',
-                                component: modules[`${'../components/attendance_management/attendance_record.vue'}`],
+                                path: '/clockingin/statistics/record',
+                                component: modules[`${'../components/clockingin_management/clockingin_record.vue'}`],
                             },
                             {// 考勤月报表
-                                path: '/attendance/statistics/report',
-                                component: modules[`${'../components/attendance_management/attendance_month.vue'}`],
+                                path: '/clockingin/statistics/report',
+                                component: modules[`${'../components/clockingin_management/clockingin_month.vue'}`],
                             },
                             {// 历史归档
-                                path: '/attendance/statistics/archive',
-                                component: modules[`${'../components/attendance_management/attendance_history.vue'}`],
+                                path: '/clockingin/statistics/archive',
+                                component: modules[`${'../components/clockingin_management/clockingin_history.vue'}`],
                             },
                         ]
                     },
@@ -519,12 +519,12 @@ const routes = [
                     },
                     //考勤扣款方案
                     {
-                        path: '/salary/attendanceplan',
-                        component: modules[`${'../components/salary_management/salary_attendance.vue'}`]
+                        path: '/salary/clockinginplan',
+                        component: modules[`${'../components/salary_management/salary_clockingin.vue'}`]
                     },
                     //新增编辑考勤扣款方案
                     {
-                        path: '/salary/insertattendanceplan',
+                        path: '/salary/insertclockinginplan',
                         component: modules[`${'../components/salary_management/salary_insertplantwo.vue'}`]
                     },
                     //出差方案
@@ -629,24 +629,24 @@ const routes = [
 
 
                     {//考勤分析
-                        path: '/statistics/attendance_analyze',
+                        path: '/statistics/clockingin_analyze',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
 
                             {//出勤分析
-                                path: '/statistics/attendance_analyze/statistics_work1',
+                                path: '/statistics/clockingin_analyze/statistics_work1',
                                 component: modules[`${'../components/statistics_management/statistics_work1.vue'}`],
                             },
                             {//工时分析
-                                path: '/statistics/attendance_analyze/statistics_work2',
+                                path: '/statistics/clockingin_analyze/statistics_work2',
                                 component: modules[`${'../components/statistics_management/statistics_work2.vue'}`],
                             },
                             {//加班分析
-                                path: '/statistics/attendance_analyze/statistics_work3',
+                                path: '/statistics/clockingin_analyze/statistics_work3',
                                 component: modules[`${'../components/statistics_management/statistics_work3.vue'}`],
                             },
                             {//请假分析
-                                path: '/statistics/attendance_analyze/statistics_work4',
+                                path: '/statistics/clockingin_analyze/statistics_work4',
                                 component: modules[`${'../components/statistics_management/statistics_work4.vue'}`],
                             }
 
