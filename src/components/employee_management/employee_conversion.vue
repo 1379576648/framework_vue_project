@@ -295,6 +295,7 @@ export default defineComponent({
   padding-left: 10px;
   text-align: center;
   color: black;
+  font-size: 12px
 }
 /deep/.el-form-item {
   display: flex;

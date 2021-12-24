@@ -86,6 +86,7 @@
     padding-left: 10px;
     text-align: center;
     color: black;
+    font-size: 12px;
   }
   /* 分页的样式 */
  /deep/ .demo-pagination-block {
