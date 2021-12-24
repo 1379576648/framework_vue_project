@@ -32,30 +32,30 @@ const routes = [
     {//首页
         path: "/home",
         component: modules[`${'../components/navigation.vue'}`],
-        redirect: '/workbench',
+        redirect: '/interface',
         children: [
             {/* 工作台 */
-                path: '/workbench',
-                redirect: "/workbench/leader",
-                component: modules[`${'../components/workbench_management/workbench_main.vue'}`],
+                path: '/interface',
+                redirect: "/interface/leader",
+                component: modules[`${'../components/interface_management/interface_main.vue'}`],
                 children: [
                     {
-                        path: "/workbench/leader",
+                        path: "/interface/leader",
                         components: {
                             //统计公司情况
-                            "workbench_time": modules[`${'../components/workbench_management/workbench_time.vue'}`],
+                            "interface_time": modules[`${'../components/interface_management/interface_time.vue'}`],
                             //待办事项
-                            "workbench_db": modules[`${'../components/workbench_management/workbench_db.vue'}`],
+                            "interface_db": modules[`${'../components/interface_management/interface_db.vue'}`],
                             //工作日历
-                            "workbench_calendar": modules[`${'../components/workbench_management/workbench_calendar.vue'}`],
+                            "interface_calendar": modules[`${'../components/interface_management/interface_calendar.vue'}`],
                             //统计分析
-                            "workbench_statistics": modules[`${'../components/workbench_management/workbench_statistics.vue'}`],
+                            "interface_statistics": modules[`${'../components/interface_management/interface_statistics.vue'}`],
                             //招聘进度
-                            "workbench_zpprogress": modules[`${'../components/workbench_management/workbench_zpprogress.vue'}`],
+                            "interface_zpprogress": modules[`${'../components/interface_management/interface_zpprogress.vue'}`],
                             //快捷功能入口
-                            "workbench_quick": modules[`${'../components/workbench_management/workbench_quick.vue'}`],
+                            "interface_quick": modules[`${'../components/interface_management/interface_quick.vue'}`],
                             //公司系统公告
-                            "workbench_notice": modules[`${'../components/workbench_management/workbench_notice.vue'}`],
+                            "interface_notice": modules[`${'../components/interface_management/interface_notice.vue'}`],
                         }
                     }
                 ]
@@ -182,67 +182,67 @@ const routes = [
                 ]
             },
             {//考勤管理
-                path: '/attendance',
-                component: modules[`${'../components/attendance_management/attendance_main.vue'}`],
-                redirect: "/attendance/check",
+                path: '/clockingin',
+                component: modules[`${'../components/clockingin_management/clockingin_main.vue'}`],
+                redirect: "/clockingin/check",
                 children: [
                     {//基础设置
-                        path: '/attendance/check',
+                        path: '/clockingin/check',
                         component: modules[`${'../components/menu_skip.vue'}`],
-                        redirect: "/attendance/check/classes",
+                        redirect: "/clockingin/check/classes",
                         children: [
                             {//班次管理
-                                path: '/attendance/check/classes',
-                                component: modules[`${'../components/attendance_management/attendance_check.vue'}`],
+                                path: '/clockingin/check/classes',
+                                component: modules[`${'../components/clockingin_management/clockingin_check.vue'}`],
                             },
                             {//添加班次
-                                path: '/attendance/check/classes/addclass',
-                                component: modules[`${'../components/attendance_management/attendance_classes.vue'}`],
+                                path: '/clockingin/check/classes/addclass',
+                                component: modules[`${'../components/clockingin_management/clockingin_classes.vue'}`],
                             }
                         ]
                     },
                     {//考勤记录
-                        path: '/attendance/checking',
+                        path: '/clockingin/checking',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//打卡记录
-                                path: '/attendance/checking/clock',
-                                component: modules[`${'../components/attendance_management/attendance_clock.vue'}`],
+                                path: '/clockingin/checking/clock',
+                                component: modules[`${'../components/clockingin_management/clockingin_clock.vue'}`],
                             },
                             {//加班记录
-                                path: '/attendance/checking/overtime',
-                                component: modules[`${'../components/attendance_management/attendance_overtime.vue'}`],
+                                path: '/clockingin/checking/overtime',
+                                component: modules[`${'../components/clockingin_management/clockingin_overtime.vue'}`],
                             },
                             {//请假记录
-                                path: '/attendance/checking/leave',
-                                component: modules[`${'../components/attendance_management/attendance_leave.vue'}`],
+                                path: '/clockingin/checking/leave',
+                                component: modules[`${'../components/clockingin_management/clockingin_leave.vue'}`],
                             },
                             {//出差记录
-                                path: '/attendance/checking/evection',
-                                component: modules[`${'../components/attendance_management/attendance_evection.vue'}`],
+                                path: '/clockingin/checking/evection',
+                                component: modules[`${'../components/clockingin_management/clockingin_evection.vue'}`],
                             },
                             {//补打卡记录
-                                path: '/attendance/checking/fillclock',
-                                component: modules[`${'../components/attendance_management/attendance_reissue.vue'}`],
+                                path: '/clockingin/checking/fillclock',
+                                component: modules[`${'../components/clockingin_management/clockingin_reissue.vue'}`],
                             },
                         ]
                     },
                     {// 考勤记录、考勤月报表、历史归档
-                        path: '/attendance/statistics',
-                        component: modules[`${'../components/attendance_management/attendance_statistics.vue'}`],
-                        redirect: "/attendance/statistics/record",
+                        path: '/clockingin/statistics',
+                        component: modules[`${'../components/clockingin_management/clockingin_statistics.vue'}`],
+                        redirect: "/clockingin/statistics/record",
                         children: [
                             {// 考勤记录
-                                path: '/attendance/statistics/record',
-                                component: modules[`${'../components/attendance_management/attendance_record.vue'}`],
+                                path: '/clockingin/statistics/record',
+                                component: modules[`${'../components/clockingin_management/clockingin_record.vue'}`],
                             },
                             {// 考勤月报表
-                                path: '/attendance/statistics/report',
-                                component: modules[`${'../components/attendance_management/attendance_month.vue'}`],
+                                path: '/clockingin/statistics/report',
+                                component: modules[`${'../components/clockingin_management/clockingin_month.vue'}`],
                             },
                             {// 历史归档
-                                path: '/attendance/statistics/archive',
-                                component: modules[`${'../components/attendance_management/attendance_history.vue'}`],
+                                path: '/clockingin/statistics/archive',
+                                component: modules[`${'../components/clockingin_management/clockingin_history.vue'}`],
                             },
                         ]
                     },
@@ -375,87 +375,87 @@ const routes = [
                 ]
             },
             {//审批管理
-                path: '/examine',
-                component: modules[`${'../components/examine_management/examine_main.vue'}`],
-                redirect: "/examine/sponsor_examine",
+                path: '/approval',
+                component: modules[`${'../components/approval_management/approval_main.vue'}`],
+                redirect: "/approval/sponsor_approval",
                 children: [
                     {//发起审批
-                        path: '/examine/sponsor_examine',
-                        component: modules[`${'../components/examine_management/examine_1_initiate.vue'}`],
+                        path: '/approval/sponsor_approval',
+                        component: modules[`${'../components/approval_management/approval_1_initiate.vue'}`],
                     },
                     {//审批中心
-                        path: '/examine/examine_centre',
+                        path: '/approval/approval_centre',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//转正审批
-                                path: '/examine/examine_centre/sponsor_examine',
-                                component: modules[`${'../components/examine_management/examine_2_positive.vue'}`],
+                                path: '/approval/approval_centre/sponsor_approval',
+                                component: modules[`${'../components/approval_management/approval_2_positive.vue'}`],
                             },
                             {//异动审批
-                                path: '/examine/examine_centre/transaction_examine',
-                                component: modules[`${'../components/examine_management/examine_4_move.vue'}`],
+                                path: '/approval/approval_centre/transaction_approval',
+                                component: modules[`${'../components/approval_management/approval_4_move.vue'}`],
                             },
                             {//调薪审批
-                                path: '/examine/examine_centre/wage_examine',
-                                component: modules[`${'../components/examine_management/examine_5_change.vue'}`],
+                                path: '/approval/approval_centre/wage_approval',
+                                component: modules[`${'../components/approval_management/approval_5_change.vue'}`],
                             },
                             {//离职审批
-                                path: '/examine/examine_centre/dimission_examine',
-                                component: modules[`${'../components/examine_management/examine_6_quit.vue'}`],
+                                path: '/approval/approval_centre/dimission_approval',
+                                component: modules[`${'../components/approval_management/approval_6_quit.vue'}`],
                             },
                             {//加班审批
-                                path: '/examine/examine_centre/overtime_examine',
-                                component: modules[`${'../components/examine_management/examine_7_work.vue'}`],
+                                path: '/approval/approval_centre/overtime_approval',
+                                component: modules[`${'../components/approval_management/approval_7_work.vue'}`],
                             },
                             {//补打卡审批
-                                path: '/examine/examine_centre/fill_clock_examine',
-                                component: modules[`${'../components/examine_management/examine_8_punch.vue'}`],
+                                path: '/approval/approval_centre/fill_clock_approval',
+                                component: modules[`${'../components/approval_management/approval_8_punch.vue'}`],
                             },
                             {//出差审批
-                                path: '/examine/examine_centre/evection_examine',
-                                component: modules[`${'../components/examine_management/examine_9_travel.vue'}`],
+                                path: '/approval/approval_centre/evection_approval',
+                                component: modules[`${'../components/approval_management/approval_9_travel.vue'}`],
                             },
                             {//请假审批
-                                path: '/examine/examine_centre/leave_examine',
-                                component: modules[`${'../components/examine_management/examine_10_leave.vue'}`],
+                                path: '/approval/approval_centre/leave_approval',
+                                component: modules[`${'../components/approval_management/approval_10_leave.vue'}`],
                             }
                         ]
                     },
                     {//我的申请
-                        path: '/examine/my_application',
+                        path: '/approval/my_application',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//我的转正申请
-                                path: '/examine/my_application/mypositive',
-                                component: modules[`${'../components/examine_management/examine_3_mypositive.vue'}`],
+                                path: '/approval/my_application/mypositive',
+                                component: modules[`${'../components/approval_management/approval_3_mypositive.vue'}`],
                             },
                             {//我的异动申请
-                                path: '/examine/my_application/mymove',
-                                component: modules[`${'../components/examine_management/examine_11_mymove.vue'}`],
+                                path: '/approval/my_application/mymove',
+                                component: modules[`${'../components/approval_management/approval_11_mymove.vue'}`],
                             },
                             {//我的调薪申请
-                                path: '/examine/my_application/mychange',
-                                component: modules[`${'../components/examine_management/examine_12_mychange.vue'}`],
+                                path: '/approval/my_application/mychange',
+                                component: modules[`${'../components/approval_management/approval_12_mychange.vue'}`],
                             },
                             {//我的离职申请
-                                path: '/examine/my_application/myquit',
-                                component: modules[`${'../components/examine_management/examine_13_myquit.vue'}`],
+                                path: '/approval/my_application/myquit',
+                                component: modules[`${'../components/approval_management/approval_13_myquit.vue'}`],
                             },
                             {//我的加班申请
-                                path: '/examine/my_application/mywork',
-                                component: modules[`${'../components/examine_management/examine_14_mywork.vue'}`],
+                                path: '/approval/my_application/mywork',
+                                component: modules[`${'../components/approval_management/approval_14_mywork.vue'}`],
                             },
                             {//我的补打卡申请
-                                path: '/examine/my_application/mypunch',
-                                component: modules[`${'../components/examine_management/examine_15_mypunch.vue'}`],
+                                path: '/approval/my_application/mypunch',
+                                component: modules[`${'../components/approval_management/approval_15_mypunch.vue'}`],
                             },
                             {//我的出差申请
-                                path: '/examine/my_application/mytravul',
-                                component: modules[`${'../components/examine_management/examine_16_mytravul.vue'}`],
+                                path: '/approval/my_application/mytravul',
+                                component: modules[`${'../components/approval_management/approval_16_mytravul.vue'}`],
                             },
                             {//我的请假申请
-                                path: '/examine/my_application/myleave',
-                                component: modules[`${'../components/examine_management/examine_17_myleave.vue'}`],
+                                path: '/approval/my_application/myleave',
+                                component: modules[`${'../components/approval_management/approval_17_myleave.vue'}`],
                             },
                         ]
                     }
@@ -531,12 +531,12 @@ const routes = [
                     },
                     //考勤扣款方案
                     {
-                        path: '/salary/attendanceplan',
-                        component: modules[`${'../components/salary_management/salary_attendance.vue'}`]
+                        path: '/salary/clockinginplan',
+                        component: modules[`${'../components/salary_management/salary_clockingin.vue'}`]
                     },
                     //新增编辑考勤扣款方案
                     {
-                        path: '/salary/insertattendanceplan',
+                        path: '/salary/insertclockinginplan',
                         component: modules[`${'../components/salary_management/salary_insertplantwo.vue'}`]
                     },
                     //出差方案
@@ -641,24 +641,24 @@ const routes = [
 
 
                     {//考勤分析
-                        path: '/statistics/attendance_analyze',
+                        path: '/statistics/clockingin_analyze',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
 
                             {//出勤分析
-                                path: '/statistics/attendance_analyze/statistics_work1',
+                                path: '/statistics/clockingin_analyze/statistics_work1',
                                 component: modules[`${'../components/statistics_management/statistics_work1.vue'}`],
                             },
                             {//工时分析
-                                path: '/statistics/attendance_analyze/statistics_work2',
+                                path: '/statistics/clockingin_analyze/statistics_work2',
                                 component: modules[`${'../components/statistics_management/statistics_work2.vue'}`],
                             },
                             {//加班分析
-                                path: '/statistics/attendance_analyze/statistics_work3',
+                                path: '/statistics/clockingin_analyze/statistics_work3',
                                 component: modules[`${'../components/statistics_management/statistics_work3.vue'}`],
                             },
                             {//请假分析
-                                path: '/statistics/attendance_analyze/statistics_work4',
+                                path: '/statistics/clockingin_analyze/statistics_work4',
                                 component: modules[`${'../components/statistics_management/statistics_work4.vue'}`],
                             }
 
