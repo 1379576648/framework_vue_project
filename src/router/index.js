@@ -249,126 +249,126 @@ const routes = [
                 ]
             },
             {//招聘管理
-                path: '/recruitment',
-                component: modules[`${'../components/recruitment_management/recruitment_main.vue'}`],
-                redirect: "/recruitment/plan",
+                path: '/recruit',
+                component: modules[`${'../components/recruit_management/recruit_main.vue'}`],
+                redirect: "/recruit/plan",
                 children: [
                     {//招聘计划
-                        path: '/recruitment/plan',
+                        path: '/recruit/plan',
                         component: modules[`${'../components/menu_skip.vue'}`],
-                        redirect: "/recruitment/plan/plan",
+                        redirect: "/recruit/plan/plan",
                         children: [
                             {//招聘计划
-                                path: '/recruitment/plan/plan',
-                                component: modules[`${'../components/recruitment_management/recruitment_zp_plan.vue'}`],
+                                path: '/recruit/plan/plan',
+                                component: modules[`${'../components/recruit_management/recruit_zp_plan.vue'}`],
                             },
                             {//新增招聘计划
-                                path: '/recruitment/addplan/addplan',
-                                component: modules[`${'../components/recruitment_management/recruitment_add_plan.vue'}`],
+                                path: '/recruit/addplan/addplan',
+                                component: modules[`${'../components/recruit_management/recruit_add_plan.vue'}`],
                             },
                             {//招聘计划详情页面
-                                path: '/recruitment/plan/details',
-                                component: modules[`${'../components/recruitment_management/recruitment_plan_details.vue'}`],
+                                path: '/recruit/plan/details',
+                                component: modules[`${'../components/recruit_management/recruit_plan_details.vue'}`],
                             }
 
                         ]
                     },
                     {//简历管理
-                        path: '/recruitment/zptresume',
+                        path: '/recruit/zptresume',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//人才库
-                                path: '/recruitment/zptresume/zptresume',
-                                redirect: "/recruitment/recruit/fullresume",
-                                component: modules[`${'../components/recruitment_management/recruitment_zp_resume.vue'}`],
+                                path: '/recruit/zptresume/zptresume',
+                                redirect: "/recruit/recruit/fullresume",
+                                component: modules[`${'../components/recruit_management/recruit_zp_resume.vue'}`],
                                 children: [
                                     {//全部简历
-                                        path: '/recruitment/recruit/fullresume',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_fullresume.vue'}`],
+                                        path: '/recruit/recruit/fullresume',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_fullresume.vue'}`],
                                     },
                                     {//新简历
-                                        path: '/recruitment/recruit/newresume',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_newresume.vue'}`],
+                                        path: '/recruit/recruit/newresume',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_newresume.vue'}`],
                                     },
                                     {//候选人
-                                        path: '/recruitment/recruit/candidate',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_candidate.vue'}`],
+                                        path: '/recruit/recruit/candidate',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_candidate.vue'}`],
                                     },
                                     {//淘汰库
-                                        path: '/recruitment/recruit/eliminate',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_eliminate.vue'}`],
+                                        path: '/recruit/recruit/eliminate',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_eliminate.vue'}`],
                                     },
                                 ]
                             },
                             {//简历详情页面
-                                path: '/recruitment/resume/details',
-                                component: modules[`${'../components/recruitment_management/recruitment_resume_details.vue'}`],
+                                path: '/recruit/resume/details',
+                                component: modules[`${'../components/recruit_management/recruit_resume_details.vue'}`],
                             },
                             {//新增简历
-                                path: '/recruitment/recruit/addresume',
-                                component: modules[`${'../components/recruitment_management/recruitment_addresume.vue'}`],
+                                path: '/recruit/recruit/addresume',
+                                component: modules[`${'../components/recruit_management/recruit_addresume.vue'}`],
                             },
                         ]
                     },
                     {//招聘过程
-                        path: '/recruitment/zpprocess',
+                        path: '/recruit/zpprocess',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//面试管理
-                                path: '/recruitment/zpprocess/recruitment_zp_interview',
-                                redirect: "/recruitment/daiInterview",
-                                component: modules[`${'../components/recruitment_management/recruitment_zp_interview.vue'}`],
+                                path: '/recruit/zpprocess/recruit_zp_interview',
+                                redirect: "/recruit/daiInterview",
+                                component: modules[`${'../components/recruit_management/recruit_zp_interview.vue'}`],
                                 children: [
                                     {//待面试
-                                        path: '/recruitment/daiInterview',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_daiInterview.vue'}`],
+                                        path: '/recruit/daiInterview',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_daiInterview.vue'}`],
                                     },
                                     {//面试通过
-                                        path: '/recruitment/interviewPass',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_interviewPass.vue'}`],
+                                        path: '/recruit/interviewPass',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_interviewPass.vue'}`],
                                     },
                                     {//待复试
-                                        path: '/recruitment/daiSecondInterview',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterview.vue'}`],
+                                        path: '/recruit/daiSecondInterview',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_daiSecondInterview.vue'}`],
                                     },
                                     {//复试通过
-                                        path: '/recruitment/daiSecondInterviewPass',
-                                        component: modules[`${'../components/recruitment_management/recruitment_zp_daiSecondInterviewPass.vue'}`],
+                                        path: '/recruit/daiSecondInterviewPass',
+                                        component: modules[`${'../components/recruit_management/recruit_zp_daiSecondInterviewPass.vue'}`],
                                     },
                                 ]
                             },
                             {//简历筛选
-                                path: '/recruitment/recruitment_screen',
-                                redirect: "/recruitment/candidate",
-                                component: modules[`${'../components/recruitment_management/recruitment_screen.vue'}`],
+                                path: '/recruit/recruit_screen',
+                                redirect: "/recruit/candidate",
+                                component: modules[`${'../components/recruit_management/recruit_screen.vue'}`],
                                 children: [
                                     {//候选人
-                                        path: '/recruitment/candidate',
-                                        component: modules[`${'../components/recruitment_management/recruitment_candidate.vue'}`],
+                                        path: '/recruit/candidate',
+                                        component: modules[`${'../components/recruit_management/recruit_candidate.vue'}`],
                                     },
                                     {//已邀约
-                                        path: '/recruitment/Invited',
-                                        component: modules[`${'../components/recruitment_management/recruitment_Invited.vue'}`],
+                                        path: '/recruit/Invited',
+                                        component: modules[`${'../components/recruit_management/recruit_Invited.vue'}`],
                                     },
                                 ]
                             },
                         ]
                     },
                     {//招聘统计
-                        path: '/recruitment/zptresume',
+                        path: '/recruit/zptresume',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//招聘进度
-                                path: '/recruitment/recruit/speed_progress',
-                                component: modules[`${'../components/recruitment_management/recruitment_speed_progress.vue'}`],
+                                path: '/recruit/recruit/speed_progress',
+                                component: modules[`${'../components/recruit_management/recruit_speed_progress.vue'}`],
                             },
                             {//计划统计
-                                path: '/recruitment/recruit/statistics',
-                                component: modules[`${'../components/recruitment_management/recruitment_statistics.vue'}`],
+                                path: '/recruit/recruit/statistics',
+                                component: modules[`${'../components/recruit_management/recruit_statistics.vue'}`],
                             },
                             {//业绩统计
-                                path: '/recruitment/recruit/achievement',
-                                component: modules[`${'../components/recruitment_management/recruitment_achievement.vue'}`],
+                                path: '/recruit/recruit/achievement',
+                                component: modules[`${'../components/recruit_management/recruit_achievement.vue'}`],
                             },
                         ]
                     },
@@ -693,53 +693,53 @@ const routes = [
                 ],
             },
             {//系统管理
-                path: '/system',
-                redirect: "/system/authority_management",
-                component: modules[`${'../components/system_management/system_main.vue'}`],
+                path: '/lineage',
+                redirect: "/lineage/authority_management",
+                component: modules[`${'../components/lineage_management/lineage_main.vue'}`],
                 children: [
                     {//权限管理
-                        path: '/system/authority_management',
-                        redirect: "/system/authority_management/authority_set",
+                        path: '/lineage/authority_management',
+                        redirect: "/lineage/authority_management/authority_set",
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//权限设置
-                                path: '/system/authority_management/authority_set',
-                                component: modules[`${'../components/system_management/system_permission_set.vue'}`],
+                                path: '/lineage/authority_management/authority_set',
+                                component: modules[`${'../components/lineage_management/lineage_permission_set.vue'}`],
                             },
                             {//角色设置
-                                path: '/system/authority_management/role',
-                                component: modules[`${'../components/system_management/system_role.vue'}`],
+                                path: '/lineage/authority_management/role',
+                                component: modules[`${'../components/lineage_management/lineage_role.vue'}`],
 
                             },
                             {//设置
-                                path: '/system/authority_management/allot_user',
-                                component: modules[`${'../components/system_management/system_allot_user.vue'}`],
+                                path: '/lineage/authority_management/allot_user',
+                                component: modules[`${'../components/lineage_management/lineage_allot_user.vue'}`],
 
                             }
                         ]
 
                     },
                     {//公告管理
-                        path: '/system/announcement_management',
+                        path: '/lineage/announcement_management',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//公告设置
-                                path: '/system/announcement_management/announcement_set',
-                                component: modules[`${'../components/system_management/system_notice.vue'}`],
+                                path: '/lineage/announcement_management/announcement_set',
+                                component: modules[`${'../components/lineage_management/lineage_notice.vue'}`],
                             }
                         ]
                     },
                     {//日志管理
-                        path: '/system/log_management',
+                        path: '/lineage/log_management',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//登录日志
-                                path: '/system/log_management/register_log',
-                                component: modules[`${'../components/system_management/system_login_log.vue'}`],
+                                path: '/lineage/log_management/register_log',
+                                component: modules[`${'../components/lineage_management/lineage_login_log.vue'}`],
                             },
                             {//操作日志
-                                path: '/system/log_management/operation_log',
-                                component: modules[`${'../components/system_management/system_operate_log.vue'}`],
+                                path: '/lineage/log_management/operation_log',
+                                component: modules[`${'../components/lineage_management/lineage_operate_log.vue'}`],
                             }
                         ]
                     }
@@ -754,9 +754,9 @@ const router = createRouter({
 //全局前置守卫，可用作前端权限验证的简单实现
 router.beforeEach(function(to, from, next) {
     if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
-         next({path: '/beginIndex'});
+         next({path: '/beginIndex'})
     }else{
-        next();
+        next()
     }
 })
 export default router

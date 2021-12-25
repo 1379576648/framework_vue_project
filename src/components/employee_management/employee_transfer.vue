@@ -18,9 +18,10 @@
                 <div style="display: inline-block;">
 
                   <el-form-item label="姓名：" prop="name">
-                    <div class="name_tb" >
-                      <span @click="become = true"><i  class="iconfont" style="position: absolute;left:210px; cursor:pointer;">&#xe629;</i></span>
-                    </div>
+                    <el-select v-model="ruleForm.name" placeholder="请选择" style="width: 239px;">
+                      <el-option label="88" value="xm" style="margin-left: 20px;"></el-option>
+                      <el-option label="小花" value="xm2" style="margin-left: 20px;"></el-option>
+                    </el-select>
                   </el-form-item><br/>
 
                   <el-form-item label="调动前部门：" prop="formerdept">
@@ -76,8 +77,8 @@
           </button>
 
           <!--搜索输入框-->
-          <el-row style="width: 200px;position: absolute;left:1090px;top:30px;">
-            <el-input v-model="seek" placeholder="搜索">
+          <el-row style="width: 150px;position: absolute;left:1090px;top:30px;">
+            <el-input v-model="seek" placeholder="搜索" size="small">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
@@ -89,11 +90,11 @@
         <div class="sub-Content__primary">
           <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column prop="name" label="姓名" width="180" />
-            <el-table-column prop="type" label="异动类型" width="180" />
-            <el-table-column prop="ydept" label="原部门" width="180" />
-            <el-table-column prop="bdhdept" label="变动后部门" width="180" />
-            <el-table-column prop="ypost" label="原职位" width="180" />
-            <el-table-column prop="bdhpost" label="变动后职位" width="180" />
+            <el-table-column prop="name" label="异动类型" width="180" />
+            <el-table-column prop="date" label="原部门" width="180" />
+            <el-table-column prop="name" label="变动后部门" width="180" />
+            <el-table-column prop="date" label="原职位" width="180" />
+            <el-table-column prop="name" label="变动后职位" width="180" />
             <el-table-column prop="date" label="生效时间" width="180" />
           </el-table>
         </div>
@@ -116,52 +117,52 @@
         </el-pagination>
       </div>
 
-      <div>
-        <el-dialog
-            v-model="become"
-            title="选择员工"
-            width="50%"
-            :close-on-click-modal="false">
+<!--      <div>-->
+<!--        <el-dialog-->
+<!--            v-model="become"-->
+<!--            title="选择员工"-->
+<!--            width="50%"-->
+<!--            :close-on-click-modal="false">-->
 
-          <!--搜索输入框-->
-          <el-row style="width: 200px;margin-left:528px;">
-            <el-input v-model="seek2" placeholder="搜索">
-              <template #suffix @click="become = true">
-                <el-icon class="el-input__icon"><i-search /></el-icon>
-              </template>
-            </el-input>
-          </el-row>
+<!--          &lt;!&ndash;搜索输入框&ndash;&gt;-->
+<!--          <el-row style="width: 150px;margin-left:528px;">-->
+<!--            <el-input v-model="seek2" placeholder="搜索" size="small">-->
+<!--              <template #suffix @click="become = true">-->
+<!--                <el-icon class="el-input__icon"><i-search /></el-icon>-->
+<!--              </template>-->
+<!--            </el-input>-->
+<!--          </el-row>-->
 
-          <el-table
-              :data="deptData"
-              height="250"
-              style="width: 100%;margin-top: 20px;">
-            <el-table-column width="50" type="selection">
+<!--          <el-table-->
+<!--              :data="deptData"-->
+<!--              height="250"-->
+<!--              style="width: 100%;margin-top: 20px;">-->
+<!--            <el-table-column width="50" type="selection">-->
 
-            </el-table-column>
+<!--            </el-table-column>-->
 
-            <el-table-column
-                prop="name"
-                label="姓名"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="dept"
-                label="部门"
-                width="180">
-            </el-table-column>
-            <el-table-column
-                prop="zw"
-                label="职位">
-            </el-table-column>
-          </el-table>
+<!--            <el-table-column-->
+<!--                prop="name"-->
+<!--                label="姓名"-->
+<!--                width="180">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="dept"-->
+<!--                label="部门"-->
+<!--                width="180">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column-->
+<!--                prop="zw"-->
+<!--                label="职位">-->
+<!--            </el-table-column>-->
+<!--          </el-table>-->
 
-          <div style="margin-top: 30px;margin-left:280px">
-            <el-button @click="become=false" style="width: 60px;">取消</el-button>
-            <el-button type="primary" style="width: 60px;">确定</el-button></div>
+<!--          <div style="margin-top: 30px;margin-left:280px">-->
+<!--            <el-button @click="become=false" style="width: 60px;">取消</el-button>-->
+<!--            <el-button type="primary" style="width: 60px;">确定</el-button></div>-->
 
-        </el-dialog>
-      </div>
+<!--        </el-dialog>-->
+<!--      </div>-->
 
     </div>
   </div>
@@ -243,7 +244,29 @@ export default defineComponent({
         dept: '2016-05-06',
         name: '王小虎',
         zw: '上海市普陀区金沙江路 1518 弄'
-      }]
+      }],
+      tableData: [
+        {
+          date: '2016-05-03',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+        {
+          date: '2016-05-02',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+        {
+          date: '2016-05-04',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+        {
+          date: '2016-05-01',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles',
+        },
+      ],
     }
   },
   methods: {

@@ -368,8 +368,8 @@ const store = createStore({
                 MENU_ID: 5,//菜单编号
                 MENU_NAME: '招聘管理',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/recruitment',//路由地址
-                MENU_MODULE: 'recruitment_management/recruitment_main',//组件地址
+                MENU_ROUTE: '/recruit',//路由地址
+                MENU_MODULE: 'recruit_management/recruit_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -377,7 +377,7 @@ const store = createStore({
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '招聘计划',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/recruitment/plan',//路由地址
+                    MENU_ROUTE: '/recruit/plan',//路由地址
                     MENU_MODULE: 'menu_skip',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -386,8 +386,8 @@ const store = createStore({
                         MENU_ID: 2,//菜单编号
                         MENU_NAME: '招聘计划',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/recruitment/plan/plan',//路由地址
-                        MENU_MODULE: 'recruitment_management/recruitment_zp_plan',//组件地址
+                        MENU_ROUTE: '/recruit/plan/plan',//路由地址
+                        MENU_MODULE: 'recruit_management/recruit_zp_plan',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -407,8 +407,8 @@ const store = createStore({
                         MENU_ID: 4,//菜单编号
                         MENU_NAME: '人才库',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/recruitment/zptresume/zptresume',//路由地址
-                        MENU_MODULE: 'recruitment_management/recruitment_zp_resume.vue',//组件地址
+                        MENU_ROUTE: '/recruit/zptresume/zptresume',//路由地址
+                        MENU_MODULE: 'recruit_management/recruit_zp_resume.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -426,8 +426,8 @@ const store = createStore({
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '简历筛选',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/recruitment/recruitment_screen',//路由地址
-                        MENU_MODULE: 'recruitment_management/recruitment_screen.vue',//组件地址
+                        MENU_ROUTE: '/recruit/recruit_screen',//路由地址
+                        MENU_MODULE: 'recruit_management/recruit_screen.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -435,8 +435,8 @@ const store = createStore({
                         MENU_ID: 7,//菜单编号
                         MENU_NAME: '面试管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/recruitment/zpprocess/recruitment_zp_interview',//路由地址
-                        MENU_MODULE: 'recruitment_management/recruitment_zp_interview.vue',//组件地址
+                        MENU_ROUTE: '/recruit/zpprocess/recruit_zp_interview',//路由地址
+                        MENU_MODULE: 'recruit_management/recruit_zp_interview.vue',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -455,8 +455,8 @@ const store = createStore({
                             MENU_ID: 5,//菜单编号
                             MENU_NAME: '招聘进度',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/recruitment/recruit/speed_progress',//路由地址
-                            MENU_MODULE: 'recruitment_management/recruitment_speed_progress.vue',//组件地址
+                            MENU_ROUTE: '/recruit/recruit/speed_progress',//路由地址
+                            MENU_MODULE: 'recruit_management/recruit_speed_progress.vue',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -466,8 +466,8 @@ const store = createStore({
                             MENU_ID: 5,//菜单编号
                             MENU_NAME: '计划统计',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/recruitment/recruit/statistics',//路由地址
-                            MENU_MODULE: 'recruitment_management/recruitment_statistics.vue',//组件地址
+                            MENU_ROUTE: '/recruit/recruit/statistics',//路由地址
+                            MENU_MODULE: 'recruit_management/recruit_statistics.vue',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -476,8 +476,8 @@ const store = createStore({
                             MENU_ID: 5,//菜单编号
                             MENU_NAME: '业绩统计',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/recruitment/recruit/achievement',//路由地址
-                            MENU_MODULE: 'recruitment_management/recruitment_achievement.vue',//组件地址
+                            MENU_ROUTE: '/recruit/recruit/achievement',//路由地址
+                            MENU_MODULE: 'recruit_management/recruit_achievement.vue',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -979,8 +979,8 @@ const store = createStore({
                 MENU_ID: 10,//菜单编号
                 MENU_NAME: '系统管理',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_ROUTE: '/system',//路由地址
-                MENU_MODULE: 'system_management/system_main',//组件地址
+                MENU_ROUTE: '/lineage',//路由地址
+                MENU_MODULE: 'lineage_management/lineage_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -988,7 +988,7 @@ const store = createStore({
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '权限管理',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/system/authority_management',//路由地址
+                    MENU_ROUTE: '/lineage/authority_management',//路由地址
                     MENU_MODULE: 'menu_skip',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -998,8 +998,8 @@ const store = createStore({
                             MENU_ID: 2,//菜单编号
                             MENU_NAME: '权限设置',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/authority_management/authority_set',//路由地址
-                            MENU_MODULE: 'system_management/system_permission_set',//组件地址
+                            MENU_ROUTE: '/lineage/authority_management/authority_set',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_permission_set',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1007,8 +1007,8 @@ const store = createStore({
                             MENU_ID: 3,//菜单编号
                             MENU_NAME: '角色设置',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/authority_management/role',//路由地址
-                            MENU_MODULE: 'system_management/system_role',//组件地址
+                            MENU_ROUTE: '/lineage/authority_management/role',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_role',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1018,7 +1018,7 @@ const store = createStore({
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '公告管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/system/announcement_management',//路由地址
+                        MENU_ROUTE: '/lineage/announcement_management',//路由地址
                         MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -1027,8 +1027,8 @@ const store = createStore({
                             MENU_ID: 7,//菜单编号
                             MENU_NAME: '公告设置',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/announcement_management/announcement_set',//路由地址
-                            MENU_MODULE: 'system_management/system_notice',//组件地址
+                            MENU_ROUTE: '/lineage/announcement_management/announcement_set',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_notice',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1038,7 +1038,7 @@ const store = createStore({
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '日志管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/system/log_management',//路由地址
+                        MENU_ROUTE: '/lineage/log_management',//路由地址
                         MENU_MODULE: 'menu_skip',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
@@ -1047,8 +1047,8 @@ const store = createStore({
                             MENU_ID: 8,//菜单编号
                             MENU_NAME: '登录日志',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/log_management/register_log',//路由地址
-                            MENU_MODULE: 'system_management/system_login_log',//组件地址
+                            MENU_ROUTE: '/lineage/log_management/register_log',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_login_log',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1056,8 +1056,8 @@ const store = createStore({
                             MENU_ID: 9,//菜单编号
                             MENU_NAME: '操作日志',//菜单名称
                             PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                            MENU_ROUTE: '/system/log_management/operation_log',//路由地址
-                            MENU_MODULE: 'system_management/system_operate_log',//组件地址
+                            MENU_ROUTE: '/lineage/log_management/operation_log',//路由地址
+                            MENU_MODULE: 'lineage_management/lineage_operate_log',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有

@@ -12,10 +12,10 @@
         <br/>
 
 
-        <div class="container" >
-          <div class="block" style="margin-left: 1095px">
+        <div class="container">
+          <div class="block" style="margin-left: 1095px;">
             <span class="demonstration"></span>
-            <el-date-picker v-model="months" type="year" placeholder="请选择年份">
+            <el-date-picker v-model="months" type="year" placeholder="请选择年份" style="width: 160px;">
             </el-date-picker>
           </div>
           </div>

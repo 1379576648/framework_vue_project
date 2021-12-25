@@ -50,10 +50,10 @@ export default {
       isActive3: false,
       isActive4: false,
       //路由地址
-      daiInterview: '/recruitment/daiInterview',
-      interviewPass: '/recruitment/interviewPass',
-      daiSecondInterview: '/recruitment/daiSecondInterview',
-      daiSecondInterviewPass: '/recruitment/daiSecondInterviewPass',
+      daiInterview: '/recruit/daiInterview',
+      interviewPass: '/recruit/interviewPass',
+      daiSecondInterview: '/recruit/daiSecondInterview',
+      daiSecondInterviewPass: '/recruit/daiSecondInterviewPass',
 
     }
   },

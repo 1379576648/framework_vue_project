@@ -162,4 +162,5 @@ export default {
 
 <style scoped>
 @import url("../../css/Examine_2.css");
+
 </style>
