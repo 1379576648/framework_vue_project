@@ -1,6 +1,7 @@
 <template>
   <input v-model="default_route">
   <div id="main" style="width: 100%;height:650px; float: left;"></div>
+  {{ one }}
 </template>
 <script>
 import * as echarts from 'echarts';
@@ -20,7 +21,7 @@ export default {
     default_route() {
       this.inquire_1();
       //返回结果
-      return this.one;
+      return this.activate_router;
     },
   }, methods: {
     inquire_1() {
@@ -33,8 +34,8 @@ export default {
           name: this.menuList.MENU_NAME,
           url: this.menuList.MENU_ROUTE,
           label: {
-            width: 94,
-            height: 54,
+            width: 180,
+            height: 80,
             backgroundColor: {
               image: this.src1,
             },
@@ -44,45 +45,29 @@ export default {
         //向集合存入对象
         this.one.push(this.two);
         //迭代循环
-        for (let i=0 ;i< this.menuList.son.length;i++) {
+        for (let i of this.menuList.son) {
           //如果菜单有叶子 并且状态为启用
-          if (this.menuList.son[i].MENU_LEAF == 0 && this.menuList.son[i].MENU_STATE == 0) {
-            //初始化对象
-            this.two = {};
-            //向对象存入数据
-            this.two = {
-              name: this.menuList.son[i].MENU_NAME,
-              url: this.menuList.son[i].MENU_ROUTE,
-              label: {
-                width: 94,
-                height: 54,
-                backgroundColor: {
-                  image: this.src1,
-                },
-              }, children: []
-            }
-            //向集合存入对象
-            this.one[0].children.push(this.two);
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
             //梯归
-            this.inquire_2(this.menuList.son[i].son);
+            this.inquire_2(i.son);
             //如果菜单没有叶子 并且状态为禁用
-          } else if (this.menuList.son[i].MENU_LEAF == 1 && this.menuList.son[i].MENU_STATE == 0) {
+          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
             //初始化对象
             this.two = {};
             //向对象存入数据
             this.two = {
-              name: this.menuList.son[i].MENU_NAME,
-              url: this.menuList.son[i].MENU_ROUTE,
+              name: i.MENU_NAME,
+              url: i.MENU_ROUTE,
               label: {
                 width: 94,
                 height: 54,
                 backgroundColor: {
                   image: this.src1,
-                },
+                }
               },
             };
             //向集合存入对象
-            this.one[0].children.push(this.two);
+            this.one.push(this.two);
           }
         }
       }
@@ -90,30 +75,15 @@ export default {
       //如果有数据
       if (value) {
         //迭代器循环
-        for (let i=0 ;i< value.length;i++) {
+        for (let i of value) {
           //如果菜单有叶子 并且状态为启用
-          if (value[i].MENU_LEAF == 0 && value[i].MENU_STATE == 0) {
-            // this.one.push(value[i])
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            this.one.push(i)
             //梯归
-            this.inquire_2(value[i].son);
+            this.inquire_2(i.son);
             //如果菜单没有叶子 并且状态为禁用
-          } else if (value[i].MENU_LEAF == 1 && value[i].MENU_STATE == 0) {
-            //初始化对象
-            this.two = {};
-            //向对象存入数据
-            this.two = {
-              name: value[i].MENU_NAME,
-              url: value[i].MENU_ROUTE,
-              label: {
-                width: 94,
-                height: 54,
-                backgroundColor: {
-                  image: this.src1,
-                },
-              },
-            };
-            //向集合存入对象
-            this.one[0].children[ this.one[0].children.length-1].children.push(this.two);
+          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+            console.log(i.MENU_NAME)
           }
         }
       }
@@ -125,9 +95,176 @@ export default {
     var option;
     //点击事件
     myChart.on('click', function (params) {
-      alert(params.data.url)
+      alert(params.data.name)
     });
 
+    let data2 = [
+      {
+        name: '深圳供电局',
+        label: {
+          width: 180,
+          height: 80,
+          backgroundColor: {
+            image: this.src1,
+          },
+        },
+        children: [
+          {
+            //子集
+            name: '全资（2家）',
+            label: {
+              width: 94,
+              height: 54,
+              backgroundColor: {
+                image: this.src1,
+              },
+            },
+            children: [
+              {
+                //子集
+                name: '深圳产投',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+                children: [
+                  {
+                    //子集
+                    name: '能源科技',
+                    percent: '1.43%',
+                    label: {
+                      width: 94,
+                      height: 54,
+                      backgroundColor: {
+                        image: this.src1,
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                //子集
+                name: '能源技术',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+            ],
+          },
+          {
+            name: '控股（1家）',
+            label: {
+              width: 94,
+              height: 54,
+              backgroundColor: {
+                image: this.src1,
+              },
+            },
+            children: [
+              {
+                //子集
+                name: '低碳城',
+                money: '',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+            ],
+          },
+          {
+            name: '参股（6家）',
+            label: {
+              width: 94,
+              height: 54,
+              backgroundColor: {
+                image: this.src1,
+              },
+            },
+            children: [
+              {
+                name: '南网电动',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+              {
+                name: '科技开发',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+              {
+                name: '深研院',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+              {
+                name: '前海供电',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+              {
+                name: '南网财务',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+              {
+                name: '混改基金',
+                percent: '1.43%',
+                label: {
+                  width: 94,
+                  height: 54,
+                  backgroundColor: {
+                    image: this.src1,
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ];
     option = {
       toolbox: {
         feature: {
@@ -143,9 +280,9 @@ export default {
           orient: 'vertical',
           name: '人力资源',
           edgeShape: 'polyline', //链接线是折现还是曲线
-          data: this.default_route,
+          data: data2,
           width: 1100, //树形图宽
-          height: 400, //树形图高
+          height: 547, //树形图高
           top: '20%',
           left: '10%',
           symbolSize: [60, 38], //设置自己选择区域的宽高
@@ -167,14 +304,15 @@ export default {
               color: '#fff',
               padding: 3,
               formatter: function (params) {
-                let name = params.data.name ? params.data.name : '';
-                let url = params.data.url ? params.data.url : '';
+                let percent = params.data.percent ? params.data.percent : '';
+                let name = params.name.substring(0, 11) + '\n' + params.name.substring(11);
                 let konggu = params.value ? params.value : '';
                 if (konggu) {
-                  return [`{name|${name}}`].join('\n');
+                  return [`{percent|${percent}}`, `{name|${name}}`].join('\n');
                 } else {
                   return [
                     `{konggu|${konggu}}`,
+                    `{percent|${percent}}`,
                     `{name|${name}}`,
                   ].join('\n');
                 }
@@ -194,9 +332,9 @@ export default {
                 name: {
                   height: 18,
                   color: '#FFF',
-                  padding: [5,0,0, 0],
+                  padding: [2, 0],
                   align: 'center',
-                  fontSize: 14,
+                  fontSize: 12,
                 },
               },
             },
@@ -210,17 +348,28 @@ export default {
                 backgroundColor: '#f3857c',
                 formatter: function (params) {
                   console.log(params);
-                  let name = params.data.name;
-                  let url = params.data.url;
-                  return [`{name|${name}}`].join('\n');
+                  let percent = params.data.percent;
+                  let name = params.name.substring(0, 11) + '\n' + params.name.substring(11);
+                  return [`{percent|${percent}}`, `{name|${name}}`].join('\n');
                 },
                 rich: {
+                  percent: {
+                    color: '#FFF',
+                    padding: [-30, 0],
+                    height: 18,
+                    distance: 10,
+                    align: 'left',
+                    verticalAlign: 'top',
+                    fontSize: 12,
+                    borderWidth: 1,
+                    fontWeight: 'normal',
+                  },
                   name: {
                     height: 22,
                     color: '#FFF',
-                    padding: [15, 0, 0, 0],
+                    padding: [13, 0, 0, 0],
                     align: 'center',
-                    fontSize: 14,
+                    fontSize: 12,
                   },
                 },
               },
