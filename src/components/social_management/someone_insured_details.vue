@@ -1,4 +1,5 @@
 <template>
+<!-- 参保明细 -->
   <div class="outer-div">
     <!-- 标题 -->
     <div class="big-title">&nbsp;&nbsp;&nbsp;参保明细</div>

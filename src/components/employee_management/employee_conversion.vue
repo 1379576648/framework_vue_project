@@ -6,8 +6,8 @@
         <span></span>
         <br />
         <!--搜索输入框-->
-        <el-row style="width: 200px; margin-left: 1090px">
-          <el-input v-model="seek" placeholder="搜索">
+        <el-row style="width: 150px; margin-left: 1090px">
+          <el-input v-model="seek" placeholder="搜索" size="small">
             <template #suffix>
               <el-icon class="el-input__icon"><i-search /></el-icon>
             </template>
@@ -295,6 +295,7 @@ export default defineComponent({
   padding-left: 10px;
   text-align: center;
   color: black;
+  font-size: 12px
 }
 /deep/.el-form-item {
   display: flex;

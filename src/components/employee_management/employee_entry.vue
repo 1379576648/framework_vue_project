@@ -7,23 +7,36 @@
         <!-- 菜单 -->
         <div class="saas-main-content">
           <div class="j-tabs2">
-            <el-menu
-              :default-active="activeIndex"
-              class="el-menu-demo"
-              mode="horizontal"
-              @select="handleSelect"
-            >
-              <router-link :to="{path:this.tobehired,query:{path: this.$route.query.path}}" style="text-decoration: none">
-              <el-menu-item style="height: 50px; " index="1"
-                >待入职员工</el-menu-item
-              >
-            </router-link>
-              <router-link :to="{path:this.hashired,query:{path: this.$route.query.path}}" style="text-decoration: none">
-              <el-menu-item style="height: 50px; " index="4"
-                >放弃入职员工</el-menu-item
-              >
-            </router-link>
-            </el-menu>
+<!--            <el-menu-->
+<!--              :default-active="activeIndex"-->
+<!--              class="el-menu-demo"-->
+<!--              mode="horizontal"-->
+<!--              @select="handleSelect"-->
+<!--            >-->
+<!--              <router-link :to="{path:this.tobehired,query:{path: this.$route.query.path}}">-->
+<!--              <el-menu-item style="height: 50px; " index="1"-->
+<!--                >待入职员工</el-menu-item-->
+<!--              >-->
+<!--            </router-link>-->
+<!--              <router-link :to="{path:this.hashired,query:{path: this.$route.query.path}}">-->
+<!--              <el-menu-item style="height: 50px; " index="4"-->
+<!--                >放弃入职员工</el-menu-item-->
+<!--              >-->
+<!--            </router-link>-->
+<!--            </el-menu>-->
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane  name="book">
+                <template #label>
+                  <router-link :to="{path:this.tobehired,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">待入职员工</div></router-link>
+                </template>
+              </el-tab-pane>
+
+              <el-tab-pane  name="second">
+                <template #label>
+                  <router-link :to="{path:this.hashired,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">放弃入职员工</div></router-link>
+                </template>
+              </el-tab-pane>
+            </el-tabs>
           </div>
 
           <section

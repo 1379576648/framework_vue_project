@@ -6,8 +6,8 @@
 				<span></span>
 			     <br/>
 				<!--搜索输入框-->
-				<el-row style="width:200px;margin-left:1090px">
-				<el-input v-model="input3" placeholder="搜索">
+				<el-row style="width:150px;margin-left:1090px">
+				<el-input v-model="input3" placeholder="搜索" size="small">
 					<template #suffix>
 					<el-icon class="el-input__icon"><i-search/></el-icon>
 					</template>
@@ -86,6 +86,7 @@
     padding-left: 10px;
     text-align: center;
     color: black;
+    font-size: 12px;
   }
   /* 分页的样式 */
  /deep/ .demo-pagination-block {

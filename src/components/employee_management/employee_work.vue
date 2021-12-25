@@ -3,8 +3,8 @@
 <br/>
 <div>
 <!--搜索输入框-->
-    <el-row style="width:200px;float:right;">
-      <el-input v-model="input3" placeholder="搜索">
+    <el-row style="width:150px;float:right;">
+      <el-input v-model="input3" placeholder="搜索" size="small">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -92,6 +92,7 @@ export default {
   padding-left: 10px;
   text-align: center;
   color: black;
+  font-size: 12px
 }
 
 /* 分页的样式 */

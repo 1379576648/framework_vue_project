@@ -154,5 +154,10 @@ export default {
   float: right;
   margin: 20px;
 }
-
+/deep/.cell {
+  padding-left: 10px;
+  text-align: center;
+  color: black;
+  font-size: 12px;
+}
 </style>
