@@ -103,9 +103,6 @@ export default {
 
   data() {
     return {
-
-
-
     }
   },
   computed: {
@@ -177,7 +174,7 @@ export default {
     }, 0);
     optiony1 = {
       title:{
-        text: "员工性别分布"
+        text:"员工性别分布",
       },
       toolbox: {
         feature: {
@@ -193,32 +190,47 @@ export default {
         }
       },
       tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)',
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
       },
-      color: colors1,
-      calculable: true,
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: ['男', '女'],
+          axisTick: {
+            alignWithLabel: true
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
       series: [
         {
-          type: 'pie',
-          radius: ['30%', '65%'],
-          center: ['50%', '50%'],
-          roseType: 'radius',
-          label: {
-            show: true,
-            color: 'inherit',
-            position: 'outside',
-            fontSize: 14,
-            formatter:"{b} {d}%",
-          },
-          labelLine: {
-            length: 1,
-            length2: 20,
-            smooth: true,
-          },
-          data: data1,
-        },
-      ],
+          name: 'Direct',
+          type: 'bar',
+          barWidth: '60%',
+          data: [330, 220],
+          itemStyle:{
+            normal:{
+              color: function (params){
+                    var colorList = ['#FFC0CB','#00FFFF'];
+                    return colorList[params.dataIndex]
+              }
+            }
+          }
+        }
+      ]
     };
     /* 员工婚姻分布 */
     var colors2 = [
@@ -251,6 +263,7 @@ export default {
       title:{
         text:"员工婚姻分布",
       },
+      color:['#8B008B','#BA55D3','#9400D3','#9932CC','#7B68EE'],
       toolbox: {
         feature: {
           dataView: {
@@ -265,32 +278,45 @@ export default {
         }
       },
       tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)',
+        trigger: 'item'
       },
-      color: colors2,
-      calculable: true,
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
       series: [
         {
+          name: 'Access From',
           type: 'pie',
-          radius: ['30%', '65%'],
-          center: ['50%', '50%'],
-          roseType: 'radius',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
           label: {
-            show: true,
-            color: 'inherit',
-            position: 'outside',
-            fontSize: 14,
-            formatter:"{b} {d}%",
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
           },
           labelLine: {
-            length: 1,
-            length2: 20,
-            smooth: true,
+            show: false
           },
-          data: data2,
-        },
-      ],
+          data: [
+            { value: 1048, name: '恋爱中' },
+            { value: 735, name: '已婚' },
+            { value: 580, name: '母胎单身狗' },
+            { value: 484, name: '单身狗' },
+          ]
+        }
+      ]
     };
     /* 员工司龄分布 */
     var colors3 = [
@@ -323,46 +349,43 @@ export default {
       title:{
         text:"员工司龄分布",
       },
-      toolbox: {
-        feature: {
-          dataView: {
-            show: true,
-            readOnly: false,
-            title:"数据视图"
-          },
-          saveAsImage: {
-            show: true,
-            title:"保存"
-          }
-        }
-      },
+      color:['#E3CF57','#FF9912','#EB8E55','#FFE384','#FFD700'],
       tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)',
+        trigger: 'item'
       },
-      color: colors3,
-      calculable: true,
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
       series: [
         {
+          name: 'Access From',
           type: 'pie',
-          radius: ['30%', '65%'],
-          center: ['50%', '50%'],
-          roseType: 'radius',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
           label: {
-            show: true,
-            color: 'inherit',
-            position: 'outside',
-            fontSize: 14,
-            formatter:"{b} {d}%",
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
           },
           labelLine: {
-            length: 1,
-            length2: 20,
-            smooth: true,
+            show: false
           },
-          data: data3,
-        },
-      ],
+          data: [
+            { value: 1048, name: 'Search Engine' },
+            { value: 735, name: 'Direct' },
+            { value: 580, name: 'Email' },
+            { value: 484, name: 'Union Ads' },
+            { value: 300, name: 'Video Ads' }
+          ]
+        }
+      ]
     };
     /* 员工学历分布 */
     var colors4 = [
@@ -395,46 +418,43 @@ export default {
       title:{
         text:"员工学历分布",
       },
-      toolbox: {
-        feature: {
-          dataView: {
-            show: true,
-            readOnly: false,
-            title:"数据视图"
-          },
-          saveAsImage: {
-            show: true,
-            title:"保存"
-          }
-        }
-      },
+      color:['#DB7093','#FF69B4','#FF69B4','#C71585','#EE82EE'],
       tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)',
+        trigger: 'item'
       },
-      color: colors4,
-      calculable: true,
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
       series: [
         {
+          name: 'Access From',
           type: 'pie',
-          radius: ['30%', '65%'],
-          center: ['50%', '50%'],
-          roseType: 'radius',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
           label: {
-            show: true,
-            color: 'inherit',
-            position: 'outside',
-            fontSize: 14,
-            formatter:"{b} {d}%",
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
           },
           labelLine: {
-            length: 1,
-            length2: 20,
-            smooth: true,
+            show: false
           },
-          data: data4,
-        },
-      ],
+          data: [
+            { value: 1048, name: '大专' },
+            { value: 735, name: '三本' },
+            { value: 580, name: '二本' },
+            { value: 484, name: '一本' },
+            { value: 300, name: '研究生' }
+          ]
+        }
+      ]
     };
     /* 员工年龄段分布 */
     var colors5 = [
@@ -467,46 +487,43 @@ export default {
       title:{
         text:"员工年龄段分布",
       },
-      toolbox: {
-        feature: {
-          dataView: {
-            show: true,
-            readOnly: false,
-            title:"数据视图"
-          },
-          saveAsImage: {
-            show: true,
-            title:"保存"
-          }
-        }
-      },
+      color:['#228B22','#7CFC00','#32CD32','#BDFCC9','#6B8E23'],
       tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)',
+        trigger: 'item'
       },
-      color: colors5,
-      calculable: true,
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
       series: [
         {
+          name: 'Access From',
           type: 'pie',
-          radius: ['30%', '65%'],
-          center: ['50%', '50%'],
-          roseType: 'radius',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
           label: {
-            show: true,
-            color: 'inherit',
-            position: 'outside',
-            fontSize: 14,
-            formatter:"{b} {d}%",
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
           },
           labelLine: {
-            length: 1,
-            length2: 20,
-            smooth: true,
+            show: false
           },
-          data: data5,
-        },
-      ],
+          data: [
+            { value: 1048, name: 'Search Engine' },
+            { value: 735, name: 'Direct' },
+            { value: 580, name: 'Email' },
+            { value: 484, name: 'Union Ads' },
+            { value: 300, name: 'Video Ads' }
+          ]
+        }
+      ]
     };
 
     /*  员工年代分布 */
@@ -547,6 +564,7 @@ export default {
             readOnly: false,
             title:"数据视图"
           },
+
           saveAsImage: {
             show: true,
             title:"保存"
@@ -557,7 +575,7 @@ export default {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
       },
-      color: colors6,
+      color:['#0000FF','#4169E1','#1E90FF','#87CEFA','#00BFFF'],
       calculable: true,
       series: [
         {
@@ -629,7 +647,7 @@ export default {
         trigger: 'item',
         formatter: '{b} : {c} ({d}%)',
       },
-      color: colors7,
+      color:['#0000FF','#4169E1','#1E90FF','#87CEFA','#00BFFF'],
       calculable: true,
       series: [
         {
@@ -684,46 +702,43 @@ export default {
       title:{
         text:"在职员工状态分布",
       },
-      toolbox: {
-        feature: {
-          dataView: {
-            show: true,
-            readOnly: false,
-            title:"数据视图"
-          },
-          saveAsImage: {
-            show: true,
-            title:"保存"
-          }
-        }
-      },
+      color:['#FFA07A','#FF7F50','#FF4500','#E9967A','#FF6347'],
       tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c} ({d}%)',
+        trigger: 'item'
       },
-      color: colors8,
-      calculable: true,
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
       series: [
         {
+          name: 'Access From',
           type: 'pie',
-          radius: ['30%', '65%'],
-          center: ['50%', '50%'],
-          roseType: 'radius',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
           label: {
-            show: true,
-            color: 'inherit',
-            position: 'outside',
-            fontSize: 14,
-            formatter:"{b} {d}%",
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
           },
           labelLine: {
-            length: 1,
-            length2: 20,
-            smooth: true,
+            show: false
           },
-          data: data8,
-        },
-      ],
+          data: [
+            { value: 1048, name: 'Search Engine' },
+            { value: 735, name: 'Direct' },
+            { value: 580, name: 'Email' },
+            { value: 484, name: 'Union Ads' },
+            { value: 300, name: 'Video Ads' }
+          ]
+        }
+      ]
     };
 
 
