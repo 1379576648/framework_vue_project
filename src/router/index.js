@@ -754,9 +754,9 @@ const router = createRouter({
 //全局前置守卫，可用作前端权限验证的简单实现
 router.beforeEach(function(to, from, next) {
     if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
-         next({path: '/beginIndex'})
+         next({path: '/beginIndex'});
     }else{
-        next()
+        next();
     }
 })
 export default router

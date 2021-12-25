@@ -1,6 +1,7 @@
 <template>
   <input v-model="default_route">
   <div id="main" style="width: 100%;height:650px; float: left;"></div>
+  {{ one }}
 </template>
 <script>
 import * as echarts from 'echarts';
@@ -33,8 +34,8 @@ export default {
           name: this.menuList.MENU_NAME,
           url: this.menuList.MENU_ROUTE,
           label: {
-            width: 94,
-            height: 54,
+            width: 180,
+            height: 80,
             backgroundColor: {
               image: this.src1,
             },
@@ -44,35 +45,19 @@ export default {
         //向集合存入对象
         this.one.push(this.two);
         //迭代循环
-        for (let i=0 ;i< this.menuList.son.length;i++) {
+        for (let i of this.menuList.son) {
           //如果菜单有叶子 并且状态为启用
-          if (this.menuList.son[i].MENU_LEAF == 0 && this.menuList.son[i].MENU_STATE == 0) {
-            //初始化对象
-            this.two = {};
-            //向对象存入数据
-            this.two = {
-              name: this.menuList.son[i].MENU_NAME,
-              url: this.menuList.son[i].MENU_ROUTE,
-              label: {
-                width: 94,
-                height: 54,
-                backgroundColor: {
-                  image: this.src1,
-                },
-              }, children: []
-            }
-            //向集合存入对象
-            this.one[0].children.push(this.two);
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
             //梯归
-            this.inquire_2(this.menuList.son[i].son);
+            this.inquire_2(i.son);
             //如果菜单没有叶子 并且状态为禁用
-          } else if (this.menuList.son[i].MENU_LEAF == 1 && this.menuList.son[i].MENU_STATE == 0) {
+          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
             //初始化对象
             this.two = {};
             //向对象存入数据
             this.two = {
-              name: this.menuList.son[i].MENU_NAME,
-              url: this.menuList.son[i].MENU_ROUTE,
+              name: i.MENU_NAME,
+              url: i.MENU_ROUTE,
               label: {
                 width: 94,
                 height: 54,
@@ -82,7 +67,7 @@ export default {
               },
             };
             //向集合存入对象
-            this.one[0].children.push(this.two);
+            this.one.push(this.two);
           }
         }
       }
@@ -90,30 +75,15 @@ export default {
       //如果有数据
       if (value) {
         //迭代器循环
-        for (let i=0 ;i< value.length;i++) {
+        for (let i of value) {
           //如果菜单有叶子 并且状态为启用
-          if (value[i].MENU_LEAF == 0 && value[i].MENU_STATE == 0) {
-            // this.one.push(value[i])
+          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+            this.one.push(i)
             //梯归
-            this.inquire_2(value[i].son);
+            this.inquire_2(i.son);
             //如果菜单没有叶子 并且状态为禁用
-          } else if (value[i].MENU_LEAF == 1 && value[i].MENU_STATE == 0) {
-            //初始化对象
-            this.two = {};
-            //向对象存入数据
-            this.two = {
-              name: value[i].MENU_NAME,
-              url: value[i].MENU_ROUTE,
-              label: {
-                width: 94,
-                height: 54,
-                backgroundColor: {
-                  image: this.src1,
-                },
-              },
-            };
-            //向集合存入对象
-            this.one[0].children[ this.one[0].children.length-1].children.push(this.two);
+          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+            console.log(i.MENU_NAME)
           }
         }
       }
@@ -145,7 +115,7 @@ export default {
           edgeShape: 'polyline', //链接线是折现还是曲线
           data: this.default_route,
           width: 1100, //树形图宽
-          height: 400, //树形图高
+          height: 547, //树形图高
           top: '20%',
           left: '10%',
           symbolSize: [60, 38], //设置自己选择区域的宽高
@@ -171,11 +141,12 @@ export default {
                 let url = params.data.url ? params.data.url : '';
                 let konggu = params.value ? params.value : '';
                 if (konggu) {
-                  return [`{name|${name}}`].join('\n');
+                  return [`{name|${name}}`, `{url|${url}}`].join('\n');
                 } else {
                   return [
                     `{konggu|${konggu}}`,
                     `{name|${name}}`,
+                    `{url|${url}}`,
                   ].join('\n');
                 }
               },
@@ -194,9 +165,9 @@ export default {
                 name: {
                   height: 18,
                   color: '#FFF',
-                  padding: [5,0,0, 0],
+                  padding: [2, 0],
                   align: 'center',
-                  fontSize: 14,
+                  fontSize: 12,
                 },
               },
             },
@@ -218,7 +189,7 @@ export default {
                   name: {
                     height: 22,
                     color: '#FFF',
-                    padding: [15, 0, 0, 0],
+                    padding: [25, 0, 0, 0],
                     align: 'center',
                     fontSize: 14,
                   },
