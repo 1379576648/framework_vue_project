@@ -81,8 +81,16 @@ export default {
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务没有关闭
-          if (response.data.data) {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+
+            //如果服务没有关闭
+          } else if (response.data.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果有数据
@@ -111,7 +119,7 @@ export default {
                   //将形成的对象存放起来
                   this.$store.commit("staffInfo", obj);
                   //跳转可以
-                  this.$router.push({path:'/home',replace:true})
+                  this.$router.push({path: '/home', replace: true})
                 }
                 //如果数据里面没有员工信息
                 else {
@@ -139,13 +147,6 @@ export default {
                 offset: 100,
               })
             }
-            //如果服务关闭
-          } else if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
           }
         })
       }

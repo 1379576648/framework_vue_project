@@ -9,17 +9,17 @@
           <el-form :inline="true">
             <!-- 登录地址搜索 -->
             <el-form-item class="form-dizhi" label="登录地址">
-              <el-input size="small" v-model="registerLogIpname" placeholder="请输入登录地址"></el-input>
+              <el-input size="small" v-model="registerLogIpname" placeholder="请输入登录地址关键字"></el-input>
             </el-form-item>
 
             <!-- 用户名称搜索 -->
             <el-form-item class="form-name" label="用户名称">
-              <el-input size="small" v-model="registerLogPeople" placeholder="请输入用户名称"></el-input>
+              <el-input size="small" v-model="registerLogPeople" placeholder="请输入用户名称关键字"></el-input>
             </el-form-item>
 
             <!-- 登录状态搜索 -->
             <el-form-item class="form-state" label="状态">
-              <el-select style="width: 190px" size="small" v-model="registerLogType" placeholder="请选择登录状态">
+              <el-select style="width: 190px" size="small" v-model="registerLogState" placeholder="请选择登录状态">
                 <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -37,7 +37,7 @@
                   type="daterange"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
-                  :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]"
+                  :default-value="[new Date(), new Date()]"
               >
               </el-date-picker>
             </el-form-item>
@@ -73,24 +73,32 @@
                     @selection-change="checkDelete"
           >
             <!-- 全选操作按钮 -->
-            <el-table-column fixed align="center" type="selection" width="50"/>
-            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
-            <el-table-column fixed prop="registerLogPeople" align="center" label="用户名称" width="132"/>
-            <el-table-column prop="registerLogPhone" align="center" label="手机号码" width="135"/>
-            <el-table-column prop="registerLogIp" align="center" label="IP地址" width="135"/>
-            <el-table-column prop="registerLogIpname" align="center" label="IP所在地" width="150"/>
-            <el-table-column prop="registerLogType" align="center" label="设备类型" width="140"/>
-            <el-table-column prop="registerLogState" align="center" label="登录状态" width="135">
-              {{}}
+            <el-table-column fixed align="center" type="selection" min-width="50"/>
+            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
+            <el-table-column fixed prop="registerLogPeople" align="center" label="用户名称" min-width="132"/>
+            <el-table-column prop="registerLogPhone" align="center" label="手机号码" min-width="135"/>
+            <el-table-column prop="registerLogIp" align="center" label="IP地址" min-width="135"/>
+            <el-table-column prop="registerLogIpname" align="center" label="IP所在地" min-width="150"/>
+            <el-table-column prop="registerLogType" align="center" label="设备类型" min-width="140"/>
+            <el-table-column align="center" label="登录状态" min-width="135">
+              <template #default="scope">
+                <span class="button-enable" v-if="scope.row.registerLogState==0">成功</span>
+                <span class="button-forbidden" v-if="scope.row.registerLogState==1">失败</span>
+              </template>
             </el-table-column>
-            <el-table-column prop="registerLogBrowser" align="center" label="浏览器" width="132"/>
-            <el-table-column prop="registerLogGenre" align="center" label="登录类型" width="135"/>
-            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建日期" width="170"/>
+            <el-table-column prop="registerLogBrowser" align="center" label="浏览器" min-width="132"/>
+            <el-table-column prop="registerLogGenre" align="center" label="登录类型" min-width="135">
+              <template #default="scope">
+                <span v-if="scope.row.registerLogGenre==0">人脸</span>
+                <span v-if="scope.row.registerLogGenre==1">密码</span>
+              </template>
+            </el-table-column>
+            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建日期" min-width="170"/>
           </el-table>
         </div>
         <!-- 分页 -->
         <div class="demo-pagination-block">
-          <el-pagination v-model:current-page="pageInfo.currentPage"
+          <el-pagination v-model:current-page="pageInfo.currenPage"
                          v-model:page-size="pageInfo.pageSize"
                          :default-page-size="pageInfo.pageSize"
                          :page-sizes="[5, 10,15,20]"
@@ -109,11 +117,10 @@
       </div>
     </div>
   </div>
-  {{ selectTime[0] }}
 </template>
 
 <script>
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 
 export default {
   data() {
@@ -125,7 +132,7 @@ export default {
       //用户名称
       registerLogPeople: '',
       //状态
-      registerLogType: '',
+      registerLogState: '',
       // 分页
       pageInfo: {
         /* 当前的页 */
@@ -148,7 +155,6 @@ export default {
       ],
       //选择时间
       selectTime: [],
-      value: '',
       //表格数据
       tableData: [],
       //复选框选择的结果
@@ -159,18 +165,16 @@ export default {
     }
   },
   methods: {
-    //重置
+    //重置操作
     reset() {
-      this.search = {
-        //登录地址
-        site: '',
-        //用户名称
-        username: '',
-        //状态
-        options: '',
-        //用户登录时间
-        value1: '',
-      }
+      //ip所在地
+      this.registerLogIpname = '';
+      //用户名称
+      this.registerLogPeople = '';
+      //状态
+      this.registerLogState = '';
+      //选择时间
+      this.selectTime = [];
     },
     //复选框选择事件
     checkDelete(val) {
@@ -246,14 +250,34 @@ export default {
           //结束时间
           "endTime": this.selectTime[1],
           //状态
-          "registerLogType": this.registerLogType,
+          "registerLogState": this.registerLogState,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
         console.log(response.data)
-        _this.tableData = response.data.data.info.records
-        _this.pageInfo.total = response.data.data.info.total
+        //如果服务关闭
+       if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        }else if(response.data.data){
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
       })
     },
     /*序号*/
@@ -281,6 +305,38 @@ export default {
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.ttf?t=1638864192788') format('truetype');
 }
 
+.saas-main-content .j-card {
+  margin: 20px 0 20px 0;
+}
+
+.button-enable {
+  background: #ecf5ff;
+  border: 1px #cfe6ff solid;
+  color: #5aaaff;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+
+.button-forbidden {
+  background: #fef0f0;
+  border: 1px #f2c5c5 solid;
+  color: #f57a7a;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+
 /*表格样式*/
 .sub-Content__primary {
   margin-bottom: 10px;
@@ -289,8 +345,7 @@ export default {
 
 /* 分页 */
 .demo-pagination-block {
-  text-align: center;
-  margin: 10px 0 10px 0;
+  margin: 10px 0 10px 10px;
 }
 
 .button {
@@ -308,6 +363,10 @@ export default {
   width: 90px;
 }
 
+.el-button--default {
+  height: 33.6px;
+}
+
 .button-delete:hover {
   background: #ff4949;
   border-color: #ff4949;
@@ -319,6 +378,7 @@ export default {
 /* 清空表格数据按钮 */
 .button-empty {
   width: 90px;
+  height: 33.6px;
   color: #13ce66;
   background: #e7faf0;
   border-color: #a1ebc2;
@@ -361,6 +421,7 @@ export default {
   color: black;
   margin: 29px 0px 0px 10px;
   width: 90px;
+  height: 34px;
   background: #fff;
   border: 1px solid #dcdfe6;
   border-top-color: rgb(220, 223, 230);
