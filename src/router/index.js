@@ -622,29 +622,30 @@ const routes = [
             {//统计分析
                 path: '/statistics',
                 component: modules[`${'../components/statistics_management/statistics_main.vue'}`],
-                redirect: "/statistics/remuneration_analyze/three",
+                redirect: "/statistics/staff_analyze",
                 children: [
-
-
-                    {//人员数量分析
-                        path: '/statistics/staff_analyze/statistics_personnel1',
-                        component: modules[`${'../components/statistics_management/statistics_personnel1.vue'}`],
+                    {//考勤分析
+                        path: '/statistics/staff_analyze',
+                        component: modules[`${'../components/menu_skip.vue'}`],
+                        redirect: "/statistics/staff_analyze/statistics_personnel1",
+                        children: [ {//人员数量分析
+                            path: '/statistics/staff_analyze/statistics_personnel1',
+                            component: modules[`${'../components/statistics_management/statistics_personnel1.vue'}`],
+                        },
+                            {//人工异动分析
+                                path: '/statistics/staff_analyze/statistics_personnel2',
+                                component: modules[`${'../components/statistics_management/statistics_personnel2.vue'}`],
+                            },
+                            {//员工概况
+                                path: '/statistics/staff_analyze/statistics_personnel3',
+                                component: modules[`${'../components/statistics_management/statistics_personnel3.vue'}`],
+                            },]
                     },
-                    {//人工异动分析
-                        path: '/statistics/staff_analyze/statistics_personnel2',
-                        component: modules[`${'../components/statistics_management/statistics_personnel2.vue'}`],
-                    },
-                    {//员工概况
-                        path: '/statistics/staff_analyze/statistics_personnel3',
-                        component: modules[`${'../components/statistics_management/statistics_personnel3.vue'}`],
-                    },
-
 
                     {//考勤分析
                         path: '/statistics/clockingin_analyze',
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
-
                             {//出勤分析
                                 path: '/statistics/clockingin_analyze/statistics_work1',
                                 component: modules[`${'../components/statistics_management/statistics_work1.vue'}`],
@@ -686,9 +687,6 @@ const routes = [
                             }
 
                         ]
-                    }, {
-                        path: '/statistics/remuneration_analyze/three',
-                        component: modules[`${'../components/statistics_management/three.vue'}`]
                     }
                 ],
             },

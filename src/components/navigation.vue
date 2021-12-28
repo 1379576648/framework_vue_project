@@ -16,6 +16,7 @@
           <!--           :default-active默认激活的路由-->
           <el-menu
               :default-active="default_route"
+              class="el-menu-demo"
               mode="horizontal"
               @select="handleSelect"
           >
@@ -386,7 +387,7 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 10;
-  display: none \9;
+  display: none;
   width: 100%;
   height: 100%;
   background: #fff;

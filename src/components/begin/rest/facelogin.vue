@@ -1,5 +1,5 @@
 <template>
-  <div class="circle">
+  <div className="circle">
     <video id="video" width="250" height="250"></video>
   </div>
   <br>
