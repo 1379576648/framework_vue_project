@@ -866,8 +866,8 @@ const store = createStore({
                         MENU_ID: 2,//菜单编号
                         MENU_NAME: '人员数量分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/staff_analyze/statistics_personnel1',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_personnel1',//组件地址
+                        MENU_ROUTE: '/statistics/staff_analyze/statistics_numberpersonnel',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_numberpersonnel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -875,8 +875,8 @@ const store = createStore({
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '人员异动分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/staff_analyze/statistics_personnel2',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_personnel2',//组件地址
+                        MENU_ROUTE: '/statistics/staff_analyze/statistics_movepersonnel',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_movepersonnel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -884,8 +884,8 @@ const store = createStore({
                         MENU_ID: 4,//菜单编号
                         MENU_NAME: '员工概况',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/staff_analyze/statistics_personnel3',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_personnel3',//组件地址
+                        MENU_ROUTE: '/statistics/staff_analyze/statistics_surveypersonnel',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_surveypersonnel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -903,8 +903,8 @@ const store = createStore({
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '出勤分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_work1',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_work1',//组件地址
+                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_attendance',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_attendance',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -912,8 +912,8 @@ const store = createStore({
                         MENU_ID: 7,//菜单编号
                         MENU_NAME: '工时分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_work2',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_work2',//组件地址
+                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_manhour',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_manhour',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -921,8 +921,8 @@ const store = createStore({
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '加班分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_work3',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_work3',//组件地址
+                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_overtime',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_overtime',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -930,8 +930,8 @@ const store = createStore({
                         MENU_ID: 9,//菜单编号
                         MENU_NAME: '请假分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_work4',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_work4',//组件地址
+                        MENU_ROUTE: '/statistics/clockingin_analyze/statistics_leave',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_leave',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -949,8 +949,8 @@ const store = createStore({
                         MENU_ID: 11,//菜单编号
                         MENU_NAME: '工资成本分析',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/remuneration_analyze/statistics_analysis1',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_analysis1',//组件地址
+                        MENU_ROUTE: '/statistics/remuneration_analyze/statistics_payrollcosts',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_payrollcosts',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -958,8 +958,8 @@ const store = createStore({
                         MENU_ID: 12,//菜单编号
                         MENU_NAME: '社保成本分析2',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/statistics/remuneration_analyze/statistics_analysis2',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_analysis2',//组件地址
+                        MENU_ROUTE: '/statistics/remuneration_analyze/statistics_socialsecurity',//路由地址
+                        MENU_MODULE: 'statistics_management/statistics_socialsecurity',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有

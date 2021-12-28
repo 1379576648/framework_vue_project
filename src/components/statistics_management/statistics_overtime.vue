@@ -1,3 +1,4 @@
+<!--加班分析-->
 <template>
   <div class="demo-date-picker" style="width: 100%;height: 49px;">
     <div class="" style="width: 850px;height: 49px; float: right;">
@@ -22,15 +23,13 @@
 
   </div>
 
-
-
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
-    <!--  每月请假人数 -->
-    <div id="mainy5" style="width: 980px;height:460px; margin-top: 20px; "></div>
+    <!--  每月加班总时长 -->
+    <div id="mainy3" style="width: 980px;height:460px; margin-top: 20px; "></div>
     <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
-      <span class="ziti">当前月请假人数：</span>
+      <span class="ziti">当前月加班时长：</span>
       <br>
       <span class="ziti">3</span>
       <br>
@@ -39,14 +38,13 @@
       <span class="ziti">???</span>
     </div>
   </div>
-
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
-    <!--  每月人均请假人数 -->
-    <div id="mainy6" style="width: 980px;height:460px; margin-top: 20px; "></div>
+    <!--  每月人均加班总时长 -->
+    <div id="mainy4" style="width: 980px;height:460px; margin-top: 20px; "></div>
     <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
 
-      <span class="ziti">当前月请假人数：</span>
+      <span class="ziti">当前月人均加班时长：</span>
       <br>
       <span class="ziti">3</span>
       <br>
@@ -135,20 +133,23 @@ export default {
   },
   mounted() {
     //准备实例
-    /* 	每月请假人数 */
-    var chartDomy5 = document.getElementById('mainy5');
-    var myCharty5= echarts.init(chartDomy5);
-    /*  每月人均请假时长 */
-    var chartDomy6 = document.getElementById('mainy6');
-    var myCharty6= echarts.init(chartDomy6);
+    /* 每月加班总时长 */
+    var chartDomy3 = document.getElementById('mainy3');
+    var myCharty3 = echarts.init(chartDomy3);
+    /* 每月人均加班时长 */
+    var chartDomy4 = document.getElementById('mainy4');
+    var myCharty4 = echarts.init(chartDomy4);
 
-    var optiony5;
-    var optiony6;
 
-    /* 每月请假人数 */
-    optiony5 = {
+    var optiony3;
+    var optiony4;
+
+
+
+    /* /每月加班总时长/ */
+    optiony3 = {
       title: {
-        text: '每月请假人数'
+        text: '每月加班总时长'
       },
       tooltip: {
         trigger: 'axis',
@@ -169,10 +170,10 @@ export default {
           magicType: {
             show: true,
             type: ['line', 'bar'],
-            title:{
+             title:{
               line:"折线图",
-              bar:"柱状图",
-            }
+               bar:"柱状图",
+             }
           },
           restore: {
             show: true,
@@ -185,7 +186,7 @@ export default {
         }
       },
       legend: {
-        data: ['请假人数', '增长率']
+        data: ['加班小时', '增长率']
       },
       xAxis: [{
         type: 'category',
@@ -219,10 +220,10 @@ export default {
 
       ],
       series: [{
-        name: '请假人数',
+        name: '加班小时',
         type: 'bar',
         data: [
-          20, 49, 70, 232, 256, 135.6, 200
+          50, 49, 70, 232, 256, 135.6, 200
         ],barWidth:'25%',
       },
 
@@ -243,9 +244,10 @@ export default {
         }
       ]
     };
-    optiony6 = {
+    /*  每月人均加班时长 */
+    optiony4 = {
       title: {
-        text: '每月人均请假人数'
+        text: '每月人均加班时长'
       },
       tooltip: {
         trigger: 'axis',
@@ -261,14 +263,14 @@ export default {
           dataView: {
             show: true,
             readOnly: false,
-            title:'数据视图'
+            title:"数据视图"
           },
           magicType: {
             show: true,
             type: ['line', 'bar'],
             title:{
               line:"折线图",
-              bar:"柱状图",
+              bar:"柱状图"
             }
           },
           restore: {
@@ -277,12 +279,12 @@ export default {
           },
           saveAsImage: {
             show: true,
-            title:"保存"
+            title:'保存'
           }
         }
       },
       legend: {
-        data: ['人均请假数', '增长率']
+        data: ['人均加班小时', '增长率']
       },
       xAxis: [{
         type: 'category',
@@ -316,7 +318,7 @@ export default {
 
       ],
       series: [{
-        name: '人均请假数',
+        name: '人均加班小时',
         type: 'bar',
         data: [
           20, 49, 70, 232, 256, 135.6, 200
@@ -340,8 +342,10 @@ export default {
         }
       ]
     };
-    optiony5 && myCharty5.setOption(optiony5);
-    optiony6 && myCharty6.setOption(optiony6);
+
+    optiony3 && myCharty3.setOption(optiony3);
+    optiony4 && myCharty4.setOption(optiony4);
+
   }
 }
 </script>
