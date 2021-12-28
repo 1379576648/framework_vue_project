@@ -956,7 +956,7 @@ const store = createStore({
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 12,//菜单编号
-                        MENU_NAME: '社保成本分析',//菜单名称
+                        MENU_NAME: '社保成本分析2',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
                         MENU_ROUTE: '/statistics/remuneration_analyze/statistics_socialsecurity',//路由地址
                         MENU_MODULE: 'statistics_management/statistics_socialsecurity',//组件地址
@@ -965,7 +965,7 @@ const store = createStore({
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 13,//菜单编号
-                        MENU_NAME: '薪酬结构分析',//菜单名称
+                        MENU_NAME: '薪酬结构分析1',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
                         MENU_ROUTE: '/statistics/remuneration_analyze/statistics_analysis3',//路由地址
                         MENU_MODULE: 'statistics_management/statistics_analysis3',//组件地址
