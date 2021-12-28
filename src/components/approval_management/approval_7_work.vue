@@ -278,15 +278,13 @@ export default {
           })
           .then((response) => {
             console.log("查询待审批加班数据");
-            console.log(response);
-            console.log(response.data.data.info)
             if (response.data.data.info === "服务发生关闭") {
               ElNotification({
                 title: '服务发生关闭',
                 message: '服务发生关闭，请稍后再试，或联系管理员',
                 type: 'error',
               })
-              this.$router.push('/beginIndex/faceLogin');
+              // this.$router.push('/beginIndex/faceLogin');
             }
             this.tableData = response.data.succeed.records;
           })
@@ -304,7 +302,6 @@ export default {
           })
           .then(function (response) {
             console.log("分页查询数据");
-            console.log(response);
             _this.tableData = response.data.succeed.records;
             _this.pageInfo.pagesize = response.data.succeed.size;
             _this.pageInfo.total = response.data.succeed.total;
@@ -321,7 +318,6 @@ export default {
           })
           .then((response) => {
             console.log("查询已审批加班数据");
-            console.log(response);
             this.tableData1 = response.data.succeed.records;
           })
           .catch(function (error) {
@@ -338,7 +334,6 @@ export default {
           })
           .then(function (response) {
             console.log("分页查询已处理的加班数据");
-            console.log(response);
             _this.tableData = response.data.succeed.records;
             _this.pageInfo1.pagesize = response.data.succeed.size;
             _this.pageInfo1.total = response.data.succeed.total;
