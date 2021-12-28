@@ -69,7 +69,13 @@
               <el-button
                   type="primary"
                   style="margin-left: 16px"
-                  @click="drawer = true"
+                  @click="(drawer = true),
+                  (value = {
+                    id: scope.row.auditflowId,
+                    name1: scope.row.staffName1,
+                    name2: scope.row.staffName2,
+                    }),
+                   details(value)"
               >
                 详情
               </el-button>
@@ -278,6 +284,7 @@ export default {
           })
           .then((response) => {
             console.log("查询待审批加班数据");
+            console.log(response)
             if (response.data.data.info === "服务发生关闭") {
               ElNotification({
                 title: '服务发生关闭',
@@ -339,6 +346,24 @@ export default {
             _this.pageInfo1.total = response.data.succeed.total;
           })
           .catch(function (error) {
+            console.log(error);
+          });
+    },
+    details(value) {
+      console.log(value.id)
+      console.log(value.name1)
+      console.log(value.name2)
+      this.axios
+          .get("http://localhost:80/selectDetailsAuditflow", {
+            params: value,
+          })
+          .then((response) => {
+            console.log("查询已审批加班数据详情");
+            console.log(response)
+            // this.tableData2 = response.data.succeed.records;
+          })
+          .catch(function (error) {
+            console.log("查询已审批加班数据详情失败")
             console.log(error);
           });
     }
