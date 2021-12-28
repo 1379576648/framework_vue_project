@@ -13,12 +13,15 @@
 
     <br/>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="name" label="姓名" width="180" />
-      <el-table-column prop="depart" label="部门" width="180" />
-      <el-table-column prop="post" label="职位" width="180" />
-      <el-table-column prop="phone" label="手机号" width="180" />
-      <el-table-column prop="email" label="邮箱" width="180" />
-      <el-table-column prop="entrydate" label="入职日期" width="180" />
+      <el-table-column prop="resumeName" label="姓名" width="180" />
+      <el-table-column prop="deptName" label="部门" width="180" />
+      <el-table-column prop="postName" label="职位" width="180" />
+      <el-table-column prop="resumePhone" label="手机" width="180" />
+      <el-table-column prop="resumeMailbox" label="邮箱" width="180" />
+      <el-table-column prop="createdTime" label="入职日期" width="180" />
+<!--      <el-table-column prop="resumeBirthday" label="出生日期" width="130" />-->
+<!--      <el-table-column prop="resumeResidence" label="户口所在地" width="130" />-->
+<!--      <el-table-column prop="resumePoliticalOutlook" label="政治面貌" width="130" />-->
       <el-table-column  label="操作">
         <template #default>
           <el-button type="text" size="small">入职 </el-button>
@@ -33,34 +36,33 @@
     <div class="demo-pagination-block">
       <el-pagination
           v-model:currentPage="pageInfo.currentPage"
-          :page-sizes="[3, 5, 10, 50]"
+          :page-sizes="[4, 5, 10, 50]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageInfo.total"
           :pager-count="5"
+          prev-text="上一页"
+          next-text="下一页"
+          @size-change="selectpage1()"
+          @current-change="selectpage1()"
           background
-          @size-change="selectUsers"
-          @current-change="selectUsers"
       >
       </el-pagination>
     </div>
-
     <!--  弹框  -->
     <div style="text-align: center;">
       <el-dialog
           v-model="become"
           width="30%"
           :close-on-click-modal="false" >
-        放弃原因：<el-input type="textarea" style="width:240px;"></el-input>
+        放弃原因：<el-input v-model="cause" type="textarea" style="width:240px;"></el-input>
         <div style="margin-top:30px;margin-left: 30px;">
           <el-button @click="become=false">取消</el-button>
           <el-button type="primary">确定</el-button></div>
 
       </el-dialog>
     </div>
-
-
 
   </div>
 </template>
@@ -74,52 +76,11 @@ export default defineComponent({
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 3, // 页大小
+        pagesize: 4, // 页大小
         total: 0, // 总页数
       },
-      tableData: [
-        {
-          entrydate: '2016-05-03',
-          name: 'Tom',
-          depart: 'California',
-          post: 'Los Angeles',
-          email: 'No. 189, Grove St, Los Angeles',
-          phone: 'CA 90036',
-          cause: 'Home',
-        },
-        {
-          entrydate: '2016-05-02',
-          name: 'Tom',
-          depart: 'California',
-          post: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          phone: 'CA 90036',
-          email: 'Office',
-        },
-        {
-          entrydate: '2016-05-04',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          entrydate: '2016-05-01',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-      ],
-      form:[
-        {
-          desc:""
-        }
-      ]
+      tableData: [],
+      cause:'',
 
     }
   },setup() {
@@ -127,6 +88,46 @@ export default defineComponent({
     return{
       become,
     }
+  },
+  methods:{
+    //查询已录用待入职的员工
+    selectpage(){
+      this.axios
+          .get("http://localhost:80/selectpage",{
+          params:this.pageInfo,
+          })
+           .then((response)=>{
+             console.log("查询已录用待入职的员工");
+             console.log(response.data.succeed.records);
+             this.tableData = response.data.succeed.records;
+           })
+            .catch(function (error){
+              console.log("失败")
+              console.log(error);
+            });
+    },
+    selectpage1(){
+      var _this = this
+      this.axios
+          .get("http://localhost:80/selectpage",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("分页查询已录用待入职的员工");
+            console.log(response);
+            _this.tableData = response.data.succeed.records;
+            _this.pageInfo.pagesize = response.data.succeed.size;
+            _this.pageInfo.total = response.data.succeed.total;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+  },
+  created() {
+      this.selectpage();
+      this.selectpage1();
   }
 })
 </script>
