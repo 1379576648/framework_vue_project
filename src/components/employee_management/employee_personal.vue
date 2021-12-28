@@ -11,19 +11,26 @@
 
       <!--      工作经历-->
       <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">工作经历<i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe604;</i></h3>
-        <div style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="jianjia" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;"><el-button type="text" @click="gzjlhs=!gzjlhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button></h3>
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">工作经历<i class="iconfont"
+                                                                                                   style="color: #085fc3;margin-right:2px;">&#xe604;</i>
+        </h3>
+        <div
+            style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
+        <h3 v-show="jianjia"
+            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
+          <el-button type="text"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
+        </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
-
+        <!--  添加按钮   -->
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="tianjiagzjl">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text" @click="gzjlhs=!gzjlhs,tianjiagzjl=!tianjiagzjl"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;工作经历</el-button>
+            <el-button type="text" @click="clickwork()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;工作经历
+            </el-button>
           </div>
         </div>
-
+        <!--  添加的工作经历  -->
         <div style="width:100%;position: relative;margin-top: 20px;" v-show="gzjlwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
@@ -50,32 +57,35 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;" @click="gzjlhs=!gzjlhs,gzjlwhite=!gzjlwhite">编辑</el-button>
+            <el-button type="text" style="color: #085fc3;" @click="redactwork()">编辑</el-button>
             <el-button type="text" style="color: red;">删除</el-button>
           </div>
         </div>
-
+        <!--  工作经历表单 -->
         <div class="information_from" v-show="gzjlhs">
           <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px">
-              <el-form-item label="开始时间:" required >
-                <el-col :span="11" >
+              <el-form-item label="开始时间:" required>
+                <el-col :span="11">
                   <el-form-item prop="date1" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
-              <el-form-item label="任职公司：" class="el-form-item" >
+              <el-form-item label="任职公司：" class="el-form-item">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input   v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
+                    <el-input v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
-              <el-form-item label="离职原因：" >
+              <el-form-item label="离职原因：">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
                     <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>
@@ -86,31 +96,31 @@
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px">
               <br>
-              <el-form-item label="结束时间:" required >
+              <el-form-item label="结束时间:" required>
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
-
+              </el-form-item>
+              <br>
 
               <div style="float: right">
-                <el-form-item label="职位：" >
+                <el-form-item label="职位：">
 
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input  v-model="ruleForm.zw" style="width: 100%;"></el-input>
+                    <el-input v-model="ruleForm.zw" style="width: 100%;"></el-input>
                   </el-form-item>
 
                 </el-form-item>
               </div>
             </div>
 
-
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="gzjlhs=!gzjlhs,tianjiagzjl=!tianjiagzjl">取消</el-button>
-                <el-button type="primary" @click="gzjlwhite=!gzjlwhite,gzjlhs=!gzjlhs,jianjia=!jianjia">保存</el-button>
+                <el-button @click="callwork()">取消</el-button>
+                <el-button type="primary" @click="addwork()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -125,16 +135,24 @@
         </h3>
       </div>
       <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">荣誉与奖励<i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe604;</i></h3>
-        <div style="width:830px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="jljianjia" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;"><el-button type="text" @click="gzjlhs=!gzjlhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button></h3>
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">荣誉与奖励<i class="iconfont"
+                                                                                                    style="color: #085fc3;margin-right:2px;">&#xe604;</i>
+        </h3>
+        <div
+            style="width:830px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
+        <h3 v-show="jljianjia"
+            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
+          <el-button type="text"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
+        </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
 
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="tianjiajl">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text" @click="jlhs=!jlhs,tianjiajl=!tianjiajl"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp; 荣誉与奖励</el-button>
+            <el-button type="text"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;
+              荣誉与奖励
+            </el-button>
           </div>
         </div>
 
@@ -161,7 +179,7 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;" @click="jlhs=!jlhs,jlwhite=!jlwhite">编辑</el-button>
+            <el-button type="text" style="color: #085fc3;">编辑</el-button>
             <el-button type="text" style="color: red;">删除</el-button>
           </div>
         </div>
@@ -170,47 +188,49 @@
           <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm">
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px">
-              <el-form-item label="荣誉/奖项名称:" prop="name" >
+              <el-form-item label="荣誉/奖项名称:" prop="name">
                 <el-input v-model="ruleForm.name" style="width:240px;"></el-input>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
-              <el-form-item label="颁发单位名称：" class="el-form-item" >
+              <el-form-item label="颁发单位名称：" class="el-form-item">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input   v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
+                    <el-input v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
-
+              </el-form-item>
+              <br>
             </div>
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px">
               <br>
-              <el-form-item label="奖励日期:" >
+              <el-form-item label="奖励日期:">
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
 
               <div style="float: right">
-                <el-form-item label="备注：" >
+                <el-form-item label="备注：">
 
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input type="textarea"  v-model="ruleForm.zw" style="width: 100%;"></el-input>
+                    <el-input type="textarea" v-model="ruleForm.zw" style="width: 100%;"></el-input>
                   </el-form-item>
 
                 </el-form-item>
               </div>
             </div>
 
-
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="jlhs=!jlhs,tianjiajl=!tianjiajl">取消</el-button>
-                <el-button type="primary" @click="jlwhite=!jlwhite,jlhs=!jlhs,jljianjia=!jljianjia">保存</el-button>
+                <el-button>取消</el-button>
+                <el-button type="primary">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -220,16 +240,26 @@
 
       <!--      惩罚-->
       <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">惩罚<i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe604;</i></h3>
-        <div style="width:870px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="cfjianjia" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;"><el-button type="text" @click="cfhs=!cfhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button></h3>
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">惩罚<i class="iconfont"
+                                                                                                 style="color: #085fc3;margin-right:2px;">&#xe604;</i>
+        </h3>
+        <div
+            style="width:870px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
+        <h3 v-show="cfjianjia"
+            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
+          <el-button type="text" @click="cfhs=!cfhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
+          </el-button>
+        </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
 
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="tianjiacf">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text" @click="cfhs=!cfhs,tianjiacf=!tianjiacf"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp; 惩罚</el-button>
+            <el-button type="text" @click="cfhs=!cfhs,tianjiacf=!tianjiacf"><i class="iconfont"
+                                                                               style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;
+              惩罚
+            </el-button>
           </div>
         </div>
 
@@ -276,19 +306,21 @@
                   <el-option label="降职" value="beijing"></el-option>
                   <el-option label="辞退" value="beijing"></el-option>
                 </el-select>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
-              <el-form-item label="惩罚单位：" class="el-form-item" >
+              <el-form-item label="惩罚单位：" class="el-form-item">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input   v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
+                    <el-input v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
-              <el-form-item label="惩罚备注：" >
+              <el-form-item label="惩罚备注：">
                 <el-form-item prop="rzgs" style="width:240px;">
-                  <el-input type="textarea"  v-model="ruleForm.zw" style="width: 100%;"></el-input>
+                  <el-input type="textarea" v-model="ruleForm.zw" style="width: 100%;"></el-input>
                 </el-form-item>
 
               </el-form-item>
@@ -299,14 +331,14 @@
               <br>
               <div style="float: right">
 
-                <el-form-item label="惩罚原因：" >
+                <el-form-item label="惩罚原因：">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input   v-model="ruleForm.zw" style="width: 100%;"></el-input>
+                    <el-input v-model="ruleForm.zw" style="width: 100%;"></el-input>
                   </el-form-item>
 
                 </el-form-item>
 
-                <el-form-item label="是否撤销：" >
+                <el-form-item label="是否撤销：">
                   <el-radio-group v-model="ruleForm.resource" style="position: absolute;left:2px;">
                     <el-radio label="是"></el-radio>
                     <el-radio label="否"></el-radio>
@@ -337,16 +369,25 @@
 
       <!--      教育经历-->
       <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">教育经历<i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe604;</i></h3>
-        <div style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="tianjiajy" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;"><el-button type="text" @click="jyhs=!jyhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button></h3>
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">教育经历<i class="iconfont"
+                                                                                                   style="color: #085fc3;margin-right:2px;">&#xe604;</i>
+        </h3>
+        <div
+            style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
+        <h3 v-show="tianjiajy"
+            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
+          <el-button type="text" @click="jyhs=!jyhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
+          </el-button>
+        </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
 
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="jytianjia">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text" @click="jyhs=!jyhs,jytianjia=!jytianjia"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;教育经历</el-button>
+            <el-button type="text" @click="jyhs=!jyhs,jytianjia=!jytianjia"><i class="iconfont"
+                                                                               style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;教育经历
+            </el-button>
           </div>
         </div>
 
@@ -381,38 +422,43 @@
           <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px">
-              <el-form-item label="开始时间:" required >
-                <el-col :span="11" >
+              <el-form-item label="开始时间:" required>
+                <el-col :span="11">
                   <el-form-item prop="date1" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
-              <el-form-item label="学校名称：" class="el-form-item" >
+              <el-form-item label="学校名称：" class="el-form-item">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input   v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
+                    <el-input v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
 
             </div>
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px">
               <br>
-              <el-form-item label="结束时间:" required >
+              <el-form-item label="结束时间:" required>
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
 
               <div style="float: right">
-                <el-form-item label="备注：" >
+                <el-form-item label="备注：">
                   <el-col :span="11">
                     <el-form-item prop="rzgs" style="width:240px;">
                       <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>
@@ -444,9 +490,17 @@
 
       <!--      离职信息-->
       <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">离职信息<i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe604;</i></h3>
-        <div style="width:845px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="lzbj" style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;"><el-button type="text" @click="lzbj=!lzbj,lzhs=!lzhs,lzwhite=!lzwhite"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑</el-button></h3>
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">离职信息<i class="iconfont"
+                                                                                                   style="color: #085fc3;margin-right:2px;">&#xe604;</i>
+        </h3>
+        <div
+            style="width:845px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
+        <h3 v-show="lzbj"
+            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
+          <el-button type="text" @click="lzbj=!lzbj,lzhs=!lzhs,lzwhite=!lzwhite"><i class="iconfont"
+                                                                                    style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑
+          </el-button>
+        </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
@@ -485,7 +539,7 @@
           <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px">
-              <el-form-item label="离职原因:" prop="region" >
+              <el-form-item label="离职原因:" prop="region">
                 <el-select
                     v-model="ruleForm.region"
                     placeholder="请选择" style="width:240px">
@@ -508,26 +562,30 @@
               </el-form-item>
               <br>
 
-              <el-form-item label="薪酬结算日期:" required >
+              <el-form-item label="薪酬结算日期:" required>
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
 
             </div>
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px">
               <br>
-              <el-form-item label="离职时间:" required >
+              <el-form-item label="离职时间:" required>
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                                    style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
-              </el-form-item><br>
+              </el-form-item>
+              <br>
 
 
               <el-form-item label="备注：" style="position: absolute;left:28px;">
@@ -561,7 +619,7 @@ export default {
   data() {
     return {
       ruleForm: {
-        name:'',
+        name: '',
         rzgs: '',
         region: '',
         date1: '',
@@ -569,57 +627,61 @@ export default {
         delivery: false,
         type: [],
         resource: '',
-        zx:'',
-        cftype:'',
+        zx: '',
+        cftype: '',
         desc: ''
       },
       rules: {
         name: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          {required: true, message: '请输入活动名称', trigger: 'blur'},
+          {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
         ],
         region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+          {required: true, message: '请选择活动区域', trigger: 'change'}
         ],
         date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
         ],
         date2: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+          {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
         ],
         type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+          {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
         ],
         resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
+          {required: true, message: '请选择活动资源', trigger: 'change'}
         ],
         desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+          {required: true, message: '请填写活动形式', trigger: 'blur'}
         ]
       },
-      jianjia:false,
-      tianjiagzjl:true,
-      gzjlwhite:false,
-      gzjlhs:false,
+      // 小添加按钮
+      jianjia: false,
+      // 大添加按钮
+      tianjiagzjl: true,
+      // 添加的工作经历
+      gzjlwhite: false,
+      // 工作经历表单
+      gzjlhs: false,
 
-      jljianjia:false,
-      tianjiajl:true,
-      jlwhite:false,
-      jlhs:false,
+      jljianjia: false,
+      tianjiajl: true,
+      jlwhite: false,
+      jlhs: false,
 
-      cfjianjia:false,
-      tianjiacf:true,
-      cfwhite:false,
-      cfhs:false,
+      cfjianjia: false,
+      tianjiacf: true,
+      cfwhite: false,
+      cfhs: false,
 
-      tianjiajy:false,
-      jytianjia:true,
-      jywhite:false,
-      jyhs:false,
+      tianjiajy: false,
+      jytianjia: true,
+      jywhite: false,
+      jyhs: false,
 
-      lzwhite:true,
-      lzhs:false,
-      lzbj:true
+      lzwhite: true,
+      lzhs: false,
+      lzbj: true
 
     };
   },
@@ -636,6 +698,26 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    // 点击添加工作经历按钮
+    clickwork(){
+      this.gzjlhs=true;
+      this.tianjiagzjl=false;
+    },
+    // 点击取消添加工作记录按钮
+    callwork(){
+      this.gzjlhs=false;
+      this.tianjiagzjl=true;
+    },
+    // 点击确定添加工作记录按钮
+    addwork(){
+      this.gzjlhs=false;
+      this.gzjlwhite=true;
+    },
+    // 点击编辑添加的工作经历表单按钮
+    redactwork(){
+      this.gzjlhs=true;
+      this.gzjlwhite=false;
     }
   }
 }
@@ -643,36 +725,41 @@ export default {
 
 <style scoped>
 /*@import url("../../css/EditingStaff.css");*/
-.basicfile_big{
-  width:100%;
+.basicfile_big {
+  width: 100%;
   /*border:1px solid red;*/
-  margin-top:20px;
+  margin-top: 20px;
   margin: auto;
 }
-.basicfile_big_auto{
-  width:80%;
+
+.basicfile_big_auto {
+  width: 80%;
   /*border:1px solid yellow;*/
   margin: auto;
 }
-.information{
+
+.information {
   position: relative;
   margin-top: 10px;
-  width:100%;
+  width: 100%;
   margin: auto;
 }
-.information_text{
-  width:850px;
+
+.information_text {
+  width: 850px;
   margin: 0px auto;
   /*background: darkorange;*/
 }
-.information_text li{
+
+.information_text li {
   /*float: left;*/
   display: inline-block;
-  width:50%;
+  width: 50%;
   padding: 4px 0px;
 
 }
-.information_text li label{
+
+.information_text li label {
   width: 200px;
   display: inline-block;
   text-align: right;
@@ -683,26 +770,27 @@ export default {
   padding: 0 24px 0 0;
   box-sizing: border-box;
 }
-.information_text li p{
+
+.information_text li p {
   display: inline-block;
 }
 
-.information_from{
-  width:100%;
+.information_from {
+  width: 100%;
   background: #e8edf2;
   position: relative;
 
 }
 
-.information_ul li{
+.information_ul li {
   display: inline-block;
-  width:50%;
+  width: 50%;
   padding: 20px 65px 0px;
   text-align: right;
 
 }
 
-.information_ul li label{
+.information_ul li label {
   /*width:100px;*/
   text-align: right;
   vertical-align: middle;
@@ -713,14 +801,16 @@ export default {
   box-sizing: border-box;
 }
 
-.information_ul{
+.information_ul {
   list-style-type: none;
 }
-.information_input{
-  width:240px;
+
+.information_input {
+  width: 240px;
   display: inline-block;
 }
-.el-form-item{
+
+.el-form-item {
   text-align: right;
 }
 
