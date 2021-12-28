@@ -1,10 +1,11 @@
+<!--工资成本-->
 <template>
   <div class="demo-date-picker" style="width: 100%;height: 49px;">
     <div class="" style="width: 850px;height: 49px; float: right;">
       <span class="demonstration" style="position: relative;top: -1px;">时间范围：</span>
 
       <el-date-picker v-model="value1" type="daterange" range-separator="到"
-                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
+                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 3px;">
       </el-date-picker>
       <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
       <el-select v-model="valuee" placeholder="请选择">
@@ -21,16 +22,24 @@
     </div>
 
   </div>
-
-
-
   <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
-    <!--  每月请假人数 -->
-    <div id="mainy5" style="width: 980px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
-
-
-      <span class="ziti">当前月请假人数：</span>
+    <!--  每月实发工资总额 -->
+    <div id="main2" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
+      <span class="ziti">当前月实发工资：</span>
+      <br>
+      <span class="ziti">3</span>
+      <br>
+      <span class="ziti">相比上月：</span>
+      <br>
+      <span class="ziti">嘿嘿嘿</span>
+    </div>
+  </div>
+  <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
+    <!--  每月平均工资 -->
+    <div id="main3" style="width: 1050px;height:460px; margin-top: 20px; "></div>
+    <div style="width: 16%;height: 320px; float: right; margin-top: -390px;">
+      <span class="ziti">当前月实发工资：</span>
       <br>
       <span class="ziti">3</span>
       <br>
@@ -40,21 +49,7 @@
     </div>
   </div>
 
-  <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
-    <!--  每月人均请假人数 -->
-    <div id="mainy6" style="width: 980px;height:460px; margin-top: 20px; "></div>
-    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
 
-
-      <span class="ziti">当前月请假人数：</span>
-      <br>
-      <span class="ziti">3</span>
-      <br>
-      <span class="ziti">相比上月：</span>
-      <br>
-      <span class="ziti">???</span>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -125,6 +120,8 @@ export default {
         },
       ]),
       valuee: ref(''),
+
+
     }
   },
 
@@ -135,20 +132,24 @@ export default {
   },
   mounted() {
     //准备实例
-    /* 	每月请假人数 */
-    var chartDomy5 = document.getElementById('mainy5');
-    var myCharty5= echarts.init(chartDomy5);
-    /*  每月人均请假时长 */
-    var chartDomy6 = document.getElementById('mainy6');
-    var myCharty6= echarts.init(chartDomy6);
 
-    var optiony5;
-    var optiony6;
+    /* 每月实发工资总额 */
+    var chartDom2 = document.getElementById('main2');
+    var myChart2 = echarts.init(chartDom2);
+    /* 每月平均工资 */
+    var chartDom3 = document.getElementById('main3');
+    var myChart3 = echarts.init(chartDom3);
 
-    /* 每月请假人数 */
-    optiony5 = {
+    var option;
+    var option1;
+    var option2;
+    var option3;
+    /* <!-- 每月计薪人数 --> */
+
+    //每月实发工资总额
+    option2 = {
       title: {
-        text: '每月请假人数'
+        text: '每月实发工资总额'
       },
       tooltip: {
         trigger: 'axis',
@@ -164,7 +165,7 @@ export default {
           dataView: {
             show: true,
             readOnly: false,
-            title:'数据视图'
+            title:"数据视图"
           },
           magicType: {
             show: true,
@@ -176,7 +177,7 @@ export default {
           },
           restore: {
             show: true,
-            title:'还原'
+            title:"还原"
           },
           saveAsImage: {
             show: true,
@@ -185,7 +186,7 @@ export default {
         }
       },
       legend: {
-        data: ['请假人数', '增长率']
+        data: ['实发工资', '增长率']
       },
       xAxis: [{
         type: 'category',
@@ -198,12 +199,12 @@ export default {
       }],
       yAxis: [{
         type: 'value',
-        name: '小时',
+        name: '元',
         min: 0,
         max: 250,
         interval: 50,
         axisLabel: {
-          formatter: '{value} 时'
+          formatter: '{value} 元'
         }
       },
         {
@@ -219,10 +220,10 @@ export default {
 
       ],
       series: [{
-        name: '请假人数',
+        name: '实发工资',
         type: 'bar',
         data: [
-          20, 49, 70, 232, 256, 135.6, 200
+          44, 23, 56, 77, 88, 44, 33, 66
         ],barWidth:'25%',
       },
 
@@ -230,7 +231,7 @@ export default {
           name: '增长率',
           type: 'line',
           yAxisIndex: 1,
-          data: [30, 20, 20, 40, 50, 30, 40],
+          data: [10, 20, 30, 40, 50, 30, 40],
           itemStyle: {
             normal: {
               color: "#FFFF66", //折线点的颜色
@@ -239,13 +240,13 @@ export default {
               }
             }
           },
-
         }
       ]
     };
-    optiony6 = {
+    /* 每月平均工资 */
+    option3 = {
       title: {
-        text: '每月人均请假人数'
+        text: '每月平均工资'
       },
       tooltip: {
         trigger: 'axis',
@@ -261,7 +262,7 @@ export default {
           dataView: {
             show: true,
             readOnly: false,
-            title:'数据视图'
+            title:"数据视图"
           },
           magicType: {
             show: true,
@@ -273,7 +274,7 @@ export default {
           },
           restore: {
             show: true,
-            title:'还原'
+            title:"还原"
           },
           saveAsImage: {
             show: true,
@@ -282,7 +283,7 @@ export default {
         }
       },
       legend: {
-        data: ['人均请假数', '增长率']
+        data: ['平均工资', '增长率']
       },
       xAxis: [{
         type: 'category',
@@ -295,12 +296,12 @@ export default {
       }],
       yAxis: [{
         type: 'value',
-        name: '小时',
+        name: '元',
         min: 0,
         max: 250,
         interval: 50,
         axisLabel: {
-          formatter: '{value} 时'
+          formatter: '{value} 元'
         }
       },
         {
@@ -316,10 +317,10 @@ export default {
 
       ],
       series: [{
-        name: '人均请假数',
+        name: '平均工资',
         type: 'bar',
         data: [
-          20, 49, 70, 232, 256, 135.6, 200
+          2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6,
         ],barWidth:'25%',
       },
 
@@ -327,7 +328,7 @@ export default {
           name: '增长率',
           type: 'line',
           yAxisIndex: 1,
-          data: [30, 20, 20, 40, 50, 30, 40],
+          data: [10, 20, 30, 40, 50, 30, 40],
           itemStyle: {
             normal: {
               color: "#FFFF66", //折线点的颜色
@@ -336,12 +337,17 @@ export default {
               }
             }
           },
-
         }
       ]
     };
-    optiony5 && myCharty5.setOption(optiony5);
-    optiony6 && myCharty6.setOption(optiony6);
+
+
+
+    option && myChart.setOption(option);
+    option1 && myChart1.setOption(option1);
+    option2 && myChart2.setOption(option2);
+    option3 && myChart3.setOption(option3);
+
   }
 }
 </script>
@@ -349,4 +355,9 @@ export default {
 
 <style scoped>
 @import url("../../css/Statistics.css");
+
+ .el-menu[data-v-244d4530] {
+   height: 57px;
+   font-weight: bold;
+ }
 </style>

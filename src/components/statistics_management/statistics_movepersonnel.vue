@@ -1,3 +1,4 @@
+<!--人员移动分析-->
 <template>
 
   <div class="demo-date-picker" style="width: 100%;height: 49px;">
@@ -5,7 +6,7 @@
       <span class="demonstration" style="position: relative;top: -1px;">时间范围：</span>
 
       <el-date-picker v-model="value1" type="daterange" range-separator="到"
-                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 0px;">
+                      start-placeholder="开始时间" end-placeholder="结束时间" style="position: relative;top: 3px;">
       </el-date-picker>
       <span class="demonstration" style="position: relative;top: -1px;left: 3px;">组织范围：</span>
       <el-select v-model="valuee" placeholder="请选择">
@@ -49,19 +50,7 @@
     </div>
   </div>
 
-  <div style="position: relative; display: block; width: 100%;border-top: 1px #000000 dashed;">
 
-    <div id="main9" style="width: 952px;height:460px;"></div>
-    <div style="width: 17%;height: 320px; float: right; margin-top: -390px;">
-
-      <span class="ziti">当前月员工损失率</span>
-      <br>
-      <span class="ziti">9</span>
-      <br>
-
-
-    </div>
-  </div>
 
 </template>
 
@@ -169,9 +158,6 @@ export default ({
     var myChart8 = echarts.init(chartDom8);
     var option8;
     /* 当前月员工损失率 */
-    var chartDom9 = document.getElementById('main9');
-    var myChart9 = echarts.init(chartDom9);
-    var option9;
 
     /* 当前月员工新进率 */
     option7 = {
@@ -318,87 +304,11 @@ export default ({
       ]
     };
     /* 当前月员工损失率 */
-    option9 = {
-      title: {
-        text: '每月员工损失率'
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985'
-          }
-        }
-      },
-      legend: {
-        data: ['损失率']
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {
-            show:true,
-            title:"保存"
-          },
 
-          magicType: {
-            show: true,
-            type: ['line', 'bar'],
-            title:{
-              line:"折线图",
-              bar:"柱状图",
-            }
-          },
-        }
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [{
-        type: 'category',
-        boundaryGap: false,
-        data: ['2021-07', '2021-08', '2021-09', '2021-10', '2021-10', '2021-11', '2021-12']
-      }],
-      yAxis: [{
-        type: 'value'
-      }],
-      series: [{
-        name: '损失率',
-        type: 'line',
-        stack: 'Total',
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [{
-              offset: 0,
-              color: '#00FF00' // 0% 处的颜色
-            }, {
-              offset: 1,
-              color: '#FF0066' // 100% 处的颜色
-            }],
-            global: false // 缺省为 false
-          }
-        },
-        emphasis: {
-          focus: 'series'
-        },
-        data: [120, 132, 101, 134, 90, 230, 210],
-        smooth:true
-      }
-
-      ]
-    };
 
     option7 && myChart7.setOption(option7);
     option8 && myChart8.setOption(option8);
-    option9 && myChart9.setOption(option9);
+
 
 
 

@@ -4,8 +4,8 @@
   <div class="saas-main-content">
 
     <!--搜索输入框-->
-    <el-row style="width:200px;float:right;">
-      <el-input v-model="input3" placeholder="搜索">
+    <el-row style="width:150px;float:right;">
+      <el-input v-model="input3" placeholder="搜索" size="small">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>

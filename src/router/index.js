@@ -627,16 +627,16 @@ const routes = [
 
 
                     {//人员数量分析
-                        path: '/statistics/staff_analyze/statistics_personnel1',
-                        component: modules[`${'../components/statistics_management/statistics_personnel1.vue'}`],
+                        path: '/statistics/staff_analyze/statistics_numberpersonnel',
+                        component: modules[`${'../components/statistics_management/statistics_numberpersonnel.vue'}`],
                     },
                     {//人工异动分析
-                        path: '/statistics/staff_analyze/statistics_personnel2',
-                        component: modules[`${'../components/statistics_management/statistics_personnel2.vue'}`],
+                        path: '/statistics/staff_analyze/statistics_movepersonnel',
+                        component: modules[`${'../components/statistics_management/statistics_movepersonnel.vue'}`],
                     },
                     {//员工概况
-                        path: '/statistics/staff_analyze/statistics_personnel3',
-                        component: modules[`${'../components/statistics_management/statistics_personnel3.vue'}`],
+                        path: '/statistics/staff_analyze/statistics_surveypersonnel',
+                        component: modules[`${'../components/statistics_management/statistics_surveypersonnel.vue'}`],
                     },
 
 
@@ -646,20 +646,20 @@ const routes = [
                         children: [
 
                             {//出勤分析
-                                path: '/statistics/clockingin_analyze/statistics_work1',
-                                component: modules[`${'../components/statistics_management/statistics_work1.vue'}`],
+                                path: '/statistics/clockingin_analyze/statistics_attendance',
+                                component: modules[`${'../components/statistics_management/statistics_attendance.vue'}`],
                             },
                             {//工时分析
-                                path: '/statistics/clockingin_analyze/statistics_work2',
-                                component: modules[`${'../components/statistics_management/statistics_work2.vue'}`],
+                                path: '/statistics/clockingin_analyze/statistics_manhour',
+                                component: modules[`${'../components/statistics_management/statistics_manhour.vue'}`],
                             },
                             {//加班分析
-                                path: '/statistics/clockingin_analyze/statistics_work3',
-                                component: modules[`${'../components/statistics_management/statistics_work3.vue'}`],
+                                path: '/statistics/clockingin_analyze/statistics_overtime',
+                                component: modules[`${'../components/statistics_management/statistics_overtime.vue'}`],
                             },
                             {//请假分析
-                                path: '/statistics/clockingin_analyze/statistics_work4',
-                                component: modules[`${'../components/statistics_management/statistics_work4.vue'}`],
+                                path: '/statistics/clockingin_analyze/statistics_leave',
+                                component: modules[`${'../components/statistics_management/statistics_leave.vue'}`],
                             }
 
                         ]
@@ -669,12 +669,12 @@ const routes = [
                         component: modules[`${'../components/menu_skip.vue'}`],
                         children: [
                             {//工资成本分析
-                                path: '/statistics/remuneration_analyze/statistics_analysis1',
-                                component: modules[`${'../components/statistics_management/statistics_analysis1.vue'}`],
+                                path: '/statistics/remuneration_analyze/statistics_payrollcosts',
+                                component: modules[`${'../components/statistics_management/statistics_payrollcosts.vue'}`],
                             },
                             {//社保成本分析
-                                path: '/statistics/remuneration_analyze/statistics_analysis2',
-                                component: modules[`${'../components/statistics_management/statistics_analysis2.vue'}`],
+                                path: '/statistics/remuneration_analyze/statistics_socialsecurity',
+                                component: modules[`${'../components/statistics_management/statistics_socialsecurity.vue'}`],
                             },
                             {//薪酬成本分析
                                 path: '/statistics/remuneration_analyze/statistics_analysis3',
@@ -751,12 +751,12 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(), routes
 })
-// //全局前置守卫，可用作前端权限验证的简单实现
-// router.beforeEach(function(to, from, next) {
-//     if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
-//          next({path: '/beginIndex'})
-//     }else{
-//         next()
-//     }
-// })
+//全局前置守卫，可用作前端权限验证的简单实现
+router.beforeEach(function(to, from, next) {
+    if ( (to.path !== '/beginIndex/faceLogin' & to.path!=='/beginIndex/passLogin' && store.state.staffMessage.staffId==null ) )  {
+         next({path: '/beginIndex'})
+    }else{
+        next()
+    }
+})
 export default router

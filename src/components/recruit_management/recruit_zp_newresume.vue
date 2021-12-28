@@ -101,23 +101,23 @@
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left"  align="center" type="selection" width="80" />
-        <el-table-column fixed="left" label="姓名" width="150">
-          <template #default="scope">
-            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
-          </template>
-        </el-table-column>
-        <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
-        <el-table-column prop="gender" label="性别" width="140"/>
-        <el-table-column prop="schoolli" label="学历" width="140"/>
-        <el-table-column prop="phone" label="手机号" width="140"/>
-        <el-table-column prop="age" label="年龄" width="140"/>
-        <el-table-column prop="email" label="邮箱" width="140"/>
-        <el-table-column prop="professional" label="专业" width="140"/>
-        <el-table-column prop="birth" label="出生日期" width="140"/>
-        <el-table-column prop="face" label="政治面貌" width="140"/>
-        <el-table-column prop="gradschool" label="毕业学校" width="140"/>
-        <el-table-column prop="invitation" label="是否邀约" width="140"/>
-        <el-table-column prop="state" label="状态" width="140"/>
+        <el-table-column fixed="left" label="姓名" width="150" prop="resumeName"/>
+<!--          <template #default="scope">-->
+<!--            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+        <el-table-column fixed="left" prop="postName" label="投递部门" width="140"/>
+        <el-table-column prop="resumeSex" label="性别" width="140"/>
+        <el-table-column prop="resumeEducation" label="学历" width="140"/>
+        <el-table-column prop="resumePhone" label="手机号" width="140"/>
+<!--        <el-table-column prop="age" label="年龄" width="140"/>-->
+        <el-table-column prop="resumeMailbox" label="邮箱" width="140"/>
+<!--        <el-table-column prop="professional" label="专业" width="140"/>-->
+        <el-table-column prop="resumeBirthday" label="出生日期" width="140"/>
+<!--        <el-table-column prop="face" label="政治面貌" width="140"/>-->
+<!--        <el-table-column prop="gradschool" label="毕业学校" width="140"/>-->
+<!--        <el-table-column prop="invitation" label="是否邀约" width="140"/>-->
+<!--        <el-table-column prop="state" label="状态" width="140"/>-->
 
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
@@ -162,7 +162,7 @@
       </div>
     </div>
 
-
+  {{this.tableData}}
 
 
   </div>
@@ -191,11 +191,7 @@ export default {
       //搜索框
       input: "",
       //表格数据
-      tableData: [
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'}
-      ],
+      tableData: [],
       //筛选框数据
       formInline:{
         vlues1:'',
@@ -210,7 +206,26 @@ export default {
     }
   },
   methods:{
+    //查询新简历
+    selectResume(){
+        this.axios
+            .get("http://localhost:80/selectResume",{
+            params: this.pageInfo,
+        })
+        .then((response) =>{
+            console.log("查询新简历");
+            console.log(response.data.succed.records);
+            this.tableData = response.data.succed.records;
+        })
+        .catch(function (error) {
+           console.log("失败")
+           console.log(error);
+        });
 
+    }
+  },
+  created() {
+    this.selectResume();
   }
 
 }

@@ -18,7 +18,7 @@
             style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="jianjia"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
-          <el-button type="text"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
+          <el-button type="text" @click="addwork2()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
         </h3>
       </div>
 
@@ -138,11 +138,13 @@
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">荣誉与奖励<i class="iconfont"
                                                                                                     style="color: #085fc3;margin-right:2px;">&#xe604;</i>
         </h3>
+
         <div
             style="width:830px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="jljianjia"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
-          <el-button type="text"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
+          <!--     小添加按钮-->
+          <el-button type="text" @click="addglory2()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
         </h3>
       </div>
 
@@ -150,12 +152,13 @@
 
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="tianjiajl">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;
+            <!-- 大添加荣誉-->
+            <el-button type="text" @click="clickglory()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;
               荣誉与奖励
             </el-button>
           </div>
         </div>
-
+        <!--  添加的荣誉表单 -->
         <div style="width:100%;position: relative;margin-top: 20px;" v-show="jlwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
@@ -179,11 +182,12 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;">编辑</el-button>
+            <el-button type="text" style="color: #085fc3;" @click="redactglory()">编辑</el-button>
             <el-button type="text" style="color: red;">删除</el-button>
           </div>
         </div>
 
+        <!--   荣誉表单     -->
         <div class="information_from" v-show="jlhs">
           <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm">
             <br/>
@@ -201,6 +205,7 @@
                 </el-col>
               </el-form-item>
               <br>
+
             </div>
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px">
@@ -229,8 +234,8 @@
 
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button>取消</el-button>
-                <el-button type="primary">保存</el-button>
+                <el-button @click="callglory()">取消</el-button>
+                <el-button type="primary" @click="addglory()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -243,26 +248,27 @@
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">惩罚<i class="iconfont"
                                                                                                  style="color: #085fc3;margin-right:2px;">&#xe604;</i>
         </h3>
+        <!--小添加惩罚-->
         <div
             style="width:870px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="cfjianjia"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
-          <el-button type="text" @click="cfhs=!cfhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
+          <el-button type="text" @click="addpunish2()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
           </el-button>
         </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
-
+        <!--大添加惩罚-->
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="tianjiacf">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text" @click="cfhs=!cfhs,tianjiacf=!tianjiacf"><i class="iconfont"
+            <el-button type="text" @click="clcikpunish()"><i class="iconfont"
                                                                                style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;
               惩罚
             </el-button>
           </div>
         </div>
-
+        <!--惩罚表单-->
         <div style="width:100%;position: relative;margin-top: 20px;" v-show="cfwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
@@ -289,7 +295,7 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;" @click="cfhs=!cfhs,cfwhite=!cfwhite">编辑</el-button>
+            <el-button type="text" style="color: #085fc3;" @click="redactpunish()">编辑</el-button>
             <el-button type="text" style="color: red;">删除</el-button>
           </div>
         </div>
@@ -350,8 +356,8 @@
 
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="cfhs=!cfhs,tianjiacf=!tianjiacf">取消</el-button>
-                <el-button type="primary" @click="cfwhite=!cfwhite,cfhs=!cfhs,cfjianjia=!cfjianjia">保存</el-button>
+                <el-button @click="callpunish()">取消</el-button>
+                <el-button type="primary" @click="addpunish()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -372,25 +378,27 @@
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">教育经历<i class="iconfont"
                                                                                                    style="color: #085fc3;margin-right:2px;">&#xe604;</i>
         </h3>
+        <!--小添加教育经历-->
         <div
             style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="tianjiajy"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
-          <el-button type="text" @click="jyhs=!jyhs"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
+          <el-button type="text" @click="addexperien2()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
           </el-button>
         </h3>
       </div>
 
       <div style="width: 100%;margin-top: 20px;">
-
+      <!--大添加教育经历-->
         <div style="width:98%;height:80px;border: 1px dotted silver;margin: auto" v-show="jytianjia">
           <div style="margin: auto;width:120px;height: 80px;line-height: 80px">
-            <el-button type="text" @click="jyhs=!jyhs,jytianjia=!jytianjia"><i class="iconfont"
+            <el-button type="text" @click="clickexperien()"><i class="iconfont"
                                                                                style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加&nbsp;&nbsp;教育经历
             </el-button>
           </div>
         </div>
 
+        <!--教育经历表单-->
         <div style="width:100%;position: relative;margin-top: 20px;" v-show="jywhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
@@ -413,7 +421,7 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;" @click="jyhs=!jyhs,jywhite=!jywhite">编辑</el-button>
+            <el-button type="text" style="color: #085fc3;" @click="redactexperien()">编辑</el-button>
             <el-button type="text" style="color: red;">删除</el-button>
           </div>
         </div>
@@ -471,8 +479,8 @@
 
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="jyhs=!jyhs,jytianjia=!jytianjia">取消</el-button>
-                <el-button type="primary" @click="jywhite=!jywhite,jyhs=!jyhs,tianjiajy=!tianjiajy">保存</el-button>
+                <el-button @click="callexperien()">取消</el-button>
+                <el-button type="primary" @click="addexperien()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -497,7 +505,7 @@
             style="width:845px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="lzbj"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
-          <el-button type="text" @click="lzbj=!lzbj,lzhs=!lzhs,lzwhite=!lzwhite"><i class="iconfont"
+          <el-button type="text" @click="redactleave()"><i class="iconfont"
                                                                                     style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑
           </el-button>
         </h3>
@@ -505,7 +513,7 @@
 
       <div style="width: 100%;margin-top: 20px;">
 
-
+        <!--离职表单-->
         <div style="width:100%;position: relative;margin-top: 20px;" v-show="lzwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
@@ -600,8 +608,8 @@
 
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="lzwhite=!lzwhite,lzhs=!lzhs,lzbj=!lzbj">取消</el-button>
-                <el-button type="primary" @click="lzwhite=!lzwhite,lzhs=!lzhs,lzbj=!lzbj ">保存</el-button>
+                <el-button @click="callleave()">取消</el-button>
+                <el-button type="primary" @click="addleave()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -664,23 +672,38 @@ export default {
       // 工作经历表单
       gzjlhs: false,
 
+      //小添加按钮
       jljianjia: false,
+      //大添加按钮
       tianjiajl: true,
+      //添加的荣誉奖励
       jlwhite: false,
+      //荣誉奖励表单
       jlhs: false,
 
+      //小添加按钮
       cfjianjia: false,
+      //大添加按钮
       tianjiacf: true,
+      //添加的惩罚
       cfwhite: false,
+      //惩罚表单
       cfhs: false,
 
+      //小添加按钮
       tianjiajy: false,
+      //大添加按钮
       jytianjia: true,
+      //添加的教育经历
       jywhite: false,
+      //教育经历表单
       jyhs: false,
 
+      //添加的离职
       lzwhite: true,
+      //离职表单
       lzhs: false,
+      //离职编辑
       lzbj: true
 
     };
@@ -712,13 +735,114 @@ export default {
     // 点击确定添加工作记录按钮
     addwork(){
       this.gzjlhs=false;
+      this.jianjia= true,
+      this.gzjlwhite=true;
+    },
+    addwork2(){
+      this.gzjlhs=true;
+      this.tianjiagzjl=false;
       this.gzjlwhite=true;
     },
     // 点击编辑添加的工作经历表单按钮
     redactwork(){
       this.gzjlhs=true;
       this.gzjlwhite=false;
+
+    },
+    //点击添加荣誉奖励按钮
+    clickglory(){
+      this.jlhs=true;
+      this.tianjiajl=false;
+    },
+    //点击取消荣誉奖励记录按钮
+    callglory(){
+      this.jlhs=false;
+      this.tianjiajl=true;
+    },
+    //点击确定荣誉奖励按钮
+    addglory(){
+      this.jlhs=false;
+      this.jljianjia=true;
+      this.jlwhite=true;
+    },
+    addglory2(){
+      this.jlhs=true;
+      this.tianjiajl=false;
+      this.jlwhite=true;
+    },
+    //点击编辑添加荣誉奖励的按钮
+    redactglory(){
+      this.jlhs=true;
+      this.jlwhite=false;
+    },
+    //点击添加惩罚按钮
+    clcikpunish(){
+      this.cfhs=true;
+      this.tianjiacf=false;
+    },
+    //点击取消惩罚记录按钮
+    callpunish(){
+      this.cfhs=false;
+      this.tianjiacf=true;
+    },
+    //点击确定惩罚按钮
+    addpunish(){
+      this.cfhs=false;
+      this.cfjianjia=true;
+      this.cfwhite=true;
+    },
+    addpunish2(){
+      this.cfhs=true;
+      this.tianjiacf=false;
+      this.cfwhite=true;
+    },
+    //点击编辑添加惩罚的按钮
+    redactpunish(){
+      this.cfhs=true;
+      this.cfwhite=false;
+    },
+    //点击添加教育经历按钮
+    clickexperien(){
+      this.jyhs=true;
+      this.jytianjia=false;
+    },
+    //点击取消教育经历按钮
+    callexperien(){
+      this.jyhs=false;
+      this.jytianjia=true;
+    },
+    //点击确定教育经历按钮
+    addexperien(){
+      this.jyhs=false;
+      this.tianjiajy=true;
+      this.jywhite=true;
+    },
+    addexperien2(){
+      this.jyhs=true;
+      this.tianjiajy=false;
+      this.jywhite=true;
+    },
+    //点击编辑教育经历按钮
+    redactexperien(){
+      this.jyhs=true;
+      this.jywhite=false;
+    },
+    //点击编辑离职按钮
+    redactleave(){
+      this.lzhs=true;
+      this.lzwhite=false;
+    },
+    //点击取消离职按钮
+    callleave(){
+      this.lzhs=false;
+    },
+    //点击保存离职按钮
+    addleave(){
+      this.lzhs=false;
+      this.lzwhite=true;
     }
+
+
   }
 }
 </script>
