@@ -160,7 +160,9 @@ export default {
       //复选框选择的结果
       checkDeleteList: [],
       //删除按钮是否可用
-      disabled: true
+      disabled: true,
+      //存放复选的id列表
+      listId: []
 
     }
   },
@@ -191,42 +193,111 @@ export default {
     //清空提示框
     empty() {
       ElMessageBox.confirm(
-          '是否确定清空所有数据！！！',
-          '友情提示', {
-            confirmButtonText: '确定',
+          '是否确认清空所有数据?',
+          '系统提示',
+          {
             cancelButtonText: '取消',
-            type: '友情提示',
+            confirmButtonText: '确认',
+            type: 'warning',
           }
       ).then(() => {
-        ElMessage({
-          type: 'success',
-          message: '清空成功！！',
+        this.axios({
+          method: 'delete',
+          url: this.url + 'emptyList',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            if (response.data.data.info=="成功"){
+              this.next();
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                ElMessage({
+                  type: 'success',
+                  message: '清空成功',
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
         })
       }).catch(() => {
         ElMessage({
-          message: '感谢你的参与',
-          type: 'warning',
+          type: 'info',
+          message: '取消成功',
         })
       })
     },
     //批量删除提示框
     remove() {
       ElMessageBox.confirm(
-          '是否确定删除！！！',
-          '友情提示', {
-            confirmButtonText: '确定',
+          '是否确认删除所选数据项?',
+          '系统提示',
+          {
             cancelButtonText: '取消',
-            type: '友情提示',
+            confirmButtonText: '确认',
+            type: 'warning',
           }
       ).then(() => {
-        ElMessage({
-          type: 'success',
-          message: '删除成功！！',
+        /*清空*/
+        this.listId = [];
+        for (let i = 0; i < this.checkDeleteList.length; i++) {
+          this.listId.push(this.checkDeleteList[i].registerLogId)
+        }
+        this.axios({
+          method: 'post',
+          url: this.url + 'checkDelete',
+          data: this.listId,
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            if (response.data.data.info=="成功"){
+              this.next();
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
         })
       }).catch(() => {
         ElMessage({
-          message: '感谢你的参与',
-          type: 'warning',
+          type: 'info',
+          message: '取消成功',
         })
       })
     },
@@ -255,15 +326,15 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log(response.data)
         //如果服务关闭
-       if (response.data.data.data) {
+        if (response.data.data.data) {
           ElNotification.warning({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
           })
-        }else if(response.data.data){
+          //如果服务没有关闭
+        } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             _this.tableData = response.data.data.info.records
@@ -315,7 +386,7 @@ export default {
   color: #5aaaff;
   display: inline-block;
   line-height: 1;
-  min-height: 20px;
+  min-height: 15px;
   white-space: nowrap;
   text-align: center;
   margin: 0;
@@ -329,7 +400,7 @@ export default {
   color: #f57a7a;
   display: inline-block;
   line-height: 1;
-  min-height: 20px;
+  min-height: 15px;
   white-space: nowrap;
   text-align: center;
   margin: 0;
