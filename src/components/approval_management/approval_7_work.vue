@@ -7,12 +7,12 @@
         <el-button @click="resetDateFilter1">重置日期过滤</el-button>
         &nbsp;
         <el-input
-            v-model="input"
+            v-model="tableData.staffName1"
             placeholder="输入名称搜索"
             style="width: 130px"
         />
         &nbsp;
-        <el-button type="success" plain>搜索</el-button>
+        <el-button type="success" plain @click="selectAuditflow()">搜索</el-button>
         <!--  表格 -->
         <el-table
             ref="filterTable1"
@@ -37,7 +37,14 @@
           <el-table-column prop="auditflowId" label="审批编号" width="100"/>
           <el-table-column prop="auditflowType" label="流程" width="100"/>
           <el-table-column prop="staffName1" label="申请人" width="150"/>
-          <el-table-column prop="auditflowState" label="状态" width="100"/>
+          <el-table-column label="状态" width="100">
+            <template #default="scope">
+              <span class="button-underway" v-if="scope.row.auditflowdetaiState===0">审批中</span>
+              <span class="button-await" v-if="scope.row.auditflowdetaiState===1">待我审批</span>
+              <span class="button-pass" v-if="scope.row.auditflowdetaiState===2">通过</span>
+              <span class="button-reject" v-if="scope.row.auditflowdetaiState===3">驳回</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="staffName2" label="当前审批人" width="150"/>
           <el-table-column prop="updatedTime" label="最近处理" width="150"/>
           <el-table-column label="操作">
@@ -93,8 +100,8 @@
               :total="pageInfo.total"
               :pager-count="5"
               background
-              @current-change="selectUser()"
-              @size-change="selectUser"
+              @current-change="selectAuditflow()"
+              @size-change="selectAuditflow()"
               prev-text="上一页"
               next-text="下一页"
           >
@@ -107,7 +114,7 @@
         <span>Hi there!</span>
       </el-drawer>
       <!-- 已办申请页面 -->
-      <el-tab-pane label="已办申请">
+      <el-tab-pane label="已办申请" @click="selectEndAuditflow()">
         <el-button @click="resetDateFilter">重置日期过滤</el-button>
         &nbsp;
         <el-input
@@ -140,7 +147,13 @@
           <el-table-column prop="auditflowId" label="审批编号" width="100"/>
           <el-table-column prop="auditflowType" label="流程" width="100"/>
           <el-table-column prop="staffName1" label="申请人" width="150"/>
-          <el-table-column prop="auditflowState" label="状态" width="100"/>
+          <el-table-column label="状态" width="100">
+            <template #default="scope">
+              <span class="button-await" v-if="scope.row.auditflowstate===0">待审</span>
+              <span class="button-pass" v-if="scope.row.auditflowstate===1">通过</span>
+              <span class="button-reject" v-if="scope.row.auditflowstate===2">驳回</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="staffName2" label="历史审批人" width="150"/>
           <el-table-column prop="updatedTime" label="最近处理" width="150"/>
           <el-table-column label="操作">
@@ -159,7 +172,7 @@
         <!-- 分页插件 -->
         <div class="demo-pagination-block">
           <el-pagination
-              v-model:currentPage="pageInfo1.currentPage"
+              v-model:currentPage1="pageInfo1.currentPage"
               :page-sizes="[3, 5, 10, 50]"
               v-model:page-size="pageInfo1.pagesize"
               :default-page-size="pageInfo1.pagesize"
@@ -167,8 +180,8 @@
               :total="pageInfo1.total"
               :pager-count="5"
               background
-              @current-change="selectEndUser()"
-              @size-change="selectEndUser"
+              @current-change="selectEndAuditflow()"
+              @size-change="selectEndAuditflow()"
           >
           </el-pagination>
         </div>
@@ -199,6 +212,8 @@ export default {
   },
   data() {
     return {
+      //访问路径
+      url: "http://localhost:80/",
       // 待办加班审批列表
       tableData: [
         {
@@ -208,7 +223,7 @@ export default {
           //类型
           AUDITFLOW_TYPE: "",
           //申请人（员工名称）
-          STAFF_ID: "",
+          staffName1: "",
           //加班状态
           AUDITFLOW_STATE: "",
           //加班人
@@ -278,106 +293,118 @@ export default {
     },
     // 查询待审批加班数据
     selectAuditflow() {
-      this.axios
-          .get("http://localhost:80/selectAuditflow", {
-            params: this.pageInfo,
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectAuditflow',
+        data: {
+          //当前页
+          "currentPage": this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //申请人名称
+          "staff_name": this.tableData.staffName1,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("查询待审批加班数据");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
-          .then((response) => {
-            console.log("查询待审批加班数据");
-            console.log(response)
-            if (response.data.data.info === "服务发生关闭") {
-              ElNotification({
-                title: '服务发生关闭',
-                message: '服务发生关闭，请稍后再试，或联系管理员',
-                type: 'error',
-              })
-              // this.$router.push('/beginIndex/faceLogin');
-            }
-            this.tableData = response.data.succeed.records;
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+            this.pageInfo.pagesize = response.data.data.info.size;
+            this.pageInfo.total = response.data.data.info.total;
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
           })
+        }
+      })
           .catch(function (error) {
             console.log("失败")
             console.log(error);
           });
     },
-    // 分页待审批加班数据
-    selectUser() {
-      var _this = this;
-      this.axios
-          .get("http://localhost:80/selectAuditflow", {
-            params: this.pageInfo,
-          })
-          .then(function (response) {
-            console.log("分页查询数据");
-            _this.tableData = response.data.succeed.records;
-            _this.pageInfo.pagesize = response.data.succeed.size;
-            _this.pageInfo.total = response.data.succeed.total;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    },
-    // 查询已处理的加班审批
+    // 查询已办审批加班数据
     selectEndAuditflow() {
-      this.axios
-          .get("http://localhost:80/selectEndAuditflow", {
-            params: this.pageInfo,
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectEnddAuditflow',
+        data: {
+          //当前页
+          "currentPage": this.pageInfo1.currentPage,
+          //页大小
+          "pagesize": this.pageInfo1.pagesize,
+          //申请人名称
+          "staff_name": this.tableData1.staffName1,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("查询已办审批加班数据")
+        console.log(response)
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
-          .then((response) => {
-            console.log("查询已审批加班数据");
-            this.tableData1 = response.data.succeed.records;
-          })
+        } else if (response.data.data) {
+          if (response.data.data.state == 200) {
+            _this.tableData1 = response.data.data.info.records;
+            this.pageInfo1.pagesize = response.data.data.info.size;
+            this.pageInfo1.total = response.data.data.info.total;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
           .catch(function (error) {
             console.log("失败")
             console.log(error);
           });
     },
-    // 分页已审批加班数据
-    selectEndUser() {
-      var _this = this;
-      this.axios
-          .get("http://localhost:80/selectEndAuditflow", {
-            params: this.pageInfo,
-          })
-          .then(function (response) {
-            console.log("分页查询已处理的加班数据");
-            _this.tableData = response.data.succeed.records;
-            _this.pageInfo1.pagesize = response.data.succeed.size;
-            _this.pageInfo1.total = response.data.succeed.total;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    },
-    details(value) {
-      console.log(value.id)
-      console.log(value.name1)
-      console.log(value.name2)
-      this.axios
-          .get("http://localhost:80/selectDetailsAuditflow", {
-            params: value,
-          })
-          .then((response) => {
-            console.log("查询已审批加班数据详情");
-            console.log(response)
-            // this.tableData2 = response.data.succeed.records;
-          })
-          .catch(function (error) {
-            console.log("查询已审批加班数据详情失败")
-            console.log(error);
-          });
-    }
+    // details(value) {
+    //   console.log(value.id)
+    //   console.log(value.name1)
+    //   console.log(value.name2)
+    //   this.axios
+    //       .get("http://localhost:80/selectDetailsAuditflow", {
+    //         params: value,
+    //       })
+    //       .then((response) => {
+    //         console.log("查询已审批加班数据详情");
+    //         console.log(response)
+    //         // this.tableData2 = response.data.succeed.records;
+    //       })
+    //       .catch(function (error) {
+    //         console.log("查询已审批加班数据详情失败")
+    //         console.log(error);
+    //       });
+    // }
   },
   // 挂载
   created() {
     // 查询待处理的加班审批
     this.selectAuditflow();
-    // 分页查询待处理的加班审批
-    this.selectUser();
     // 查询已处理的加班审批
     this.selectEndAuditflow();
-    //分页查询已处理的加班审批
-    this.selectEndUser();
   }
 };
 </script>
