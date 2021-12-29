@@ -76,13 +76,13 @@
               <el-button
                   type="primary"
                   style="margin-left: 16px"
-                  @click="(drawer = true),
+                  @click="
                   (value = {
                     id: scope.row.auditflowId,
                     name1: scope.row.staffName1,
                     name2: scope.row.staffName2,
                     }),
-                   details(value)"
+                   particulars(value)"
               >
                 详情
               </el-button>
@@ -93,25 +93,66 @@
         <div class="demo-pagination-block">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
+              :page-sizes="[1, 3, 5, 7]"
               v-model:page-size="pageInfo.pagesize"
               :default-page-size="pageInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageInfo.total"
               :pager-count="5"
               background
-              @current-change="selectAuditflow()"
-              @size-change="selectAuditflow()"
-              prev-text="上一页"
               next-text="下一页"
-          >
+              prev-text="上一页"
+              @size-change="selectAuditflow()"
+              @current-change="selectAuditflow()"
+              @prev-click="selectAuditflow()"
+              @next-click="selectAuditflow()">
+            prev-text="上一页"
+            next-text="下一页"
+            >
             <!--  @size-change="selectUsers" @current-change="selectUsers" -->
           </el-pagination>
         </div>
       </el-tab-pane>
       <!-- 点击详情，弹出抽屉-->
       <el-drawer v-model="drawer" title="I am the title" :with-header="false">
-        <span>Hi there!</span>
+        <el-form ref="form" :model="details">
+          <el-form-item label="标题">
+            <el-input v-model="details[0].auditflowTitle" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="申请人">
+            <el-input v-model="details[0].staffName1" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="申请状态">
+            <el-input v-model="details[0].auditflowdetaiState" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="加班类型">
+            <el-input v-model="details[0].overtimeaskType" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="加班事由">
+            <el-input v-model="details[0].overtimeaskmatter" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input v-model="details[0].overtimeaskremarks" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="加班开始时间">
+            <el-input v-model="details[0].overtimeaskSDate" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="加班结束时间">
+            <el-input v-model="details[0].overtimeaskEDate" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="加班总时长">
+            <el-input v-model="details[0].overtimeasktotaldate" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="审批人">
+            <el-input v-model="details[0].staffName2" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="审批备注">
+            <el-input v-model="details[0].auditflowdetai_remarks" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="审核时间">
+            <el-input v-model="details[0].auditflowdetaiDate" disabled></el-input>
+          </el-form-item>
+        </el-form>
       </el-drawer>
       <!-- 已办申请页面 -->
       <el-tab-pane label="已办申请" @click="selectEndAuditflow()">
@@ -171,24 +212,25 @@
 
         <!-- 分页插件 -->
         <div class="demo-pagination-block">
-          <el-pagination
-              v-model:currentPage1="pageInfo1.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
-              v-model:page-size="pageInfo1.pagesize"
-              :default-page-size="pageInfo1.pagesize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="pageInfo1.total"
-              :pager-count="5"
-              background
-              @current-change="selectEndAuditflow()"
-              @size-change="selectEndAuditflow()"
-          >
+          <el-pagination v-model:current-page="pageInfo1.currentPage"
+                         v-model:page-size="pageInfo1.pagesize"
+                         :default-page-size="pageInfo1.pagesize"
+                         :page-sizes="[3,6,9,12]"
+                         :pager-count="5"
+                         :total="pageInfo1.total"
+                         background
+                         layout="	total ,sizes, prev, pager, next, jumper"
+                         next-text="下一页"
+                         prev-text="上一页"
+                         @size-change="selectEndAuditflow()"
+                         @current-change="selectEndAuditflow()"
+                         @prev-click="selectEndAuditflow()"
+                         @next-click="selectEndAuditflow()">
           </el-pagination>
         </div>
       </el-tab-pane>
     </el-tabs>
   </div>
-
 </template>
 
 <script>
@@ -206,12 +248,12 @@ import {ElMessage, ElNotification} from "element-plus";
 export default {
   setup() {
     return {
-      drawer: ref(false),
       input: ref(""),
     };
   },
   data() {
     return {
+      drawer: false,
       //访问路径
       url: "http://localhost:80/",
       // 待办加班审批列表
@@ -264,6 +306,33 @@ export default {
         pagesize: 3, // 页大小
         total: 0, // 总页数
       },
+      // 详情抽屉表单
+      details: {
+        //审批标题
+        auditflowtitle: "",
+        //申请人
+        staffName1: "",
+        //审核状态
+        auditflowdetaiState: "",
+        //加班类型
+        overtimeaskType: "",
+        //加班事由
+        overtimeaskmatter: "",
+        // 备注
+        overtimeaskremarks: "",
+        //加班开始时间
+        overtimeaskSDate: "",
+        //加班结束时间
+        overtimeaskEDate: "",
+        //加班总小时
+        overtimeasktotaldate: "",
+        // 审核人
+        staffName2: "",
+        //审核时间
+        auditflowdetaiDate: "",
+        // 审核备注
+        auditflowdetai_remarks: "",
+      }
     };
   },
   methods: {
@@ -380,24 +449,35 @@ export default {
             console.log(error);
           });
     },
-    // details(value) {
-    //   console.log(value.id)
-    //   console.log(value.name1)
-    //   console.log(value.name2)
-    //   this.axios
-    //       .get("http://localhost:80/selectDetailsAuditflow", {
-    //         params: value,
-    //       })
-    //       .then((response) => {
-    //         console.log("查询已审批加班数据详情");
-    //         console.log(response)
-    //         // this.tableData2 = response.data.succeed.records;
-    //       })
-    //       .catch(function (error) {
-    //         console.log("查询已审批加班数据详情失败")
-    //         console.log(error);
-    //       });
-    // }
+    particulars(value) {
+      console.log(value.id)
+      console.log(value.name1)
+      console.log(value.name2)
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDetailsAuditflow',
+        data: {
+          //审批编号
+          "auditflowId": value.id,
+          //申请人
+          "staffName1": value.name1,
+          //审批人
+          "staffName2": value.name2,
+        }, responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        this.drawer = true;
+        console.log("查询已审批加班数据详情");
+        console.log(response)
+        this.details = response.data.data.info;
+
+      })
+          .catch(function (error) {
+            console.log("查询已审批加班数据详情失败")
+            console.log(error);
+          });
+    }
   },
   // 挂载
   created() {
