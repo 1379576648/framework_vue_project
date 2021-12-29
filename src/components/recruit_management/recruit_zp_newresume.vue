@@ -162,7 +162,6 @@
       </div>
     </div>
 
-  {{this.tableData}}
 
 
   </div>
@@ -232,7 +231,7 @@ export default {
           .then(function (response){
             console.log("分页查询");
             console.log(response);
-            _this.tableData = response.data.records;
+            _this.tableData = response.data.succed.records;
             _this.pageInfo.pagesize = response.data.succed.size;
             _this.pageInfo.total = response.data.succed.total;
           })
