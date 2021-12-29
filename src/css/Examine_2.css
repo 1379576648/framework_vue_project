@@ -32,3 +32,63 @@ table * {
 /deep/.el-table .el-table__cell{
   text-align: center;
 }
+/*!*待我审批样式  蓝色*!*/
+.button-await {
+  background: #ecf5ff;
+  border: 1px #cfe6ff solid;
+  color: #5aaaff;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 10px 15px;
+  border-radius: var(--el-border-radius-base);
+}
+/*驳回审批样式 红色*/
+.button-reject {
+  /*背景*/
+  background: #fef0f0;
+  /*边框*/
+  border: 1px #f2c5c5 solid;
+  /*字的颜色*/
+  color: #f57a7a;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 10px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+/*通过审批样式 绿色*/
+.button-pass {
+  background: #f0f9eb;
+  border: 1px #f0f9eb solid;
+  color: #6fc545;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 10px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+
+/*审批中样式 灰色*/
+.button-underway {
+  background: #f4f4f5;
+  border: 1px #f9f9f9 solid;
+  color: #92959b;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 10px 15px;
+  border-radius: var(--el-border-radius-base);
+}
