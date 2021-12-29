@@ -155,8 +155,8 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="sele"
-            @current-change="sele"
+            @size-change="selectPage"
+            @current-change="selectPage"
         >
         </el-pagination>
       </div>
@@ -221,11 +221,31 @@ export default {
            console.log("失败")
            console.log(error);
         });
+    },
+    //分页查询
+    selectPage(){
+      var _this = this;
+      this.axios
+          .get("http://localhost:80/selectResume",{
+            params: this.pageInfo,
+          })
+          .then(function (response){
+            console.log("分页查询");
+            console.log(response);
+            _this.tableData = response.data.records;
+            _this.pageInfo.pagesize = response.data.succed.size;
+            _this.pageInfo.total = response.data.succed.total;
+          })
+          .catch(function (error) {
+            console.log("失败")
+            console.log(error);
+          });
 
     }
   },
   created() {
     this.selectResume();
+    this.selectPage();
   }
 
 }
