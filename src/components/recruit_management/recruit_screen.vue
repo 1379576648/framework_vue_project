@@ -9,7 +9,7 @@
             <li @click="liback(1)">
               <div v-bind:class="{active:isActive1}">
                 <router-link :to="{path:this.one,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive1}">候选人 (99)</span>
+                  <span v-bind:class="{sactive:isActive1}">面试候选人 (99)</span>
                 </router-link>
               </div>
             </li>

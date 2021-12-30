@@ -114,7 +114,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
             v-model:currentPage="pageInfo.currenPage"

@@ -4,32 +4,12 @@
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 新增招聘计划按钮 -->
-          <a style="margin-top: 4px;">
-            <router-link :to="{path:this.addresume,query:{path:this.$route.query.path}}">
-            <button type="button" class="ant-btn ant-btn-primary">
-              <span>+ 新增</span>
-            </button>
-            </router-link>
-          </a>
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
+
           <!-- 批量批量删除按钮 -->
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
             <span>批量删除</span>
           </button>
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量设为候选人</span>
-          </button>
 
-
-          <!--筛选框-->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt" @click="icons =! icons">
-            <span>筛选</span>
-          </button>
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -130,7 +110,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
             v-model:currentPage="pageInfo.currenPage"
