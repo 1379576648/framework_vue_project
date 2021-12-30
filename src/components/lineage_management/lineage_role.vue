@@ -9,12 +9,12 @@
           <el-form style="margin-top: 20px;" :inline="true" v-model="search">
             <!-- 角色名册搜索 -->
             <el-form-item class="form-name" label="角色名称">
-              <el-input  size="small" v-model="search.role_name" placeholder="请输入角色名称"></el-input>
+              <el-input  size="small" v-model="search.role_name" placeholder="请输入角色名称关键字" style="width: 150px"></el-input>
             </el-form-item>
 
             <!-- 权限字符搜索 -->
             <el-form-item class="form-jurisdiction" label="权限字符">
-              <el-input size="small" v-model="search.character" placeholder="请输入权限字符"></el-input>
+              <el-input size="small" v-model="search.character" placeholder="请输入权限字符关键字" style="width: 150px"></el-input>
             </el-form-item>
 
             <!-- 角色状态搜索 -->
@@ -33,37 +33,32 @@
             <!-- 创建 时间搜索 -->
             <el-form-item class="form-time" label="创建时间">
               <el-date-picker
-                  style="width: 325px"
-                  size="small"
-                  v-model="search.value1"
-                  type="daterange"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]"
-              >
-              </el-date-picker>
-            </el-form-item>
-            <!-- 操作按钮 -->
-            <el-form-item  style="margin-left: 1066px;margin-top: -43px;margin-bottom: -24px;">
-              <el-button size="mini" class="search-ss" type="primary" >
-                <i class="iconfont">
-                  &#xe61b
-                </i>
-                搜索
-              </el-button>
-              <el-button size="mini" class="search-cz" type="primary" @click="reset()">
-                <i class="iconfont">
-                  &#xe6b8
-                </i>
-                重置
-              </el-button>
+                  v-model="selectTime"
+                  type="datetimerange"
+                  :shortcuts="shortcuts"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+              ></el-date-picker>
             </el-form-item>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
           <div class="button">
-            <el-button class="button-new" size="mini"  @click="outerVisible = true,judge='新增'">+ 新增</el-button>
-            <el-button class="button-delete" size="mini" v-bind:disabled="disableds" @click="remove">删除</el-button>
+            <el-button class="button-new" size="mini"  @click="outerVisible = true,judge='新增'" style="height: 33px">+ 新增</el-button>
+            <el-button class="button-delete" size="mini" v-bind:disabled="disableds" @click="remove" style="height: 33px;margin-right: 884px">删除</el-button>
+            <el-button size="mini" class="search-ss" type="primary" >
+              <i class="iconfont">
+                &#xe61b
+              </i>
+              搜索
+            </el-button>
+            <el-button size="mini" class="search-cz" type="primary" @click="reset()">
+              <i class="iconfont">
+                &#xe6b8
+              </i>
+              重置
+            </el-button>
           </div>
 
 
@@ -223,19 +218,20 @@
 
             <!-- 分页 -->
             <div class="demo-pagination-block">
-              <!-- <span class="demonstration">All combined</span> -->
-              <el-pagination
-                  v-model:currentPage="pageInfo.currenPage"
-                  :page-sizes="[3, 5, 10, 50]"
-                  v-model:page-size="pageInfo.pagesize"
-                  :default-page-size="pageInfo.pagesize"
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :total="pageInfo.total"
-                  :pager-count="5"
-                  background
-                  @size-change="sele"
-                  @current-change="sele"
-              >
+              <el-pagination v-model:current-page="pageInfo.currenPage"
+                             v-model:page-size="pageInfo.pageSize"
+                             :default-page-size="pageInfo.pageSize"
+                             :page-sizes="[5, 10,15,20]"
+                             :pager-count="5"
+                             :total="pageInfo.total"
+                             background
+                             layout="	total ,sizes, prev, pager, next, jumper"
+                             next-text="下一页"
+                             prev-text="上一页"
+                             @size-change="next()"
+                             @current-change="next()"
+                             @prev-click="next()"
+                             @next-click="next()">
               </el-pagination>
             </div>
 
@@ -252,79 +248,50 @@ import {ElMessage, ElMessageBox} from "element-plus";
 export default {
 
   data() {
-
-    //时间
-    const value1 = ref('')
-
-
-    //删除提示框
-    const open = () => {
-      ElMessageBox.confirm(
-          '是否确定删除！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '删除成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    }
-
-    //批量删除提示框
-    const remove = () => {
-      ElMessageBox.confirm(
-          '是否确定删除！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '删除成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    }
-
     return {
       //跳转界面
       two:'/system/authority_management/allot_user',
-
+      //选择时间
+      selectTime: [],
+      //日期选择组件
+      shortcuts: [
+        {
+          text: '过去一周',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去一个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去三个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            return [start, end]
+          },
+        },
+      ],
       // 分页
       pageInfo: {
-        currenPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
         total: 0,
       },
-
-      //批量删除
-      remove,
-
-      //弹出框删除
-      open,
-
       //搜索重置form
       search:{
         //角色名称
@@ -527,6 +494,54 @@ export default {
     }
   },
   methods: {
+    //删除提示框
+     open () {
+      ElMessageBox.confirm(
+          '是否确定删除！！！',
+          '友情提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: '友情提示',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '删除成功！！',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              message: '感谢你的参与',
+              type: 'warning',
+            })
+          })
+    },
+    //批量删除提示框
+     remove ()  {
+      ElMessageBox.confirm(
+          '是否确定删除！！！',
+          '友情提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: '友情提示',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '删除成功！！',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              message: '感谢你的参与',
+              type: 'warning',
+            })
+          })
+    },
     loadNode(node, resolve) {
       resolve(this.menuList)
     },
@@ -565,8 +580,16 @@ export default {
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.woff?t=1638864192788') format('woff'),
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.ttf?t=1638864192788') format('truetype');
 }
-.normal{
-
+/deep/ .el-range-editor.el-input__inner {
+  height: 32px;
+}
+.el-form--inline .el-form-item{
+  margin-right: -40px !important;
+  margin-left: 12px !important;
+}
+/deep/ .el-range-editor.el-input__inner .el-range-separator {
+  position: relative;
+  top: -4px;
 }
 .shut{
   margin-top: -40px;
@@ -619,6 +642,11 @@ export default {
   width: 353px;
 
 }
+.el-form .form-time{
+  position: relative;
+  left: 67px;
+  top: -4px;
+}
 .menus{
   width: 353px;
 
@@ -666,10 +694,8 @@ export default {
 
 
 /* 分页 */
-.demo-pagination-block{
-  margin-left: 810px;
-  margin-bottom: 20px;
-  margin-top: 15px;
+.demo-pagination-block {
+  margin: 10px 0 10px 10px;
 }
 .button{
   margin-top: -21px;
@@ -700,11 +726,7 @@ export default {
 
 
 
-/* 搜索按钮 */
-.search{
 
-
-}
 .search-ss {
   background-color: #085FC3;
   color: white;
