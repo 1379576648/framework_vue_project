@@ -1,6 +1,5 @@
 <!--员工花名册工作经历-->
 <template>
-<br/>
 <div>
 <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
@@ -11,8 +10,11 @@
       </el-input>
     </el-row>
 </div>
+  <br/>
+  <br/>
 <div>
-  <el-table :data="tableData" stripe style="width: 100%">
+  <el-table :data="tableData" stripe style="width: 100%"
+            :header-cell-style="{background:'#eef1f6',color:'#606266'}">
     <el-table-column prop="staffName" label="姓名" width="190" />
     <el-table-column prop="workStareTime" label="开始时间" width="190" />
     <el-table-column prop="workEndTime" label="结束时间" width="190" />

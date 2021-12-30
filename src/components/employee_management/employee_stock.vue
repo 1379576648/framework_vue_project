@@ -15,7 +15,10 @@
     </el-row>
 
     <br/>
-    <el-table :data="tableData" stripe style="width: 100%">
+    <br/>
+    <br/>
+    <el-table :data="tableData" stripe style="width: 100%;cursor: pointer"
+              :header-cell-style="{background:'#eef1f6',color:'#606266'}">
       <el-table-column prop="resumeName" label="姓名" width="180"/>
       <el-table-column prop="deptName" label="部门" width="180"/>
       <el-table-column prop="postName" label="职位" width="180"/>
