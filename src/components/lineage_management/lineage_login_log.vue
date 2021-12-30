@@ -4,7 +4,7 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
-        <div class="mt-20 ml-20 mr-20">
+        <div class="mt-20 ml-20 mr-20" >
           <!-- 搜索登录数据部分 -->
           <el-form :inline="true">
             <!-- 登录地址搜索 -->
@@ -32,36 +32,33 @@
             <!-- 登录时间搜索 -->
             <el-form-item class="form-time" label="登录时间">
               <el-date-picker
-                  size="small"
                   v-model="selectTime"
-                  type="daterange"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :default-value="[new Date(), new Date()]"
+                  type="datetimerange"
+                  :shortcuts="shortcuts"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
               >
               </el-date-picker>
-            </el-form-item>
-            <!-- 操作按钮 -->
-            <el-form-item style="margin-left: 1071px;margin-top: -30px">
-              <el-button size="mini" class="search-ss" type="primary" @click="next">
-                <i class="iconfont">
-                  &#xe61b
-                </i>
-                搜索
-              </el-button>
-              <el-button size="mini" class="search-cz" type="primary" @click="reset()">
-                <i class="iconfont">
-                  &#xe6b8
-                </i>
-                重置
-              </el-button>
             </el-form-item>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
-          <div class="button">
-            <el-button size="mini" style="width: 90px;" v-bind:disabled="disabled" @click="remove">删除</el-button>
-            <el-button class="button-empty" size="mini" @click="empty">清空</el-button>
+          <div class="button" style="margin-top: -30px">
+            <el-button size="mini"  style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled" @click="remove">删除</el-button>
+            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 882px">清空</el-button>
+            <el-button size="mini" class="search-ss" type="primary" @click="next">
+              <i class="iconfont">
+                &#xe61b
+              </i>
+              搜索
+            </el-button>
+            <el-button size="mini" class="search-cz" type="primary" @click="reset()">
+              <i class="iconfont">
+                &#xe6b8
+              </i>
+              重置
+            </el-button>
           </div>
         </div>
 
@@ -70,6 +67,7 @@
           <el-table :data="tableData" style="width: 100% ;"
                     border
                     stripe
+                    :header-cell-style="{textAlign: 'center',background:'rgba(213,213,218,0.63)',color:'#6C6C6C'}"
                     @selection-change="checkDelete"
           >
             <!-- 全选操作按钮 -->
@@ -162,8 +160,37 @@ export default {
       //删除按钮是否可用
       disabled: true,
       //存放复选的id列表
-      listId: []
-
+      listId: [],
+      //日期选择组件
+      shortcuts: [
+        {
+          text: '过去一周',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去一个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去三个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            return [start, end]
+          },
+        },
+      ],
     }
   },
   methods: {
@@ -177,6 +204,8 @@ export default {
       this.registerLogState = '';
       //选择时间
       this.selectTime = [];
+      //刷新表格
+      this.next();
     },
     //复选框选择事件
     checkDelete(val) {
@@ -203,7 +232,7 @@ export default {
       ).then(() => {
         this.axios({
           method: 'delete',
-          url: this.url + 'emptyList',
+          url: this.url + 'emptyRegisterLogList',
           responseEncoding: 'utf-8',
         }).then((response) => {
           //如果服务关闭
@@ -215,7 +244,7 @@ export default {
             })
             //如果服务没有关闭
           } else if (response.data.data) {
-            if (response.data.data.info=="成功"){
+            if (response.data.data.info == "成功") {
               this.next();
               //如果服务是正常的
               if (response.data.data.state == 200) {
@@ -260,7 +289,7 @@ export default {
         }
         this.axios({
           method: 'post',
-          url: this.url + 'checkDelete',
+          url: this.url + 'checkRegisterLogDelete',
           data: this.listId,
           responseType: 'json',
           responseEncoding: 'utf-8',
@@ -274,7 +303,7 @@ export default {
             })
             //如果服务没有关闭
           } else if (response.data.data) {
-            if (response.data.data.info=="成功"){
+            if (response.data.data.info == "成功") {
               this.next();
               //如果服务是正常的
               if (response.data.data.state == 200) {
@@ -317,9 +346,9 @@ export default {
           //IP所在地
           "registerLogIpname": this.registerLogIpname,
           //起始时间
-          "startTime": this.selectTime[0],
+          "startTime": this.selectTime==null?null:this.selectTime[0],
           //结束时间
-          "endTime": this.selectTime[1],
+          "endTime": this.selectTime==null?null:this.selectTime[1],
           //状态
           "registerLogState": this.registerLogState,
         },
@@ -380,6 +409,15 @@ export default {
   margin: 20px 0 20px 0;
 }
 
+/deep/ .el-range-editor.el-input__inner {
+  height: 32px;
+}
+
+/deep/ .el-range-editor.el-input__inner .el-range-separator {
+  position: relative;
+  top: -4px;
+}
+
 .button-enable {
   background: #ecf5ff;
   border: 1px #cfe6ff solid;
@@ -412,6 +450,7 @@ export default {
 .sub-Content__primary {
   margin-bottom: 10px;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 /* 分页 */
@@ -420,7 +459,7 @@ export default {
 }
 
 .button {
-  margin-bottom: 17px;
+  margin-bottom: 10px;
   margin-top: -55px;
 
 }
@@ -649,6 +688,10 @@ button, html [type="button"], [type="reset"], [type="submit"] {
   border-color: #366cb3;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.el-form--inline .el-form-item {
+  margin-right: -10px;
 }
 
 .ant-btn, .ant-btn:active, .ant-btn:focus {
