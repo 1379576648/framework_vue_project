@@ -18,7 +18,7 @@
       <el-table-column prop="postName" label="职位" width="180" />
       <el-table-column prop="resumePhone" label="手机" width="180" />
       <el-table-column prop="resumeMailbox" label="邮箱" width="180" />
-      <el-table-column prop="createdTime" label="入职日期" width="180" />
+      <el-table-column prop="hiredate" label="入职日期" width="180" />
 <!--      <el-table-column prop="resumeBirthday" label="出生日期" width="130" />-->
 <!--      <el-table-column prop="resumeResidence" label="户口所在地" width="130" />-->
 <!--      <el-table-column prop="resumePoliticalOutlook" label="政治面貌" width="130" />-->
@@ -59,7 +59,7 @@
         放弃原因：<el-input v-model="cause" type="textarea" style="width:240px;"></el-input>
         <div style="margin-top:30px;margin-left: 30px;">
           <el-button @click="become=false">取消</el-button>
-          <el-button type="primary">确定</el-button></div>
+          <el-button type="primary" @click="become=false">确定</el-button></div>
 
       </el-dialog>
     </div>
@@ -106,6 +106,7 @@ export default defineComponent({
               console.log(error);
             });
     },
+    //分页查询已录用待入职的员工
     selectpage1(){
       var _this = this
       this.axios
@@ -126,7 +127,9 @@ export default defineComponent({
     },
   },
   created() {
+    //查询已录用待入职的员工
       this.selectpage();
+    //分页查询已录用待入职的员工
       this.selectpage1();
   }
 })

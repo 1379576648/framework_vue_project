@@ -64,14 +64,12 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="date" label="姓名" width="150" />
-    <el-table-column prop="name" label="工号" width="150" />
-     <el-table-column prop="name" label="证件号码" width="150" />
-      <el-table-column prop="name" label="所属单位" width="150" />
-       <el-table-column prop="name" label="部门" width="150" />
-       <el-table-column prop="name" label="职位" width="150" />
-       <el-table-column prop="name" label="入职日期" width="150" />
-       <el-table-column prop="name" label="试用期限" width="150" />
+            <el-table-column prop="staffName" label="姓名" width="180" />
+     <el-table-column prop="staffIdentity" label="证件号码" width="180" />
+       <el-table-column prop="deptName" label="部门" width="180" />
+       <el-table-column prop="postName" label="职位" width="180" />
+       <el-table-column prop="staffHiredate" label="入职日期" width="180" />
+       <el-table-column prop="testtime" label="试用期限" width="180" />
     <el-table-column fixed="right" label="操作">
     <template #default>
 			<el-button type="text" size="small" @click="become = true">办理转正</el-button>
@@ -85,19 +83,20 @@
         <div class="demo-pagination-block">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
+              :page-sizes="[4, 5, 10, 50]"
               v-model:page-size="pageInfo.pagesize"
               :default-page-size="pageInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageInfo.total"
               :pager-count="5"
+              prev-text="上一页"
+              next-text="下一页"
+              @size-change="selectpost1()"
+              @current-change="selectpost1()"
               background
-              @size-change="selectUsers"
-              @current-change="selectUsers"
           >
           </el-pagination>
         </div>
-
 
       </div>
     </div>
@@ -190,26 +189,8 @@ export default defineComponent({
     return {
       tableData: [
         {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-
+          testtime:"三个月"
+        }
       ],
       seek:"",
       become_1:{
@@ -225,7 +206,7 @@ export default defineComponent({
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 3, // 页大小
+        pagesize: 4, // 页大小
         total: 0, // 总页数
       },
       rules: {
@@ -277,9 +258,51 @@ export default defineComponent({
             remarks:'',
             becomedate:''
       }
-    }
+    },
+    //查询转正记录
+    selectpost(){
+      this.axios
+          .get("http://localhost:80/selectpost",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("查询工作经历");
+            console.log(response.data.succeed.records);
+            this.tableData = response.data.succeed.records;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+    //分页查询转正记录
+    selectpost1(){
+      var _this = this
+      this.axios
+          .get("http://localhost:80/selectpost",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("分页查询工作经历");
+            console.log(response);
+            _this.tableData = response.data.succeed.records;
+            _this.pageInfo.pagesize = response.data.succeed.size;
+            _this.pageInfo.total = response.data.succeed.total;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+  },
+  created() {
+    //查询工作经历
+    this.selectpost();
+    //分页查询工作经历
+    this.selectpost1();
   }
 })
+
 </script>
 
 

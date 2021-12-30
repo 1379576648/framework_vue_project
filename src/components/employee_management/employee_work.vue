@@ -13,12 +13,12 @@
 </div>
 <div>
   <el-table :data="tableData" stripe style="width: 100%">
-    <el-table-column prop="date" label="姓名" width="180" />
-    <el-table-column prop="name" label="开始时间" width="180" />
-    <el-table-column prop="name" label="结束时间" width="180" />
-    <el-table-column prop="name" label="任职公司" width="180" />
-    <el-table-column prop="name" label="职位" width="180" />
-    <el-table-column prop="name" label="离职原因" width="180" />
+    <el-table-column prop="staffName" label="姓名" width="190" />
+    <el-table-column prop="workStareTime" label="开始时间" width="190" />
+    <el-table-column prop="workEndTime" label="结束时间" width="190" />
+    <el-table-column prop="companyName" label="任职公司" width="190" />
+    <el-table-column prop="positionName" label="职位" width="190" />
+    <el-table-column prop="positionDescribe" label="离职原因" width="190" />
     <el-table-column fixed="right" label="操作">
     <template #default>
       <router-link :to="{path:this.information,query:{path: this.$route.query.path}}">
@@ -33,15 +33,17 @@
   <div class="demo-pagination-block">
     <el-pagination
         v-model:currentPage="pageInfo.currentPage"
-        :page-sizes="[3, 5, 10, 50]"
+        :page-sizes="[4, 5, 10, 50]"
         v-model:page-size="pageInfo.pagesize"
         :default-page-size="pageInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.total"
         :pager-count="5"
+        prev-text="上一页"
+        next-text="下一页"
+        @size-change="selectwork1()"
+        @current-change="selectwork1()"
         background
-        @size-change="selectUsers"
-        @current-change="selectUsers"
     >
     </el-pagination>
   </div>
@@ -53,37 +55,59 @@ export default {
   data() {
     return {
       information:'/employee/message/employee_roster/information',
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 3, // 页大小
+        pagesize: 4, // 页大小
         total: 0, // 总页数
       },
       input3:"",
     }
   },
+  methods:{
+    //查询工作经历
+    selectwork(){
+      this.axios
+          .get("http://localhost:80/selectwork",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("查询工作经历");
+            console.log(response.data.succeed.records);
+            this.tableData = response.data.succeed.records;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+    //分页查询工作经历
+    selectwork1(){
+      var _this = this
+      this.axios
+          .get("http://localhost:80/selectwork",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("分页查询工作经历");
+            console.log(response);
+            _this.tableData = response.data.succeed.records;
+            _this.pageInfo.pagesize = response.data.succeed.size;
+            _this.pageInfo.total = response.data.succeed.total;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+  },
+  created() {
+    //查询工作经历
+    this.selectwork();
+    //分页查询工作经历
+    this.selectwork1();
+  }
 }
 
 </script>

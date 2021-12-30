@@ -26,10 +26,6 @@
           </button>
 
 
-          <!--筛选框-->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt" @click="icons =! icons">
-            <span>筛选</span>
-          </button>
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -101,11 +97,11 @@
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left"  align="center" type="selection" width="80" />
-        <el-table-column fixed="left" label="姓名" width="150" prop="resumeName"/>
-<!--          <template #default="scope">-->
-<!--            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+        <el-table-column fixed="left" label="姓名" width="150" prop="resumeName">
+          <template #default="scope">
+            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.resumeName}}">{{scope.row.resumeName}}</router-link>
+          </template>
+        </el-table-column>
         <el-table-column fixed="left" prop="postName" label="投递部门" width="140"/>
         <el-table-column prop="resumeSex" label="性别" width="140"/>
         <el-table-column prop="resumeEducation" label="学历" width="140"/>
@@ -144,7 +140,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
             v-model:currentPage="pageInfo.currenPage"
@@ -162,7 +158,6 @@
       </div>
     </div>
 
-  {{this.tableData}}
 
 
   </div>
@@ -178,7 +173,7 @@ export default {
   data() {
     return {
       //路由地址
-      addresume:'/recruitment/recruit/addresume',
+      addresume:'/recruit/recruit/addresume',
       details:'/recruitment/resume/details',
       pageInfo: {
         currenPage: 1,
@@ -232,7 +227,7 @@ export default {
           .then(function (response){
             console.log("分页查询");
             console.log(response);
-            _this.tableData = response.data.records;
+            _this.tableData = response.data.succed.records;
             _this.pageInfo.pagesize = response.data.succed.size;
             _this.pageInfo.total = response.data.succed.total;
           })
