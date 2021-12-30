@@ -33,8 +33,8 @@
           :pager-count="5"
           prev-text="上一页"
           next-text="下一页"
-          @size-change="selectabandon1()"
-          @current-change="selectabandon1()"
+          @size-change="selectabandon()"
+          @current-change="selectabandon()"
           background
       >
       </el-pagination>
@@ -42,10 +42,12 @@
   </div>
 
 </template>
-<script lang="ts">
+<script>
+import {ElNotification} from "element-plus";
 export default {
   data() {
     return {
+      url: "http://localhost:80/",
       tableData: [],
       input3:'',
       pageInfo: {
@@ -59,46 +61,51 @@ export default {
   },
   methods:{
     //查询已经淘汰的员工
-    selectabandon(){
-      this.axios
-          .get("http://localhost:80/selectabandon",{
-            params:this.pageInfo,
-          })
-          .then((response)=>{
-            console.log("查询已经淘汰的员工");
-            console.log(response.data.succeed.records);
-            this.tableData = response.data.succeed.records;
-          })
-          .catch(function (error){
-            console.log("失败")
-            console.log(error);
-          });
-    },
-    //分页查询已经淘汰的员工
-    selectabandon1(){
+    selectabandon() {
       var _this = this
-      this.axios
-          .get("http://localhost:80/selectabandon",{
-            params:this.pageInfo,
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectabandon',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //员工名称
+          "resumeName": this.resumeName,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
-          .then((response)=>{
-            console.log("分页查询已录用待入职的员工");
-            console.log(response);
-            _this.tableData = response.data.succeed.records;
-            _this.pageInfo.pagesize = response.data.succeed.size;
-            _this.pageInfo.total = response.data.succeed.total;
-          })
-          .catch(function (error){
-            console.log("失败")
-            console.log(error);
-          });
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
     },
   },
-  created() {
-    //查询已经淘汰的员工
-    this.selectabandon();
+  mounted() {
     //分页查询已经淘汰的员工
-    this.selectabandon1();
+    this.selectabandon();
   }
 }
 </script>

@@ -91,8 +91,8 @@
               :pager-count="5"
               prev-text="上一页"
               next-text="下一页"
-              @size-change="selectpost1()"
-              @current-change="selectpost1()"
+              @size-change="selectpost()"
+              @current-change="selectpost()"
               background
           >
           </el-pagination>
@@ -173,9 +173,9 @@
 </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, ref } from 'vue'
-import {ElMessage} from "element-plus/es";
+import {ElNotification} from "element-plus";
 export default defineComponent({
 
   data() {
@@ -187,6 +187,7 @@ export default defineComponent({
       }
     };
     return {
+      url: "http://localhost:80/",
       tableData: [
         {
           testtime:"三个月"
@@ -260,46 +261,51 @@ export default defineComponent({
       }
     },
     //查询转正记录
-    selectpost(){
-      this.axios
-          .get("http://localhost:80/selectpost",{
-            params:this.pageInfo,
-          })
-          .then((response)=>{
-            console.log("查询工作经历");
-            console.log(response.data.succeed.records);
-            this.tableData = response.data.succeed.records;
-          })
-          .catch(function (error){
-            console.log("失败")
-            console.log(error);
-          });
-    },
-    //分页查询转正记录
-    selectpost1(){
+    selectpost() {
       var _this = this
-      this.axios
-          .get("http://localhost:80/selectpost",{
-            params:this.pageInfo,
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectpost',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //员工名称
+          "resumeName": this.resumeName,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
-          .then((response)=>{
-            console.log("分页查询工作经历");
-            console.log(response);
-            _this.tableData = response.data.succeed.records;
-            _this.pageInfo.pagesize = response.data.succeed.size;
-            _this.pageInfo.total = response.data.succeed.total;
-          })
-          .catch(function (error){
-            console.log("失败")
-            console.log(error);
-          });
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
     },
   },
-  created() {
-    //查询工作经历
-    this.selectpost();
+  mounted() {
     //分页查询工作经历
-    this.selectpost1();
+    this.selectpost();
   }
 })
 
