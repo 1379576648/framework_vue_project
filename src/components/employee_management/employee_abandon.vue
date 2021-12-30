@@ -13,89 +13,93 @@
     </el-row>
 	<br/>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="name" label="姓名" width="200" />
-      <el-table-column prop="depart" label="部门" width="200" />
-      <el-table-column prop="post" label="职位" width="200" />
-      <el-table-column prop="phone" label="手机号" width="200" />
-      <el-table-column prop="entrydate" label="入职日期" width="200" />
-	  <el-table-column prop="cause" label="放弃原因" width="" />
+      <el-table-column prop="resumeName" label="姓名" width="200" />
+      <el-table-column prop="deptName" label="部门" width="200" />
+      <el-table-column prop="postName" label="职位" width="200" />
+      <el-table-column prop="resumePhone" label="手机号" width="200" />
+      <el-table-column prop="hiredate" label="入职日期" width="200" />
+	  <el-table-column prop="waiveReason" label="放弃原因" width="" />
 
     </el-table>
-
     <!-- 分页插件 -->
     <div class="demo-pagination-block">
       <el-pagination
           v-model:currentPage="pageInfo.currentPage"
-          :page-sizes="[3, 5, 10, 50]"
+          :page-sizes="[4, 5, 10, 50]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageInfo.total"
           :pager-count="5"
+          prev-text="上一页"
+          next-text="下一页"
+          @size-change="selectabandon1()"
+          @current-change="selectabandon1()"
           background
-          @size-change="selectUsers"
-          @current-change="selectUsers"
       >
       </el-pagination>
     </div>
-
-
-
   </div>
-</template>
 
+</template>
 <script lang="ts">
 export default {
   data() {
     return {
-      tableData: [
-        {
-          entrydate: '2016-05-03',
-          name: 'Tom',
-          depart: 'California',
-          post: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          phone: 'CA 90036',
-          cause: 'Home',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-      ],
+      tableData: [],
       input3:'',
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 3, // 页大小
+        pagesize: 4, // 页大小
         total: 0, // 总页数
       },
 
     }
   },
+  methods:{
+    //查询已经淘汰的员工
+    selectabandon(){
+      this.axios
+          .get("http://localhost:80/selectabandon",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("查询已经淘汰的员工");
+            console.log(response.data.succeed.records);
+            this.tableData = response.data.succeed.records;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+    //分页查询已经淘汰的员工
+    selectabandon1(){
+      var _this = this
+      this.axios
+          .get("http://localhost:80/selectabandon",{
+            params:this.pageInfo,
+          })
+          .then((response)=>{
+            console.log("分页查询已录用待入职的员工");
+            console.log(response);
+            _this.tableData = response.data.succeed.records;
+            _this.pageInfo.pagesize = response.data.succeed.size;
+            _this.pageInfo.total = response.data.succeed.total;
+          })
+          .catch(function (error){
+            console.log("失败")
+            console.log(error);
+          });
+    },
+  },
+  created() {
+    //查询已经淘汰的员工
+    this.selectabandon();
+    //分页查询已经淘汰的员工
+    this.selectabandon1();
+  }
 }
 </script>
 
