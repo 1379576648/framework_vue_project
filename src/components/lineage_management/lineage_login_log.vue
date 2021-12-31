@@ -73,19 +73,19 @@
             <!-- 全选操作按钮 -->
             <el-table-column fixed align="center" type="selection" min-width="50"/>
             <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
-            <el-table-column fixed prop="registerLogPeople" align="center" label="用户名称" min-width="132"/>
-            <el-table-column prop="registerLogPhone" align="center" label="手机号码" min-width="135"/>
-            <el-table-column prop="registerLogIp" align="center" label="IP地址" min-width="135"/>
-            <el-table-column prop="registerLogIpname" align="center" label="IP所在地" min-width="150"/>
-            <el-table-column prop="registerLogType" align="center" label="设备类型" min-width="140"/>
-            <el-table-column align="center" label="登录状态" min-width="135">
+            <el-table-column fixed prop="registerLogPeople" align="center" sortable label="用户名称" min-width="132"/>
+            <el-table-column prop="registerLogPhone" align="center" sortable label="手机号码" min-width="135"/>
+            <el-table-column prop="registerLogIp" align="center" sortable label="IP地址" min-width="135"/>
+            <el-table-column prop="registerLogIpname" align="center" sortable label="IP所在地" min-width="150"/>
+            <el-table-column prop="registerLogType" align="center" sortable label="设备类型" min-width="140"/>
+            <el-table-column align="center" sortable label="登录状态" min-width="135">
               <template #default="scope">
                 <span class="button-enable" v-if="scope.row.registerLogState==0">成功</span>
                 <span class="button-forbidden" v-if="scope.row.registerLogState==1">失败</span>
               </template>
             </el-table-column>
-            <el-table-column prop="registerLogBrowser" align="center" label="浏览器" min-width="132"/>
-            <el-table-column prop="registerLogGenre" align="center" label="登录类型" min-width="135">
+            <el-table-column prop="registerLogBrowser" align="center" sortable label="浏览器" min-width="132"/>
+            <el-table-column prop="registerLogGenre" align="center" sortable label="登录类型" min-width="135">
               <template #default="scope">
                 <span v-if="scope.row.registerLogGenre==0">人脸</span>
                 <span v-if="scope.row.registerLogGenre==1">密码</span>
@@ -124,7 +124,7 @@ export default {
   data() {
     return {
       //访问路径
-      url: "http://localhost:80/",
+      url: "http://localhost:80/registerLog/",
       //ip所在地
       registerLogIpname: '',
       //用户名称
@@ -288,7 +288,7 @@ export default {
           this.listId.push(this.checkDeleteList[i].registerLogId)
         }
         this.axios({
-          method: 'post',
+          method: 'delete',
           url: this.url + 'checkRegisterLogDelete',
           data: this.listId,
           responseType: 'json',

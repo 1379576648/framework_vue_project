@@ -285,7 +285,6 @@ export default {
         menuModule: ''
       },
       rules: {
-
         //菜单名称
         menuName: [
           {
