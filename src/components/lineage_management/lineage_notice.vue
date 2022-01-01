@@ -48,7 +48,7 @@
             <el-button size="mini"
                        style="width: 90px;height: 33px"
                        class="button-new"
-                       @click="selectDeptList(),outerVisible = true,judge='新增'">
+                       @click="selectDeptList(),outerVisible = true,judge='新增',this.eliminate()">
               + 新增
             </el-button>
             <el-button size="mini" style="width: 90px;height: 33px" type="danger" class="button-delete" @click="remove"
@@ -101,6 +101,7 @@
             <el-table-column fixed="right" align="center" label="操作" min-width="280">
               <template #default="scope">
                 <el-button size="mini" type="success" @click="announcement = true,selectPossessDeptList(scope.row.noticeId)
+                           ,peropleNoticeViewedMethod(scope.row.noticeId),unseenNoticePersonMethod(scope.row.noticeId)
                            ,fromValue.noticeType=scope.row.noticeType
                            ,fromValue.noticeTitle=scope.row.noticeTitle
                            ,fromValue.noticeState=scope.row.noticeState=='0'?'0':'1'
@@ -258,8 +259,16 @@
         <div style="width: 510px">{{fromValue.noticeMatter}}</div>
       </el-form-item>
       <!-- 已查看人员 -->
-      <el-form-item label="已看人员：" prop="noticeMatter" >
-        <div style="width: 510px">{{fromValue.noticeMatter}}</div>
+      <el-form-item label="已看人员：" prop="peropleNoticeViewed" >
+        <div style="width: 510px">
+          <span v-for="name in fromValue.peropleNoticeViewed" style="margin-right: 20px">{{name.staffName}}</span>
+        </div>
+      </el-form-item>
+      <!-- 未查看人员 -->
+      <el-form-item label="未看人员：" prop="unseenNoticePerson" >
+        <div style="width: 510px">
+          <span v-for="name in fromValue.unseenNoticePerson" style="margin-right: 20px">{{name.staffName}}</span>
+        </div>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -270,6 +279,8 @@
   </el-dialog>
   {{ fromValue }}
   {{ options }}
+  {{fromValue.peropleNoticeViewed}}
+  {{fromValue.unseenNoticePerson}}
 </template>
 
 <script>
@@ -354,6 +365,10 @@ export default {
         deptNameList: [],
         //职位名称
         postName:'',
+        //未看公告人员集合
+        peropleNoticeViewed:[],
+        //已看公告人员集合
+        unseenNoticePerson:[],
       },
       //表单验证
       formVerify: {
@@ -643,29 +658,8 @@ export default {
                 type: 'success',
                 message: '新增成功',
               })
-              //初始化表单数据
-              this.fromValue = {
-                //公告编号
-                noticeId: '',
-                //公告标题
-                noticeTitle: '',
-                //公告状态
-                noticeState: "0",
-                //发布人
-                noticePeople: this.$store.state.staffMessage.staffName,
-                //部门职位编号
-                deptPostId: this.$store.state.staffMessage.deptPostId,
-                //发布内容
-                noticeMatter: '',
-                //公告类型
-                noticeType: '',
-                //员工编号
-                staffId: this.$store.state.staffMessage.staffId,
-                //部门名称集合
-                deptNameList: [],
-                //职位名称
-                postName:'',
-              }
+              //清空数据
+              this.eliminate();
               this.outerVisible = false
             } else {
               ElMessage({
@@ -712,29 +706,8 @@ export default {
                 type: 'success',
                 message: '修改成功',
               })
-              //初始化表单数据
-              this.fromValue = {
-                //公告编号
-                noticeId: '',
-                //公告标题
-                noticeTitle: '',
-                //公告状态
-                noticeState: "0",
-                //发布人
-                noticePeople: this.$store.state.staffMessage.staffName,
-                //部门职位编号
-                deptPostId: this.$store.state.staffMessage.deptPostId,
-                //发布内容
-                noticeMatter: '',
-                //公告类型
-                noticeType: '',
-                //员工编号
-                staffId: this.$store.state.staffMessage.staffId,
-                //部门名称集合
-                deptNameList: [],
-                //职位名称
-                postName:'',
-              }
+              //清空数据
+              this.eliminate();
               this.outerVisible = false
             } else {
               ElMessage({
@@ -771,8 +744,8 @@ export default {
         }
       })
     },
-    //取消按钮方法
-    cancel() {
+    //清空数据
+    eliminate(){
       this.fromValue = {
         //公告编号
         noticeId: '',
@@ -795,6 +768,11 @@ export default {
         //职位名称
         postName:'',
       }
+    },
+    //取消按钮方法
+    cancel() {
+      //清空数据
+      this.eliminate();
       this.outerVisible = false
     },
     //重置
@@ -875,6 +853,68 @@ export default {
             for (let i = 0; i < response.data.data.info.length; i++) {
               this.fromValue.deptNameList.push(response.data.data.info[i].deptName)
             }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //已看公告人员
+    peropleNoticeViewedMethod(id){
+      this.axios({
+        method: 'get',
+        url: this.url + 'peropleNoticeViewed?id='+id,
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.fromValue.peropleNoticeViewed = response.data.data.info;
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //未看公告人员
+    unseenNoticePersonMethod(id){
+      this.axios({
+        method: 'get',
+        url: this.url + 'unseenNoticePerson?id='+id,
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.fromValue.unseenNoticePerson = response.data.data.info;
           }
           //如果服务是雪崩的
           else {
