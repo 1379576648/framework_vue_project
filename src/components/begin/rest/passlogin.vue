@@ -90,7 +90,7 @@ export default {
             })
 
             //如果服务没有关闭
-          } else if (response.data.data.data) {
+          } else if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果有数据
@@ -114,7 +114,9 @@ export default {
                     //员工学历
                     "staffEducation": value.staffEducation,
                     //员工政治面貌
-                    "staffOutlook": value.staffOutlook
+                    "staffOutlook": value.staffOutlook,
+                    //部门职位编号
+                    "deptPostId":value.deptPostId
                   }
                   //将形成的对象存放起来
                   this.$store.commit("staffInfo", obj);

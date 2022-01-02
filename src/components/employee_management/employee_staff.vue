@@ -57,18 +57,19 @@
 
 <br/>
 <div style="margin-top:95px;">
- <el-table :data="tableData" style="width: 100%;">
+ <el-table :data="tableData" style="width: 100%;"
+           :header-cell-style="{background:'#eef1f6',color:'#606266'}">
    <el-table-column type="selection"></el-table-column>
-    <el-table-column fixed="left" prop="date" label="姓名" width="150"/>
-    <el-table-column prop="name" label="出生日期" width="150" />
-    <el-table-column prop="city" label="部门" width="150" />
-    <el-table-column prop="state" label="职位" width="150" />
-	 <el-table-column prop="state" label="手机" width="150" />
-	  <el-table-column prop="state" label="状态" width="150" />
-    <el-table-column  prop="date" label="入职日期" sortable  width="150">
+    <el-table-column fixed="left" prop="date" label="姓名" width="140"/>
+    <el-table-column prop="name" label="出生日期" width="140" />
+    <el-table-column prop="city" label="部门" width="140" />
+    <el-table-column prop="state" label="职位" width="140" />
+	 <el-table-column prop="state" label="手机" width="140" />
+	  <el-table-column prop="state" label="状态" width="140" />
+    <el-table-column  prop="date" label="入职日期" sortable  width="140">
 	</el-table-column>
-   <el-table-column  prop="date" label="转正日期"   width="150"/>
-    <el-table-column fixed="right" label="操作" width="150">
+   <el-table-column  prop="date" label="转正日期"   width="140"/>
+    <el-table-column fixed="right" label="操作" width="140">
       <template #default>
         <router-link :to="{path:this.staffedit,query:{path: this.$route.query.path}}">
         <el-button type="text" size="small" @click="handleClick"

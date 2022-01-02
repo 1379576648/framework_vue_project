@@ -5,20 +5,21 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
-          <el-form :inline="true"	v-model="search">
+          <el-form :inline="true" v-model="search" style="margin-left: 20px">
             <!-- 系统模块搜索 -->
             <el-form-item label="系统模块">
-              <el-input style="border: 1px;width: 243px;" size="small" v-model="search.system_module" placeholder="请输入系统模块"></el-input>
+              <el-input style="border: 1px;width: 150px;" size="small" v-model="search.system_module"
+                        placeholder="请输入系统模块关键字"></el-input>
             </el-form-item>
 
             <!-- 操作人员搜索 -->
             <el-form-item class="form-staff" label="操作人员">
-              <el-input size="small" v-model="search.username" placeholder="请输入操作人员"></el-input>
+              <el-input size="small" v-model="search.username" placeholder="请输入操作人员" style="width: 150px"></el-input>
             </el-form-item>
 
             <!-- 操作类型搜索 -->
             <el-form-item class="form-type" label="操作类型">
-              <el-select class="form-types" size="small" v-model="search.type" placeholder="操作类型">
+              <el-select class="form-types" size="small" v-model="search.type" placeholder="操作类型" style="width: 200px">
                 <el-option
                     v-for="item in type"
                     :key="item.value"
@@ -28,55 +29,35 @@
                 </el-option>
               </el-select>
             </el-form-item>
-
-            <!-- 登录状态搜索 -->
-            <el-form-item class="form-state" label="登录状态">
-              <el-select class="form-states" size="small" v-model="search.state" placeholder="登录状态">
-                <el-option
-                    v-for="item in state"
-                    :key="item.value1"
-                    :label="item.label"
-                    :value="item.value1"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-
             <!-- 操作时间搜索 -->
-            <el-form-item class="form-time"  label="登录时间">
-              <el-date-picker style="width: 242px;"
-                              size="small"
-                              margin-left: 0px;
-                              v-model="search.value2"
-                              type="daterange"
-                              start-placeholder="开始日期"
-                              end-placeholder="结束日期"
-                              :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]"
-              >
-              </el-date-picker>
-            </el-form-item>
-
-            <!-- 操作按钮 -->
-            <el-form-item class="search">
-              <el-button size="mini" class="search-ss" type="primary">
-                <i class="iconfont">
-                  &#xe61b
-                </i>
-                搜索
-              </el-button>
-              <el-button size="mini" class="search-cz" type="primary" @click="reset()">
-                <i class="iconfont">
-                  &#xe6b8
-                </i>
-                重置
-              </el-button>
+            <el-form-item class="form-time" label="登录时间">
+              <el-date-picker
+                  v-model="selectTime"
+                  type="datetimerange"
+                  :shortcuts="shortcuts"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+              ></el-date-picker>
             </el-form-item>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
           <div class="button">
-            <el-button class="button-delete" size="mini"  v-bind:disabled="disableds" @click="remove">删除</el-button>
-            <el-button class="button-empty" size="mini" @click="empty">清空</el-button>
+            <el-button class="button-delete" size="mini" v-bind:disabled="disableds" @click="remove" style="margin-left: 20px">删除</el-button>
+            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 864px">清空</el-button>
+            <el-button size="mini" class="search-ss" type="primary">
+              <i class="iconfont">
+                &#xe61b
+              </i>
+              搜索
+            </el-button>
+            <el-button size="mini" class="search-cz" type="primary" @click="reset()">
+              <i class="iconfont">
+                &#xe6b8
+              </i>
+              重置
+            </el-button>
           </div>
 
           <!-- 表格内容部分 -->
@@ -88,17 +69,17 @@
                       :default-sort="{ prop: 'date', order: 'descending' }"
             >
               <!-- 全选操作按钮 -->
-              <el-table-column type="selection" width="50" />
-              <el-table-column prop="id" label="日志编号" width="105" />
-              <el-table-column prop="module" label="系统模块" width="105" />
-              <el-table-column prop="type" label="操作类型" width="105" />
-              <el-table-column prop="name" label="员工名称" width="105" />
-              <el-table-column prop="post" label="员工职位" width="105" />
-              <el-table-column prop="beg_way" label="请求方式" width="110" />
-              <el-table-column prop="state" label="操作状态" width="100" />
-              <el-table-column prop="location" label="请求地址" width="125" />
-              <el-table-column prop="ip"  label="IP地址" width="125" />
-              <el-table-column prop="date" sortable label="操作日期" width="150" />
+              <el-table-column type="selection" width="50"/>
+              <el-table-column prop="id" label="日志编号" width="105"/>
+              <el-table-column prop="module" label="系统模块" width="105"/>
+              <el-table-column prop="type" label="操作类型" width="105"/>
+              <el-table-column prop="name" label="员工名称" width="105"/>
+              <el-table-column prop="post" label="员工职位" width="105"/>
+              <el-table-column prop="beg_way" label="请求方式" width="110"/>
+              <el-table-column prop="state" label="操作状态" width="100"/>
+              <el-table-column prop="location" label="请求地址" width="125"/>
+              <el-table-column prop="ip" label="IP地址" width="125"/>
+              <el-table-column prop="date" sortable label="操作日期" width="150"/>
               <el-table-column align="center" label="操作" width="105">
                 <template #default="scope">
                     <span style="color: deepskyblue; font-size: 14px" @click="aaaaaa(scope.row)">
@@ -112,7 +93,7 @@
             </el-table>
           </div>
 
-          <el-dialog  width="750px" style="background-color: red" v-model="particular" title="操作日志详细">
+          <el-dialog width="750px" style="background-color: red" v-model="particular" title="操作日志详细">
             <el-form class="el-form" v-model="affiche">
               <!-- 操作日志详情 -->
               <el-form-item style="font-weight: bold;size: 14px;margin-left: 10px" label="系统模块：">
@@ -120,51 +101,61 @@
               </el-form-item>
               <!-- 请求地址详情 -->
               <el-form-item style="margin-left: 351px;margin-top: -60px;font-weight: bold;size: 14px" label="请求地址：">
-                <el-input size="small" :disabled="true" style="width: 245px;font-weight: bold;size: 14px" v-model="affiche.location"></el-input>
+                <el-input size="small" :disabled="true" style="width: 245px;font-weight: bold;size: 14px"
+                          v-model="affiche.location"></el-input>
               </el-form-item>
               <!-- 请求方式详情 -->
-              <el-form-item class="zhiti"  label="请求方式：">
-                <el-input size="small" :disabled="true" style="width: 583px;font-weight: bold;size: 14px" v-model="affiche.beg_way"></el-input>
+              <el-form-item class="zhiti" label="请求方式：">
+                <el-input size="small" :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
+                          v-model="affiche.beg_way"></el-input>
               </el-form-item>
               <!-- 操作方法详情 -->
-              <el-form-item class="zhiti"  label="操作方法：">
-                <el-input size="small" :disabled="true" style="width: 583px;font-weight: bold;size: 14px" v-model="affiche.way"></el-input>
+              <el-form-item class="zhiti" label="操作方法：">
+                <el-input size="small" :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
+                          v-model="affiche.way"></el-input>
               </el-form-item>
               <!-- 请求参数详情 -->
               <el-form-item class="zhiti" label="请求参数：">
-                <el-input :disabled="true" style="width: 583px;font-weight: bold;size: 14px" v-model="affiche.required_parameter" type="textarea"></el-input>
+                <el-input :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
+                          v-model="affiche.required_parameter" type="textarea"></el-input>
               </el-form-item>
               <!-- 返回参数详情-->
               <el-form-item class="zhiti" label="返回参数：">
-                <el-input :disabled="true" style="width: 583px;font-weight: bold;size: 14px" v-model="affiche.return_parameters" type="textarea"></el-input>
+                <el-input :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
+                          v-model="affiche.return_parameters" type="textarea"></el-input>
               </el-form-item>
               <!-- 操作状态详情 -->
               <el-form-item class="zhiti" label="操作状态：">
-                <el-input :disabled="true" size="small" style="width: 245px;font-weight: bold;size: 14px" v-model="affiche.state"></el-input>
+                <el-input :disabled="true" size="small" style="width: 245px;font-weight: bold;size: 14px"
+                          v-model="affiche.state"></el-input>
               </el-form-item>
               <!-- 操作时间详情 -->
               <el-form-item style="font-weight: bold;size: 14px;margin-left: 351px;margin-top: -62px;" label="操作时间：">
-                <el-input :disabled="true" size="small" style="width: 245px;font-weight: bold;size: 14px" v-model="affiche.date"></el-input>
+                <el-input :disabled="true" size="small" style="width: 245px;font-weight: bold;size: 14px"
+                          v-model="affiche.date"></el-input>
               </el-form-item>
-              <el-button  style="width: 70px;margin-left: 600px;background-color: rgb(255, 227, 232);" @click="particular=false" size="mini">关闭</el-button>
+              <el-button style="width: 70px;margin-left: 600px;background-color: rgb(255, 227, 232);"
+                         @click="particular=false" size="mini">关闭
+              </el-button>
             </el-form>
           </el-dialog>
 
           <!-- 分页 -->
           <div class="demo-pagination-block">
-            <!-- <span class="demonstration">All combined</span> -->
-            <el-pagination
-                v-model:currentPage="pageInfo.currenPage"
-                :page-sizes="[3, 5, 10, 50]"
-                v-model:page-size="pageInfo.pagesize"
-                :default-page-size="pageInfo.pagesize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="pageInfo.total"
-                :pager-count="5"
-                background
-                @size-change="sele"
-                @current-change="sele"
-            >
+            <el-pagination v-model:current-page="pageInfo.currenPage"
+                           v-model:page-size="pageInfo.pageSize"
+                           :default-page-size="pageInfo.pageSize"
+                           :page-sizes="[5, 10,15,20]"
+                           :pager-count="5"
+                           :total="pageInfo.total"
+                           background
+                           layout="	total ,sizes, prev, pager, next, jumper"
+                           next-text="下一页"
+                           prev-text="上一页"
+                           @size-change="next()"
+                           @current-change="next()"
+                           @prev-click="next()"
+                           @next-click="next()">
             </el-pagination>
           </div>
 
@@ -177,95 +168,68 @@
 <script>
 import {ref} from 'vue'
 import {ElMessage, ElMessageBox} from "element-plus";
-
-
 export default {
   data() {
-
-
-    //批量删除提示框
-    const remove = () => {
-      ElMessageBox.confirm(
-          '是否确定删除！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '删除成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    }
-
-    //清空提示框
-    const empty = () => {
-      ElMessageBox.confirm(
-          '是否确定清空所有数据！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '清空成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    }
-    //操作时间
-    const value2 = ref('')
     return {
-      //批量删除
-      remove,
-
-      //清空数据
-      empty,
-
+      //选择时间
+      selectTime: [],
+      //日期选择组件
+      shortcuts: [
+        {
+          text: '过去一周',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去一个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去三个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            return [start, end]
+          },
+        },
+      ],
       // 分页
       pageInfo: {
-        currenPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
         total: 0,
       },
 
 
       //搜索重置form
-      search:{
+      search: {
         //系统模块
-        system_module:'',
+        system_module: '',
         //操作人员
-        username:'',
+        username: '',
         //操作类型
-        type:'',
+        type: '',
         //登录状态
-        state:'',
+        state: '',
         //登录时间
-        vlues2:'',
+        vlues2: '',
       },
 
       //操作日志详细对话框
-      particular:false,
+      particular: false,
 
 
       // 搜索操作类型下拉框
@@ -324,13 +288,13 @@ export default {
         name: "4",
         post: "5",
         beg_way: "6",
-        state:"7",
-        location:"8",
-        ip:"i9",
-        date:"2002-2-02 11:12:11",
-        way:'fasdfasdfadfaasdfasdfa',
-        required_parameter:'44555www44rw',
-        return_parameters:'rwe1wwwwwwwww565rw',
+        state: "7",
+        location: "8",
+        ip: "i9",
+        date: "2002-2-02 11:12:11",
+        way: 'fasdfasdfadfaasdfasdfa',
+        required_parameter: '44555www44rw',
+        return_parameters: 'rwe1wwwwwwwww565rw',
       },
         {
           id: "2",
@@ -339,13 +303,13 @@ export default {
           name: "4",
           post: "5",
           beg_way: "6",
-          state:"7",
-          location:"8",
-          ip:"i9",
-          date:"2002-03-03 12:13:12",
-          way:'fasdfasdfadfaasdfasdfa',
-          required_parameter:'44555144rw',
-          return_parameters:'rwe16541565rw',
+          state: "7",
+          location: "8",
+          ip: "i9",
+          date: "2002-03-03 12:13:12",
+          way: 'fasdfasdfadfaasdfasdfa',
+          required_parameter: '44555144rw',
+          return_parameters: 'rwe16541565rw',
         },
         {
           id: "3",
@@ -354,68 +318,116 @@ export default {
           name: "4",
           post: "5",
           beg_way: "6",
-          state:"7",
-          location:"8",
-          ip:"i9",
-          date:"2002-2-02 11:12:11",
-          way:'fasdfasdfadfaasdfasdfa',
-          required_parameter:'ewrw',
-          return_parameters:'rwerw',
+          state: "7",
+          location: "8",
+          ip: "i9",
+          date: "2002-2-02 11:12:11",
+          way: 'fasdfasdfadfaasdfasdfa',
+          required_parameter: 'ewrw',
+          return_parameters: 'rwerw',
         },
       ],
 
 
       //删除按钮是否禁用
-      disableds:true,
+      disableds: true,
       //接收表格里的数据
-      table:[],
+      table: [],
       //查看详情赋值
-      affiche:{
+      affiche: {
         module: '',
         type: '',
-        name:'',
-        post:'',
-        beg_way:'',
-        state:'',
-        location:'',
-        ip:'',
-        date:'',
-        way:"",
-        required_parameter:'',
-        return_parameters:'',
+        name: '',
+        post: '',
+        beg_way: '',
+        state: '',
+        location: '',
+        ip: '',
+        date: '',
+        way: "",
+        required_parameter: '',
+        return_parameters: '',
       },
     }
   },
-  methods:{
+  methods: {
+    //批量删除提示框
+    remove() {
+      ElMessageBox.confirm(
+          '是否确定删除！！！',
+          '友情提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: '友情提示',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '删除成功！！',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              message: '感谢你的参与',
+              type: 'warning',
+            })
+          })
+    },
+    //清空提示框
+    empty() {
+      ElMessageBox.confirm(
+          '是否确定清空所有数据！！！',
+          '友情提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: '友情提示',
+          }
+      )
+          .then(() => {
+            ElMessage({
+              type: 'success',
+              message: '清空成功！！',
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              message: '感谢你的参与',
+              type: 'warning',
+            })
+          })
+    },
     //点击详情获取表单里的值
-    aaaaaa(row){
-      this.affiche=row;
+    aaaaaa(row) {
+      this.affiche = row;
       console.log(this.affiche)
-      this.particular=true
+      this.particular = true
     },
 
     //判断删除按钮是否可用
-    deletepl(val){
-      this.table=val
-      if(this.table != ''){
+    deletepl(val) {
+      this.table = val
+      if (this.table != '') {
         this.disableds = false
-      }else {
+      } else {
         this.disableds = true
       }
     },
     //重置方法
-    reset(){
-      this.search={
+    reset() {
+      this.search = {
         //系统模块
-        system_module:'',
-            //操作人员
-            username:'',
-            //操作类型
-            type:'',
-            //登录状态
-            state:'',
-            //登录时间
-            vlues2:'',
+        system_module: '',
+        //操作人员
+        username: '',
+        //操作类型
+        type: '',
+        //登录状态
+        state: '',
+        //登录时间
+        vlues2: '',
       }
     }
   }
@@ -426,28 +438,34 @@ export default {
 
 @import url("../../css/zpdaohang.css");
 
-/deep/.el-dialog__body{
+/deep/ .el-dialog__body {
   background-color: #f5f7fa;
 }
-
-.zhiti{
+/deep/ .el-range-editor.el-input__inner {
+  height: 32px;
+}
+/deep/ .el-range-editor.el-input__inner .el-range-separator {
+  position: relative;
+  top: -4px;
+}
+.zhiti {
   font-weight: bold;
   size: 14px;
   margin-left: 10px;
   margin-top: 10px;
 }
 
-/deep/.el-dialog__body .el-input--small .el-input__inner {
+/deep/ .el-dialog__body .el-input--small .el-input__inner {
   height: 32px;
   line-height: 32px;
   border: none;
 }
-/deep/.el-textarea__inner{
+
+/deep/ .el-textarea__inner {
   min-height: 32.6px;
   border: none;
   resize: none;
 }
-
 
 
 @font-face {
@@ -459,34 +477,36 @@ export default {
 
 
 /* 分页 */
-.demo-pagination-block{
-  margin-left: 854px;
-  margin-bottom: 20px;
+.demo-pagination-block {
+  margin: 10px 0 10px 10px;
 }
 
 /*表格样式*/
-.sub-Content__primary{
+.sub-Content__primary {
   margin-bottom: 10px;
 }
-.button{
+
+.button {
   margin-top: -6px;
   margin-bottom: 8px;
 
 }
+
 /* 删除表格数据按钮 */
-.button-delete{
+.button-delete {
   width: 90px;
 }
 
 /* 清空表格数据按钮 */
-.button-empty{
+.button-empty {
   width: 90px;
   color: #13ce66;
   background: #e7faf0;
   border-color: #a1ebc2;
   border: none;
 }
-.button-empty:hover{
+
+.button-empty:hover {
   width: 90px;
   background: #13ce66;
   border-color: #13ce66;
@@ -496,10 +516,11 @@ export default {
 
 
 /* 搜索按钮 */
-.search{
+.search {
   margin-top: -27px;
   margin-left: 10px;
 }
+
 .search-ss {
   background-color: #085FC3;
   color: white;
@@ -509,6 +530,7 @@ export default {
   background-color: #1890ff;
   border-color: #1890ff;
 }
+
 .search-ss:hover {
   background-color: #085FC3;
   color: white;
@@ -518,6 +540,7 @@ export default {
   background: #e8f4ff;
   border-color: #a3d3ff;
 }
+
 /* 重置按钮 */
 .search-cz {
   color: black;
@@ -532,6 +555,7 @@ export default {
   border-color: #dcdfe6;
   color: #606266;
 }
+
 .search-cz:hover {
   color: black;
   margin: 29px 0px 0px 10px;
@@ -542,42 +566,44 @@ export default {
   background: #e8f4ff;
   border-color: #a3d3ff;
 }
+
 /* 操作日期 */
-.form-time{
+.form-time {
   margin-bottom: 20px;
 }
+
 /* 登录状态 */
-.form-state{
+.form-state {
   margin-left: 10px;
 }
-.form-states{
+
+.form-states {
   width: 230px;
 }
+
 /* 登录类型 */
-.form-type{
+.form-type {
   margin-left: 10px;
 
 }
-.form-types{
+
+.form-types {
   width: 225px;
 }
 
 /* 操作人员搜索样式 */
-.form-staff{
+.form-staff {
   margin-left: 15px;
-  width: 300px;
 }
+
 /* 系统模块搜索样式 */
-.form-module{
+.form-module {
   margin-left: 10px;
   width: 300px;
-
 }
-
-
-
-
-
+.el-form .form-time{
+  margin-left: 20px;
+}
 
 .saas-main-content {
   padding-top: 12px;
@@ -726,8 +752,6 @@ button, html [type="button"], [type="reset"], [type="submit"] {
   border-color: #085fc3;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 }
-
-
 
 
 </style>
