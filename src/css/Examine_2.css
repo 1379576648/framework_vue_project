@@ -92,3 +92,7 @@ table * {
   padding: 10px 15px;
   border-radius: var(--el-border-radius-base);
 }
+
+.el-form-item{
+  margin-bottom: 10px;
+}
