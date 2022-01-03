@@ -7,7 +7,7 @@
       <el-input v-model="seek" placeholder="搜索" size="small" @click="selectpage">
         <template #suffix>
 
-          <el-icon class="el-input__icon">
+          <el-icon class="el-input__icon" @change="selectpage">
             <i-search/>
           </el-icon>
         </template>
