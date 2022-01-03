@@ -7,7 +7,7 @@
         <el-button @click="selectAuditflow2()">重置</el-button>
         &nbsp;
         <el-input
-            v-model="tableData.staffName1"
+            v-model="staffName1"
             placeholder="根据申请人搜索"
             style="width: 130px"
         />
@@ -36,7 +36,8 @@
               width="140"
               column-key="date1"
           />
-          <el-table-column prop="auditflowId" label="审批编号" width="100"/>
+          <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
+          <!--          <el-table-column prop="auditflowId" label="审批编号" width="100"/>-->
           <el-table-column prop="auditflowType" label="流程" width="100"/>
           <el-table-column prop="staffName1" label="申请人" width="150"/>
           <el-table-column label="状态" width="100">
@@ -183,7 +184,7 @@
         <el-button @click="selectEndAuditflow2()">重置</el-button>
         &nbsp;
         <el-input
-            v-model="tableData1.staffName1"
+            v-model="staffName1"
             placeholder="根据申请人搜索"
             style="width: 130px"
         />
@@ -204,6 +205,7 @@
             :data="tableData1"
             style="width: 100%"
         >
+          <el-table-column fixed :index="indexMethod2" align="center" label="序号" type="index" min-width="100"/>
           <el-table-column
               prop="createdTime"
               label="日期"
@@ -211,7 +213,7 @@
               width="140"
               column-key="date1"
           />
-          <el-table-column prop="auditflowId" label="审批编号" width="100"/>
+          <!--          <el-table-column prop="auditflowId" label="审批编号" width="100"/>-->
           <el-table-column prop="auditflowType" label="流程" width="100"/>
           <el-table-column prop="staffName1" label="申请人" width="150"/>
           <el-table-column label="状态" width="100">
@@ -284,7 +286,7 @@
               <el-input v-model="details2[0].staffName2" disabled></el-input>
             </el-form-item>
             <el-form-item label="审批备注：">
-              <el-input v-model="details2[0].auditflowdetai_remarks" disabled></el-input>
+              <el-input v-model="details2[0].auditflowdetaiRemarks" disabled></el-input>
             </el-form-item>
             <el-form-item label="审核时间：">
               <el-input v-model="details2[0].auditflowdetaiDate" disabled></el-input>
@@ -296,7 +298,7 @@
           <el-pagination v-model:current-page="pageInfo1.currentPage"
                          v-model:page-size="pageInfo1.pagesize"
                          :default-page-size="pageInfo1.pagesize"
-                         :page-sizes="[3,6,9,12]"
+                         :page-sizes="[1,3,5,7]"
                          :pager-count="5"
                          :total="pageInfo1.total"
                          background
@@ -312,6 +314,51 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  <!-- 点击气泡确认框弹出添加通过备注对话框-->
+  <el-dialog
+      v-model="add_remark"
+      title="添加该记录的通过备注"
+      width="30%"
+      :close-on-click-modal=false
+      :show-close=false
+  >
+    <template #footer>
+      <el-form :model="formInline" class="demo-form-inline">
+        <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
+        &nbsp;
+        <el-form-item>
+          <el-button type="primary" @click="pass_overtime(id)"
+          >确定
+          </el-button
+          >
+          <el-button @click="add_remark=false,remark=''">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </template>
+  </el-dialog>
+
+  <!-- 点击气泡确认框弹出添加驳回备注对话框-->
+  <el-dialog
+      v-model="add_remark2"
+      title="添加该记录的驳回备注"
+      width="30%"
+      :close-on-click-modal=false
+      :show-close=false
+  >
+    <template #footer>
+      <el-form :model="formInline" class="demo-form-inline">
+        <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
+        &nbsp;
+        <el-form-item>
+          <el-button type="primary" @click="reject_overtime(id)"
+          >确定
+          </el-button
+          >
+          <el-button @click="add_remark2=false,remark=''">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -334,50 +381,30 @@ export default {
   },
   data() {
     return {
+      // 添加通过备注弹出框
+      add_remark: false,
+      // 添加驳回备注弹出框
+      add_remark2: false,
+      // 审批明细表编号
+      id: [],
       drawer: false,
       drawer2: false,
       // 选择开始日期/结束日期
       selectTime: [],
       // 选择开始日期/结束日期
       selectTime2: [],
+      // 待审批查询申请人
+      staffName: "",
+      // 已审批查询申请人
+      staffName1: "",
+      // 通过时备注
+      remark: "",
       //访问路径
       url: "http://localhost:80/",
       // 待办加班审批列表
-      tableData: [
-        {
-          date: "",
-          //加班编号
-          AUDITFLOW_ID: "",
-          //类型
-          AUDITFLOW_TYPE: "",
-          //申请人（员工名称）
-          staffName1: "",
-          //加班状态
-          AUDITFLOW_STATE: "",
-          //加班人
-          STAFF_NAME: "",
-          //最近处理
-          UPDATED_TIME: "",
-        },
-      ],
+      tableData: [],
       // 已办转正审批列表
-      tableData1: [
-        {
-          date1: "",
-          //加班编号
-          AUDITFLOW_ID: "",
-          //类型
-          AUDITFLOW_TYPE: "",
-          //申请人（员工名称）
-          STAFF_ID: "",
-          //加班状态
-          AUDITFLOW_STATE: "",
-          //加班人
-          STAFF_NAME: "",
-          //最近处理
-          UPDATED_TIME: "",
-        },
-      ],
+      tableData1: [],
       // 待处理分页
       pageInfo: {
         // 分页参数
@@ -466,105 +493,13 @@ export default {
     };
   },
   methods: {
-    // 重置日期过滤
-    resetDateFilter1() {
-      this.$refs.filterTable1.clearFilter("date1");
-    },
-    // 重置日期过滤
-    resetDateFilter() {
-      this.$refs.filterTable.clearFilter("date");
-    },
-    clearFilter() {
-      this.$refs.filterTable.clearFilter();
-    },
-    // 筛选
-    filterHandler(value, row, column) {
-      const property = column["property"];
-      return row[property] === value;
-    },
-    // 通过审批修改其状态
+    // 通过点击气泡确认框弹出添加备注对话框
     through_approval(id) {
-      var _this = this
-      this.axios({
-        method: 'post',
-        url: this.url + 'update_Approval_State',
-        data: {
-          auditflowdetailId: id.auditflowdetailId1,
-          auditflowdetailId2: id.auditflowdetailId2,
-        },
-        responseType: 'json',
-        responseEncoding: 'utf-8',
-      }).then((response) => {
-        console.log("修改状态")
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
-          this.selectAuditflow();
-          this.selectEndAuditflow();
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败',
-            type: 'error',
-          })
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败',
-            type: 'error',
-          })
-        }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      this.add_remark = true;
     },
-    // 驳回时审批修改其状态
+    // 驳回时点击气泡确认框弹出添加备注对话框
     rejected_apply(id) {
-      var _this = this
-      this.axios({
-        method: 'post',
-        url: this.url + 'reject_Approval_State',
-        data: {
-          auditflowdetailId: id.auditflowdetailId1,
-          auditflowdetailId2: id.auditflowdetailId2,
-          auditflowdetailId3: id.auditflowdetailId3,
-          auditflowId:id.auditflowId,
-        },
-        responseType: 'json',
-        responseEncoding: 'utf-8',
-      }).then((response) => {
-        console.log("驳回该审批")
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '驳回成功',
-            type: 'success',
-          })
-          this.selectAuditflow();
-          this.selectEndAuditflow();
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
-          })
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
-          })
-        }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      this.add_remark2 = true;
     },
     // 查询待审批加班数据
     selectAuditflow() {
@@ -578,11 +513,11 @@ export default {
           //页大小
           "pagesize": this.pageInfo.pagesize,
           //申请人名称
-          "staffName1": this.tableData.staffName1,
+          "staffName1": this.staffName,
           //起始时间
-          "startTime": this.selectTime[0],
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
           //结束时间
-          "endTime": this.selectTime[1],
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -617,6 +552,8 @@ export default {
     },
     // 查询待审批加班数据-不带数据
     selectAuditflow2() {
+      this.staffName1 = "";
+      this.selectTime = "";
       var _this = this
       this.axios({
         method: 'post',
@@ -670,7 +607,7 @@ export default {
           //页大小
           "pagesize": this.pageInfo1.pagesize,
           //申请人名称
-          "staffName1": this.tableData1.staffName1,
+          "staffName1": this.staffName1,
           //起始时间
           "startTime": this.selectTime2[0],
           //结束时间
@@ -708,6 +645,8 @@ export default {
     },
     // 查询已办审批加班数据-不带数据
     selectEndAuditflow2() {
+      this.staffName1 = "";
+      this.selectTime2 = "";
       var _this = this
       this.axios({
         method: 'post',
@@ -824,9 +763,118 @@ export default {
         console.log(" 根据审批编号查询审批明细表失败")
         console.log(error);
       });
-    }
+    },
+    // 备注弹出框点击确定 通过当前审批
+    pass_overtime(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'update_Approval_State',
+        data: {
+          auditflowdetailId: id.auditflowdetailId1,
+          auditflowdetailId2: id.auditflowdetailId2,
+          auditflowdetaiRemarks: this.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectAuditflow();
+          this.selectEndAuditflow();
+          this.add_remark = false;
+          this.remark="";
+        } else if (response.data.data === 999) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+          this.add_remark = false;
+          this.remark="";
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+          this.add_remark = false;
+          this.remark="";
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    // 备注弹出框点击确定 驳回当前审批
+    reject_overtime(id){
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'reject_Approval_State',
+        data: {
+          auditflowdetailId: id.auditflowdetailId1,
+          auditflowdetailId2: id.auditflowdetailId2,
+          auditflowdetailId3: id.auditflowdetailId3,
+          auditflowId: id.auditflowId,
+          auditflowdetaiRemarks: this.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("驳回该审批")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '驳回成功',
+            type: 'success',
+          })
+          this.selectAuditflow();
+          this.selectEndAuditflow();
+          this.add_remark2=false;
+          this.remark="";
+        } else if (response.data.data === 999) {
+          ElMessage({
+            showClose: true,
+            message: '驳回失败',
+            type: 'error',
+          })
+          this.add_remark2=false;
+          this.remark="";
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '驳回失败',
+            type: 'error',
+          })
+          this.add_remark2=false;
+          this.remark="";
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
 
-
+    },
+    //序号1
+    indexMethod(index) {
+      let curpage = this.pageInfo.currentPage; //单前页码，具体看组件取值
+      let limitpage = this.pageInfo.pagesize; //每页条数，具体是组件取值
+      return index + 1 + (curpage - 1) * limitpage;
+    },
+    //序号2
+    indexMethod2(index) {
+      let curpage = this.pageInfo1.currentPage; //单前页码，具体看组件取值
+      let limitpage = this.pageInfo1.pagesize; //每页条数，具体是组件取值
+      return index + 1 + (curpage - 1) * limitpage;
+    },
   },
   // 挂载
   created() {
