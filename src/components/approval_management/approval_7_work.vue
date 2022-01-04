@@ -376,7 +376,7 @@ export default {
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
-      }).then((response) => {
+      }) .then((response) => {
         console.log("查询待审批加班数据");
         console.log(response);
         if (response.data.data.data) {
@@ -399,8 +399,7 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
+      }).catch(function (error) {
             console.log("失败")
             console.log(error);
           });
