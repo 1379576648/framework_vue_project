@@ -320,7 +320,6 @@ export default {
       },
       //新增菜单弹出框
       insertMenu: false,
-      one: "",
       //一键展开收缩菜单
       expands: false,
       //渲染展开菜单

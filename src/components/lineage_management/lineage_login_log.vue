@@ -4,22 +4,22 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
-        <div class="mt-20 ml-20 mr-20" >
+        <div class="mt-20 ml-20 mr-20">
           <!-- 搜索登录数据部分 -->
           <el-form :inline="true">
             <!-- 登录地址搜索 -->
             <el-form-item class="form-dizhi" label="登录地址">
-              <el-input size="small" v-model="registerLogIpname" placeholder="请输入登录地址关键字"></el-input>
+              <el-input size="small" v-model="registerLogIpname" clearable placeholder="请输入登录地址关键字"></el-input>
             </el-form-item>
 
             <!-- 用户名称搜索 -->
             <el-form-item class="form-name" label="用户名称">
-              <el-input size="small" v-model="registerLogPeople" placeholder="请输入用户名称关键字"></el-input>
+              <el-input size="small" v-model="registerLogPeople" clearable placeholder="请输入用户名称关键字"></el-input>
             </el-form-item>
 
             <!-- 登录状态搜索 -->
             <el-form-item class="form-state" label="状态">
-              <el-select style="width: 190px" size="small" v-model="registerLogState" placeholder="请选择登录状态">
+              <el-select style="width: 190px" size="small" v-model="registerLogState" clearable placeholder="请选择登录状态">
                 <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -45,7 +45,9 @@
 
           <!-- 对数据的增删改按钮 -->
           <div class="button" style="margin-top: -30px">
-            <el-button size="mini"  style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled" @click="remove">删除</el-button>
+            <el-button size="mini" style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled"
+                       @click="remove">删除
+            </el-button>
             <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 882px">清空</el-button>
             <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
@@ -72,7 +74,7 @@
           >
             <!-- 全选操作按钮 -->
             <el-table-column fixed align="center" type="selection" min-width="50"/>
-            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
+            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
             <el-table-column fixed prop="registerLogPeople" align="center" sortable label="用户名称" min-width="132"/>
             <el-table-column prop="registerLogPhone" align="center" sortable label="手机号码" min-width="135"/>
             <el-table-column prop="registerLogIp" align="center" sortable label="IP地址" min-width="135"/>
@@ -91,7 +93,7 @@
                 <span v-if="scope.row.registerLogGenre==1">密码</span>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建日期" min-width="170"/>
+            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建时间" min-width="170"/>
           </el-table>
         </div>
         <!-- 分页 -->
@@ -244,13 +246,19 @@ export default {
             })
             //如果服务没有关闭
           } else if (response.data.data) {
-            if (response.data.data.info == "成功") {
-              this.next();
-              //如果服务是正常的
-              if (response.data.data.state == 200) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果返回成功
+              if (response.data.data.info == "成功") {
+                this.next();
                 ElMessage({
                   type: 'success',
                   message: '清空成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
                 })
               }
             }
@@ -303,13 +311,19 @@ export default {
             })
             //如果服务没有关闭
           } else if (response.data.data) {
-            if (response.data.data.info == "成功") {
-              this.next();
-              //如果服务是正常的
-              if (response.data.data.state == 200) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果返回成功
+              if (response.data.data.info == "成功") {
+                this.next();
                 ElMessage({
                   type: 'success',
                   message: '删除成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
                 })
               }
             }
@@ -346,9 +360,9 @@ export default {
           //IP所在地
           "registerLogIpname": this.registerLogIpname,
           //起始时间
-          "startTime": this.selectTime==null?null:this.selectTime[0],
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
           //结束时间
-          "endTime": this.selectTime==null?null:this.selectTime[1],
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
           //状态
           "registerLogState": this.registerLogState,
         },
@@ -366,8 +380,8 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
           }
           //如果服务是雪崩的
           else {

@@ -711,7 +711,7 @@ const routes = [
                                 component: modules[`${'../components/lineage_management/lineage_role.vue'}`],
 
                             },
-                            {//设置
+                            {//分配用户
                                 path: '/lineage/authority_management/allot_user',
                                 component: modules[`${'../components/lineage_management/lineage_allot_user.vue'}`],
 
