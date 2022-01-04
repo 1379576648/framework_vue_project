@@ -852,7 +852,7 @@ const store = createStore({
                 MENU_MODULE: 'statistics_management/statistics_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                MENU_LEAF: 0,//是否有叶子 0有 1没有
+                MENU_LEAF: 0,//是否有叶子 0有 1没有0
                 son: [{
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '人员分析',//菜单名称

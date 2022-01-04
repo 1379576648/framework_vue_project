@@ -1,4 +1,4 @@
-<!--简历：全部简历-->
+ <!--简历：全部简历-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -130,7 +130,7 @@
       <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currenPage"
+            v-model:currentPage="pageInfo.currentPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -138,8 +138,8 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="selectPage"
-            @current-change="selectPage"
+            @size-change="selectAllresume"
+            @current-change="selectAllresume"
         >
         </el-pagination>
       </div>
@@ -154,7 +154,7 @@
 import {
   ref
 } from 'vue'
-import {ElMessageBox, ElMessage} from 'element-plus'
+import {ElMessageBox, ElMessage, ElNotification} from 'element-plus'
 
 export default {
   data() {
@@ -164,15 +164,17 @@ export default {
       addresume:'/recruit/recruit/addresume',
       details:'/recruitment/resume/details',
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       //筛选框显示隐藏
       icons: false,
       //搜索框
       input: "",
+      //访问路径
+      url: "http://localhost:80/",
       //表格数据
       tableData: [],
       //筛选框数据
@@ -212,44 +214,46 @@ export default {
     },
     //查询全部简历
     selectAllresume(){
-      this.axios
-          .get("http://localhost:80/selectAllresume",{
-            params: this.pageInfo,
-          })
-          .then((response) =>{
-            console.log("查询新简历");
-            console.log(response.data.succed.records);
-            this.tableData = response.data.succed.records;
-          })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
-    },
-    //分页查询
-    selectPage(){
-      var _this = this;
-      this.axios
-          .get("http://localhost:80/selectAllresume",{
-            params: this.pageInfo,
-          })
-          .then(function (response){
-            console.log("分页查询");
-            console.log(response);
-            _this.tableData = response.data.succed.records;
-            _this.pageInfo.pagesize = response.data.succed.size;
-            _this.pageInfo.total = response.data.succed.total;
-          })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+        var _this=this
+        this.axios({
+          method:'post',
+          url:this.url+'selectAllresume',
+          data:{
+            'currentPage':this.pageInfo.currentPage,
+            'pagesize':this.pageInfo.pagesize
+          },
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response)=>{
+          console.log("查询全部简历数据")
+          console.log(response);
+          if (response.data.state===300){
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.state===200){
+            this.tableData=response.data.succed.records;
+            this.pageInfo.pagesize=response.data.succed.size;
+            this.pageInfo.total=response.data.succed.total;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
 
-    }
+      }).catch(function (error){
+          console.log(" 失败")
+          console.log(error);
+        })
+    },
+
   },
   created() {
     this.selectAllresume();
-    this.selectPage();
   }
 }
 </script>
