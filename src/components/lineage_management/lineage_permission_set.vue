@@ -242,7 +242,7 @@
                    filterable
                    allow-create
                    default-first-option
-                   max-height="100px"
+                   max-height="50px"
         >
           <el-option label="公交" value="2"></el-option>
           <el-option label="地铁" value="3"></el-option>
@@ -285,7 +285,6 @@ export default {
         menuModule: ''
       },
       rules: {
-
         //菜单名称
         menuName: [
           {
@@ -321,7 +320,6 @@ export default {
       },
       //新增菜单弹出框
       insertMenu: false,
-      one: "",
       //一键展开收缩菜单
       expands: false,
       //渲染展开菜单

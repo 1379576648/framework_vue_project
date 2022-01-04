@@ -75,20 +75,23 @@
               </svg></i>
             <span>新增</span>
           </button>
-
+        </div>
           <!--搜索输入框-->
-          <el-row style="width: 150px;position: absolute;left:1090px;top:30px;">
+          <div style="margin-left: 1130px;margin-top: -57px;">
+          <el-row style="width: 150px;">
             <el-input v-model="seek" placeholder="搜索" size="small">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
             </el-input>
           </el-row>
-        </div>
+            </div>
 
+<br/>
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
-          <el-table :data="tableData" stripe style="width: 100%">
+          <el-table :data="tableData" stripe style="width: 100%"
+                    :header-cell-style="{background:'#eef1f6',color:'#606266'}">
             <el-table-column prop="name" label="姓名" width="180" />
             <el-table-column prop="name" label="异动类型" width="180" />
             <el-table-column prop="date" label="原部门" width="180" />

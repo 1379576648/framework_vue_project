@@ -6,18 +6,21 @@
 				<span></span>
 			     <br/>
 				<!--搜索输入框-->
-				<el-row style="width:150px;margin-left:1090px">
+        <div style="margin-left: 1161px;">
+				<el-row style="width:150px;">
 				<el-input v-model="input3" placeholder="搜索" size="small">
 					<template #suffix>
 					<el-icon class="el-input__icon"><i-search/></el-icon>
 					</template>
 				</el-input>
 				</el-row>
+        </div>
 
 				<!-- 表格内容部分 -->
 				<div class="sub-Content__primary">
 					
-					 <el-table :data="tableData" stripe style="width: 100%">
+					 <el-table :data="tableData" stripe style="width: 100%"
+                     :header-cell-style="{background:'#eef1f6',color:'#606266'}">
                         <el-table-column prop="name" label="姓名" width="120" />
                         <el-table-column prop="depart" label="部门" width="150" />
                         <el-table-column prop="post" label="职位" width="150" />

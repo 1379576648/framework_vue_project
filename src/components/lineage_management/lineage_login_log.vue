@@ -9,17 +9,17 @@
           <el-form :inline="true">
             <!-- 登录地址搜索 -->
             <el-form-item class="form-dizhi" label="登录地址">
-              <el-input size="small" v-model="registerLogIpname" placeholder="请输入登录地址关键字"></el-input>
+              <el-input size="small" v-model="registerLogIpname" clearable placeholder="请输入登录地址关键字"></el-input>
             </el-form-item>
 
             <!-- 用户名称搜索 -->
             <el-form-item class="form-name" label="用户名称">
-              <el-input size="small" v-model="registerLogPeople" placeholder="请输入用户名称关键字"></el-input>
+              <el-input size="small" v-model="registerLogPeople" clearable placeholder="请输入用户名称关键字"></el-input>
             </el-form-item>
 
             <!-- 登录状态搜索 -->
             <el-form-item class="form-state" label="状态">
-              <el-select style="width: 190px" size="small" v-model="registerLogState" placeholder="请选择登录状态">
+              <el-select style="width: 190px" size="small" v-model="registerLogState" clearable placeholder="请选择登录状态">
                 <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -32,36 +32,35 @@
             <!-- 登录时间搜索 -->
             <el-form-item class="form-time" label="登录时间">
               <el-date-picker
-                  size="small"
                   v-model="selectTime"
-                  type="daterange"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :default-value="[new Date(), new Date()]"
+                  type="datetimerange"
+                  :shortcuts="shortcuts"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
               >
               </el-date-picker>
-            </el-form-item>
-            <!-- 操作按钮 -->
-            <el-form-item style="margin-left: 1071px;margin-top: -30px">
-              <el-button size="mini" class="search-ss" type="primary" @click="next">
-                <i class="iconfont">
-                  &#xe61b
-                </i>
-                搜索
-              </el-button>
-              <el-button size="mini" class="search-cz" type="primary" @click="reset()">
-                <i class="iconfont">
-                  &#xe6b8
-                </i>
-                重置
-              </el-button>
             </el-form-item>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
-          <div class="button">
-            <el-button size="mini" style="width: 90px;" v-bind:disabled="disabled" @click="remove">删除</el-button>
-            <el-button class="button-empty" size="mini" @click="empty">清空</el-button>
+          <div class="button" style="margin-top: -30px">
+            <el-button size="mini" style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled"
+                       @click="remove">删除
+            </el-button>
+            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 882px">清空</el-button>
+            <el-button size="mini" class="search-ss" type="primary" @click="next">
+              <i class="iconfont">
+                &#xe61b
+              </i>
+              搜索
+            </el-button>
+            <el-button size="mini" class="search-cz" type="primary" @click="reset()">
+              <i class="iconfont">
+                &#xe6b8
+              </i>
+              重置
+            </el-button>
           </div>
         </div>
 
@@ -70,30 +69,31 @@
           <el-table :data="tableData" style="width: 100% ;"
                     border
                     stripe
+                    :header-cell-style="{textAlign: 'center',background:'rgba(213,213,218,0.63)',color:'#6C6C6C'}"
                     @selection-change="checkDelete"
           >
             <!-- 全选操作按钮 -->
             <el-table-column fixed align="center" type="selection" min-width="50"/>
-            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
-            <el-table-column fixed prop="registerLogPeople" align="center" label="用户名称" min-width="132"/>
-            <el-table-column prop="registerLogPhone" align="center" label="手机号码" min-width="135"/>
-            <el-table-column prop="registerLogIp" align="center" label="IP地址" min-width="135"/>
-            <el-table-column prop="registerLogIpname" align="center" label="IP所在地" min-width="150"/>
-            <el-table-column prop="registerLogType" align="center" label="设备类型" min-width="140"/>
-            <el-table-column align="center" label="登录状态" min-width="135">
+            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
+            <el-table-column fixed prop="registerLogPeople" align="center" sortable label="用户名称" min-width="132"/>
+            <el-table-column prop="registerLogPhone" align="center" sortable label="手机号码" min-width="135"/>
+            <el-table-column prop="registerLogIp" align="center" sortable label="IP地址" min-width="135"/>
+            <el-table-column prop="registerLogIpname" align="center" sortable label="IP所在地" min-width="150"/>
+            <el-table-column prop="registerLogType" align="center" sortable label="设备类型" min-width="140"/>
+            <el-table-column align="center" sortable label="登录状态" min-width="135">
               <template #default="scope">
                 <span class="button-enable" v-if="scope.row.registerLogState==0">成功</span>
                 <span class="button-forbidden" v-if="scope.row.registerLogState==1">失败</span>
               </template>
             </el-table-column>
-            <el-table-column prop="registerLogBrowser" align="center" label="浏览器" min-width="132"/>
-            <el-table-column prop="registerLogGenre" align="center" label="登录类型" min-width="135">
+            <el-table-column prop="registerLogBrowser" align="center" sortable label="浏览器" min-width="132"/>
+            <el-table-column prop="registerLogGenre" align="center" sortable label="登录类型" min-width="135">
               <template #default="scope">
                 <span v-if="scope.row.registerLogGenre==0">人脸</span>
                 <span v-if="scope.row.registerLogGenre==1">密码</span>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建日期" min-width="170"/>
+            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建时间" min-width="170"/>
           </el-table>
         </div>
         <!-- 分页 -->
@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       //访问路径
-      url: "http://localhost:80/",
+      url: "http://localhost:80/registerLog/",
       //ip所在地
       registerLogIpname: '',
       //用户名称
@@ -162,8 +162,37 @@ export default {
       //删除按钮是否可用
       disabled: true,
       //存放复选的id列表
-      listId: []
-
+      listId: [],
+      //日期选择组件
+      shortcuts: [
+        {
+          text: '过去一周',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去一个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            return [start, end]
+          },
+        },
+        {
+          text: '过去三个月',
+          value: () => {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            return [start, end]
+          },
+        },
+      ],
     }
   },
   methods: {
@@ -177,6 +206,8 @@ export default {
       this.registerLogState = '';
       //选择时间
       this.selectTime = [];
+      //刷新表格
+      this.next();
     },
     //复选框选择事件
     checkDelete(val) {
@@ -203,7 +234,7 @@ export default {
       ).then(() => {
         this.axios({
           method: 'delete',
-          url: this.url + 'emptyList',
+          url: this.url + 'emptyRegisterLogList',
           responseEncoding: 'utf-8',
         }).then((response) => {
           //如果服务关闭
@@ -215,13 +246,19 @@ export default {
             })
             //如果服务没有关闭
           } else if (response.data.data) {
-            if (response.data.data.info=="成功"){
-              this.next();
-              //如果服务是正常的
-              if (response.data.data.state == 200) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果返回成功
+              if (response.data.data.info == "成功") {
+                this.next();
                 ElMessage({
                   type: 'success',
                   message: '清空成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
                 })
               }
             }
@@ -259,8 +296,8 @@ export default {
           this.listId.push(this.checkDeleteList[i].registerLogId)
         }
         this.axios({
-          method: 'post',
-          url: this.url + 'checkDelete',
+          method: 'delete',
+          url: this.url + 'checkRegisterLogDelete',
           data: this.listId,
           responseType: 'json',
           responseEncoding: 'utf-8',
@@ -274,13 +311,19 @@ export default {
             })
             //如果服务没有关闭
           } else if (response.data.data) {
-            if (response.data.data.info=="成功"){
-              this.next();
-              //如果服务是正常的
-              if (response.data.data.state == 200) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果返回成功
+              if (response.data.data.info == "成功") {
+                this.next();
                 ElMessage({
                   type: 'success',
                   message: '删除成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
                 })
               }
             }
@@ -317,9 +360,9 @@ export default {
           //IP所在地
           "registerLogIpname": this.registerLogIpname,
           //起始时间
-          "startTime": this.selectTime[0],
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
           //结束时间
-          "endTime": this.selectTime[1],
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
           //状态
           "registerLogState": this.registerLogState,
         },
@@ -337,8 +380,8 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
           }
           //如果服务是雪崩的
           else {
@@ -380,6 +423,15 @@ export default {
   margin: 20px 0 20px 0;
 }
 
+/deep/ .el-range-editor.el-input__inner {
+  height: 32px;
+}
+
+/deep/ .el-range-editor.el-input__inner .el-range-separator {
+  position: relative;
+  top: -4px;
+}
+
 .button-enable {
   background: #ecf5ff;
   border: 1px #cfe6ff solid;
@@ -412,6 +464,7 @@ export default {
 .sub-Content__primary {
   margin-bottom: 10px;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 /* 分页 */
@@ -420,7 +473,7 @@ export default {
 }
 
 .button {
-  margin-bottom: 17px;
+  margin-bottom: 10px;
   margin-top: -55px;
 
 }
@@ -649,6 +702,10 @@ button, html [type="button"], [type="reset"], [type="submit"] {
   border-color: #366cb3;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.el-form--inline .el-form-item {
+  margin-right: -10px;
 }
 
 .ant-btn, .ant-btn:active, .ant-btn:focus {
