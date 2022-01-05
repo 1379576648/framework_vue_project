@@ -48,10 +48,10 @@
                 <h3 style="margin-left: 20px;">固定工资</h3>
                 <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
                 <span @click="
-              this.$parent.$data.salary_checkwage==false,
-              this.$parent.$data.regular==true,
-              this.$parent.$data.callbackpay==false,
-              this.$parent.$data.attendanceplan==false,
+              this.$parent.$data.salary_checkwage=false,
+              this.$parent.$data.regular=true,
+              this.$parent.$data.callbackpay=false,
+              this.$parent.$data.attendanceplan=false,
               this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
               this.$parent.$data.salary_insertplanthree=false"
@@ -66,10 +66,10 @@
                 <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
                   <span
                       @click="
-                      this.$parent.$data.salary_checkwage==false,
-              this.$parent.$data.regular==false,
-              this.$parent.$data.callbackpay==true,
-              this.$parent.$data.attendanceplan==false,
+                      this.$parent.$data.salary_checkwage=false,
+              this.$parent.$data.regular=false,
+              this.$parent.$data.callbackpay=true,
+              this.$parent.$data.attendanceplan=false,
               this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
               this.$parent.$data.salary_insertplanthree=false"
@@ -85,10 +85,10 @@
                 <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
                   <span
                       @click="
-                       this.$parent.$data.salary_checkwage==false,
-              this.$parent.$data.regular==false,
-              this.$parent.$data.callbackpay==false,
-              this.$parent.$data.attendanceplan==true,
+                       this.$parent.$data.salary_checkwage=false,
+              this.$parent.$data.regular=false,
+              this.$parent.$data.callbackpay=false,
+              this.$parent.$data.attendanceplan=true,
               this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
               this.$parent.$data.salary_insertplanthree=false"
@@ -104,10 +104,10 @@
                 <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
                   <span
                       @click="
-                        this.$parent.$data.salary_checkwage==false,
-              this.$parent.$data.regular==false,
-              this.$parent.$data.callbackpay==false,
-              this.$parent.$data.attendanceplan==false,
+                        this.$parent.$data.salary_checkwage=false,
+              this.$parent.$data.regular=false,
+              this.$parent.$data.callbackpay=false,
+              this.$parent.$data.attendanceplan=false,
               this.$parent.$data.evectionplan=true,
               this.$parent.$data.salary_insertplan=false,
               this.$parent.$data.salary_insertplanthree=false"
