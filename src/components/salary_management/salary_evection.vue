@@ -7,13 +7,14 @@
         <div style="margin-top: 20px">
           <button type="button" class="ant-btn ant-btn-primary"
                   @click="
-                  this.$parent.$data.salary_insertplan=true,
+                  this.$parent.$data.salary_insertplan=false,
                   this.$parent.$data.salary_checkwage=false,
                   this.$parent.$data.regular=false,
                   this.$parent.$data.callbackpay=false,
                   this.$parent.$data.attendanceplan=false,
                   this.$parent.$data.evectionplan=false,
                   this.$parent.$data.salary_insertplanthree=true,
+                   this.$parent.$data.salary_insertplantwo=false,
                   this.$parent.$data.insertplanthree_name='新增'">
             <i aria-label="图标: plus" class="anticon anticon-plus">
               <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="plus" width="1em" height="1em"
@@ -59,6 +60,7 @@
                   this.$parent.$data.attendanceplan=false,
                   this.$parent.$data.evectionplan=false,
                   this.$parent.$data.salary_insertplanthree=true,
+                   this.$parent.$data.salary_insertplantwo=false,
                   this.$parent.$data.insertplanthree_name='编辑'"
                 >编辑
                 </el-button
