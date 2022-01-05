@@ -1,7 +1,7 @@
 <!-- 角色设置页面 -->
 
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" v-if="allot_user==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
@@ -171,9 +171,10 @@
                     <template #dropdown>
                       <el-dropdown-menu style="width: 96px;text-align: center">
                         <el-dropdown-item @click="data_permission=true">数据权限</el-dropdown-item>
-                        <router-link :to="{path:this.route.grant,query:{path: this.$route.query.path}}">
-                          <el-dropdown-item>分配用户</el-dropdown-item>
-                        </router-link>
+                        <!--                        <router-link :to="{path:this.route.grant,query:{path: this.$route.query.path}}">-->
+
+                        <el-dropdown-item @click="allot_user=true">分配用户</el-dropdown-item>
+                        <!--                        </router-link>-->
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
@@ -184,9 +185,10 @@
             <!-- 数据权限对话框 -->
             <el-dialog width="500px" v-model="data_permission" title="分配数据权限">
               <!-- form表单 -->
-              <el-form class="from-data"  :model="fromValue">
+              <el-form class="from-data" :model="fromValue">
                 <el-form-item class="role-name" label="角色名称">
-                  <el-input size="small" v-model="fromValue.roleName" style=" width: 348px;" :disabled="true"></el-input>
+                  <el-input size="small" v-model="fromValue.roleName" style=" width: 348px;"
+                            :disabled="true"></el-input>
                 </el-form-item>
 
                 <el-form-item class="menu" label="菜单权限" :key="refreshTable">
@@ -249,16 +251,26 @@
       </div>
     </div>
   </div>
+<!--  分配用户-->
+  <allot_user v-if="allot_user"/>
 </template>
 
 <script>
 import {defineComponent, ref} from 'vue'
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+//分配用户
+import allot_user from '../lineage_management/lineage_allot_user.vue'
 
 export default {
-
+  //注册组件
+  components: {
+    //分配用户
+    allot_user,
+  },
   data() {
     return {
+      //显示隐藏分配用户
+      allot_user: false,
       //访问路径
       url: "http://localhost:80/role/",
       //跳转界面
@@ -521,7 +533,7 @@ export default {
             required: true,
             message: '描述不为空',
             trigger: 'blur',
-          },  {
+          }, {
             min: 0,
             max: 100,
             message: '描述不能超过100个字符',

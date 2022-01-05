@@ -4,7 +4,7 @@
 
   <div class="basicfile_big">
     <div class="basicfile_big_auto">
-      <div style="border-left:3px solid blue;">
+      <div >
         <h3>
           <span style="margin-left:10px;">基本档案</span>
         </h3>
@@ -21,7 +21,7 @@
 
       <div style="width: 100%;margin-top: 20px;">
         <div class="information_text" v-show="informations_1">
-          <ul style="list-style-type: none; ">
+          <ul style="list-style-type: none;">
             <li>
               <label>员工编号</label>
               <p>23</p>
@@ -78,10 +78,6 @@
               <label>星座</label>
               <p></p>
             </li>
-            <li>
-              <label>专业</label>
-              <p></p>
-            </li>
 
 
           </ul>
@@ -93,21 +89,21 @@
 
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
-              <el-form-item label="员工编号：" prop="emp_id" >
-                <el-input v-model="essentialForm.emp_id" style="width:240px;"></el-input>
+              <el-form-item label="员工编号：" prop="emp_id" style="width:300px;margin-left: -220px;">
+                <el-input v-model="essentialForm.emp_id"></el-input>
               </el-form-item><br/>
 
 
-              <el-form-item label="出生日期：" >
+              <el-form-item label="出生日期：" style="width:600px;margin-left: -220px;">
                 <el-col :span="11">
-                  <el-form-item prop="birthday" style="width:240px;position: absolute;left:10px">
+                  <el-form-item prop="birthday">
                     <el-date-picker type="date" placeholder="选择日期" v-model="essentialForm.birthday" style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-form-item><br/>
 
-              <el-form-item label="婚姻状态：" prop="marital">
-                <el-select style="width:240px;" v-model="essentialForm.marital">
+              <el-form-item label="婚姻状态：" prop="marital" style="width:300px;margin-left: -220px;">
+                <el-select v-model="essentialForm.marital">
                   <el-option label="已婚" value="yh"></el-option>
                   <el-option label="未婚" value="wh"></el-option>
                   <el-option label="离异" value="ly"></el-option>
@@ -116,40 +112,35 @@
               </el-form-item><br/>
 
 
-              <el-form-item label="身份证：" prop="identity">
-                <el-input v-model="essentialForm.identity" style="width:240px"></el-input>
+              <el-form-item label="身份证：" prop="identity" style="width:280px;margin-left: -208px;">
+                <el-input v-model="essentialForm.identity"></el-input>
               </el-form-item><br/>
 
-              <el-form-item label="政治面貌：" prop="politics">
-                <el-select style="width:240px;" v-model="essentialForm.politics">
+              <el-form-item label="政治面貌：" prop="politics" style="width:300px;margin-left: -220px;">
+                <el-select v-model="essentialForm.politics">
                   <el-option label="团员" value="ty"></el-option>
                   <el-option label="党员" value="dy"></el-option>
                   <el-option label="群众" value="qz"></el-option>
                 </el-select>
               </el-form-item><br/>
 
-              <el-form-item label="毕业学校：" prop="school">
-                <el-input v-model="essentialForm.school" style="width:240px;"></el-input>
+              <el-form-item label="毕业学校：" prop="school" style="width:300px;margin-left: -220px;">
+                <el-input v-model="essentialForm.school"></el-input>
               </el-form-item><br/>
 
 
-              <el-form-item label="血型：" prop="blood">
-                <el-input v-model="essentialForm.blood" style="width:240px;"></el-input>
+              <el-form-item label="血型：" prop="blood" style="width:280px;margin-left: -200px;">
+                <el-input v-model="essentialForm.blood"></el-input>
               </el-form-item><br/>
 
 
-
-
-              <el-form-item label="专业：" prop="major">
-                <el-input v-model="essentialForm.major" style="width:240px;"></el-input>
-              </el-form-item>
             </div>
 
 
 
             <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
               <br/>
-              <el-form-item prop="emp_name" >
+              <el-form-item prop="emp_name">
                 <template #label >姓名：</template>
                 <el-input v-model="essentialForm.emp_name" style="width:240px;" disabled></el-input>
               </el-form-item><br/>
@@ -259,17 +250,17 @@
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
 
-              <el-form-item label="手机号" prop="phone" >
-                <el-input v-model="contactForm.phone" style="width:240px;"></el-input>
+              <el-form-item label="手机号" prop="phone" style="width:300px;margin-left: -320px;" >
+                <el-input v-model="contactForm.phone"></el-input>
               </el-form-item><br/>
 
-              <el-form-item label="微信：" prop="WeChat">
-                <el-input v-model="contactForm.WeChat" style="width:240px"></el-input>
+              <el-form-item label="微信：" prop="WeChat" style="width:300px;margin-left: -320px;">
+                <el-input v-model="contactForm.WeChat"></el-input>
               </el-form-item><br/>
 
 
-              <el-form-item label="现住地址：" prop="address">
-                <el-input v-model="contactForm.address" style="width:240px;"></el-input>
+              <el-form-item label="现住地址：" prop="address" style="width:300px;margin-left: -320px;">
+                <el-input v-model="contactForm.address"></el-input>
               </el-form-item><br/>
 
             </div>
@@ -354,17 +345,17 @@
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
 
-              <el-form-item label="部门：" prop="dept">
-                <el-input v-model="informationForm.dept"  style="width:240px;"></el-input>
+              <el-form-item label="部门：" prop="dept" style="width:300px;margin-left: -320px;">
+                <el-input v-model="informationForm.dept"></el-input>
               </el-form-item><br/>
 
-              <el-form-item label="职位：" prop="position">
-                <el-input v-model="informationForm.position" style="width:240px;"></el-input>
+              <el-form-item label="职位：" prop="position" style="width:300px;margin-left: -320px;">
+                <el-input v-model="informationForm.position"></el-input>
               </el-form-item><br/>
 
 
-              <el-form-item label="工龄：" prop="service">
-                <el-input v-model="informationForm.service" style="width:240px;"></el-input>
+              <el-form-item label="工龄：" prop="service" style="width:300px;margin-left: -320px;">
+                <el-input v-model="informationForm.service"></el-input>
               </el-form-item><br/>
 
             </div>

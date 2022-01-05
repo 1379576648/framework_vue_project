@@ -1,6 +1,6 @@
 <!--招聘过程 人才库-->
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" v-if="recruit_addresume==false&&recruit_plan_details==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="j-tabs">
@@ -66,6 +66,10 @@
       </div>
     </div>
   </div>
+  <!--  新增简历-->
+  <recruit_addresume v-if="recruit_addresume" />
+  <!--  招聘计划详情页面-->
+  <recruit_plan_details v-if="recruit_plan_details"/>
 </template>
 
 <script>
@@ -77,7 +81,10 @@ import recruit_zp_newresume from '../recruit_management/recruit_zp_newresume.vue
 import recruit_zp_candidate from '../recruit_management/recruit_zp_candidate.vue';
 //淘汰库
 import recruit_zp_eliminate from '../recruit_management/recruit_zp_eliminate.vue';
-
+//新增简历
+import recruit_addresume from '../recruit_management/recruit_addresume.vue';
+//招聘计划详情页面
+import recruit_plan_details from '../recruit_management/recruit_plan_details.vue';
 export default {
   //组成组件
   components: {
@@ -88,7 +95,11 @@ export default {
     //候选人
     recruit_zp_candidate,
     //淘汰库
-    recruit_zp_eliminate
+    recruit_zp_eliminate,
+    //新增简历
+    recruit_addresume,
+    //招聘计划详情页面
+    recruit_plan_details
   },
   data() {
     return {
@@ -97,7 +108,10 @@ export default {
       isActive3: false,
       isActive4: false,
       activeName:'fullresume',
-
+      //新增简历
+      recruit_addresume:false,
+      //招聘计划详情页面
+      recruit_plan_details:false,
 
     }
   },

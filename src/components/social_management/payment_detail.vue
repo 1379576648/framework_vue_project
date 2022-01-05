@@ -1,6 +1,6 @@
 <template>
 <!--社保缴费明细-->
-  <div class="saas-main-content">
+  <div class="saas-main-content" v-if="someone_insured_particulars==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <!-- 计薪月份 -->
@@ -106,9 +106,7 @@
             <el-table-column prop="state" label="公积金企业缴费" width="110" />
             <el-table-column prop="state" label="操作">
               <template #default>
-                <router-link :to="{path:this.path,query:{path:this.$route.query.path}}">
-                  <el-button type="text" size="small">查看 </el-button>
-                </router-link>
+                  <el-button type="text" size="small" @click="someone_insured_particulars=true">查看 </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -133,16 +131,24 @@
       </div>
     </div>
   </div>
-  &nbsp;
+<!-- 查看个人参保详情-->
+  <someone_insured_particulars v-if="someone_insured_particulars"/>
 </template>
 
 <script>
 import { ref, defineComponent } from "vue";
-
+//查看个人参保详情
+import someone_insured_particulars from '../social_management/someone_insured_particulars.vue';
 export default {
+  //注册组件
+  components:{
+    //查看个人参保详情
+    someone_insured_particulars
+  },
   data() {
     return {
-      path:"/social/social_payment/someone_insured_particulars",
+      //显示隐藏查看个人参保详情
+      someone_insured_particulars:false,
       // 部门名称
       dept_name: null,
       // 选择部门 下拉选择器

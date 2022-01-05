@@ -4,7 +4,7 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-head">
         <div class="j-card-head-title" style="margin-left:20px;">
-          <span>{{this.$route.query.name}}出差方案</span>
+          <span>{{ this.name }}出差方案</span>
         </div>
       </div>
       <div class="j-card-body">
@@ -30,7 +30,7 @@
                     </el-select>
                   </el-form-item>
 
-                  <el-form-item label="发放："  style="width:500px"
+                  <el-form-item label="发放：" style="width:500px"
                                 v-if="ruleForm.businesswage=='wagebyhour'">
                     <el-input-number
                         v-model="num"
@@ -43,7 +43,7 @@
                     <span>元 × 出差的小时数</span>
                   </el-form-item>
 
-                  <el-form-item label="发放："  style="width:500px"
+                  <el-form-item label="发放：" style="width:500px"
                                 v-else="">
                     <el-input-number
                         v-model="num"
@@ -55,8 +55,6 @@
                     />
                     <span>元/次</span>
                   </el-form-item>
-
-
 
 
                   <el-form-item label="适用对象" prop="suitableusers">
@@ -73,29 +71,15 @@
                       <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                   <el-form-item label="备注" prop="remark" style="width:500px">
                     <el-input v-model="ruleForm.remark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
-                    >提交</el-button
-                    >&nbsp;
-                    <router-link :to="{path:this.evectionplan,query:{path: this.$route.query.path}}">
-                      <el-button style="width: 60px;">取消</el-button></router-link>
+                    >提交
+                    </el-button
+                    >
+                      <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplanthree=false">取消</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -109,17 +93,14 @@
 </template>
 
 
-
-
 <script lang="ts">
 import {ElMessage} from "element-plus";
 
 export default {
+  props: ['name'],
   data() {
 
     return {
-      //出差方案
-      evectionplan:'/salary/evectionplan',
       ruleForm: {
         schemename: '',
         businesswage: '',
@@ -129,7 +110,7 @@ export default {
       },
       num: '150',
       rules: {
-        schemename:[
+        schemename: [
           {
             required: true,
             message: '请输入方案名称',
@@ -146,7 +127,7 @@ export default {
       }
     }
   },
-  methods:{
+  methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -165,7 +146,8 @@ export default {
 <style scoped>
 @import url(../../css/dimission.css);
 @import url("../../css/navigation.css");
-/deep/.el-form-item__label {
+
+/deep/ .el-form-item__label {
   flex: 0 0 auto;
   text-align: right;
   font-size: var(--el-form-label-font-size);

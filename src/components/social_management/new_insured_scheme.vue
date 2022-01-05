@@ -1,11 +1,10 @@
 <template>
-<!-- 新增修改方案 -->
+  <!-- 新增修改方案 -->
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <!-- 标题 -->
-        <div class="big-title">&nbsp;&nbsp;&nbsp;{{ this.$route.query.name }}参保方案</div>
-
+        <div class="big-title">&nbsp;&nbsp;&nbsp;{{ this.name }}参保方案</div>
         <!-- 参保方案名称输入框 -->
         <div class="all-input">
           方案名称：&nbsp;
@@ -309,9 +308,7 @@
 
         </div>
         <div style="text-align: center">
-          <router-link :to="{path:this.path,query:{path:this.$route.query.path}}">
-            <el-button size="small">取消</el-button>
-          </router-link>
+          <el-button size="small" @click="this.$parent.$data.new_insured_scheme=false">取消</el-button>
           &nbsp;&nbsp;
           <el-button size="small" type="primary">保存</el-button>
         </div>
@@ -326,6 +323,7 @@ import {ref, defineComponent} from "vue";
 import {ElMessage} from "element-plus";
 
 export default {
+  props:['name'],
   methods: {
     // 删除行
     deleteRow(index, rows) {

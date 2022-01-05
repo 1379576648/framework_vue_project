@@ -39,14 +39,12 @@
       </el-form-item>
       <el-form-item>
         <div class="u">
-          <router-link to="/attendance/check">
-            <el-button>
+            <el-button @click="this.$parent.$data.clockingin_classes=false">
               <el-icon>
                 <i-circle-close/>
               </el-icon>
               <span>取消</span>
             </el-button>
-          </router-link>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <el-button type="primary" @click="submitForm('ruleForm')">
             <el-icon>

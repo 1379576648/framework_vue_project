@@ -70,12 +70,9 @@
    <el-table-column  prop="date" label="转正日期"   width="160"/>
     <el-table-column fixed="right" label="操作" width="160">
       <template #default>
-        <router-link :to="{path:this.staffedit,query:{path: this.$route.query.path}}">
-        <el-button type="text" size="small" @click=""
+        <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_compile=true"
           >编辑 </el-button>
-        </router-link>
-        <router-link :to="{path:this.leave,query:{path: this.$route.query.path}}" style="text-decoration: none">&nbsp;
-        <el-button type="text" size="small">办理离职</el-button></router-link>
+        <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_dimission=true">办理离职</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -105,7 +102,6 @@
 import {defineComponent,ref} from 'vue'
 export default {
 //操作时间
-
   data() {
     const value2 = ref('')
     return {
@@ -167,7 +163,7 @@ export default {
       input3:"",
       value2:"",
     }
-  },
+  }
 }
 </script>
 <style scoped>

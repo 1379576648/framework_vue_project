@@ -35,9 +35,7 @@
           <div class="button">
             <el-button class="button-new" size="mini"  @click="outerVisible = true">+ 添加用户</el-button>
             <el-button class="button-amend" size="mini" v-bind:disabled="disableds" @click="open">-  批量取消授权</el-button>
-            <router-link :to="{path:this.two,query:{path: this.$route.query.path}}">
-              <el-button class="button-delete" size="mini">X 关闭</el-button>
-            </router-link>
+              <el-button class="button-delete" size="mini" @click="this.$parent.$data.allot_user=false">X 关闭</el-button>
           </div>
 
 

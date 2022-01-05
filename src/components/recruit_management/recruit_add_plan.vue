@@ -6,7 +6,7 @@
       <!--标题-->
       <div class="j-card-head">
         <div class="j-card-head-title">
-          <span>{{this.$route.query.name}}招聘计划</span>
+          <span>{{this.name}}招聘计划</span>
         </div>
       </div>
       <!--内容-->
@@ -83,8 +83,8 @@
 
 
               <el-form-item>
+                <el-button  style="margin-left: 30px; width: 100px" @click="this.$parent.$data.recruit_add_plan=false">取消</el-button>
                 <el-button style="width: 100px;"  type="primary" @click="submitForm('ruleForm')">提交</el-button>
-                <el-button  style="margin-left: 30px; width: 100px" @click="goback()">取消</el-button>
               </el-form-item>
 
             </el-form>
@@ -103,6 +103,7 @@
 <script lang="ts">
 import { ref } from 'vue'
 export default {
+  props:['name'],
   data() {
     const zpnum = ref(1)
     return {
@@ -173,10 +174,6 @@ export default {
           return false
         }
       })
-    },
-    //取消：跳转上一级目录
-    goback(){
-      this.$router.go('-1');
     }
   },
 }
