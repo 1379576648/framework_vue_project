@@ -55,7 +55,7 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
           <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-            <el-table-column prop="ID" label="序号" width="150"/>
+            <el-table-column prop="ID" label="ID" width="150"/>
             <el-table-column label="招聘计划名称" width="200">
               <template #default="scope">
                 <router-link :to="{path:this.two,query:{path:this.$route.query.path,name:scope.row.zpname}}">{{scope.row.zpname}}</router-link>
@@ -66,6 +66,7 @@
             <el-table-column prop="zpnum" label="招聘人数" width="200"/>
             <el-table-column prop="statetime" label="发布时间" width="200"/>
             <el-table-column prop="zpzt" label="招聘状态" width="200"/>
+            <el-table-column prop="zpzt" label="负责人" width="200"/>
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
                 <div v-if="tableData[scope.$index].zpzt=='招聘中'">
