@@ -7,7 +7,7 @@
         <el-button @click="selectAuditflow2()">重置</el-button>
         &nbsp;
         <el-input
-            v-model="staffName1"
+            v-model="staffName"
             placeholder="根据申请人搜索"
             style="width: 130px"
         />
@@ -336,7 +336,6 @@
       </el-form>
     </template>
   </el-dialog>
-
   <!-- 点击气泡确认框弹出添加驳回备注对话框-->
   <el-dialog
       v-model="add_remark2"
@@ -362,14 +361,6 @@
 </template>
 
 <script>
-import {
-  Search,
-  Edit,
-  Check,
-  Message,
-  Star,
-  Delete,
-} from "@element-plus/icons";
 import {defineComponent, ref} from "vue";
 import {ElMessage, ElNotification} from "element-plus";
 
@@ -387,7 +378,9 @@ export default {
       add_remark2: false,
       // 审批明细表编号
       id: [],
+      // 详情抽屉1
       drawer: false,
+      // 详情抽屉2
       drawer2: false,
       // 选择开始日期/结束日期
       selectTime: [],
@@ -521,7 +514,7 @@ export default {
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
-      }).then((response) => {
+      }) .then((response) => {
         console.log("查询待审批加班数据");
         console.log(response);
         if (response.data.data.data) {
@@ -544,8 +537,7 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
+      }).catch(function (error) {
             console.log("失败")
             console.log(error);
           });
@@ -582,6 +574,8 @@ export default {
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
           }
+          this.staffName="";
+          this.selectTime="";
         } else {
           ElNotification.warning({
             title: '提示',
@@ -789,7 +783,7 @@ export default {
           this.selectAuditflow();
           this.selectEndAuditflow();
           this.add_remark = false;
-          this.remark="";
+          this.remark = "";
         } else if (response.data.data === 999) {
           ElMessage({
             showClose: true,
@@ -797,7 +791,7 @@ export default {
             type: 'error',
           })
           this.add_remark = false;
-          this.remark="";
+          this.remark = "";
         } else {
           ElMessage({
             showClose: true,
@@ -805,7 +799,7 @@ export default {
             type: 'error',
           })
           this.add_remark = false;
-          this.remark="";
+          this.remark = "";
         }
       }).catch(function (error) {
         console.log("失败")
@@ -813,7 +807,7 @@ export default {
       });
     },
     // 备注弹出框点击确定 驳回当前审批
-    reject_overtime(id){
+    reject_overtime(id) {
       var _this = this
       this.axios({
         method: 'post',
@@ -838,24 +832,24 @@ export default {
           })
           this.selectAuditflow();
           this.selectEndAuditflow();
-          this.add_remark2=false;
-          this.remark="";
+          this.add_remark2 = false;
+          this.remark = "";
         } else if (response.data.data === 999) {
           ElMessage({
             showClose: true,
             message: '驳回失败',
             type: 'error',
           })
-          this.add_remark2=false;
-          this.remark="";
+          this.add_remark2 = false;
+          this.remark = "";
         } else {
           ElMessage({
             showClose: true,
             message: '驳回失败',
             type: 'error',
           })
-          this.add_remark2=false;
-          this.remark="";
+          this.add_remark2 = false;
+          this.remark = "";
         }
       }).catch(function (error) {
         console.log("失败")

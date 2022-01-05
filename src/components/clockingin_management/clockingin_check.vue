@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       // 新增路由地址
-      one: '/attendance/check/classes/addclass',
+      one: '/clockingin/check/classes/addclass',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */

@@ -143,7 +143,7 @@
       <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currenPage"
+            v-model:currentPage="pageInfo.currentPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -151,8 +151,8 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="selectPage"
-            @current-change="selectPage"
+            @size-change="selectResume"
+            @current-change="selectResume"
         >
         </el-pagination>
       </div>
@@ -168,6 +168,7 @@
 import {
   ref
 } from 'vue'
+import {ElNotification} from "element-plus";
 
 export default {
   data() {
@@ -175,10 +176,12 @@ export default {
       //路由地址
       addresume:'/recruit/recruit/addresume',
       details:'/recruitment/resume/details',
+      //访问路径
+      url: "http://localhost:80/",
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       //筛选框显示隐藏
@@ -203,44 +206,45 @@ export default {
   methods:{
     //查询新简历
     selectResume(){
-        this.axios
-            .get("http://localhost:80/selectResume",{
-            params: this.pageInfo,
-        })
-        .then((response) =>{
-            console.log("查询新简历");
-            console.log(response.data.succed.records);
-            this.tableData = response.data.succed.records;
-        })
-        .catch(function (error) {
-           console.log("失败")
-           console.log(error);
-        });
-    },
-    //分页查询
-    selectPage(){
-      var _this = this;
-      this.axios
-          .get("http://localhost:80/selectResume",{
-            params: this.pageInfo,
-          })
-          .then(function (response){
-            console.log("分页查询");
-            console.log(response);
-            _this.tableData = response.data.succed.records;
-            _this.pageInfo.pagesize = response.data.succed.size;
-            _this.pageInfo.total = response.data.succed.total;
-          })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+       var _this=this
+       this.axios({
+         method:'post',
+         url:this.url+'selectResume',
+         data:{
+           "currentPage":this.pageInfo.currentPage,
+           "pagesize":this.pageInfo.pagesize,
+         },
+         responseType: 'json',
+         responseEncoding: 'utf-8',
+       }).then((response)=>{
+         console.log("查询新简历数据")
+         console.log(response);
+         if (response.data.state == 300){
+           ElNotification.warning({
+             title: '提示',
+             message: "服务发生关闭",
+             offset: 100,
+           })
+         } else if (response.data.state == 200){
+           this.tableData=response.data.succed.records;
+           this.pageInfo.pagesize=response.data.succed.size;
+           this.pageInfo.total=response.data.succed.total;
+         }else {
+           ElNotification.warning({
+             title: '提示',
+             message: "服务发生雪崩",
+             offset: 100,
+           })
+         }
+       }).catch(function (error) {
+         console.log("失败")
+         console.log(error);
+       });
 
     }
   },
   created() {
     this.selectResume();
-    this.selectPage();
   }
 
 }

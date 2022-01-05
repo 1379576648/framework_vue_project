@@ -4,44 +4,35 @@
 
       <div class="j-card-body">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane  name="book">
-            <template #label>
-              <router-link :to="{path:this.regularearn,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">固定工资</div></router-link>
-            </template>
+          <el-tab-pane  name="book" label="固定工资">
+            <salary_regularearn />
           </el-tab-pane>
 
-          <el-tab-pane  name="second">
-            <template #label>
-              <router-link :to="{path:this.raisequery,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">调薪查询</div></router-link>
-            </template>
+          <el-tab-pane  name="second" label="调薪查询">
+            <salary_raisequery />
           </el-tab-pane>
         </el-tabs>
-
       </div>
-      <section
-          class="ant-layout ant-layout-has-sider"
-          style="
-              min-width: 988px;
-              min-height: 90vh;
-              background-color: rgba(232, 239, 246, 0);
-              box-shadow: rgb(121, 159, 197) 0px 7px;
-            "
-          id="scrollLayout"
-      >
-        <main style="margin:10px" class="ant-layout-content">
-          <router-view  ></router-view>
-        </main>
-      </section>
     </div>
   </div>
 </template>
 
 <script>
+//固定工资
+import salary_regularearn from '../salary_management/salary_regularearn.vue';
+//调薪查询
+import salary_raisequery from '../salary_management/salary_raisequery.vue';
 export default {
+  //注册组件
+  components:{
+    //固定工资
+    salary_regularearn,
+    //调薪查询
+    salary_raisequery,
+  },
   data(){
     return{
-      regularearn:'/salary/regular/regularearn',
-      raisequery:'/salary/regular/raisequery',
+      activeName:'book'
     }
   }
 }

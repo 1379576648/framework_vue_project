@@ -144,8 +144,8 @@ export default {
   data() {
     return {
       //路由地址
-      details:'/recruitment/resume/details',
-      addresume:'/recruitment/recruit/addresume',
+      details:'/recruit/recruit/addresume',
+      addresume:'/recruit/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */

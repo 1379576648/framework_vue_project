@@ -4,36 +4,50 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="j-tabs">
-          <ul>
-            <li @click="liback(1)">
-              <div v-bind:class="{active:isActive1}">
-                <router-link :to="{path:this.daiInterview,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive1}">面试中 (99)</span>
-                </router-link>
-              </div>
-            </li>
+          <!--          <ul>-->
+          <!--            <li @click="liback(1)">-->
+          <!--              <div v-bind:class="{active:isActive1}">-->
+          <!--                <router-link :to="{path:this.daiInterview,query:{path:this.$route.query.path}}">-->
+          <!--                  <span v-bind:class="{sactive:isActive1}">面试中 (99)</span>-->
+          <!--                </router-link>-->
+          <!--              </div>-->
+          <!--            </li>-->
 
-            <li @click="liback(3)">
-              <div v-bind:class="{active:isActive3}">
-                <router-link :to="{path:this.daiSecondInterview,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive3}">复试中 (99)</span>
-                </router-link>
-              </div>
-            </li>
+          <!--            <li @click="liback(3)">-->
+          <!--              <div v-bind:class="{active:isActive3}">-->
+          <!--                <router-link :to="{path:this.daiSecondInterview,query:{path:this.$route.query.path}}">-->
+          <!--                  <span v-bind:class="{sactive:isActive3}">复试中 (99)</span>-->
+          <!--                </router-link>-->
+          <!--              </div>-->
+          <!--            </li>-->
 
-            <li @click="liback(2)">
-              <div v-bind:class="{active:isActive2}">
-                <router-link :to="{path:this.interviewPass,query:{path:this.$route.query.path}}">
-                  <span v-bind:class="{sactive:isActive2}">面试通过 (99)</span>
-                </router-link>
-              </div>
-            </li>
+          <!--            <li @click="liback(2)">-->
+          <!--              <div v-bind:class="{active:isActive2}">-->
+          <!--                <router-link :to="{path:this.interviewPass,query:{path:this.$route.query.path}}">-->
+          <!--                  <span v-bind:class="{sactive:isActive2}">面试通过 (99)</span>-->
+          <!--                </router-link>-->
+          <!--              </div>-->
+          <!--            </li>-->
 
-          </ul>
+          <!--          </ul>-->
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane name="daiInterview" label="待面试(99)">
+              <recruit_zp_daiInterview/>
+            </el-tab-pane>
+            <el-tab-pane name="interviewPass" label="面试中(99)">
+              <recruit_zp_interviewPass/>
+            </el-tab-pane>
+            <el-tab-pane name="daiSecondInterview" label="复试中(99)">
+              <recruit_zp_daiSecondInterview/>
+            </el-tab-pane>
+            <el-tab-pane name="daiSecondInterviewPass" label="面试通过(99)">
+              <recruit_zp_daiSecondInterviewPass/>
+            </el-tab-pane>
+          </el-tabs>
         </div>
-        <div>
-          <router-view/>
-        </div>
+        <!--        <div>-->
+        <!--          <router-view/>-->
+        <!--        </div>-->
 
 
       </div>
@@ -42,18 +56,34 @@
 </template>
 
 <script>
+//待面试
+import recruit_zp_daiInterview from '../recruit_management/recruit_zp_daiInterview.vue';
+//面试中
+import recruit_zp_interviewPass from '../recruit_management/recruit_zp_interviewPass.vue';
+//复试中
+import recruit_zp_daiSecondInterview from '../recruit_management/recruit_zp_daiSecondInterview.vue';
+//面试通过
+import recruit_zp_daiSecondInterviewPass from '../recruit_management/recruit_zp_daiSecondInterviewPass.vue';
+
 export default {
+  //注册组件
+  components: {
+    //待面试
+    recruit_zp_daiInterview,
+    //面试中
+    recruit_zp_interviewPass,
+    //复试中
+    recruit_zp_daiSecondInterview,
+    //面试通过
+    recruit_zp_daiSecondInterviewPass,
+  },
   data() {
     return {
       isActive1: true,
       isActive2: false,
       isActive3: false,
       isActive4: false,
-      //路由地址
-      daiInterview: '/recruit/daiInterview',
-      interviewPass: '/recruit/interviewPass',
-      daiSecondInterview: '/recruit/daiSecondInterview',
-      daiSecondInterviewPass: '/recruit/daiSecondInterviewPass',
+      activeName: 'daiInterview',
 
     }
   },

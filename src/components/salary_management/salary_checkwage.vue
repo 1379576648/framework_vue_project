@@ -6,31 +6,41 @@
       <div class="j-card-body">
         <span></span>
         <div>
-  <el-tabs v-model="wagetable" @tab-click="handleClick">
+          <el-tabs v-model="wagetable" @tab-click="handleClick">
 
-    <el-tab-pane name="wages">
+            <el-tab-pane name="wages">
 
-      <template #label>
-        <div style="width: 100px; text-align: center;">  <router-link :to="{path:this.selectwagetable,query:{path: this.$route.query.path}}">工资表</router-link></div>
-      </template>
+              <template #label>
+                <div style="width: 100px; text-align: center;"> 工资表</div>
+              </template>
 
-      <router-view></router-view>
+              <!--      查看工资表-->
+              <salary_wagetable/>
 
 
-    </el-tab-pane>
-  </el-tabs>
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </div>
     </div>
   </div>
   &nbsp;
 </template>
+
 <script lang="ts">
+//查看工资表
+import salary_wagetable from '../salary_management/salary_wagetable.vue';
+
 export default {
+  //注册组件
+  components: {
+    //查看工资表
+    salary_wagetable,
+  },
   data() {
     return {
       //查看工资表
-      selectwagetable:'/salary/selectwagetable',
+      selectwagetable: '/salary/selectwagetable',
       wagetable: 'wages',
     }
   },
@@ -38,15 +48,12 @@ export default {
 </script>
 <style scoped>
 @import url("../../css/navigation.css");
-/deep/.cell {
+
+/deep/ .cell {
   padding-left: 10px;
   text-align: center;
   color: black;
 }
-
-
-
-
 
 
 /deep/ .el-tabs__item {
@@ -62,7 +69,8 @@ export default {
   color: var(--el-text-color-primary);
   position: relative;
 }
-/deep/.el-tabs__nav {
+
+/deep/ .el-tabs__nav {
   white-space: nowrap;
   position: relative;
   transition: transform var(--el-transition-duration);

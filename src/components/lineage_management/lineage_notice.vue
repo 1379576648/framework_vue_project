@@ -10,15 +10,15 @@
           <el-form style="margin-bottom: -18px;" :inline="true">
             <!-- 公告标题搜索 -->
             <el-form-item class="form-gg" label="公告标题">
-              <el-input size="small" placeholder="请输入公告标题关键字" v-model="noticeTitle"></el-input>
+              <el-input size="small" placeholder="请输入公告标题关键字" clearable v-model="noticeTitle"></el-input>
             </el-form-item>
             <!-- 操作人员搜索 -->
             <el-form-item class="form-ry" label="发布人">
-              <el-input size="small" placeholder="请输入发布人关键字" v-model="noticePeople"></el-input>
+              <el-input size="small" placeholder="请输入发布人关键字" clearable v-model="noticePeople"></el-input>
             </el-form-item>
             <!-- 公告类型搜索 -->
             <el-form-item class="form-lx" label="类型">
-              <el-select size="small" v-model="noticeType" placeholder="公告类型">
+              <el-select size="small" v-model="noticeType" clearable placeholder="公告类型">
                 <el-option
                     v-for="item in type"
                     :key="item.value1"
@@ -80,7 +80,7 @@
           >
             <!-- 全选操作按钮 -->
             <el-table-column fixed align="center" type="selection" min-width="50"/>
-            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
+            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
             <el-table-column fixed prop="noticeTitle" align="center" sortable label="公告标题" min-width="230"/>
             <el-table-column prop="noticePeople" align="center" sortable label="发布人" min-width="160"/>
             <el-table-column prop="noticePost" align="center" sortable label="职位" min-width="160"/>
@@ -153,18 +153,18 @@
     </div>
   </div>
   <!-- 弹出操作窗口 -->
-  <el-dialog width="668px" v-model="outerVisible" destroy-on-close="false" @close="cancel" >
+  <el-dialog width="668px" v-model="outerVisible" destroy-on-close="false" @close="cancel">
     <span class="headline"> {{ judge }}公告</span>
     <!-- form表单 -->
     <el-form ref="fromValue" :rules="formVerify" :model="fromValue" :inline="true" style="margin-left: 30px"
              label-position="right">
       <!-- 公告标题 -->
       <el-form-item prop="noticeTitle" label="公告标题" style="margin-right: 40px">
-        <el-input size="small" placeholder="请输入公告标题" v-model="fromValue.noticeTitle"></el-input>
+        <el-input size="small" placeholder="请输入公告标题" clearable v-model="fromValue.noticeTitle"></el-input>
       </el-form-item>
       <!-- 公告类型-->
       <el-form-item prop="noticeType" label="公告类型">
-        <el-select size="small" v-model="fromValue.noticeType" placeholder="公告类型" style="width: 180px">
+        <el-select size="small" v-model="fromValue.noticeType" clearable placeholder="公告类型" style="width: 180px">
           <el-option
               v-for="item in type"
               :key="item.value1"
@@ -198,6 +198,7 @@
             v-model="fromValue.noticeMatter"
             type="textarea"
             placeholder="请输入发布内容"
+            clearable
             style="width: 475px">
         </el-input>
 
@@ -221,20 +222,20 @@
       title="公告详情"
       width="700px"
   >
-    <el-form :model="fromValue"  :inline="true" style="margin-left: 30px;margin-right: 30px">
+    <el-form :model="fromValue" :inline="true" style="margin-left: 30px;margin-right: 30px">
       <!-- 公告标题 -->
       <el-form-item prop="noticeTitle" label="公告标题：" style="margin-right: 32px">
         <div style="width: 510px">
-         {{fromValue.noticeTitle}}
+          {{ fromValue.noticeTitle }}
         </div>
       </el-form-item>
       <!-- 发布人 -->
-      <el-form-item prop="noticePeople" label="发布人："  style="margin-left: 15px">
-        <div style="width: 300px">{{fromValue.noticePeople}}</div>
+      <el-form-item prop="noticePeople" label="发布人：" style="margin-left: 15px">
+        <div style="width: 300px">{{ fromValue.noticePeople }}</div>
       </el-form-item>
       <!-- 职位 -->
-      <el-form-item prop="postName" label="职位："  style="margin-left: 25px">
-        <div style="width: 100px">{{fromValue.postName}}</div>
+      <el-form-item prop="postName" label="职位：" style="margin-left: 25px">
+        <div style="width: 100px">{{ fromValue.postName }}</div>
       </el-form-item>
       <!-- 公告类型-->
       <el-form-item prop="noticeType" label="公告类型：">
@@ -243,8 +244,8 @@
         <div style="width: 300px" v-show="fromValue.noticeType==2">任免性</div>
       </el-form-item>
       <!-- 公告状态 -->
-      <el-form-item prop="noticeState" label="状态："  style="margin-left: 27px">
-          <div style="width: 100px">{{fromValue.noticeState==0?'启用':'禁用'}}</div>
+      <el-form-item prop="noticeState" label="状态：" style="margin-left: 27px">
+        <div style="width: 100px">{{ fromValue.noticeState == 0 ? '启用' : '禁用' }}</div>
       </el-form-item>
       <!-- 部门列表-->
       <el-form-item label="发布部门：" prop="deptNameList">
@@ -256,18 +257,18 @@
       </el-form-item>
       <!-- 公告内容 -->
       <el-form-item label="内容：" prop="noticeMatter" style="margin-left: 27px;">
-        <div style="width: 510px">{{fromValue.noticeMatter}}</div>
+        <div style="width: 510px">{{ fromValue.noticeMatter }}</div>
       </el-form-item>
       <!-- 已查看人员 -->
-      <el-form-item label="已看人员：" prop="peropleNoticeViewed" >
+      <el-form-item label="已看人员：" prop="peropleNoticeViewed">
         <div style="width: 510px">
-          <span v-for="name in fromValue.peropleNoticeViewed" style="margin-right: 20px">{{name.staffName}}</span>
+          <span v-for="name in fromValue.peropleNoticeViewed" style="margin-right: 20px">{{ name.staffName }}</span>
         </div>
       </el-form-item>
       <!-- 未查看人员 -->
-      <el-form-item label="未看人员：" prop="unseenNoticePerson" >
+      <el-form-item label="未看人员：" prop="unseenNoticePerson">
         <div style="width: 510px">
-          <span v-for="name in fromValue.unseenNoticePerson" style="margin-right: 20px">{{name.staffName}}</span>
+          <span v-for="name in fromValue.unseenNoticePerson" style="margin-right: 20px">{{ name.staffName }}</span>
         </div>
       </el-form-item>
     </el-form>
@@ -277,10 +278,6 @@
       </span>
     </template>
   </el-dialog>
-  {{ fromValue }}
-  {{ options }}
-  {{fromValue.peropleNoticeViewed}}
-  {{fromValue.unseenNoticePerson}}
 </template>
 
 <script>
@@ -364,11 +361,11 @@ export default {
         //部门名称集合
         deptNameList: [],
         //职位名称
-        postName:'',
+        postName: '',
         //未看公告人员集合
-        peropleNoticeViewed:[],
+        peropleNoticeViewed: [],
         //已看公告人员集合
-        unseenNoticePerson:[],
+        unseenNoticePerson: [],
       },
       //表单验证
       formVerify: {
@@ -381,7 +378,7 @@ export default {
           }, {
             min: 0,
             max: 25,
-            message: '标题长度不能超过25个字符',
+            message: '标题不能超过25个字符',
             trigger: 'blur',
           }
         ],
@@ -395,7 +392,7 @@ export default {
           {
             min: 0,
             max: 500,
-            message: '发布内容长度不能超过500个字符',
+            message: '发布内容不能超过500个字符',
             trigger: 'blur',
           }
         ],
@@ -419,7 +416,7 @@ export default {
       //部门列表
       options: [],
       //查看公告弹出框
-      announcement:false,
+      announcement: false,
       //公告类型
       type: ([
         {
@@ -441,8 +438,6 @@ export default {
       checkDeleteList: [],
       // 判断添加还是编辑
       judge: "添加",
-      //按钮是否被禁用
-      disabled: true,
       //复选框选中的ID
       listId: [],
     }
@@ -484,9 +479,8 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            console.log(response.data.data.info.records)
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
           }
           //如果服务是雪崩的
           else {
@@ -539,6 +533,11 @@ export default {
                 ElMessage({
                   type: 'success',
                   message: '删除成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
                 })
               }
             }
@@ -600,6 +599,11 @@ export default {
                   type: 'success',
                   message: '删除成功',
                 })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
               }
             }
             //如果服务是雪崩的
@@ -622,14 +626,6 @@ export default {
     //复选框选择事件
     checkDelete(val) {
       this.checkDeleteList = val;
-      //如果有被选择的值则删除按钮可用
-      if (this.checkDeleteList != '') {
-        this.disabled = false;
-      }
-      //如果没有被选择的值删除按钮不可用
-      if (this.checkDeleteList == '') {
-        this.disabled = true;
-      }
     },
     //新增对话框表单验证
     new() {
@@ -745,7 +741,7 @@ export default {
       })
     },
     //清空数据
-    eliminate(){
+    eliminate() {
       this.fromValue = {
         //公告编号
         noticeId: '',
@@ -766,7 +762,7 @@ export default {
         //部门名称集合
         deptNameList: [],
         //职位名称
-        postName:'',
+        postName: '',
       }
     },
     //取消按钮方法
@@ -866,10 +862,10 @@ export default {
       })
     },
     //已看公告人员
-    peropleNoticeViewedMethod(id){
+    peropleNoticeViewedMethod(id) {
       this.axios({
         method: 'get',
-        url: this.url + 'peropleNoticeViewed?id='+id,
+        url: this.url + 'peropleNoticeViewed?id=' + id,
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
@@ -897,10 +893,10 @@ export default {
       })
     },
     //未看公告人员
-    unseenNoticePersonMethod(id){
+    unseenNoticePersonMethod(id) {
       this.axios({
         method: 'get',
-        url: this.url + 'unseenNoticePerson?id='+id,
+        url: this.url + 'unseenNoticePerson?id=' + id,
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
@@ -947,9 +943,11 @@ export default {
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.woff?t=1638864192788') format('woff'),
   url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.ttf?t=1638864192788') format('truetype');
 }
-/deep/.el-form-item__label{
+
+/deep/ .el-form-item__label {
   font-weight: bold !important;
 }
+
 .button-enable {
   background: #ecf5ff;
   border: 1px #cfe6ff solid;

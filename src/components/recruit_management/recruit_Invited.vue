@@ -163,7 +163,7 @@ export default {
   data() {
     return {
       //路由地址 ：简历详情页面
-      details:'/recruitment/resume/details',
+      details:'/recruit/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
