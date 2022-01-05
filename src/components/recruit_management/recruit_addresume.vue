@@ -212,10 +212,9 @@
 
 
             </el-form>
-
-            <el-button type="primary" @click="">提交</el-button>
+            <el-button @click="this.$parent.$data.recruit_addresume=false">取消</el-button>
             <el-button>重置</el-button>
-            <el-button @click="goblack()">取消</el-button>
+            <el-button type="primary" @click="">提交</el-button>
           </div>
 
         </div>
@@ -260,12 +259,6 @@ export default {
       this.src = '';
       this.isShow = false;
     },
-
-
-    //取消按钮事件：返回上一级
-    goblack(){
-      this.$router.go('-1');
-    }
   },
 }
 

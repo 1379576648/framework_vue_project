@@ -4,11 +4,9 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
-        <router-link :to="{path:this.book,query:{path: this.$route.query.path}}">
-        <button type="button" class="ant-btn ant-btn-primary ant-btn-two-chinese-chars" style="margin-left: 1100px;margin-top: 20px;width: 80px;">
+        <button @click="this.$parent.$data.employee_compile=false" type="button" class="ant-btn ant-btn-primary ant-btn-two-chinese-chars" style="margin-left: 1100px;margin-top: 20px;width: 80px;">
           <span>返回</span>
         </button>
-        </router-link>
         <div style="text-align: center; margin-top: 60px">
 
           <!-- 用户照片 -->

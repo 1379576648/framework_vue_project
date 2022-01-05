@@ -3,10 +3,8 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
-        <el-button style="float:left;margin-top: 25px;margin-left: 20px;" size="mini" @click="goblick()">返回</el-button>
+        <el-button style="float:left;margin-top: 25px;margin-left: 20px;" size="mini" @click="this.$parent.$data.recruit_plan_details=false">返回</el-button>
         <div style="display: flex; justify-content: flex-end; padding: 20px 20px 0px;" class="resume-operation">
-
-
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item>
               <el-select v-model="formInline.region" placeholder="学历">

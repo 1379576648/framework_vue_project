@@ -1,13 +1,19 @@
 <!--薪酬步骤导航 -->
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content"
+       v-if="salary_checkwage==false&&
+       regular==false&&
+       callbackpay==false&&
+       attendanceplan==false&&
+       evectionplan==false&&
+       salary_insertplan==false&&
+      salary_insertplanthree==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <span></span>
         <div class="payroll2-tabs">
           <ul style="margin-left: 85px">
-
-              <li @click="paysheet=false,scheme=false,flat=true">
+            <li @click="structure">
               <i class="iconfont i-iconfont">&#xe602;</i>
               <h3>
                 <span>第一步</span>
@@ -17,7 +23,7 @@
 
 
             <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>
-            <li class="" @click="paysheet=false,scheme=true,flat=false">
+            <li class="" @click="certified">
               <i class="iconfont">&#xe633;</i>
               <h3>
                 <span>第二步</span>
@@ -26,7 +32,7 @@
             </li>
 
             <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>
-            <li class="" @click="paysheet=true,scheme=false,flat=false">
+            <li class="" @click="salary">
               <i class="iconfont">&#xe624;</i>
               <h3>
                 <span>第三步</span>
@@ -35,17 +41,29 @@
             </li>
           </ul>
         </div>
-<!--        薪酬结构-->
+        <!--        薪酬结构-->
         <salary_construction v-if="flat"/>
-<!--        核算方案-->
+        <!--        核算方案-->
         <salary_accountscheme v-if="scheme"/>
-<!--        工资表-->
+        <!--        工资表-->
         <salary_archive v-if="paysheet"/>
-
       </div>
     </div>
   </div>
-  &nbsp;
+  <!--  查看工资表-->
+  <salary_checkwage v-if="salary_checkwage"/>
+  <!-- 固定工资 -->
+  <regular v-if="regular"/>
+  <!-- 加班工资 -->
+  <callbackpay v-if="callbackpay"/>
+  <!-- 考勤扣款 -->
+  <attendanceplan v-if="attendanceplan"/>
+  <!--  出差方案-->
+  <evectionplan v-if="evectionplan"/>
+  <!--  新增修改加班方案-->
+  <salary_insertplan v-if="salary_insertplan" :name="insertplan_name"/>
+  <!--  新增修改出差方案-->
+  <salary_insertplanthree v-if="salary_insertplanthree"/>
 </template>
 
 <script>
@@ -55,30 +73,107 @@ import salary_construction from '../salary_management/salary_construction.vue';
 import salary_accountscheme from '../salary_management/salary_accountscheme.vue';
 //工资表
 import salary_archive from '../salary_management/salary_archive.vue';
+//查看工资表
+import salary_checkwage from '../salary_management/salary_checkwage.vue';
+//固定工资
+import regular from '../salary_management/salary_fixedwage.vue';
+//加班工资
+import callbackpay from '../salary_management/salary_workovertimeplan.vue';
+//考勤扣款
+import attendanceplan from '../salary_management/salary_insertplan.vue';
+//出差方案
+import evectionplan from '../salary_management/salary_evection.vue';
+//新增修改加班方案
+import salary_insertplan from '../salary_management/salary_insertplan.vue';
+//新增修改出差方案
+import salary_insertplanthree from '../salary_management/salary_insertplanthree.vue';
+
 export default {
   //注册组件
-  components:{
+  components: {
     //薪酬结构
     salary_construction,
     //核算方案
     salary_accountscheme,
     //工资表
     salary_archive,
+    //查看工资表
+    salary_checkwage,
+    //固定工资
+    regular,
+    //加班工资
+    callbackpay,
+    //考勤扣款
+    attendanceplan,
+    //出差方案
+      evectionplan,
+    //新增修改加班方案
+    salary_insertplan,
+    //新增修改出差方案
+    salary_insertplanthree,
   },
-  data(){
-    return{
+  data() {
+    return {
       //薪酬结构
-      flat:true,
+      flat: true,
       //核算方案
-      scheme:false,
+      scheme: false,
       //工资表
-      paysheet:false,
+      paysheet: false,
+      //显示隐藏工资表
+      salary_checkwage: false,
+      //固定工资
+      regular: false,
+      //加班工资
+      callbackpay: false,
+      //考勤扣款
+      attendanceplan: false,
+      //出差方案
+      evectionplan: false,
+      //新增修改加班方案
+      salary_insertplan: false,
+      //新增修改出差方案
+      salary_insertplanthree: false,
+      //新增或修改加班方案
+      insertplan_name:'',
+      //新增修改出差方案
+      insertplanthree_name:'',
+    }
+  }, methods: {
+    //设置薪酬结构
+    structure() {
+      //工资表
+      this.paysheet = false;
+      //核算方案
+      this.scheme = false;
+      //薪酬结构
+      this.flat = true;
+    },
+    //设置核实方案
+    certified() {
+      //工资表
+      this.paysheet = false;
+      //核算方案
+      this.scheme = true;
+      //薪酬结构
+      this.flat = false;
+    },
+    //设置工资表
+    salary() {
+      //工资表
+      this.paysheet = true;
+      //核算方案
+      this.scheme = false;
+      //薪酬结构
+      this.flat = false;
+    },
+    //全局显示隐藏
+    reveal() {
+
     }
   }
 }
 </script>
-
-
 
 
 <style scoped>

@@ -1,6 +1,6 @@
 <!--员工花名册页面-->
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" v-if="employee_dimission==false&&employee_compile==false">
     <!-- 菜单 -->
     <div class="saas-main-content">
       <div class="j-tabs2">
@@ -23,7 +23,7 @@
                     </el-menu>-->
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane name="book" label="花名册">
-            <employee_staff/>
+            <employee_staff />
           </el-tab-pane>
 
           <el-tab-pane name="second" label="工作经历">
@@ -34,6 +34,10 @@
 
     </div>
   </div>
+<!--  员工编辑-->
+  <employee_compile v-if="employee_compile"/>
+<!--  办理离职-->
+  <employee_dimission v-if="employee_dimission"/>
 </template>
 
 <script>
@@ -41,16 +45,27 @@
 import employee_staff from '../employee_management/employee_staff.vue';
 //工作经历
 import employee_work from '../employee_management/employee_work.vue';
-
+//办理离职
+import employee_dimission from '../employee_management/employee_dimission.vue';
+//员工编辑
+import employee_compile from '../employee_management/employee_compile.vue';
 export default {
   components: {
     //花名册
     employee_staff,
     //工作经历
-    employee_work
+    employee_work,
+    //办理离职
+    employee_dimission,
+    //员工编辑
+    employee_compile
   },
   data() {
     return {
+      //办理离职
+      employee_dimission:false,
+      //员工编辑
+      employee_compile:false,
       activeName:'book'
     }
   },

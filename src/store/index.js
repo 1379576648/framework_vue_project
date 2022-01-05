@@ -677,7 +677,7 @@ const store = createStore({
                 MENU_NAME: '薪酬管理',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                 MENU_ROUTE: '/salary',//路由地址
-                MENU_MODULE: 'salary_management/salary_main',//组件地址
+                MENU_MODULE: '/salary_management/salary_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -686,28 +686,42 @@ const store = createStore({
                     MENU_NAME: '薪酬结构',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
                     MENU_ROUTE: '/salary/paynavigation',//路由地址
-                    MENU_MODULE: '/salary_management/salary_salarynavigation.vue',//组件地址
+                    MENU_MODULE: '/salary_management/salary_salarynavigation.',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                    MENU_LEAF: 1,//是否有叶子 0有 1没有
-                }, {
-                    MENU_ID: 7.2,//菜单编号
-                    MENU_NAME: '核算方案',//菜单名称
-                    PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/salary/scheme',//路由地址
-                    MENU_MODULE: '/salary_management/salary_accountscheme.vue',//组件地址
-                    MENU_STATE: 0,//是否启用 0启用 1禁用
-                    MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                    MENU_LEAF: 1,//是否有叶子 0有 1没有
-                }, {
-                    MENU_ID: 7.3,//菜单编号
-                    MENU_NAME: '工资表',//菜单名称
-                    PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/salary/paysheet',//路由地址
-                    MENU_MODULE: '/salary_management/salary_salarynavigation.vue',//组件地址
-                    MENU_STATE: 0,//是否启用 0启用 1禁用
-                    MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                    MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    MENU_LEAF: 0,//是否有叶子 0有 1没有
+                    son: [
+                        {
+                            MENU_ID: 7.1,//菜单编号
+                            MENU_NAME: '核算方案',//菜单名称
+                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            MENU_ROUTE: '/salary/scheme',//路由地址
+                            MENU_MODULE: '/salary_management/salary_accountscheme',//组件地址
+                            MENU_STATE: 0,//是否启用 0启用 1禁用
+                            MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
+                            MENU_LEAF: 1,//是否有叶子 0有 1没有
+                        },
+                        {
+                            MENU_ID: 7.1,//菜单编号
+                            MENU_NAME: '工资表',//菜单名称
+                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            MENU_ROUTE: '/salary/paysheet',//路由地址
+                            MENU_MODULE: '/salary_management/salary_archive',//组件地址
+                            MENU_STATE: 0,//是否启用 0启用 1禁用
+                            MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
+                            MENU_LEAF: 1,//是否有叶子 0有 1没有
+                        },
+                        {
+                            MENU_ID: 7.1,//菜单编号
+                            MENU_NAME: '工资表',//菜单名称
+                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            MENU_ROUTE: '/salary/paysheet',//路由地址
+                            MENU_MODULE: '/salary_management/salary_archive',//组件地址
+                            MENU_STATE: 0,//是否启用 0启用 1禁用
+                            MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
+                            MENU_LEAF: 1,//是否有叶子 0有 1没有
+                        }
+                    ]
                 }, {
                     MENU_ID: 7.4,//菜单编号
                     MENU_NAME: '薪酬统计',//菜单名称
@@ -724,7 +738,7 @@ const store = createStore({
                 MENU_NAME: '社保管理',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                 MENU_ROUTE: '/social',//路由地址
-                MENU_MODULE: 'social_management/social_main',//组件地址
+                MENU_MODULE: '/social_management/social_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -732,17 +746,17 @@ const store = createStore({
                     MENU_ID: 8.1,//菜单编号
                     MENU_NAME: '基本设置',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/social/basic_setup',//路由地址
-                    MENU_MODULE: 'social_management/social_main',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
                     son: [{
                         MENU_ID: 8.11,//菜单编号
                         MENU_NAME: '参保方案',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/social/basic_setup/insured_scheme',//路由地址
-                        MENU_MODULE: 'social_management/insured_scheme',//组件地址
+                        MENU_MODULE: '/social_management/insured_scheme',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -750,8 +764,8 @@ const store = createStore({
                             MENU_ID: 8.11,//菜单编号
                             MENU_NAME: '新增',//菜单名称
                             PICTURE_ADDRESS: '',//图片地址
-                            MENU_ROUTE: '',//路由地址
-                            MENU_MODULE: '',//组件地址
+                            MENU_ROUTE: '/social/basic_setup/new_insured_scheme',//路由地址
+                            MENU_MODULE: '/social_management/new_insured_scheme',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -759,8 +773,8 @@ const store = createStore({
                             MENU_ID: 8.11,//菜单编号
                             MENU_NAME: '编辑',//菜单名称
                             PICTURE_ADDRESS: '',//图片地址
-                            MENU_ROUTE: '',//路由地址
-                            MENU_MODULE: '',//组件地址
+                            MENU_ROUTE: '/social/basic_setup/new_insured_scheme',//路由地址
+                            MENU_MODULE: '/social_management/new_insured_scheme',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -788,17 +802,17 @@ const store = createStore({
                     MENU_ID: 8.2,//菜单编号
                     MENU_NAME: '社保管理',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/social/social_management',//路由地址
-                    MENU_MODULE: 'social_management/social_main',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
                     son: [{
                         MENU_ID: 8.21,//菜单编号
                         MENU_NAME: '参保人员管理',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/social/social_management/insured_management',//路由地址
-                        MENU_MODULE: 'social_management/insured_management',//组件地址
+                        MENU_MODULE: '/social_management/insured_management',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -817,30 +831,41 @@ const store = createStore({
                     MENU_ID: 8.3,//菜单编号
                     MENU_NAME: '社保缴费',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/social/social_payment',//路由地址
-                    MENU_MODULE: 'social_management/social_main',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
                     son: [{
                         MENU_ID: 8.31,//菜单编号
                         MENU_NAME: '月底报表',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/social/social_payment/monthly_report',//路由地址
-                        MENU_MODULE: 'social_management/monthly_report',//组件地址
+                        MENU_MODULE: '/social_management/monthly_report',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 8.32,//菜单编号
                         MENU_NAME: '社保缴费明细',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/social/social_payment/payment_detail',//路由地址
-                        MENU_MODULE: 'social_management/payment_detail',//组件地址
+                        MENU_MODULE: '/social_management/payment_detail',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                        MENU_LEAF: 1,//是否有叶子 0有 1没有
-
+                        MENU_LEAF: 0,//是否有叶子 0有 1没有
+                        son: [
+                            {
+                                MENU_ID: 8.32,//菜单编号
+                                MENU_NAME: '查看',//菜单名称
+                                PICTURE_ADDRESS: '',//图片地址
+                                MENU_ROUTE: '/social/social_payment/someone_insured_particulars',//路由地址
+                                MENU_MODULE: '/social_management/someone_insured_particulars',//组件地址
+                                MENU_STATE: 0,//是否启用 0启用 1禁用
+                                MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
+                                MENU_LEAF: 0,//是否有叶子 0有 1没有
+                            }
+                        ]
                     }]
                 }]
             },
@@ -849,7 +874,7 @@ const store = createStore({
                 MENU_NAME: '统计分析',//菜单名称
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
                 MENU_ROUTE: '/statistics',//路由地址
-                MENU_MODULE: 'statistics_management/statistics_main',//组件地址
+                MENU_MODULE: '/statistics_management/statistics_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                 MENU_LEAF: 0,//是否有叶子 0有 1没有0
@@ -857,35 +882,35 @@ const store = createStore({
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '人员分析',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/statistics/staff_analyze',//路由地址
-                    MENU_MODULE: 'menu_skip',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
                     son: [{
                         MENU_ID: 2,//菜单编号
                         MENU_NAME: '人员数量分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/staff_analyze/statistics_numberpersonnel',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_numberpersonnel',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_numberpersonnel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 3,//菜单编号
                         MENU_NAME: '人员异动分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/staff_analyze/statistics_movepersonnel',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_movepersonnel',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_movepersonnel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 4,//菜单编号
                         MENU_NAME: '员工概况',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/staff_analyze/statistics_surveypersonnel',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_surveypersonnel',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_surveypersonnel',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -894,44 +919,44 @@ const store = createStore({
                     MENU_ID: 5,//菜单编号
                     MENU_NAME: '考勤分析',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/statistics/clockingin_analyze',//路由地址
-                    MENU_MODULE: 'menu_skip',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
                     son: [{
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '出勤分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/clockingin_analyze/statistics_attendance',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_attendance',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_attendance',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 7,//菜单编号
                         MENU_NAME: '工时分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/clockingin_analyze/statistics_manhour',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_manhour',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_manhour',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '加班分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/clockingin_analyze/statistics_overtime',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_overtime',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_overtime',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 9,//菜单编号
                         MENU_NAME: '请假分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/clockingin_analyze/statistics_leave',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_leave',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_leave',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -940,39 +965,49 @@ const store = createStore({
                     MENU_ID: 10,//菜单编号
                     MENU_NAME: '薪酬分析',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/statistics/remuneration_analyze',//路由地址
-                    MENU_MODULE: 'menu_skip',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
                     son: [{
                         MENU_ID: 11,//菜单编号
                         MENU_NAME: '工资成本分析',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/remuneration_analyze/statistics_payrollcosts',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_payrollcosts',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_payrollcosts',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 12,//菜单编号
-                        MENU_NAME: '社保成本分析2',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_NAME: '社保成本分析',//菜单名称
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/remuneration_analyze/statistics_socialsecurity',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_socialsecurity',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_socialsecurity',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
                     }, {
                         MENU_ID: 13,//菜单编号
-                        MENU_NAME: '薪酬结构分析1',//菜单名称
-                        PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                        MENU_NAME: '薪酬成本分析',//菜单名称
+                        PICTURE_ADDRESS: '',//图片地址
                         MENU_ROUTE: '/statistics/remuneration_analyze/statistics_analysis3',//路由地址
-                        MENU_MODULE: 'statistics_management/statistics_analysis3',//组件地址
+                        MENU_MODULE: '/statistics_management/statistics_analysis3',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 1,//是否有叶子 0有 1没有
-                    }]
+                    }, {
+                        MENU_ID: 14,//菜单编号
+                        MENU_NAME: '部门成本分析',//菜单名称
+                        PICTURE_ADDRESS: '',//图片地址
+                        MENU_ROUTE: '/statistics/remuneration_analyze/statistics_analysis4',//路由地址
+                        MENU_MODULE: '/statistics_management/statistics_analysis4',//组件地址
+                        MENU_STATE: 0,//是否启用 0启用 1禁用
+                        MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
+                        MENU_LEAF: 1,//是否有叶子 0有 1没有
+                    }
+                    ]
                 }]
             },
             {
@@ -988,8 +1023,8 @@ const store = createStore({
                     MENU_ID: 1,//菜单编号
                     MENU_NAME: '权限管理',//菜单名称
                     PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_ROUTE: '/lineage/authority_management',//路由地址
-                    MENU_MODULE: 'menu_skip',//组件地址
+                    MENU_ROUTE: '',//路由地址
+                    MENU_MODULE: '',//组件地址
                     MENU_STATE: 0,//是否启用 0启用 1禁用
                     MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                     MENU_LEAF: 0,//是否有叶子 0有 1没有
@@ -997,38 +1032,50 @@ const store = createStore({
                         {
                             MENU_ID: 2,//菜单编号
                             MENU_NAME: '权限设置',//菜单名称
-                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            PICTURE_ADDRESS: '',//图片地址
                             MENU_ROUTE: '/lineage/authority_management/authority_set',//路由地址
-                            MENU_MODULE: 'lineage_management/lineage_permission_set',//组件地址
+                            MENU_MODULE: '/lineage_management/lineage_permission_set',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
                         }, {
                             MENU_ID: 3,//菜单编号
                             MENU_NAME: '角色设置',//菜单名称
-                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            PICTURE_ADDRESS: '',//图片地址
                             MENU_ROUTE: '/lineage/authority_management/role',//路由地址
-                            MENU_MODULE: 'lineage_management/lineage_role',//组件地址
+                            MENU_MODULE: '/lineage_management/lineage_role',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                            MENU_LEAF: 1,//是否有叶子 0有 1没有
-                        }]
+                            MENU_LEAF: 0,//是否有叶子 0有 1没有
+                            son: [
+                                {
+                                    MENU_ID: 5,//菜单编号
+                                    MENU_NAME: '分配用户',//菜单名称
+                                    PICTURE_ADDRESS: '',//图片地址
+                                    MENU_ROUTE: '',//路由地址
+                                    MENU_MODULE: '',//组件地址
+                                    MENU_STATE: 0,//是否启用 0启用 1禁用
+                                    MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
+                                    MENU_LEAF: 1,//是否有叶子 0有 1没有
+                                }
+                            ]
+                        },]
                 },
                     {
                         MENU_ID: 6,//菜单编号
                         MENU_NAME: '公告管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/lineage/announcement_management',//路由地址
-                        MENU_MODULE: 'menu_skip',//组件地址
+                        MENU_ROUTE: '',//路由地址
+                        MENU_MODULE: '',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
                         son: [{
                             MENU_ID: 7,//菜单编号
                             MENU_NAME: '公告设置',//菜单名称
-                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            PICTURE_ADDRESS: '',//图片地址
                             MENU_ROUTE: '/lineage/announcement_management/announcement_set',//路由地址
-                            MENU_MODULE: 'lineage_management/lineage_notice',//组件地址
+                            MENU_MODULE: '/lineage_management/lineage_notice',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1038,26 +1085,26 @@ const store = createStore({
                         MENU_ID: 8,//菜单编号
                         MENU_NAME: '日志管理',//菜单名称
                         PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                        MENU_ROUTE: '/lineage/log_management',//路由地址
-                        MENU_MODULE: 'menu_skip',//组件地址
+                        MENU_ROUTE: '',//路由地址
+                        MENU_MODULE: '',//组件地址
                         MENU_STATE: 0,//是否启用 0启用 1禁用
                         MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                         MENU_LEAF: 0,//是否有叶子 0有 1没有
                         son: [{
                             MENU_ID: 8,//菜单编号
                             MENU_NAME: '登录日志',//菜单名称
-                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            PICTURE_ADDRESS: '',//图片地址
                             MENU_ROUTE: '/lineage/log_management/register_log',//路由地址
-                            MENU_MODULE: 'lineage_management/lineage_login_log',//组件地址
+                            MENU_MODULE: '/lineage_management/lineage_login_log',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
                         }, {
                             MENU_ID: 9,//菜单编号
                             MENU_NAME: '操作日志',//菜单名称
-                            PICTURE_ADDRESS: '&#xe64c;',//图片地址
+                            PICTURE_ADDRESS: '',//图片地址
                             MENU_ROUTE: '/lineage/log_management/operation_log',//路由地址
-                            MENU_MODULE: 'lineage_management/lineage_operate_log',//组件地址
+                            MENU_MODULE: '/lineage_management/lineage_operate_log',//组件地址
                             MENU_STATE: 0,//是否启用 0启用 1禁用
                             MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
                             MENU_LEAF: 1,//是否有叶子 0有 1没有
@@ -1131,7 +1178,7 @@ const store = createStore({
         },
         chart_menuList: (state) => (path) => {
             //定义数组
-            let chart_menuList=[];
+            let chart_menuList = [];
             //循环菜单列表
             for (let i = 0; i < state.memuList.length; i++) {
                 //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用

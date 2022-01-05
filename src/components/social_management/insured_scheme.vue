@@ -1,14 +1,12 @@
 <template>
-<!-- 参保方案 -->
-  <div class="saas-main-content">
+  <!-- 参保方案 -->
+  <div class="saas-main-content" v-if="new_insured_scheme==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <!-- 表格按钮部分 -->
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增参保方案按钮 -->
-          <router-link :to="{path:this.path,query:{path:this.$route.query.path,name:'新增'}}">
-            <el-button size="small" type="primary"> +新增</el-button>
-          </router-link>
+          <el-button size="small" type="primary" @click="new_insured_scheme=true,name='新增'"> +新增</el-button>
 
           <!-- 下拉选择器 -->
           <div class="resume-operation">
@@ -39,12 +37,9 @@
             <el-table-column label="操作">
               <template #default="scope"
               >
-                <router-link :to="{path:this.path,query:{path:this.$route.query.path,name:'修改'}}">
-                  <el-button size="small" type="text">
+                  <el-button size="small" type="text" @click="new_insured_scheme=true,name='修改'">
                     编辑
                   </el-button>
-                </router-link
-                >&nbsp;
 
                 <el-button type="text" size="small"> {{ scope.row.scheme_state === '启用' ? '禁用 ' : '启用 ' }}</el-button>
 
@@ -52,7 +47,7 @@
                 <el-popconfirm v-if="scope.row.scheme_state==='禁用'"
                                @confirm="deleteRow(scope.$index, scheme_table)" title="删除此方案?">
                   <template #reference>
-                    <el-button style="color:red" type="text" size="small">删除 </el-button>
+                    <el-button style="color:red" type="text" size="small">删除</el-button>
                   </template>
                 </el-popconfirm>
 
@@ -81,14 +76,22 @@
       </div>
     </div>
   </div>
-  &nbsp;
+  <!--  新增-->
+  <new_insured_scheme v-if="new_insured_scheme" :name="name"/>
 </template>
 
 <script>
 import {ref, defineComponent} from "vue";
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
+//新增
+import new_insured_scheme from '../social_management/new_insured_scheme.vue';
 
 export default {
+  //注册组件
+  components: {
+    //新增
+    new_insured_scheme,
+  },
   methods: {
     // 删除行
     deleteRow(index, rows) {
@@ -101,7 +104,10 @@ export default {
   },
   data() {
     return {
-      path: "/social/basic_setup/new_insured_scheme",
+      //判断是新增还是修改
+      name:'',
+      //显示新增或者修改
+      new_insured_scheme: false,
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页

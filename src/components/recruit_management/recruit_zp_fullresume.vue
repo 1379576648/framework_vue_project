@@ -1,4 +1,4 @@
- <!--简历：全部简历-->
+<!--简历：全部简历-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -6,11 +6,9 @@
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增招聘计划按钮 -->
           <a style="margin-top: 4px;">
-            <router-link :to="{path:this.addresume,query:{path:this.$route.query.path}}">
-            <button type="button" class="ant-btn ant-btn-primary">
+            <button type="button" class="ant-btn ant-btn-primary" @click="this.$parent.$parent.$parent.$data.recruit_addresume=true">
               <span>+ 新增</span>
             </button>
-            </router-link>
           </a>
           <!-- 批量导入按钮 -->
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
@@ -98,11 +96,14 @@
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
                 :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left" align="center" type="selection" width="80"/>
-        <el-table-column fixed="left" label="姓名" width="150" >
-                  <template #default="scope">
-                    <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.resumeName}}">{{scope.row.resumeName}}</router-link>
-                  </template>
-                </el-table-column>
+        <el-table-column fixed="left" label="姓名" width="150">
+          <template #default="scope">
+            <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
+             {{ scope.row.resumeName }}
+            </span>
+
+          </template>
+        </el-table-column>
         <el-table-column fixed="left" prop="postName" label="投递部门" width="140"/>
         <el-table-column prop="resumeSex" label="性别" width="140"/>
         <el-table-column prop="resumeEducation" label="学历" width="140"/>
@@ -160,9 +161,6 @@ export default {
   data() {
 
     return {
-      //路由地址
-      addresume:'/recruit/recruit/addresume',
-      details:'/recruit/resume/details',
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
@@ -213,47 +211,49 @@ export default {
           })
     },
     //查询全部简历
-    selectAllresume(){
-        var _this=this
-        this.axios({
-          method:'post',
-          url:this.url+'selectAllresume',
-          data:{
-            'currentPage':this.pageInfo.currentPage,
-            'pagesize':this.pageInfo.pagesize
-          },
-          responseType: 'json',
-          responseEncoding: 'utf-8',
-        }).then((response)=>{
-          console.log("查询全部简历数据")
-          console.log(response);
-          if (response.data.state===300){
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.state===200){
-            this.tableData=response.data.succed.records;
-            this.pageInfo.pagesize=response.data.succed.size;
-            this.pageInfo.total=response.data.succed.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+    selectAllresume() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectAllresume',
+        data: {
+          'currentPage': this.pageInfo.currentPage,
+          'pagesize': this.pageInfo.pagesize
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("查询全部简历数据")
+        console.log(response);
+        if (response.data.state === 300) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.state === 200) {
+          this.tableData = response.data.succed.records;
+          this.pageInfo.pagesize = response.data.succed.size;
+          this.pageInfo.total = response.data.succed.total;
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
 
-      }).catch(function (error){
-          console.log(" 失败")
-          console.log(error);
-        })
+      }).catch(function (error) {
+        console.log(" 失败")
+        console.log(error);
+      })
     },
 
   },
   created() {
     this.selectAllresume();
+  },mounted() {
+    console.log(this.$data)
   }
 }
 </script>

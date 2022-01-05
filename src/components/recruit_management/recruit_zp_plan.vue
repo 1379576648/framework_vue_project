@@ -1,6 +1,6 @@
 <!-- 招聘计划 -->
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" v-if="recruit_add_plan==false&&recruit_plan_details==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <span></span>
@@ -9,11 +9,9 @@
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增招聘计划按钮 -->
           <a style="margin-top: 4px;">
-            <router-link :to="{path:this.one,query:{path:this.$route.query.path,name:'新增'}}">
-              <button type="button" class="ant-btn ant-btn-primary">
+              <button type="button" class="ant-btn ant-btn-primary"  @click="recruit_add_plan=true,recruit_add_plan_name='新增'">
                 <span>新增招聘计划</span>
               </button>
-            </router-link>
           </a>
           <!-- 批量导入按钮 -->
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
@@ -54,11 +52,15 @@
 
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
-          <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+          <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
+                    :header-cell-style="{background:'#eef1f6',color:'#606266'}">
             <el-table-column prop="ID" label="序号" width="150"/>
             <el-table-column label="招聘计划名称" width="200">
-              <template #default="scope">
-                <router-link :to="{path:this.two,query:{path:this.$route.query.path,name:scope.row.zpname}}">{{scope.row.zpname}}</router-link>
+              <template #default="scope" >
+                <span @click="recruit_plan_details=true">
+                 {{ scope.row.zpname }}
+                </span>
+
               </template>
             </el-table-column>
             <el-table-column prop="zpzw" label="招聘职位" width="200"/>
@@ -69,9 +71,7 @@
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
                 <div v-if="tableData[scope.$index].zpzt=='招聘中'">
-                  <router-link :to="{path:this.one,query:{path:this.$route.query.path,name: '修改'}}">
-                  <el-button type="text" size="small" >编辑</el-button>
-                  </router-link>
+                    <el-button type="text" size="small" @click="recruit_add_plan=true,recruit_add_plan_name='编辑'">编辑</el-button>
                   &nbsp;
                   <el-popconfirm title="是否确定关闭?" @confirm="confirmgb()" @cancel="cancelgb()">
                     <template #reference>
@@ -85,7 +85,7 @@
 
                   <el-popconfirm title="是否确认删除该招聘计划?" @confirm="confirmsc()" @cancel="cancelsc()">
                     <template #reference>
-                       <el-button type="text" size="small">删除</el-button>
+                      <el-button type="text" size="small">删除</el-button>
                     </template>
                   </el-popconfirm>
 
@@ -115,17 +115,35 @@
         </el-pagination>
       </div>
     </div>
-
   </div>
+<!--  新增招聘计划-->
+  <recruit_add_plan v-if="recruit_add_plan" :name="recruit_add_plan_name"/>
+<!--  招聘计划详情页面-->
+  <recruit_plan_details v-if="recruit_plan_details"/>
 </template>
 
 <script>
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
+//新增招聘计划
+import recruit_add_plan from '../recruit_management/recruit_add_plan.vue';
+//招聘计划详情页面
+import recruit_plan_details from '../recruit_management/recruit_plan_details.vue';
 export default {
+  //注册组件
+  components: {
+    //新增招聘计划
+    recruit_add_plan,
+    //招聘计划详情页面
+    recruit_plan_details
+  },
   data() {
     return {
-      one: '/recruit/addplan/addplan',
-      two:'/recruit/plan/details',
+      //新增招聘计划
+      recruit_add_plan:false,
+      //判断是新增还是编辑
+      recruit_add_plan_name:'',
+      //招聘计划详情页面
+      recruit_plan_details:false,
       //分页
       pageInfo: {
         currenPage: 3,
@@ -146,7 +164,7 @@ export default {
       ],
       value1: "",
       value2: "",
-      row1:{
+      row1: {
         ID: null,
         zpname: null,
         zpzw: null,
@@ -179,30 +197,30 @@ export default {
       ]
     }
   },
-  methods:{
+  methods: {
     //消息提示框确认按钮事件
-    confirmgb(){
+    confirmgb() {
       ElMessage({
         message: '操作成功',
         type: 'success',
       })
     },
     //消息提示框取消按钮事件
-    cancelgb(){
+    cancelgb() {
       ElMessage({
         message: '已取消该操作',
         type: 'warning',
       })
     },
     //消息提示框确认按钮事件
-    confirmsc(){
+    confirmsc() {
       ElMessage({
         message: '操作成功',
         type: 'success',
       })
     },
     //消息提示框取消按钮事件
-    cancelsc(){
+    cancelsc() {
       ElMessage({
         message: '已取消该操作',
         type: 'warning',
@@ -216,11 +234,13 @@ export default {
 
 <style type="text/css" scoped>
 @import url("../../css/zpdaohang.css");
-.demo-pagination-block{
-  margin-left:850px ;
+
+.demo-pagination-block {
+  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
 .saas-main-content {
   padding-top: 12px;
   min-height: 500px;

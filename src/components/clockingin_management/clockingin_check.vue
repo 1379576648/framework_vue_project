@@ -1,14 +1,12 @@
 <!--班次管理页面-->
 <template>
-  <div class="w">
-    <router-link :to="{path: this.one,query:{path:this.$route.query.path}}">
-      <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;">
+  <div class="w" v-if="clockingin_classes==false">
+      <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;" @click="clockingin_classes=true">
         <el-icon>
           <i-plus/>
         </el-icon>
         <span>新增</span>
       </el-button>
-    </router-link>
     <!-- 搜索框 -->
     <el-input v-model="input" placeholder="搜索" style="width:200px;float:right;margin-top:20px;margin-right:20px;">
       <template #suffix>
@@ -78,14 +76,22 @@
       </el-pagination>
     </div>
   </div>
+<!--  添加班次-->
+  <clockingin_classes v-if="clockingin_classes"/>
 </template>
 
 <script lang="ts">
+//添加班次
+import clockingin_classes from '../clockingin_management/clockingin_classes.vue';
 export default {
+  components:{
+    //添加班次
+    clockingin_classes
+  },
   data() {
     return {
-      // 新增路由地址
-      one: '/clockingin/check/classes/addclass',
+      //添加班次
+      clockingin_classes:false,
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */

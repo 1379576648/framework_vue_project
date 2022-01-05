@@ -81,12 +81,14 @@
     <br/>
     <!-- 表格数据 -->
     <div class="ant-table-wrapper j_statistics_layout">
-      <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-        <el-table-column fixed="left"  align="center" type="selection" width="80" />
+      <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
+                :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+        <el-table-column fixed="left" align="center" type="selection" width="80"/>
         <el-table-column fixed="left" prop="name" label="姓名" width="150">
           <template #default="scope">
-            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
-          </template>
+   <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
+             {{ scope.row.name }}
+            </span></template>
         </el-table-column>
         <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
         <el-table-column prop="gender" label="性别" width="140"/>
@@ -131,8 +133,6 @@
     </div>
 
 
-
-
   </div>
 
 </template>
@@ -145,9 +145,6 @@ import {
 export default {
   data() {
     return {
-      //路由地址
-      details:'/recruit/recruit/addresume',
-      addresume:'/recruit/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
@@ -155,31 +152,71 @@ export default {
         total: 0,
       },
       //筛选框显示隐藏
-      icons:false,
+      icons: false,
       //搜索框
       input: "",
       //表格数据
       tableData: [
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'}
+        {
+          name: 'tom',
+          departm: 'tom',
+          gender: 'tom',
+          schoolli: 'tom',
+          phone: 'tom',
+          age: 'tom',
+          email: 'tom',
+          professional: 'tom',
+          birth: 'tom',
+          face: 'tom',
+          gradschool: 'tom   ',
+          invitation: 'tom',
+          state: 'tom'
+        },
+        {
+          name: 'tom',
+          departm: 'tom',
+          gender: 'tom',
+          schoolli: 'tom',
+          phone: 'tom',
+          age: 'tom',
+          email: 'tom',
+          professional: 'tom',
+          birth: 'tom',
+          face: 'tom',
+          gradschool: 'tom   ',
+          invitation: 'tom',
+          state: 'tom'
+        },
+        {
+          name: 'tom',
+          departm: 'tom',
+          gender: 'tom',
+          schoolli: 'tom',
+          phone: 'tom',
+          age: 'tom',
+          email: 'tom',
+          professional: 'tom',
+          birth: 'tom',
+          face: 'tom',
+          gradschool: 'tom   ',
+          invitation: 'tom',
+          state: 'tom'
+        }
       ],
       //筛选框数据
-      formInline:{
-        vlues1:'',
-        vlues2:'',
-        vlues3:'',
-        vlues4:'',
-        user:''
+      formInline: {
+        vlues1: '',
+        vlues2: '',
+        vlues3: '',
+        vlues4: '',
+        user: ''
 
       }
 
 
     }
   },
-  methods:{
-
-  }
+  methods: {}
 
 }
 
@@ -187,13 +224,14 @@ export default {
 <style type="text/css" scoped>
 /*@import url("../../css/navigation.css");*/
 @import url("../../css/zpdaohang.css");
-.demo-pagination-block{
-  margin-left:850px ;
+
+.demo-pagination-block {
+  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }
 
-.icon-s{
+.icon-s {
   width: 75%;
   height: 45px;
   border-radius: 4px;
@@ -202,12 +240,13 @@ export default {
   padding: 16px;
   margin-left: 70px;
 }
+
 .el-button--primary { /* el-input 显示时 */
   background: #085fc3 !important;
   border-color: #085fc3 !important;
 }
 
-.el-button--primary:hover {/* el-input 悬浮时 */
+.el-button--primary:hover { /* el-input 悬浮时 */
   background: #297ccf !important;
   border-color: #297ccf !important;
   color: #FFF !important;
