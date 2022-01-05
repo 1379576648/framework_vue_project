@@ -174,7 +174,7 @@ export default {
     return {
       //路由地址
       addresume:'/recruit/recruit/addresume',
-      details:'/recruitment/resume/details',
+      details:'/recruit/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
