@@ -49,6 +49,7 @@
 
 <!--          </div>-->
 
+          <div style="margin-left: 30px;">
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane  name="book" label="基本档案">
               <employee_basic/>
@@ -58,6 +59,7 @@
              <employee_personal/>
             </el-tab-pane>
           </el-tabs>
+          </div>
 
         </div>
       </div>
@@ -85,7 +87,7 @@ export default {
       src: '',
       isShow: false,
       book:'/employee/message/employee_roster',
-      activeName:'book',
+      activeName:'second',
       dialogImageUrl: "",
       dialogVisible: false,
     };

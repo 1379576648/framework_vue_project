@@ -295,9 +295,9 @@
                   <el-form-item>
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
                     >提交</el-button
-                    >
-                    <router-link to="/attendance">&nbsp;
-                      <el-button @click="goblack()" style="width: 60px;">取消</el-button></router-link>
+                    >&nbsp;
+                    <router-link :to="{path:this.attendanceplan,query:{path: this.$route.query.path}}">
+                      <el-button style="width: 60px;">取消</el-button></router-link>
                   </el-form-item>
                 </el-form>
               </div>
@@ -320,6 +320,8 @@ export default {
   data() {
 
     return {
+      //考勤扣款
+      attendanceplan:'/salary/attendanceplan',
       ruleForm: {
         schemename: '',
         late: '',
@@ -384,9 +386,6 @@ export default {
     }
   },
   methods:{
-    goblack(){
-      this.$router.go('-1');
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

@@ -4,10 +4,10 @@
 
     <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input v-model="seek" placeholder="搜索" size="small" @click="selectpage">
+      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectpage" >
         <template #suffix>
 
-          <el-icon class="el-input__icon" @change="selectpage">
+          <el-icon class="el-input__icon" >
             <i-search/>
           </el-icon>
         </template>
@@ -29,8 +29,34 @@
       <!--      <el-table-column prop="resumeResidence" label="户口所在地" width="130" />-->
       <!--      <el-table-column prop="resumePoliticalOutlook" label="政治面貌" width="130" />-->
       <el-table-column label="操作">
-        <template #default>
-          <el-button type="text" size="small">入职</el-button>
+        <template #default="scope">
+          <el-button type="text" size="small" @click="selectpage(scope.row.employmentId)
+                                               ,fromValue.resumeId=scope.row.resumeId
+                                               ,fromValue.resumeName=scope.row.resumeName
+                                               ,fromValue.resumeSex=scope.row.resumeSex
+                                               ,fromValue.resumePhone=scope.row.resumePhone
+                                               ,fromValue.resumeEducation=scope.row.resumeEducation
+                                               ,fromValue.resumeMailbox=scope.row.resumeMailbox
+                                               ,fromValue.resumePhoto=scope.row.resumePhoto
+                                               ,fromValue.resumeBirthday=scope.row.resumeBirthday
+                                               ,fromValue.resumeResidence=scope.row.resumeResidence
+                                               ,fromValue.resumePoliticalOutlook=scope.row.resumePoliticalOutlook
+                                               ,fromValue.hiredate=scope.row.hiredate
+                                               ,fromValue.deptName=scope.row.deptName
+                                               ,fromValue.postName=scope.row.postName
+                                               ,fromValue.workStareTime=scope.row.workStareTime
+                                               ,fromValue.workEndTime=scope.row.workEndTime
+                                               ,fromValue.companyName=scope.row.companyName
+                                               ,fromValue.positionName=scope.row.positionName
+                                               ,fromValue.positionIndustry=scope.row.positionIndustry
+                                               ,fromValue.positionDescribe=scope.row.positionDescribe
+                                               ,fromValue.positionSqmonthly=scope.row.positionSqmonthly
+                                               ,fromValue.educationStartTime=scope.row.educationStartTime
+                                               ,fromValue.educationEndTime=scope.row.educationEndTime
+                                               ,fromValue.educationStudentname=scope.row.educationStudentname
+                                               ,fromValue.educationMajor=scope.row.educationMajor
+                                               ,fromValue.educationFullTime=scope.row.educationFullTime
+                                               ,insertStaff()">入职</el-button>
 
           <el-button @click="become=true" type="text" size="small">放弃</el-button>
 
@@ -77,7 +103,7 @@
 
 <script>
 import {defineComponent, ref} from 'vue'
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default defineComponent({
   data() {
@@ -92,7 +118,61 @@ export default defineComponent({
       },
       tableData: [],
       cause: '',
-
+      //表单数据
+      fromValue: {
+        //简历编号
+        resumeId:'',
+        //录用编号
+        employmentId: '',
+        //简历姓名
+        resumeName:'',
+        //简历性别
+        resumeSex:'',
+        //手机号码
+        resumePhone:'',
+        //邮箱
+        resumeMailbox:'',
+        //照片
+        resumePhoto:'',
+        //出生日期
+        resumeBirthday:'',
+        //政治面貌
+        resumePoliticalOutlook:'',
+        //学历
+        resumeEducation:'',
+        //入职日期
+        hiredate:'',
+        //户口所在地
+        resumeResidence:'',
+        //部门名称
+        deptName:'',
+        //职位名称
+        postName:'',
+        //开始时间
+        workStareTime:'',
+        //结束时间
+        workEndTime:'',
+        //公司名称
+        companyName:'',
+        //职位名称
+        positionName:'',
+        //所属行业
+        positionIndustry:'',
+        //工作描述
+        positionDescribe:'',
+        //税前月薪
+        positionSqmonthly:'',
+        //开始时间
+        educationStartTime:'',
+        //结束时间
+        educationEndTime:'',
+        //学校名称
+        educationStudentname:'',
+        //所属专业
+        educationMajor:'',
+        //是否全日制
+        educationFullTime:'',
+      },
     }
   }, setup() {
     const become = ref(false)
@@ -102,7 +182,7 @@ export default defineComponent({
   },
   methods: {
     //查询已录用待入职的员工
-    selectpage() {
+    selectpage(id) {
       var _this = this
       this.axios({
         method: 'post',
@@ -113,7 +193,7 @@ export default defineComponent({
           //页大小
           "pagesize": this.pageInfo.pagesize,
           //员工名称
-          "resumeName": this.resumeName,
+          "resumeName": this.seek,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -143,6 +223,53 @@ export default defineComponent({
         }
       })
     },
+    //新增员工
+    insertStaff() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertStaff',
+        data: this.fromValue,
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              this.selectpage();
+              ElNotification({
+                title: '提示',
+                message: '入职成功',
+                type: 'success',
+              })
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+
   },
   mounted() {
     //查询已录用待入职的员工

@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       url: "http://localhost:80/",
-      information:'/employee/message/employee_roster/information',
+      information:'/employee/message/employee_roster/staffedit',
       tableData: [],
       pageInfo: {
         // 分页参数

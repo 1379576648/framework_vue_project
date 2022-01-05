@@ -21,6 +21,7 @@
                       >
                     </router-link>
                     </el-menu>-->
+        <div style="margin-left: 15px;">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane name="book" label="花名册">
             <employee_staff />
@@ -30,6 +31,7 @@
             <employee_work/>
           </el-tab-pane>
         </el-tabs>
+        </div>
       </div>
 
     </div>
