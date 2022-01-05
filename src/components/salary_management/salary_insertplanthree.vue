@@ -93,9 +93,9 @@
                   <el-form-item>
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
                     >提交</el-button
-                    >
-                    <router-link to="/evection">&nbsp;
-                      <el-button style="width: 60px;" @click="goblack()">取消</el-button></router-link>
+                    >&nbsp;
+                    <router-link :to="{path:this.evectionplan,query:{path: this.$route.query.path}}">
+                      <el-button style="width: 60px;">取消</el-button></router-link>
                   </el-form-item>
                 </el-form>
               </div>
@@ -118,6 +118,8 @@ export default {
   data() {
 
     return {
+      //出差方案
+      evectionplan:'/salary/evectionplan',
       ruleForm: {
         schemename: '',
         businesswage: '',
@@ -145,9 +147,6 @@ export default {
     }
   },
   methods:{
-    goblack(){
-      this.$router.go('-1');
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

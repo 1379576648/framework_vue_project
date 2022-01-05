@@ -7,11 +7,11 @@
         <br />
         <div style="width:95%;background: #e8edf2;padding-top: 30px;margin: auto;" v-show="changesadd">
           <div style="width: 90%;margin: auto;">
-            <h2 >
+            <h3>
               <span>人事异动</span>
               -
               <span>添加</span>
-            </h2>
+            </h3>
             <div style="width: 80%;margin: auto;margin-top: 30px;position: relative;padding-bottom:30px ">
 
               <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">

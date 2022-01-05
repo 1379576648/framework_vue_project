@@ -259,7 +259,7 @@ const routes = [{
                     component: modules[`${'../components/salary_management/salary_checkwage.vue'}`],
                 }, //固定工资方案
                 {
-                    path: '/salary/regular/',
+                    path: '/salary/regular',
                     component: modules[`${'../components/salary_management/salary_fixedwage.vue'}`],
                 }, //加班工资方案
                 {
