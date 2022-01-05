@@ -160,11 +160,11 @@
              label-position="right">
       <!-- 公告标题 -->
       <el-form-item prop="noticeTitle" label="公告标题" style="margin-right: 40px">
-        <el-input size="small" placeholder="请输入公告标题" v-model="fromValue.noticeTitle"></el-input>
+        <el-input size="small" placeholder="请输入公告标题" clearable v-model="fromValue.noticeTitle"></el-input>
       </el-form-item>
       <!-- 公告类型-->
       <el-form-item prop="noticeType" label="公告类型">
-        <el-select size="small" v-model="fromValue.noticeType" placeholder="公告类型" style="width: 180px">
+        <el-select size="small" v-model="fromValue.noticeType" clearable placeholder="公告类型" style="width: 180px">
           <el-option
               v-for="item in type"
               :key="item.value1"
@@ -198,6 +198,7 @@
             v-model="fromValue.noticeMatter"
             type="textarea"
             placeholder="请输入发布内容"
+            clearable
             style="width: 475px">
         </el-input>
 

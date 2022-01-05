@@ -1,28 +1,20 @@
 <!--考勤分页-->
 <template>
-<!--  考勤记录页面上导航栏-->
+  <!--  考勤记录页面上导航栏-->
   <div class="head">
-    <el-tabs v-model="activeName"  type="card" @tab-click="handleClick">
-      
-      <el-tab-pane  name="first">
-        <template #label>
-          <router-link :to="{path: this.one,query:{path:this.$route.query.path}}"><span style="color: #5aaaff">考勤记录</span></router-link>
-        </template>
-        <router-view ></router-view>
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+
+      <el-tab-pane name="first" label="考勤记录">
+        <clockingin_record/>
       </el-tab-pane>
 
-      <el-tab-pane name="second">
-        <template #label>
-          <router-link :to="{path: this.two,query:{path:this.$route.query.path}}"><span style="color: #5aaaff">考勤月报表</span></router-link>
-        </template>
-        <router-view></router-view>
+      <el-tab-pane name="second" label="考勤月报表">
+
+        <clockingin_month/>
       </el-tab-pane>
 
-      <el-tab-pane name="thirdly">
-        <template #label>
-          <router-link :to="{path: this.three,query:{path:this.$route.query.path}}"><span style="color: #5aaaff">历史归档</span></router-link>
-        </template>
-        <router-view ></router-view>
+      <el-tab-pane name="thirdly" label="历史归档">
+        <clockingin_history/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -30,14 +22,26 @@
 
 
 <script lang="ts">
+//考勤记录
+import clockingin_record from '../clockingin_management/clockingin_record.vue';
+//考勤月报表
+import clockingin_month from '../clockingin_management/clockingin_month.vue';
+//历史归档
+import clockingin_history from '../clockingin_management/clockingin_history.vue';
+
 export default {
+  //注册组件
+  components: {
+    //考勤记录
+    clockingin_record,
+    //考勤月报表
+    clockingin_month,
+    //历史归档
+    clockingin_history,
+  },
   data() {
     return {
       activeName: 'first',
-      // 考勤记录/考勤月报表/历史归档路由
-      one:'/clockingin/statistics/record',
-      two:'/clockingin/statistics/report',
-      three:'/clockingin/statistics/archive',
     };
   },
   methods: {
@@ -53,7 +57,8 @@ export default {
   margin-left: -20px;
   margin-top: 0px;
 }
-a{
+
+a {
   text-decoration: none;
 }
 </style>

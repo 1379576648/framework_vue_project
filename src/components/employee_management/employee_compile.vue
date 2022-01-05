@@ -28,11 +28,6 @@
             </div>
           </div>
 
-
-
-
-
-
           <el-dialog v-model="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="" />
           </el-dialog>
@@ -57,39 +52,16 @@
 <!--          </div>-->
 
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane  name="book">
-              <template #label>
-                <router-link :to="{path:this.basicfile,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">基本档案</div></router-link>
-              </template>
+            <el-tab-pane  name="book" label="基本档案">
+              <employee_basic/>
             </el-tab-pane>
 
-            <el-tab-pane  name="second">
-              <template #label>
-                <router-link :to="{path:this.information,query:{path: this.$route.query.path}}"><div style="width: 100px; text-align: center;">个人信息</div></router-link>
-              </template>
+            <el-tab-pane  name="second" label="个人信息">
+             <employee_personal/>
             </el-tab-pane>
           </el-tabs>
 
-
-            
-
         </div>
-      <div>
-        <section
-          class="ant-layout ant-layout-has-sider"
-          style="
-            min-width: 988px;
-            min-height: 90vh;
-            background-color: rgba(232, 239, 246, 0);
-            box-shadow: rgb(121, 159, 197) 0px 7px;
-          "
-          id="scrollLayout"
-        >
-          <main style="margin: 10px" class="ant-layout-content">
-            <router-view></router-view>
-          </main>
-        </section>
-      </div>
       </div>
     </div>
   </div>
@@ -97,19 +69,25 @@
 </template>
 
 <script>
-
+//基本档案
+import employee_basic from '../employee_management/employee_basic.vue';
+//个人信息
+import employee_personal from  '../employee_management/employee_personal.vue';
 import { Plus } from "@element-plus/icons";
 export default {
   components: {
     Plus,
+    //基本档案
+    employee_basic,
+    //个人信息
+    employee_personal,
   },
   data() {
     return {
       src: '',
       isShow: false,
-      book:'/employee/message/employee_roster/book',
-      basicfile:'/employee/message/employee_roster/basicfile',
-      information:'/employee/message/employee_roster/information',
+      book:'/employee/message/employee_roster',
+      activeName:'book',
       dialogImageUrl: "",
       dialogVisible: false,
     };
