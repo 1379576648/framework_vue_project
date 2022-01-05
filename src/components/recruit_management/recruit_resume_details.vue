@@ -14,7 +14,7 @@
           <!-- 个人消息列 -->
           <div class="ant-row-flex ant-row-flex-space-between" style="margin-bottom: -16px;">
             <div class="ant-col">
-              <span style="font-size: 18px; font-weight: bold;">{{this.$route.query.name}}</span>
+              <span style="font-size: 18px; font-weight: bold;">{{ this.$route.query.name }}</span>
               &nbsp;&nbsp;
               <span>ID:31089 </span>
               &nbsp;&nbsp;
@@ -23,7 +23,7 @@
               <span><span>已入职</span>&nbsp;|&nbsp;<span class="ant-tag"><a href="">人力资源专员</a></span></span>
             </div>
             <div class="ant-col">
-              <el-button plain size="small">推进下一阶段 ^ </el-button>
+              <el-button plain size="small">推进下一阶段 ^</el-button>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
                   <div style="width: 120px;text-align: center">简历消息</div>
                 </template>
 
-                <div  > <!---->
+                <div> <!---->
                   <div style="margin-left: 0%;" class="ant-tabs-content">
                     <div role="tabpanel" aria-hidden="false" class="ant-tabs-tabpane ant-tabs-tabpane-active">
                       <div>
@@ -50,18 +50,21 @@
                           <!--
                           个人信息
                           -->
-                          <div style="display: block;margin-top: 15px;" class="mt-15" >
+                          <div style="display: block;margin-top: 15px;" class="mt-15">
                             <div class="ant-card">
                               <div style="padding: 0px;">
                                 <!-- 个人消息标题 -->
                                 <div class="ant-row">
                                   <!-- 标题 -->
-                                  <div style="font-size: 18px; font-weight: bold;" class="ant-col ant-col-12 gutter-example">
+                                  <div style="font-size: 18px; font-weight: bold;"
+                                       class="ant-col ant-col-12 gutter-example">
                                     <span>个人信息</span>
                                   </div>
                                   <!-- 编辑按钮 -->
                                   <div style="text-align: right">
-                                    <el-button plain style="width: 70px" @click="personal_details=true" size="mini">+ 编辑</el-button>
+                                    <el-button plain style="width: 70px" @click="personal_details=true" size="mini">+
+                                      编辑
+                                    </el-button>
                                   </div>
                                 </div>
                                 <!-- 个人消息内容 -->
@@ -69,14 +72,16 @@
 
                                   <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
                                     <!-- 性别 -->
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>性别</span>：
                                         男
                                       </div>
                                     </div>
                                     <!-- 邮箱 -->
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>邮箱</span>：
                                         3210053361@qq.com
@@ -84,13 +89,15 @@
                                     </div>
                                   </div>
                                   <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>政治面貌</span>：
                                       </div>
                                     </div>
                                     <!-- 婚姻状况 -->
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>婚姻状况</span>：
                                       </div>
@@ -98,12 +105,10 @@
                                   </div>
 
 
-
                                 </div>
                               </div>
                             </div>
                           </div>
-
 
 
                           <el-dialog
@@ -113,11 +118,14 @@
                               :before-close="handleClose"
                           >
                             <el-form :inline="true" v-model="affiche">
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"  label="邮箱：">
-                                <el-input ></el-input>
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"
+                                            label="邮箱：">
+                                <el-input></el-input>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;size: 14px;margin-left: 120px;margin-top: -15px;"  label="性别：">
+                              <el-form-item style="font-weight: bold;size: 14px;margin-left: 120px;margin-top: -15px;"
+                                            label="性别：">
                                 <div class="normal">
                                   <el-radio v-model="affiche.radio1" label="1">正常</el-radio>
                                 </div>
@@ -126,8 +134,9 @@
                                 </div>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 95px;" label="政治面貌：">
-                                <el-select size="small" style="width: 215px" v-model="affiche.politics_status" >
+                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 95px;"
+                                            label="政治面貌：">
+                                <el-select size="small" style="width: 215px" v-model="affiche.politics_status">
                                   <el-option
                                       v-for="item in politics_status"
                                       :key="item.value1"
@@ -137,8 +146,9 @@
                                 </el-select>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 90px;" label="婚姻状况：">
-                                <el-select size="small" style="width: 215px" v-model="affiche.marriage" >
+                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 90px;"
+                                            label="婚姻状况：">
+                                <el-select size="small" style="width: 215px" v-model="affiche.marriage">
                                   <el-option
                                       v-for="item in marriage"
                                       :key="item.value1"
@@ -148,12 +158,12 @@
                                 </el-select>
                               </el-form-item>
 
-                              <el-form-item >
+                              <el-form-item>
                                 <div class="announcement-cz">
                                   <el-button size="small " style="width: 85px;" @click="personal_details=false">
                                     取消
                                   </el-button>
-                                  <el-button size="small " style="width: 85px;" type="primary" >
+                                  <el-button size="small " style="width: 85px;" type="primary">
                                     保存
                                   </el-button>
                                 </div>
@@ -163,30 +173,33 @@
                           </el-dialog>
 
 
-
-                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;" role="separator"></div>
+                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;"
+                               role="separator"></div>
                           <!--
                           求职意向信息
                            -->
-                          <div style="display: block;margin-top: 15px;" class="mt-15" >
+                          <div style="display: block;margin-top: 15px;" class="mt-15">
                             <div class="ant-card">
                               <div style="padding: 0px;">
                                 <!-- 求职意向标题 -->
                                 <div class="ant-row">
                                   <!-- 标题 -->
-                                  <div style="font-size: 18px; font-weight: bold;" class="ant-col ant-col-12 gutter-example">
+                                  <div style="font-size: 18px; font-weight: bold;"
+                                       class="ant-col ant-col-12 gutter-example">
                                     <span>求职意向</span>
                                   </div>
                                   <!-- 编辑按钮 -->
                                   <div style="text-align: right">
-                                    <el-button plain style="width: 70px" size="mini" @click="job_intention=true">+ 编辑</el-button>
+                                    <el-button plain style="width: 70px" size="mini" @click="job_intention=true">+ 编辑
+                                    </el-button>
                                   </div>
                                 </div>
                                 <!--求职意向内容 -->
                                 <div class="gutter-example mycard">
 
                                   <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>期望薪资</span>：3000-4000
                                         元
@@ -196,7 +209,8 @@
                                   </div>
 
                                   <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>到岗时间</span>：2020-10-11
                                       </div>
@@ -205,7 +219,8 @@
                                   </div>
 
                                   <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
-                                    <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                    <div style="padding-left: 8px; padding-right: 8px;"
+                                         class="ant-col ant-col-7 gutter-row">
                                       <div style="float: left;">
                                         <span>自我评价</span>：优秀、非常优秀、相对牛逼
                                       </div>
@@ -227,18 +242,22 @@
                               :before-close="handleClose"
                           >
                             <el-form :inline="true" v-model="affiches">
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"  label="期望薪资：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"
+                                            label="期望薪资：">
                                 <el-input v-model="affiches.pay"></el-input>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;size: 14px;margin-left: 53px;margin-top: -15px;"  label="到岗时间：">
+                              <el-form-item style="font-weight: bold;size: 14px;margin-left: 53px;margin-top: -15px;"
+                                            label="到岗时间：">
                                 <div class="block">
                                   <el-date-picker v-model="affiches.value1" type="date" placeholder="Pick a day">
                                   </el-date-picker>
                                 </div>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 123px;" label="自我评价：">
+                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 123px;"
+                                            label="自我评价：">
                                 <el-input
                                     v-model="affiches.content"
                                     style="
@@ -249,7 +268,7 @@
                                 </el-input>
                               </el-form-item>
 
-                              <el-form-item >
+                              <el-form-item>
                                 <div class="announcement-cz">
                                   <el-button size="small " style="width: 85px;" @click="job_intention=false">
                                     取消
@@ -264,8 +283,8 @@
                           </el-dialog>
 
 
-
-                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;" role="separator"></div>
+                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;"
+                               role="separator"></div>
 
                           <!--
                            最近工作、最高学历
@@ -275,28 +294,34 @@
                               <!--  最近工作、最高学历标题 -->
                               <div class="ant-row">
                                 <!-- 标题 -->
-                                <div style="font-size: 18px; font-weight: bold;" class="ant-col ant-col-12 gutter-example">
+                                <div style="font-size: 18px; font-weight: bold;"
+                                     class="ant-col ant-col-12 gutter-example">
                                   <span>最高学历</span>
                                 </div>
-                                <div style="font-size: 18px; font-weight: bold; width: 30%;" class="ant-col ant-col-12 gutter-example">
+                                <div style="font-size: 18px; font-weight: bold; width: 30%;"
+                                     class="ant-col ant-col-12 gutter-example">
                                   <span>最近工作</span>
                                 </div>
                                 <!-- 编辑按钮 -->
                                 <div style="text-align: right">
-                                  <el-button plain style="width: 70px" size="mini" @click="job_qualifications=true">+ 编辑</el-button>
+                                  <el-button plain style="width: 70px" size="mini" @click="job_qualifications=true">+
+                                    编辑
+                                  </el-button>
                                 </div>
                               </div>
 
                               <div class="gutter-example mycard">
                                 <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
 
-                                  <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                  <div style="padding-left: 8px; padding-right: 8px;"
+                                       class="ant-col ant-col-7 gutter-row">
                                     <div style="float: left;">
                                       <span>专业</span>：java工程师
                                     </div>
                                   </div>
 
-                                  <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                  <div style="padding-left: 8px; padding-right: 8px;"
+                                       class="ant-col ant-col-7 gutter-row">
                                     <div style="float: left;">
                                       <span>职位</span>：老板
                                     </div>
@@ -307,13 +332,15 @@
                                 <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
 
 
-                                  <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                  <div style="padding-left: 8px; padding-right: 8px;"
+                                       class="ant-col ant-col-7 gutter-row">
                                     <div style="float: left;">
                                       <span>学校</span>：家里蹲大学
                                     </div>
                                   </div>
 
-                                  <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                  <div style="padding-left: 8px; padding-right: 8px;"
+                                       class="ant-col ant-col-7 gutter-row">
                                     <div style="float: left;">
                                       <span>公司</span>：王鑫科技集团
                                     </div>
@@ -322,7 +349,8 @@
                                 </div>
 
                                 <div style="margin-left: -8px; margin-right: -8px;" class="ant-row">
-                                  <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-7 gutter-row">
+                                  <div style="padding-left: 8px; padding-right: 8px;"
+                                       class="ant-col ant-col-7 gutter-row">
                                     <div style="float: left;">
                                       <span>学历</span>：博士之上
                                     </div>
@@ -342,12 +370,15 @@
                               :before-close="handleClose"
                           >
                             <el-form :inline="true" v-model="qualifications">
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"  label="专业：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"
+                                            label="专业：">
                                 <el-input v-model="qualifications.specialty"></el-input>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: -14px;size: 14px;margin-left: 61px;" label="职位 ：">
-                                <el-select size="small" style="width: 215px" v-model="qualifications.position" >
+                              <el-form-item style="font-weight: bold;margin-top: -14px;size: 14px;margin-left: 61px;"
+                                            label="职位 ：">
+                                <el-select size="small" style="width: 215px" v-model="qualifications.position">
                                   <el-option
                                       v-for="item in position"
                                       :key="item.value1"
@@ -357,16 +388,22 @@
                                 </el-select>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 124px;margin-top: 20px;width: 268px;"  label="学校：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 124px;margin-top: 20px;width: 268px;"
+                                            label="学校：">
                                 <el-input v-model="qualifications.school"></el-input>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 62px;margin-top: 20px;width: 268px;"  label="公司：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 62px;margin-top: 20px;width: 268px;"
+                                            label="公司：">
                                 <el-input v-model="qualifications.company"></el-input>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: 10px;size: 14px;margin-left: 122px;" label="学历：">
-                                <el-select size="small" style="width: 215px" v-model="qualifications.education_background" >
+                              <el-form-item style="font-weight: bold;margin-top: 10px;size: 14px;margin-left: 122px;"
+                                            label="学历：">
+                                <el-select size="small" style="width: 215px"
+                                           v-model="qualifications.education_background">
                                   <el-option
                                       v-for="item in education_background"
                                       :key="item.value1"
@@ -376,12 +413,12 @@
                                 </el-select>
                               </el-form-item>
 
-                              <el-form-item >
+                              <el-form-item>
                                 <div class="announcement-cz">
                                   <el-button size="small " style="width: 85px;" @click="job_qualifications=false">
                                     取消
                                   </el-button>
-                                  <el-button size="small " style="width: 85px;" type="primary" >
+                                  <el-button size="small " style="width: 85px;" type="primary">
                                     保存
                                   </el-button>
                                 </div>
@@ -390,23 +427,27 @@
                             </el-form>
                           </el-dialog>
 
-                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;" role="separator"></div>
+                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;"
+                               role="separator"></div>
 
                           <!--
                             工作经历
                              -->
-                          <div style="display: block;margin-top: 15px;" class="mt-15" >
+                          <div style="display: block;margin-top: 15px;" class="mt-15">
                             <div class="ant-card">
                               <div style="padding: 0px;">
                                 <!-- 工作经历标题 -->
                                 <div class="ant-row">
                                   <!-- 标题 -->
-                                  <div style="font-size: 18px; font-weight: bold;" class="ant-col ant-col-12 gutter-example">
+                                  <div style="font-size: 18px; font-weight: bold;"
+                                       class="ant-col ant-col-12 gutter-example">
                                     <span>工作经历</span>
                                   </div>
                                   <!-- 编辑按钮 -->
                                   <div style="text-align: right">
-                                    <el-button plain style="width: 70px" size="mini" @click="work_experience=true">+ 新增</el-button>
+                                    <el-button plain style="width: 70px" size="mini" @click="work_experience=true">+
+                                      新增
+                                    </el-button>
                                   </div>
                                 </div>
                                 <!--工作经历内容  循环 -->
@@ -442,12 +483,15 @@
                               :before-close="handleClose"
                           >
                             <el-form :inline="true" v-model="experience">
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"  label="任职公司：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"
+                                            label="任职公司：">
                                 <el-input v-model="experience.firm"></el-input>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: -14px;size: 14px;margin-left: 61px;" label="职位 ：">
-                                <el-select size="small" style="width: 215px" v-model="experience.position" >
+                              <el-form-item style="font-weight: bold;margin-top: -14px;size: 14px;margin-left: 61px;"
+                                            label="职位 ：">
+                                <el-select size="small" style="width: 215px" v-model="experience.position">
                                   <el-option
                                       v-for="item in position"
                                       :key="item.value1"
@@ -457,15 +501,21 @@
                                 </el-select>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 124px;width: 268px;"  label="所属行业：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 124px;width: 268px;"
+                                            label="所属行业：">
                                 <el-input v-model="experience.industry"></el-input>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 37px;width: 295px;"  label="税前工资：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 37px;width: 295px;"
+                                            label="税前工资：">
                                 <el-input v-model="experience.salary"></el-input>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 122px;width: 268px;"  label="工作时间：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 122px;width: 268px;"
+                                            label="工作时间：">
                                 <el-date-picker
                                     size="small"
                                     v-model="experience.time"
@@ -477,7 +527,8 @@
                                 </el-date-picker>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 123px;" label="工作描述：">
+                              <el-form-item style="font-weight: bold;margin-top: 20px;size: 14px;margin-left: 123px;"
+                                            label="工作描述：">
                                 <el-input
                                     v-model="experience.describe "
                                     style="
@@ -488,12 +539,12 @@
                                 </el-input>
                               </el-form-item>
 
-                              <el-form-item >
+                              <el-form-item>
                                 <div class="announcement-cz">
                                   <el-button size="small " style="width: 85px;" @click="work_experience=false">
                                     取消
                                   </el-button>
-                                  <el-button size="small " style="width: 85px;" type="primary" >
+                                  <el-button size="small " style="width: 85px;" type="primary">
                                     保存
                                   </el-button>
                                 </div>
@@ -503,23 +554,27 @@
                           </el-dialog>
 
 
-                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;" role="separator"></div>
+                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;"
+                               role="separator"></div>
 
                           <!--
                             教育经历
                              -->
-                          <div style="display: block;margin-top: 15px;" class="mt-15" >
+                          <div style="display: block;margin-top: 15px;" class="mt-15">
                             <div class="ant-card">
                               <div style="padding: 0px;">
                                 <!-- 工作经历标题 -->
                                 <div class="ant-row">
                                   <!-- 标题 -->
-                                  <div style="font-size: 18px; font-weight: bold;" class="ant-col ant-col-12 gutter-example">
+                                  <div style="font-size: 18px; font-weight: bold;"
+                                       class="ant-col ant-col-12 gutter-example">
                                     <span>教育经历</span>
                                   </div>
                                   <!-- 编辑按钮 -->
                                   <div style="text-align: right">
-                                    <el-button plain style="width: 70px" size="mini" @click="education_experience=true">+ 新增</el-button>
+                                    <el-button plain style="width: 70px" size="mini" @click="education_experience=true">
+                                      + 新增
+                                    </el-button>
                                   </div>
                                 </div>
                                 <!--工作经历内容  循环 -->
@@ -555,16 +610,21 @@
                               :before-close="handleClose"
                           >
                             <el-form :inline="true" v-model="education">
-                              <el-form-item size="small" style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"  label="学校名字：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: 14px;margin-left: 124px;width: 268px;"
+                                            label="学校名字：">
                                 <el-input v-model="education.school_name"></el-input>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;size: -14px;margin-left: 61px;width: 268px;"  label="所学专业：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;size: -14px;margin-left: 61px;width: 268px;"
+                                            label="所学专业：">
                                 <el-input v-model="education.major"></el-input>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;margin-top: 10px;size: 14px;margin-left: 150px;" label="学历：">
-                                <el-select size="small" style="width: 187px" v-model="education.backgrounds" >
+                              <el-form-item style="font-weight: bold;margin-top: 10px;size: 14px;margin-left: 150px;"
+                                            label="学历：">
+                                <el-select size="small" style="width: 187px" v-model="education.backgrounds">
                                   <el-option
                                       v-for="item in backgrounds"
                                       :key="item.value1"
@@ -574,7 +634,8 @@
                                 </el-select>
                               </el-form-item>
 
-                              <el-form-item style="font-weight: bold;size: 14px;margin-left: 48px;margin-top: 10px;"  label="是否全日制：">
+                              <el-form-item style="font-weight: bold;size: 14px;margin-left: 48px;margin-top: 10px;"
+                                            label="是否全日制：">
                                 <div class="normal">
                                   <el-radio v-model="experience.full_time" label="1">是</el-radio>
                                 </div>
@@ -583,7 +644,9 @@
                                 </div>
                               </el-form-item>
 
-                              <el-form-item size="small" style="font-weight: bold;margin-top: 30px;size: 14px;margin-left: 122px;width: 268px;"  label="受教时长：">
+                              <el-form-item size="small"
+                                            style="font-weight: bold;margin-top: 30px;size: 14px;margin-left: 122px;width: 268px;"
+                                            label="受教时长：">
                                 <el-date-picker
                                     size="small"
                                     v-model="experience.duration"
@@ -595,12 +658,12 @@
                                 </el-date-picker>
                               </el-form-item>
 
-                              <el-form-item >
+                              <el-form-item>
                                 <div class="announcement-czs">
                                   <el-button size="small " style="width: 85px;" @click="work_experience=false">
                                     取消
                                   </el-button>
-                                  <el-button size="small " style="width: 85px;" type="primary" >
+                                  <el-button size="small " style="width: 85px;" type="primary">
                                     保存
                                   </el-button>
                                 </div>
@@ -610,14 +673,16 @@
                           </el-dialog>
 
                           <!--备注-->
-                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;" role="separator"></div>
-                          <div style="display: block;margin-top: 15px;" class="mt-15" >
+                          <div class="ant-divider ant-divider-horizontal" style="margin-top: 15px;"
+                               role="separator"></div>
+                          <div style="display: block;margin-top: 15px;" class="mt-15">
                             <div class="ant-card">
                               <div style="padding: 0px;">
                                 <!-- 工作经历标题 -->
                                 <div class="ant-row">
                                   <!-- 标题 -->
-                                  <div style="font-size: 18px; font-weight: bold;" class="ant-col ant-col-12 gutter-example">
+                                  <div style="font-size: 18px; font-weight: bold;"
+                                       class="ant-col ant-col-12 gutter-example">
                                     <span>备注</span>
                                   </div>
                                   <!-- 编辑按钮 -->
@@ -687,8 +752,7 @@
 <script>
 
 
-
-import {  reactive, toRefs ,ref} from 'vue'
+import {reactive, toRefs, ref} from 'vue'
 
 export default {
   data() {
@@ -700,7 +764,7 @@ export default {
       disabledDate(time) {
         return time.getTime() > Date.now()
       },
-      value1:'',
+      value1: '',
     })
 
     return {
@@ -708,16 +772,16 @@ export default {
       ...toRefs(state),
       activeName: 'one',
       //个人信息弹出框
-      personal_details:false,
-      affiche:{
+      personal_details: false,
+      affiche: {
         //政治面貌
-        politics_status:'',
+        politics_status: '',
         //单选框按钮
-        radio1:'1',
+        radio1: '1',
         //婚姻状况
-        marriage:'',
+        marriage: '',
       },
-      politics_status:ref([
+      politics_status: ref([
         {
           value1: '村书记',
           label: '村书记',
@@ -728,7 +792,7 @@ export default {
         }
       ]),
       //婚姻状况
-      marriage:ref([
+      marriage: ref([
         {
           value1: '已婚',
           label: '已婚',
@@ -745,32 +809,32 @@ export default {
       ]),
 
       //求职意向对话框
-      job_intention:false,
-      affiches:{
+      job_intention: false,
+      affiches: {
         //自我评价
-        content:'',
+        content: '',
         //期望薪资
-        pay:'',
+        pay: '',
         //到岗时间
-        value1:''
+        value1: ''
       },
 
 
       //最高学历最近工作
-      job_qualifications:false,
-      qualifications:{
+      job_qualifications: false,
+      qualifications: {
         //专业
-        specialty:'',
+        specialty: '',
         //职位
-        position:'',
+        position: '',
         //学校
-        school:'',
+        school: '',
         //公司
-        company:'',
+        company: '',
         //学历
-        education_background:'',
+        education_background: '',
       },
-      position:ref([
+      position: ref([
         {
           value1: '厨师',
           label: '厨师',
@@ -784,7 +848,7 @@ export default {
           label: '老板',
         }
       ]),
-      education_background:ref([
+      education_background: ref([
         {
           value1: '小学',
           label: '小学',
@@ -800,32 +864,32 @@ export default {
       ]),
 
       //工作经历
-      work_experience:false,
-      experience:{
-        firm:'',
-        position:'',
-        industry:'',
-        salary:'',
-        time:'',
-        describe:'',
+      work_experience: false,
+      experience: {
+        firm: '',
+        position: '',
+        industry: '',
+        salary: '',
+        time: '',
+        describe: '',
 
       },
       //教育经历
-      education_experience:false,
-      education:{
+      education_experience: false,
+      education: {
         //学校名字
-        school_name:'',
+        school_name: '',
         //所学专业
-        major:'',
+        major: '',
         //学历
-        backgrounds:'',
+        backgrounds: '',
         //教育时长
-        duration:'',
+        duration: '',
         //是否全日制
-        full_time:'1'
+        full_time: '1'
 
       },
-      backgrounds:ref([
+      backgrounds: ref([
         {
           value1: '小学',
           label: '小学',
@@ -846,7 +910,7 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event)
     },
-    goback(){
+    goback() {
       this.$router.go('-1');
     }
   },
@@ -865,42 +929,53 @@ export default {
   url('//at.alicdn.com/t/font_2985811_0z1f95yydth.woff?t=1639493721834') format('woff'),
   url('//at.alicdn.com/t/font_2985811_0z1f95yydth.ttf?t=1639493721834') format('truetype');
 }
-.announcement-czs{
+
+.announcement-czs {
   margin-top: 15px;
   margin-left: 345px;
 }
-.announcement-cz{
+
+.announcement-cz {
   margin-top: 35px;
   margin-left: 345px;
 }
-.normal{
+
+.normal {
   margin-top: 1px;
 }
-.shut{
+
+.shut {
   margin-top: -40px;
   margin-left: 73px;
 }
-.iconfont{
-  font-family:"iconfont" !important;
-  font-size:16px;font-style:normal;
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
   color: black;
 }
-.mycard i:hover{
-  cursor:pointer;
+
+.mycard i:hover {
+  cursor: pointer;
 }
+
 .mycard .title {
   font-size: 14px;
   line-height: 1.75;
 }
-.title span{
+
+.title span {
   padding-right: 80px;
 }
-.mycard .desc{
+
+.mycard .desc {
   width: 1000px;
 }
+
 .mycard .desc-pre {
   line-height: 1.75;
   font-family: inherit;
@@ -919,10 +994,12 @@ export default {
   color: rgba(0, 0, 0, 0.65);
   background: #e8e8e8;
 }
+
 .ant-divider {
   margin: 0 2px;
   margin-top: 0px;
 }
+
 .ant-divider-horizontal {
   display: block;
   clear: both;
@@ -930,10 +1007,12 @@ export default {
   min-width: 100%;
   height: 1px;
 }
-.ant-divider{
+
+.ant-divider {
   position: relative;
   top: -0.06em;
 }
+
 .ant-divider {
   box-sizing: border-box;
   padding: 0;
@@ -943,7 +1022,6 @@ export default {
   list-style: none;
   font-feature-settings: 'tnum';
 }
-
 
 
 .mycard:hover {
@@ -956,6 +1034,7 @@ export default {
   overflow: hidden;
   content: '';
 }
+
 .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane, .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
   flex-shrink: 0;
   width: 100%;
@@ -963,19 +1042,23 @@ export default {
   opacity: 1;
   transition: opacity 0.45s;
 }
+
 .myResumeDetail .ant-tabs-tabpane {
   max-height: 800px;
   overflow: auto;
   padding-bottom: 200px;
 }
+
 .mainContent .ant-card, .edit__forms .ant-card {
   width: 100%;
 }
+
 .ant-card {
   color: rgba(0, 0, 0, 0.65);
   background: #fff;
   border-radius: 2px;
 }
+
 .ant-card {
   box-sizing: border-box;
   margin: 0;
@@ -991,6 +1074,7 @@ export default {
   border-radius: 2px;
   transition: all 0.3s;
 }
+
 .ant-row {
   position: relative;
   height: auto;
@@ -1000,24 +1084,28 @@ export default {
   display: block;
   box-sizing: border-box;
 }
+
 .ant-col-12 {
   display: block;
   box-sizing: border-box;
   width: 30%;
 }
-.ant-col-12,ant-col-7 {
+
+.ant-col-12, ant-col-7 {
   flex: 0 0 auto;
   position: relative;
   padding-right: 0;
   padding-left: 0;
 }
-.ant-col{
+
+.ant-col {
   min-height: 1px;
 }
 
-.ant-col-7,ant-col-12{
+.ant-col-7, ant-col-12 {
   float: left;
 }
+
 /**
  消息内容面板样式
  */
@@ -1038,17 +1126,15 @@ export default {
 }
 
 
-
-
-
-
 .ant-row-flex-space-between {
   justify-content: space-between;
 }
+
 .ant-row-flex {
   display: flex;
   flex-flow: row wrap;
 }
+
 .ant-col {
   position: relative;
   min-height: 1px;
@@ -1057,6 +1143,7 @@ export default {
 .ant-tabs {
   color: rgba(0, 0, 0, 0.65);
 }
+
 .ant-tabs {
   box-sizing: border-box;
   margin: 0;
@@ -1071,10 +1158,12 @@ export default {
   overflow: hidden;
   zoom: 1;
 }
+
 .ant-tabs::before, .ant-tabs::after {
   display: table;
   content: '';
 }
+
 *, ::before, ::after {
   box-sizing: border-box;
 }
@@ -1093,7 +1182,8 @@ export default {
   color: var(--el-text-color-primary);
   position: relative;
 }
-/deep/.el-tabs__nav {
+
+/deep/ .el-tabs__nav {
   white-space: nowrap;
   position: relative;
   transition: transform var(--el-transition-duration);
@@ -1102,11 +1192,10 @@ export default {
   margin-left: 0px;
 }
 
-a{
+a {
   font-size: 15px;
   color: black;
 }
-
 
 
 </style>

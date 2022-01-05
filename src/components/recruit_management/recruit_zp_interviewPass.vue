@@ -142,7 +142,7 @@ import {
 export default {
   data() {
     return {
-      details:'/recruitment/resume/details',
+      details:'/recruit/resume/details',
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */

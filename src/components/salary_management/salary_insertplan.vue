@@ -159,8 +159,9 @@
             <el-form-item>
               <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
               >提交</el-button
-              >
-              <el-button style="width: 60px;" @click="goblack()">取消</el-button>
+              >&nbsp;
+              <router-link :to="{path:this.callbackpay,query:{path: this.$route.query.path}}">
+                <el-button style="width: 60px;">取消</el-button></router-link>
             </el-form-item>
           </el-form>
         </div>
@@ -182,6 +183,8 @@ export default {
   data() {
 
     return {
+      //加班工资
+      callbackpay:'/salary/callbackpay',
       ruleForm: {
         schemename: '',
         workday: '',
@@ -229,9 +232,6 @@ export default {
 
   },
   methods:{
-    goblack(){
-      this.$router.go('-1');
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
