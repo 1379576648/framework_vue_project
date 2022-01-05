@@ -1,4 +1,4 @@
-<!-- 简历筛选：候选人 -->
+<!-- 简历筛选：面试候选人 -->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -117,7 +117,7 @@
       <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currenPage"
+            v-model:currentPage="pageInfo.currentPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -150,7 +150,7 @@ export default {
       //路由地址 ：简历详情页面
       details:'/recruitment/resume/details',
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
@@ -160,11 +160,7 @@ export default {
       //搜索框
       input: "",
       //表格数据
-      tableData: [
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'}
-      ],
+      tableData: [],
       //筛选框数据
       formInline:{
         vlues1:'',
