@@ -7,7 +7,8 @@
        attendanceplan==false&&
        evectionplan==false&&
        salary_insertplan==false&&
-      salary_insertplanthree==false">
+      salary_insertplanthree==false&&
+      salary_insertplantwo==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <span></span>
@@ -63,7 +64,9 @@
   <!--  新增修改加班方案-->
   <salary_insertplan v-if="salary_insertplan" :name="insertplan_name"/>
   <!--  新增修改出差方案-->
-  <salary_insertplanthree v-if="salary_insertplanthree"/>
+  <salary_insertplanthree v-if="salary_insertplanthree" :name="insertplanthree_name"/>
+<!--  考勤扣款新增或修改方案-->
+  <salary_insertplantwo v-if="salary_insertplantwo" :name="insertplantwo_name"/>
 </template>
 
 <script>
@@ -80,13 +83,15 @@ import regular from '../salary_management/salary_fixedwage.vue';
 //加班工资
 import callbackpay from '../salary_management/salary_workovertimeplan.vue';
 //考勤扣款
-import attendanceplan from '../salary_management/salary_insertplan.vue';
+import attendanceplan from '../salary_management/salary_attendance.vue';
 //出差方案
 import evectionplan from '../salary_management/salary_evection.vue';
 //新增修改加班方案
 import salary_insertplan from '../salary_management/salary_insertplan.vue';
 //新增修改出差方案
 import salary_insertplanthree from '../salary_management/salary_insertplanthree.vue';
+//新增修改考勤扣款方案
+import salary_insertplantwo from '../salary_management/salary_insertplantwo.vue';
 
 export default {
   //注册组件
@@ -111,6 +116,8 @@ export default {
     salary_insertplan,
     //新增修改出差方案
     salary_insertplanthree,
+    //新增修改考勤扣款方案
+    salary_insertplantwo,
   },
   data() {
     return {
@@ -134,10 +141,14 @@ export default {
       salary_insertplan: false,
       //新增修改出差方案
       salary_insertplanthree: false,
+      //新增修改考勤扣款方案
+      salary_insertplantwo:false,
       //新增或修改加班方案
       insertplan_name:'',
       //新增修改出差方案
       insertplanthree_name:'',
+      //新增修改考勤扣款方案
+      insertplantwo_name:''
     }
   }, methods: {
     //设置薪酬结构

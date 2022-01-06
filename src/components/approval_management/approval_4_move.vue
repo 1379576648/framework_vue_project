@@ -1,5 +1,5 @@
 <template>
-  <!--  审批页面-->
+  <!--  调动审批页面-->
   <div class="body_1">
     <el-tabs type="border-card">
       <!-- 待办申请页面 -->

@@ -79,7 +79,7 @@
                     >提交
                     </el-button
                     >
-                      <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplanthree=false">取消</el-button>
+                      <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplanthree=false,this.$parent.$data.evectionplan=true">取消</el-button>
                   </el-form-item>
                 </el-form>
               </div>

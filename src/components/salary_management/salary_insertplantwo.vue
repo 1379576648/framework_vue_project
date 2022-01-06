@@ -4,7 +4,7 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-head">
         <div class="j-card-head-title" style="margin-left:20px;">
-          <span>{{this.$route.query.name}}考勤方案</span>
+          <span>{{this.name}}考勤方案</span>
         </div>
       </div>
       <div class="j-card-body">
@@ -293,11 +293,12 @@
                     <el-input v-model="ruleForm.remark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
+                    <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplantwo=false,this.$parent.$data.attendanceplan=true
+">取消</el-button>&nbsp;
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
                     >提交</el-button
-                    >&nbsp;
-                    <router-link :to="{path:this.attendanceplan,query:{path: this.$route.query.path}}">
-                      <el-button style="width: 60px;">取消</el-button></router-link>
+                    >
+
                   </el-form-item>
                 </el-form>
               </div>
@@ -317,6 +318,7 @@
 import {ElMessage} from "element-plus";
 
 export default {
+  props:['name'],
   data() {
 
     return {

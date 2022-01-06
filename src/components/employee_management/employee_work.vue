@@ -23,9 +23,8 @@
     <el-table-column prop="positionDescribe" label="离职原因" width="190" />
     <el-table-column fixed="right" label="操作">
     <template #default>
-      <router-link :to="{path:this.information,query:{path: this.$route.query.path}}">
-			<el-button type="text" size="small">编辑 </el-button>
-      </router-link>
+
+			<el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_compile=true">编辑 </el-button>
 	</template>
     </el-table-column>
   </el-table>

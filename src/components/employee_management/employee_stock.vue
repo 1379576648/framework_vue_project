@@ -32,6 +32,7 @@
         <template #default="scope">
           <el-button type="text" size="small" @click="selectpage(scope.row.employmentId)
                                                ,fromValue.resumeId=scope.row.resumeId
+                                               ,fromValue.employmentId=scope.row.employmentId
                                                ,fromValue.resumeName=scope.row.resumeName
                                                ,fromValue.resumeSex=scope.row.resumeSex
                                                ,fromValue.resumePhone=scope.row.resumePhone
@@ -56,7 +57,7 @@
                                                ,fromValue.educationStudentname=scope.row.educationStudentname
                                                ,fromValue.educationMajor=scope.row.educationMajor
                                                ,fromValue.educationFullTime=scope.row.educationFullTime
-                                               ,insertStaff()">入职</el-button>
+                                               ,updateEmploymentState(scope.row.employmentId),insertStaff()">入职</el-button>
 
           <el-button @click="become=true" type="text" size="small">放弃</el-button>
 
@@ -182,7 +183,7 @@ export default defineComponent({
   },
   methods: {
     //查询已录用待入职的员工
-    selectpage(id) {
+    selectpage() {
       var _this = this
       this.axios({
         method: 'post',
@@ -268,6 +269,32 @@ export default defineComponent({
           }
         }
       })
+    },
+    //修改
+    updateEmploymentState() {
+      console.log(this.fromValue.employmentId);
+      console.log("11111111111111111111111111111111")
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateEmploymentState',
+        data: {
+          employmentId: this.fromValue.employmentId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          this.selectpage();
+        } else if (response.data.data === 100) {
+        } else {
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
 
   },
