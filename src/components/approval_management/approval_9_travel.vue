@@ -352,7 +352,6 @@
       </el-form>
     </template>
   </el-dialog>
-
 </template>
 
 <script>
@@ -389,7 +388,7 @@ export default {
       remark: "",
       //访问路径
       url: "http://localhost:80/",
-      // 待办加班审批列表
+      // 待办出差审批列表
       tableData: [],
       // 已办转正审批列表
       tableData1: [],
@@ -600,7 +599,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批出差数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -644,7 +643,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批出差数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -688,7 +687,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批出差数据详情");
         console.log(response)
         if (response.data.data.state == 300) {
           ElNotification.warning({
@@ -731,7 +730,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer2 = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批出差数据详情");
         console.log(response)
         if (response.data.data.state == 300) {
           ElNotification.warning({
