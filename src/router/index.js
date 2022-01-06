@@ -21,103 +21,96 @@ const routes = [{
         path: '/beginIndex/passLogin', component: modules[`${'../components/begin/rest/passlogin.vue'}`]
     }]
 }, {//首页
-    path: "/home", component: modules[`${'../components/navigation.vue'}`], redirect: '/interface', children: [{/* 工作台 */
-        path: '/interface',
-        redirect: "/interface/leader",
-        component: modules[`${'../components/interface_management/interface_main.vue'}`],
-        children: [{
-            path: "/interface/leader", components: {
-                "interface_time": modules[`${'../components/interface_management/interface_time.vue'}`],//统计公司情况
-                "interface_db": modules[`${'../components/interface_management/interface_db.vue'}`],//待办事项
-                "interface_calendar": modules[`${'../components/interface_management/interface_calendar.vue'}`], //工作日历
-                "interface_statistics": modules[`${'../components/interface_management/interface_statistics.vue'}`],//统计分析
-                "interface_zpprogress": modules[`${'../components/interface_management/interface_zpprogress.vue'}`], //招聘进度
-                "interface_quick": modules[`${'../components/interface_management/interface_quick.vue'}`], //快捷功能入口
-                "interface_notice": modules[`${'../components/interface_management/interface_notice.vue'}`],//公司系统公告
-            }
-        }]
-    }, {//组织管理
-        path: '/organization',
-        component: modules[`${'../components/organization_management/organization_main.vue'}`],
-        redirect: '/organization/message/zz_evectino',
-        children: [
-            {//部门详情
-                path: '/organization/message/zz_evectino',
-                component: modules[`${'../components/organization_management/zz_evection.vue'}`],
-            },
-            {//职位信息
-                path: '/organization/message/zz_post',
-                component: modules[`${'../components/organization_management/zz_post.vue'}`],
-            },
-            {//职位管理
-                path: '/organization/message/zz_edit',
-                component: modules[`${'../components/organization_management/zz_edit.vue'}`],
-            },
-            {//部门管理
-                path: '/organization/message/zz_depts',
-                component: modules[`${'../components/organization_management/zz_depts.vue'}`],
-            }
-        ]
-    }, {//员工管理
-        path: '/employee',
-        component: modules[`${'../components/employee_management/employee_main.vue'}`],
-        redirect: "/employee/message/employee_roster",
-        children: [
-            {//员工花名册
-                path: '/employee/message/employee_roster',
-                component: modules[`${'../components/employee_management/employee_staff_one.vue'}`],
-            },
-            {//历史花名册
-                path: '/employee/message/history_roster',
-                component: modules[`${'../components/employee_management/employee_history.vue'}`],
-            },
-            {//入职管理
-                path: '/employee/transaction/entry',
-                component: modules[`${'../components/employee_management/employee_entry.vue'}`],
-            },
-            {//转正管理
-                path: '/employee/transaction/worker',
-                component: modules[`${'../components/employee_management/employee_conversion.vue'}`],
-            },
-            {//调动管理
-                path: '/employee/transaction/transfer',
-                component: modules[`${'../components/employee_management/employee_transfer.vue'}`],
-            }]
-    }, {//考勤管理
-        path: '/clockingin',
-        component: modules[`${'../components/clockingin_management/clockingin_main.vue'}`],
-        redirect: "/clockingin/check/classes",
-        children: [
-            {//班次管理
-                path: '/clockingin/check/classes',
-                component: modules[`${'../components/clockingin_management/clockingin_check.vue'}`],
-            },
-            {//打卡记录
-                path: '/clockingin/checking/clock',
-                component: modules[`${'../components/clockingin_management/clockingin_clock.vue'}`],
-            },
-            {//加班记录
-                path: '/clockingin/checking/overtime',
-                component: modules[`${'../components/clockingin_management/clockingin_overtime.vue'}`],
-            },
-            {//请假记录
-                path: '/clockingin/checking/leave',
-                component: modules[`${'../components/clockingin_management/clockingin_leave.vue'}`],
-            },
-            {//出差记录
-                path: '/clockingin/checking/evection',
-                component: modules[`${'../components/clockingin_management/clockingin_evection.vue'}`],
-            },
-            {//补打卡记录
-                path: '/clockingin/checking/fillclock',
-                component: modules[`${'../components/clockingin_management/clockingin_reissue.vue'}`],
-            },
-            {// 考勤记录、考勤月报表、历史归档
-                path: '/clockingin/statistics',
-                component: modules[`${'../components/clockingin_management/clockingin_statistics.vue'}`],
-            },
-        ]
-    },
+    path: "/home",
+    component: modules[`${'../components/navigation.vue'}`],
+    redirect: '/interface',
+    children: [
+        {/* 工作台 */
+            path: '/interface',
+            component: modules[`${'../components/interface_management/interface_main.vue'}`],
+        },
+        {//组织管理
+            path: '/organization',
+            component: modules[`${'../components/organization_management/organization_main.vue'}`],
+            redirect: '/organization/message/zz_evectino',
+            children: [
+                {//部门详情
+                    path: '/organization/message/zz_evectino',
+                    component: modules[`${'../components/organization_management/zz_evection.vue'}`],
+                },
+                {//职位信息
+                    path: '/organization/message/zz_post',
+                    component: modules[`${'../components/organization_management/zz_post.vue'}`],
+                },
+                {//职位管理
+                    path: '/organization/message/zz_edit',
+                    component: modules[`${'../components/organization_management/zz_edit.vue'}`],
+                },
+                {//部门管理
+                    path: '/organization/message/zz_depts',
+                    component: modules[`${'../components/organization_management/zz_depts.vue'}`],
+                }
+            ]
+        }, {//员工管理
+            path: '/employee',
+            component: modules[`${'../components/employee_management/employee_main.vue'}`],
+            redirect: "/employee/message/employee_roster",
+            children: [
+                {//员工花名册
+                    path: '/employee/message/employee_roster',
+                    component: modules[`${'../components/employee_management/employee_staff_one.vue'}`],
+                },
+                {//历史花名册
+                    path: '/employee/message/history_roster',
+                    component: modules[`${'../components/employee_management/employee_history.vue'}`],
+                },
+                {//入职管理
+                    path: '/employee/transaction/entry',
+                    component: modules[`${'../components/employee_management/employee_entry.vue'}`],
+                },
+                {//转正管理
+                    path: '/employee/transaction/worker',
+                    component: modules[`${'../components/employee_management/employee_conversion.vue'}`],
+                },
+                {//调动管理
+                    path: '/employee/transaction/transfer',
+                    component: modules[`${'../components/employee_management/employee_transfer.vue'}`],
+                }]
+        }, {//考勤管理
+            path: '/clockingin',
+            component: modules[`${'../components/clockingin_management/clockingin_main.vue'}`],
+            redirect: "/clockingin/check/classes",
+            children: [
+                {//班次管理
+                    path: '/clockingin/check/classes',
+                    component: modules[`${'../components/clockingin_management/clockingin_check.vue'}`],
+                },
+                {//打卡记录
+                    path: '/clockingin/checking/clock',
+                    component: modules[`${'../components/clockingin_management/clockingin_clock.vue'}`],
+                },
+                {//加班记录
+                    path: '/clockingin/checking/overtime',
+                    component: modules[`${'../components/clockingin_management/clockingin_overtime.vue'}`],
+                },
+                {//请假记录
+                    path: '/clockingin/checking/leave',
+                    component: modules[`${'../components/clockingin_management/clockingin_leave.vue'}`],
+                },
+                {//出差记录
+                    path: '/clockingin/checking/evection',
+                    component: modules[`${'../components/clockingin_management/clockingin_evection.vue'}`],
+                },
+                {//补打卡记录
+                    path: '/clockingin/checking/fillclock',
+                    component: modules[`${'../components/clockingin_management/clockingin_reissue.vue'}`],
+                },
+                {// 考勤记录、考勤月报表、历史归档
+                    path: '/clockingin/statistics',
+                    component: modules[`${'../components/clockingin_management/clockingin_statistics.vue'}`],
+                },
+            ]
+        },
         {//招聘管理
             path: '/recruit',
             component: modules[`${'../components/recruit_management/recruit_main.vue'}`],
