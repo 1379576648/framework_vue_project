@@ -48,7 +48,7 @@
             <el-button size="mini" style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled"
                        @click="remove">删除
             </el-button>
-            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 882px">清空</el-button>
+            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 882px" v-bind:disabled="tableData==''?true:false">清空</el-button>
             <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
                 &#xe61b
@@ -63,7 +63,6 @@
             </el-button>
           </div>
         </div>
-
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
           <el-table :data="tableData" style="width: 100% ;"
@@ -402,6 +401,11 @@ export default {
     },
   }, mounted() {
     this.next();
+  },computed(){
+    //清空按钮
+    emptyButton(function (){
+      return this.tableData==null?true:false;
+    })
   }
 
 

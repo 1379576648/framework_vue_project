@@ -11,26 +11,10 @@ const store = createStore({
                 MENU_NAME: '工作台',//菜单名称Picture address
                 MENU_ROUTE: '/interface',//路由地址,
                 PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                MENU_MODULE: 'components/interface_management/interface_main',//组件地址
+                MENU_MODULE: '/interface_management/interface_main',//组件地址
                 MENU_STATE: 0,//是否启用 0启用 1禁用
                 MENU_TYPE: 0,//菜单类型 0:菜单 1:按钮
-                MENU_LEAF: 0,//是否有叶子 0有 1没有
-                son: [{
-                    MENU_ID: 1.1,//菜单编号
-                    MENU_NAME: '首项',//菜单名称Picture address
-                    MENU_ROUTE: '/interface/leader',//路由地址,
-                    PICTURE_ADDRESS: '&#xe64c;',//图片地址
-                    MENU_MODULE: 'interface_management/interface_time,'
-                        + 'interface_management/interface_db,'
-                        + 'interface_management/interface_calendar,'
-                        + 'interface_management/interface_statistics,'
-                        + 'components/interface_management/interface_zpprogress,'
-                        + 'interface_management/interface_quick,'
-                        + 'interface_management/interface_notice',//组件地址
-                    MENU_STATE: 0,//是否启用 0启用 1禁用
-                    MENU_TYPE: 1,//菜单类型 0:菜单 1:按钮
-                    MENU_LEAF: 1,//是否有叶子 0有 1没有
-                }]
+                MENU_LEAF: 1,//是否有叶子 0有 1没有
             },
             {
                 MENU_ID: 2,//菜单编号
