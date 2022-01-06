@@ -4,24 +4,26 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <span></span>
-        <br />
+        <br/>
         <!--搜索输入框-->
         <div style="margin-left: 1161px">
-        <el-row style="width: 150px;">
-          <el-input v-model="seek" placeholder="搜索" size="small">
-            <template #suffix>
-              <el-icon class="el-input__icon"><i-search /></el-icon>
-            </template>
-          </el-input>
-        </el-row>
+          <el-row style="width: 150px;">
+            <el-input v-model="seek" placeholder="搜索" size="small" @input="selectpost">
+              <template #suffix>
+                <el-icon class="el-input__icon">
+                  <i-search/>
+                </el-icon>
+              </template>
+            </el-input>
+          </el-row>
         </div>
 
         <div style="margin-top:20px;margin-left:20px;" class="icon-p">
           <el-row :gutter="10">
             <el-col :span="8">
               <el-card
-                shadow="always"
-                style="
+                  shadow="always"
+                  style="
                   background-color: rgb(35, 102, 167);
                   color: white;
                   font-size: 14px;
@@ -34,8 +36,8 @@
             </el-col>
             <el-col :span="8">
               <el-card
-                shadow="hover"
-                style="
+                  shadow="hover"
+                  style="
                   background-color: rgb(73, 167, 130);
                   color: white;
                   font-size: 14px;
@@ -48,8 +50,8 @@
             </el-col>
             <el-col :span="8" style="margin-left:-20px;">
               <el-card
-                shadow="never"
-                style="
+                  shadow="never"
+                  style="
                   background-color: rgb(233, 143, 39);
                   color: white;
                   font-size: 14px;
@@ -67,18 +69,24 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
           <el-table :data="tableData" stripe style="width: 100%"
-                    :header-cell-style="{background:'#eef1f6',color:'#606266'}" >
-            <el-table-column prop="staffName" label="姓名" width="180" />
-     <el-table-column prop="staffIdentity" label="证件号码" width="180" />
-       <el-table-column prop="deptName" label="部门" width="180" />
-       <el-table-column prop="postName" label="职位" width="180" />
-       <el-table-column prop="staffHiredate" label="入职日期" width="180" />
-       <el-table-column prop="testtime" label="试用期限" width="180" />
-    <el-table-column fixed="right" label="操作">
-    <template #default>
-			<el-button type="text" size="small" @click="become = true">办理转正</el-button>
-	</template>
-    </el-table-column>
+                    :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+            <el-table-column prop="staffName" label="姓名" width="180"/>
+            <el-table-column prop="staffIdentity" label="证件号码" width="180"/>
+            <el-table-column prop="deptName" label="部门" width="180"/>
+            <el-table-column prop="postName" label="职位" width="180"/>
+            <el-table-column prop="staffHiredate" label="入职日期" width="180"/>
+            <!--       <el-table-column prop="testtime" label="试用期限" width="180" />-->
+            <el-table-column label="试用期限" width="180">
+              <template #default="scope">
+                <span>三个月</span>
+              </template>
+            </el-table-column>
+            <el-table-column fixed="right" label="操作">
+              <template #default>
+                <el-button type="text" size="small" @click="become = true">办理转正</el-button>
+              </template>
+            </el-table-column>
+
           </el-table>
         </div>
 
@@ -105,108 +113,103 @@
       </div>
     </div>
   </div>
-<div>
-  <el-dialog
-      v-model="become"
-      title="转正"
-      width="50%"
-      :close-on-click-modal="false"
-  >
-    <el-form
-        ref="form_1"
-        :model="become_1"
-        label-width="120px"
-        :rules="rules"
+  <div>
+    <el-dialog
+        v-model="become"
+        title="转正"
+        width="50%"
+        :close-on-click-modal="false"
     >
-      <el-form-item label="员工名称 :" prop="name" style="">
-        <el-input v-model="become_1.name" disabled ></el-input>
-      </el-form-item>
-      <el-form-item label="部门名称 :" prop="dept">
-        <el-input v-model="become_1.dept" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="职位 :">
-        <el-input v-model="become_1.post" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="入职日期 :">
-        <el-input v-model="become_1.entrydate" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="试用期限 :">
-        <el-input v-model="become_1.tryoutdate" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="转正类型" prop="type" style="width:600px">
-        <el-select
-             v-model="become_1.type"
-            placeholder="请选择"
-        >
-          <el-option label="转正" value="zz" style="margin-left: 20px"></el-option>
-          <el-option label="提前转正" value="tqzz" style="margin-left: 20px"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="转正日期 :" prop="becomedate">
-        <el-date-picker
-            v-model="become_1.becomedate"
-            type="date"
-            placeholder="选择时间"
-        >
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="转正备注 :">
-        <el-input
-            v-model="become_1.remarks"
-            type="textarea"
-            maxlength="500"
-            show-word-limit
-            prop="remarks_1"
-        ></el-input>
-      </el-form-item>
+      <el-form
+          ref="form_1"
+          :model="become_1"
+          label-width="120px"
+          :rules="rules"
+      >
+        <el-form-item label="员工名称 :" prop="name" style="">
+          <el-input v-model="become_1.name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="部门名称 :" prop="dept">
+          <el-input v-model="become_1.dept" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="职位 :">
+          <el-input v-model="become_1.post" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="入职日期 :">
+          <el-input v-model="become_1.entrydate" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="试用期限 :">
+          <el-input v-model="become_1.tryoutdate" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="转正类型" prop="type" style="width:600px">
+          <el-select
+              v-model="become_1.type"
+              placeholder="请选择"
+          >
+            <el-option label="转正" value="zz" style="margin-left: 20px"></el-option>
+            <el-option label="提前转正" value="tqzz" style="margin-left: 20px"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="转正日期 :" prop="becomedate">
+          <el-date-picker
+              v-model="become_1.becomedate"
+              type="date"
+              placeholder="选择时间"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="转正备注 :">
+          <el-input
+              v-model="become_1.remarks"
+              type="textarea"
+              maxlength="500"
+              show-word-limit
+              prop="remarks_1"
+          ></el-input>
+        </el-form-item>
 
-    </el-form>
-    <template #footer>
+      </el-form>
+      <template #footer>
           <span class="dialog-footer">
             <el-button style="width: 60px" type="primary" @click="submitForm('form_1')"
             >确定</el-button
             >
             <el-button style="width: 60px" @click="become = false,RestForm()">取消</el-button>
           </span>
-    </template>
-  </el-dialog>
+      </template>
+    </el-dialog>
 
 
-
-
-</div>
+  </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import {defineComponent, ref} from 'vue'
 import {ElNotification} from "element-plus";
+
 export default defineComponent({
 
   data() {
     const one = (rule, value, callback) => {
-      if (new Date()>value){
+      if (new Date() > value) {
         callback(new Error("转正日期不能小于当前时间"));
-      }else {
+      } else {
         callback();
       }
     };
     return {
       url: "http://localhost:80/",
-      tableData: [
-        {
-          testtime:"三个月"
-        }
-      ],
-      seek:"",
-      become_1:{
-        name:'',
-        dept:'',
-        post:'',
-        entrydate:'',
-        tryoutdate:'',
-        type:'',
-        remarks:'',
-        becomedate:''
+      tableData: [],
+      seek: "",
+      become_1: {
+        name: '',
+        dept: '',
+        post: '',
+        entrydate: '',
+        tryoutdate: '',
+        type: '',
+        remarks: '',
+        becomedate: ''
       },
       pageInfo: {
         // 分页参数
@@ -222,11 +225,11 @@ export default defineComponent({
             trigger: 'change',
           },
         ],
-        becomedate:[
+        becomedate: [
           {
-            required:true,
-            message:'请选择转正日期',
-            trigger:'change'
+            required: true,
+            message: '请选择转正日期',
+            trigger: 'change'
           },
           {
             validator: one, trigger: "change"
@@ -237,11 +240,11 @@ export default defineComponent({
   },
   setup() {
     const become = ref(false)
-    return{
+    return {
       become,
     }
   },
-  methods:{
+  methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -252,16 +255,16 @@ export default defineComponent({
         }
       })
     },
-    RestForm(){
-      this.become_1={
-        name:'',
-            dept:'',
-            post:'',
-            entrydate:'',
-            tryoutdate:'',
-            type:'',
-            remarks:'',
-            becomedate:''
+    RestForm() {
+      this.become_1 = {
+        name: '',
+        dept: '',
+        post: '',
+        entrydate: '',
+        tryoutdate: '',
+        type: '',
+        remarks: '',
+        becomedate: ''
       }
     },
     //查询转正记录
@@ -276,7 +279,7 @@ export default defineComponent({
           //页大小
           "pagesize": this.pageInfo.pagesize,
           //员工名称
-          "resumeName": this.resumeName,
+          "staffName": this.seek,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -318,35 +321,37 @@ export default defineComponent({
 
 <style scoped>
 @import url("../../css/navigation.css");
-/deep/.mainContent .sub-Content__primary {
+
+/deep/ .mainContent .sub-Content__primary {
   padding: 12px 24px;
   background: #fff;
   border-radius: 4px;
 }
 
-/deep/.cell {
+/deep/ .cell {
   padding-left: 10px;
   text-align: center;
   color: black;
   font-size: 12px
 }
-/deep/.el-form-item {
+
+/deep/ .el-form-item {
   display: flex;
   margin-bottom: 22px;
 }
 
-/deep/.el-card__body {
+/deep/ .el-card__body {
   /* padding: var(--el-card-padding); */
   padding: 10px 0;
 }
 
 
-/deep/.icon-p p{
+/deep/ .icon-p p {
   text-align: center;
 }
 
 /* 分页的样式 */
-/deep/.demo-pagination-block {
+/deep/ .demo-pagination-block {
   float: right;
   margin: 20px;
 }
