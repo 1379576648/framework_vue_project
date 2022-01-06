@@ -3,7 +3,6 @@
            style="min-width: 988px; min-height: 100vh; background-color: rgb(232, 239, 246); box-shadow: rgb(121, 159, 197) 0px 7px;"
            id="scrollLayout">
     <div class="sider-view-left">
-
     </div>
     <main class="ant-layout-content">
       <div class="saas-main-content">
@@ -13,35 +12,35 @@
               <div class="ant-spin-container">
                 <div style="margin-left: -8px; margin-right: -8px;">
                   <!--                  统计公司情况-->
-                  <router-view v-if="activate_menuName[0]" :name="activate_menuName[0]"/>
+                  <interface_time/>
                   <!--  body左  -->
                   <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-16">
                     <!--
                       待办事项
                       -->
-                    <router-view v-if="activate_menuName[1]" :name="activate_menuName[1]"/>
+                    <interface_db/>
                     <!--a
                       工作日历
                       -->
-                    <router-view v-if="activate_menuName[2]" :name="activate_menuName[2]"/>
+                    <interface_calendar/>
                     <!--  统计分析  -->
 
-                    <router-view v-if="activate_menuName[3]" :name="activate_menuName[3]"/>
+                    <interface_statistics/>
                   </div>
                   <!--  body右  -->
                   <div style="padding-left: 8px; padding-right: 8px;" class="ant-col ant-col-8">
                     <!--
                       招聘进度
                       -->
-                    <router-view v-if="activate_menuName[4]" :name="activate_menuName[4]"/>
+                    <interface_zpprogress/>
                     <!--
                       快捷功能入口
                       -->
-                    <router-view v-if="activate_menuName[5]" :name="activate_menuName[5]"/>
+                    <interface_quick/>
                     <!--
                       公司系统公告
                       -->
-                    <router-view v-if="activate_menuName[6]" :name="activate_menuName[6]"/>
+                    <interface_notice/>
 
                   </div>
 
@@ -65,51 +64,39 @@
 
 </template>
 <script>
+// 统计公司情况
+import interface_time from './interface_time.vue';
+// 待办事项
+import interface_db from './interface_db.vue';
+//工作日历
+import interface_calendar from './interface_calendar.vue';
+//统计分析
+import interface_statistics from './interface_statistics.vue';
+// 招聘进度
+import interface_zpprogress from './interface_zpprogress.vue';
+//快捷功能入口
+import interface_quick from './interface_quick.vue';
+// 公司系统公告
+import interface_notice from './interface_notice.vue';
+
 export default {
-  data() {
-    return {
-      //获取当前激活的菜单列表
-      menu_List: this.$store.getters.store_menuList(this.$store.state.activate_router)[0],
-      //当前页面所有的菜单列表
-      menuName:[]
-    }
-  }, computed: {
-    activate_menuName(){
-      // //找出第一个没有叶子的菜单
-      this.inquire_1();
-      return this.menuName;
-    }
-  },methods:{
-    inquire_1() {
-      for (let i of this.menu_List) {
-        //如果菜单有叶子 并且状态为启用 并且类型为菜单
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0&& i.MENU_TYPE==1) {
-          //梯归
-          this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0&& i.MENU_TYPE==1) {
-          //通过,分割字符串形成数组，再取当前组件名称添加最后一个/后面的字符
-          var attr =i.MENU_MODULE.split(",")
-          for (let j of attr) {
-            this.menuName.push(j.substring(j.lastIndexOf('/') + 1,j.length));
-          }
-        }
-      }
-    }, inquire_2(value) {
-      for (let i of value) {
-        //如果菜单有叶子 并且状态为启用 并且类型为菜单
-        if (i.MENU_LEAF == 0 && i.MENU_STATE == 0 && i.MENU_TYPE==1) {
-          //梯归
-          this.inquire_2(i.son);
-        } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0&& i.MENU_TYPE==1) {
-          //通过,分割字符串形成数组，再取当前组件名称添加最后一个/后面的字符
-          var attr =i.MENU_MODULE.split(",")
-          for (let j of attr) {
-            this.menuName.push(j.substring(j.lastIndexOf('/') + 1,j.length));
-          }
-        }
-      }
-    }
-  }
+  //注册组件
+  components: {
+// 统计公司情况
+    interface_time,
+// 待办事项
+    interface_db,
+//工作日历
+    interface_calendar,
+//统计分析
+    interface_statistics,
+// 招聘进度
+    interface_zpprogress,
+//快捷功能入口
+    interface_quick,
+// 公司系统公告
+    interface_notice,
+  },
 }
 </script>
 
