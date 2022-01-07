@@ -31,7 +31,7 @@
           >
             <el-button
                 type="text"
-                @click="Change = true"
+                @click="variation()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_4.svg"/>
@@ -216,8 +216,8 @@
           @close="cancel_1"
       >
         <el-form ref="form_1" :model="become_1" label-width="120px">
-          <el-form-item label="员工名称 :">
-            <el-input v-model="become_1.name" disabled></el-input>
+          <el-form-item label="员工名称 :" prop="present_user">
+            <el-input v-model="become_1.present_user" disabled></el-input>
           </el-form-item>
           <el-form-item label="部门名称 :">
             <el-input v-model="become_1.dept" disabled></el-input>
@@ -271,7 +271,7 @@
                 </div>
                 <div class="sub-title" style="line-height: 10px">
                   管理三号
-                 </div>
+                </div>
               </div>
             </el-col>
           </el-form-item>
@@ -304,7 +304,7 @@
           <el-form-item label="异动后部门">
             <el-select v-model="Change_1.dept_1" placeholder="部门名称">
               <el-option
-                  v-for="item in dept"
+                  v-for="item in variation_dept"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -895,21 +895,25 @@
       </el-dialog>
     </div>
   </div>
+  {{deptid}}
 </template>
 
 <script lang="js">
 import {defineComponent, reactive, ref, toRefs} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
 export default defineComponent({
   data() {
     return {
+      deptid:this.$store.state.staffMessage.deptId,
+      // 地址选择器
       options: regionData,
+      // 地址选择器
       selectedOptions: [],
       //转正表单
       become_1: {
         //名称
-        name: "",
+        present_user: this.$store.state.staffMessage.staffName,
         //部门
         dept: "",
         //类型
@@ -1025,16 +1029,7 @@ export default defineComponent({
         date3: "",
       },
       // 异动后查部门
-      dept: ref([
-        {
-          value: '部门1',
-          label: '部门1',
-        },
-        {
-          value: '部门2',
-          label: '部门2',
-        }
-      ]),
+      variation_dept: [],
     };
   },
   setup() {
@@ -1067,6 +1062,8 @@ export default defineComponent({
       travel,
       sick,
       ...toRefs(state),
+      //访问路径
+      url: "http://localhost:80/",
     };
   },
   methods: {
@@ -1534,6 +1531,44 @@ export default defineComponent({
     cancel_date7() {
       this.become_1.date1 = "";
     },
+    variation() {
+      this.axios({
+        method: 'get',
+        url: this.url + 'selectDeptList',
+      }).then((response) => {
+        console.log("点击异动查询全部部门成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.variation_dept = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.variation_dept.push({value: response.data.data.info[i].deptId, label: response.data.data.info[i].deptName})
+              this.Change = true;
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    }
   },
 });
 </script>
