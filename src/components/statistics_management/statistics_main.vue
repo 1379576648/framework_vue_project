@@ -80,15 +80,15 @@ export default {
         //迭代循环
         for (let i of this.menuList) {
           //如果菜单有叶子 并且状态为启用
-          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+          if (i.menuPowerLeaf == 0 && i.menuPowerState == 0) {
             //梯归
-            this.inquire_2(i.son);
+            this.inquire_2(i.list);
             //如果菜单没有叶子 并且状态为禁用
-          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+          } else if (i.menuPowerLeaf == 1 && i.menuPowerState == 0) {
             //找出第一个路由为默认激活路由
             if (this.activate_router == '') {
               //替换默认激活地址
-              this.activate_router = i.MENU_ROUTE
+              this.activate_router = i.menuPowerRoute
             }
           }
         }
@@ -99,15 +99,15 @@ export default {
         //迭代器循环
         for (let i of value) {
           //如果菜单有叶子 并且状态为启用
-          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
+          if (i.menuPowerLeaf == 0 && i.menuPowerState == 0) {
             //梯归
-            this.inquire_2(i.son);
+            this.inquire_2(i.list);
             //如果菜单没有叶子 并且状态为禁用
-          } else if (i.MENU_LEAF == 1 && i.MENU_STATE == 0) {
+          } else if (i.menuPowerLeaf == 1 && i.menuPowerState == 0) {
             //找出第一个路由为默认激活路由
             if (this.activate_router == '') {
               //替换默认激活地址
-              this.activate_router = i.MENU_ROUTE
+              this.activate_router = i.menuPowerRoute
             }
           }
         }

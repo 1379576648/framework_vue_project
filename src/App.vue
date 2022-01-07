@@ -48,7 +48,9 @@ export default {
     window.addEventListener('beforeunload', () => {
       //刷新前将目前登录的用户保存到sessionStorage中
       sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+      sessionStorage.setItem("refresh", "true")
     })
+
   }
 }
 </script>

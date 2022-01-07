@@ -20,20 +20,20 @@
               mode="horizontal"
               @select="handleSelect"
           >
-            <el-menu-item v-for="memu in memuList1" :index=memu.MENU_ROUTE>
-              {{ memu.MENU_NAME }}
+            <el-menu-item v-for="memu in memuList1" :index=memu.menuPowerRoute>
+              {{ memu.menuPowerName }}
             </el-menu-item>
             <el-sub-menu index="5" v-if="memuList2">
               <template #title>更多</template>
               <li style="text-align: center;margin: 10px 32px; float: left;width: 58px;height: 81px"
                   v-for="memu in memuList2">
-                <router-link :to="{path:memu.MENU_ROUTE,query:{'path':memu.MENU_ROUTE}}"
-                             @click="activate_router=memu.MENU_ROUTE, this.$store.state.activate_router=memu.MENU_ROUTE">
+                <router-link :to="{path:memu.menuPowerRoute,query:{'path':memu.menuPowerRoute}}"
+                             @click="activate_router=memu.menuPowerRoute, this.$store.state.activate_router=memu.menuPowerRoute">
                   <i class="iconfont"
                      style="color: #0c9c6e;font-size: 40px;height: 40px;width: 40px; display: block;margin: auto;">
-                    {{ iconHandle(memu.PICTURE_ADDRESS) }}</i>
+                    {{ iconHandle(memu.pictureAddress) }}</i>
                   <br/>
-                  <p style="color: #040711">{{ memu.MENU_NAME }}</p>
+                  <p style="color: #040711">{{ memu.menuPowerName }}</p>
                 </router-link>
               </li>
             </el-sub-menu>
@@ -277,7 +277,7 @@ export default {
           //如果默认激活路由为空
           if (this.activate_router == '') {
             //选择菜单列表第一个路由为默认激活
-            this.activate_router = i.MENU_ROUTE;
+            this.activate_router = i.menuPowerRoute;
           }
         }
       }
