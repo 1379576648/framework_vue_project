@@ -395,9 +395,9 @@ export default {
       remark: "",
       //访问路径
       url: "http://localhost:80/",
-      // 待办加班审批列表
+      // 待办请假审批列表
       tableData: [],
-      // 已办转正审批列表
+      // 已办请假审批列表
       tableData1: [],
       // 待处理分页
       pageInfo: {
@@ -452,17 +452,17 @@ export default {
         auditflowdetaiState: "",
         //审批状态
         auditflowstate: "",
-        //加班类型
+        //请假类型
         overtimeaskType: "",
-        //加班事由
+        //请假事由
         overtimeaskmatter: "",
         // 备注
         overtimeaskremarks: "",
-        //加班开始时间
+        //请假开始时间
         overtimeaskSDate: "",
-        //加班结束时间
+        //请假结束时间
         overtimeaskEDate: "",
-        //加班总小时
+        //请假总小时
         overtimeasktotaldate: "",
         // 审核人
         staffName2: "",
@@ -495,7 +495,7 @@ export default {
     rejected_apply(id) {
       this.add_remark2 = true;
     },
-    // 查询待审批加班数据
+    // 查询待审批请假数据
     selectLeaveAll() {
       var _this = this
       this.axios({
@@ -516,7 +516,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询待审批加班数据");
+        console.log("查询待审批请假数据");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -544,7 +544,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询待审批加班数据-不带数据
+    // 查询待审批请假数据-不带数据
     selectLeaveAll2() {
       this.staffName1 = "";
       this.selectTime = "";
@@ -561,7 +561,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询待审批加班数据");
+        console.log("查询待审批请假数据");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -591,7 +591,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询已办审批加班数据
+    // 查询已办审批请假数据
     selectEndLeaveAll() {
       var _this = this
       this.axios({
@@ -612,7 +612,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批请假数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -639,7 +639,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询已办审批加班数据-不带数据
+    // 查询已办审批请假数据-不带数据
     selectEndLeaveAll2() {
       this.staffName1 = "";
       this.selectTime2 = "";
@@ -656,7 +656,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批请假数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -683,7 +683,7 @@ export default {
             console.log(error);
           });
     },
-    // 待我审批的加班数据详情
+    // 待我审批的请假数据详情
     particulars(value) {
       console.log(value.id)
       console.log(value.name1)
@@ -703,17 +703,17 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批请假数据详情");
         console.log(response)
         this.details = response.data.data.info;
 
       })
           .catch(function (error) {
-            console.log("查询待我审批加班数据详情失败")
+            console.log("查询待我审批请假数据详情失败")
             console.log(error);
           });
     },
-    // 已审批的加班数据详情
+    // 已审批的请假数据详情
     particulars2(value2) {
       var _this = this
       this.axios({
@@ -730,13 +730,13 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer2 = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批请假数据详情");
         console.log(response)
         this.details2 = response.data.data.info;
 
       })
           .catch(function (error) {
-            console.log("查询已审批的加班数据详情失败")
+            console.log("查询已审批的请假数据详情失败")
             console.log(error);
           });
     },
@@ -874,9 +874,9 @@ export default {
   },
   // 挂载
   created() {
-    // 查询待处理的加班审批
+    // 查询待处理的请假审批
     this.selectLeaveAll();
-    // 查询已处理的加班审批
+    // 查询已处理的请假审批
     this.selectEndLeaveAll();
   }
 };

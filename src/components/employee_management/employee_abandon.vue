@@ -5,7 +5,7 @@
 
     <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input v-model="input3" placeholder="搜索" size="small">
+      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectabandon">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -52,7 +52,7 @@ export default {
     return {
       url: "http://localhost:80/",
       tableData: [],
-      input3:'',
+      seek:'',
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
@@ -74,8 +74,8 @@ export default {
           'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
-          //员工名称
-          "resumeName": this.resumeName,
+          //名称
+          "resumeName": this.seek,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -107,6 +107,11 @@ export default {
     },
   },
   mounted() {
+    //分页查询已经淘汰的员工
+    this.selectabandon();
+  },
+  // 挂载
+  created() {
     //分页查询已经淘汰的员工
     this.selectabandon();
   }

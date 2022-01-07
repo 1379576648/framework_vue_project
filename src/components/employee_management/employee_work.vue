@@ -3,7 +3,7 @@
 <div>
 <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input v-model="input3" placeholder="搜索" size="small">
+      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectwork">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -66,7 +66,7 @@ export default {
         pagesize: 4, // 页大小
         total: 0, // 总页数
       },
-      input3:"",
+      seek:"",
     }
   },
   methods:{
@@ -81,8 +81,8 @@ export default {
           'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
-          //员工名称
-          "resumeName": this.resumeName,
+          //名称
+          "staffName": this.seek,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

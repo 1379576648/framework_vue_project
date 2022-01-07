@@ -514,7 +514,7 @@ export default {
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
-      }) .then((response) => {
+      }).then((response) => {
         console.log("查询待审批加班数据");
         console.log(response);
         if (response.data.data.data) {
@@ -538,9 +538,9 @@ export default {
           })
         }
       }).catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询待审批加班数据-不带数据
     selectAuditflow2() {
@@ -574,8 +574,8 @@ export default {
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
           }
-          this.staffName="";
-          this.selectTime="";
+          this.staffName = "";
+          this.selectTime = "";
         } else {
           ElNotification.warning({
             title: '提示',
@@ -583,11 +583,10 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询已办审批加班数据
     selectEndAuditflow() {
@@ -631,11 +630,10 @@ export default {
             })
           }
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询已办审批加班数据-不带数据
     selectEndAuditflow2() {
@@ -675,11 +673,10 @@ export default {
             })
           }
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 待我审批的加班数据详情
     particulars(value) {
@@ -705,11 +702,10 @@ export default {
         console.log(response)
         this.details = response.data.data.info;
 
-      })
-          .catch(function (error) {
-            console.log("查询待我审批加班数据详情失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("查询待我审批加班数据详情失败")
+        console.log(error);
+      });
     },
     // 已审批的加班数据详情
     particulars2(value2) {
@@ -732,11 +728,10 @@ export default {
         console.log(response)
         this.details2 = response.data.data.info;
 
-      })
-          .catch(function (error) {
-            console.log("查询已审批的加班数据详情失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("查询已审批的加班数据详情失败")
+        console.log(error);
+      });
     },
     // 根据审批编号查询审批明细表编号
     queryDetail(auditflowId) {

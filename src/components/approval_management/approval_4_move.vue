@@ -1,5 +1,5 @@
 <template>
-  <!--  调动审批页面-->
+  <!--  异动审批页面-->
   <div class="body_1">
     <el-tabs type="border-card">
       <!-- 待办申请页面 -->
@@ -383,7 +383,7 @@ export default {
       remark: "",
       //访问路径
       url: "http://localhost:80/",
-      // 待办加班审批列表
+      // 待办异动审批列表
       tableData: [],
       // 已办转正审批列表
       tableData1: [],
@@ -475,7 +475,7 @@ export default {
     rejected_apply(id) {
       this.add_remark2 = true;
     },
-    // 查询待审批出差数据
+    // 查询待审批异动数据
     selectTransferAll() {
       var _this = this
       this.axios({
@@ -496,7 +496,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询待审批出差数据");
+        console.log("查询待审批异动数据");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -524,7 +524,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询待审批出差数据-不带数据
+    // 查询待审批异动数据-不带数据
     selectTransferAll2() {
       this.staffName = "";
       this.selectTime = "";
@@ -541,7 +541,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询待审批出差数据");
+        console.log("查询待审批异动数据");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -569,7 +569,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询已办审批出差数据
+    // 查询已办审批异动数据
     selectEndTransferAll() {
       var _this = this
       this.axios({
@@ -590,7 +590,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批异动数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -617,7 +617,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询已办审批出差数据-不带数据
+    // 查询已办审批异动数据-不带数据
     selectEndTransferAll2() {
       this.staffName1 = "";
       this.selectTime2 = "";
@@ -634,7 +634,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批异动数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -661,7 +661,7 @@ export default {
             console.log(error);
           });
     },
-    // 待我审批的出差数据详情
+    // 待我审批的异动数据详情
     particulars(value) {
       var _this = this
       this.axios({
@@ -678,7 +678,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批异动数据详情");
         console.log(response)
        if (response.data.data.state == 300 || response.data.data.info == "服务发生雪崩"){
          ElNotification.warning({
@@ -696,11 +696,11 @@ export default {
          })
        }
       }).catch(function (error) {
-        console.log("查询已审批出差数据详情失败")
+        console.log("查询已审批异动数据详情失败")
         console.log(error);
       });
     },
-    // 已审批的出差数据详情
+    // 已审批的异动数据详情
     particulars2(value2) {
       var _this = this
       this.axios({
@@ -717,7 +717,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer2 = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批异动数据详情");
         console.log(response)
         if (response.data.data.state == 300) {
           ElNotification.warning({
@@ -739,7 +739,7 @@ export default {
         }
       })
           .catch(function (error) {
-            console.log("查询已审批出差数据详情失败")
+            console.log("查询已审批异动数据详情失败")
             console.log(error);
           });
     },
@@ -877,9 +877,9 @@ export default {
   },
   // 挂载
   created() {
-    // 查询待处理的出差审批
+    // 查询待处理的异动审批
     this.selectTransferAll();
-    // 查询已处理的出差审批
+    // 查询已处理的异动审批
     this.selectEndTransferAll();
   }
 };

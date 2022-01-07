@@ -24,7 +24,7 @@
           <ul style="list-style-type: none;">
             <li>
               <label>员工编号</label>
-              <p>23</p>
+              <span></span>
             </li>
             <li>
               <label>姓名</label>
@@ -410,147 +410,117 @@
 
 
 </template>
-
-<script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import { defineComponent, ref } from 'vue'
-export default defineComponent({
-  setup() {
-    const state = reactive({
-      disabledDate(time) {
-        return time.getTime() > Date.now()
-      },
-      shortcuts: [
-        {
-          text: 'Today',
-          value: new Date(),
-        },
-        {
-          text: 'Yesterday',
-          value: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            return date
-          },
-        },
-        {
-          text: 'A week ago',
-          value: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-            return date
-          },
-        },
-      ],
-      value1: '',
-      value2: '',
-    })
-
+<script>
+import {ElNotification} from "element-plus";
+export default {
+  data() {
     return {
-      input: ref(''),
-      ...toRefs(state),
-    }
-  },
-  data(){
-    return{
       //基本信息
-      essentialForm:{
+      essentialForm: {
         //员工编号
-        emp_id:"",
+        emp_id: "",
         //员工姓名
-        emp_name:"",
+        emp_name: "",
         //出生日期
-        birthday:"",
+        birthday: "",
         //年龄
-        emp_age:"",
+        emp_age: "",
         //婚姻状况
-        marital:"",
+        marital: "",
         //最高学历
-        official:"",
+        official: "",
         //身份证
-        identity:"",
+        identity: "",
         //性别
-        emp_sex:"",
+        emp_sex: "",
         //政治面貌
-        politics:"",
+        politics: "",
         //户口所在地
-        registered:"",
+        registered: "",
         //毕业学校
-        school:"",
+        school: "",
         //银行卡号
-        credit:"",
+        credit: "",
         //血型
-        blood:"",
+        blood: "",
         //星座
-        constellation:"",
+        constellation: "",
         //专业
-        major:""
+        major: ""
 
 
       },
       //联系方式
-      contactForm:{
+      contactForm: {
         //手机号
-        phone:"",
+        phone: "",
         //个人邮箱
-        eamil:"",
+        eamil: "",
         //微信
-        WeChat:"",
+        WeChat: "",
         //QQ
-        qq:"",
+        qq: "",
         //现住地址
-        address:"",
+        address: "",
         //紧急联系人
-        emergency:"",
+        emergency: "",
       },
 
       //在职信息
-      informationForm:{
+      informationForm: {
         //部门
-        dept:"",
+        dept: "",
         //入职日期
-        boardDate:"",
+        boardDate: "",
         //职位
-        position:"",
+        position: "",
         //员工状态
-        state:"",
+        state: "",
         //工龄
-        service:"",
+        service: "",
         //转正日期
-        positive:"",
+        positive: "",
       },
 
-      rules:{
+      rules: {
         name:
 
-            { required: true,
+            {
+              required: true,
               message: '请输入活动名称',
-              trigger: 'blur' },
-        id:  { required: true,
+              trigger: 'blur'
+            },
+        id: {
+          required: true,
           message: '编号不能为空',
-          trigger: 'blur' },
-        phone: [ { required: true,
+          trigger: 'blur'
+        },
+        phone: [{
+          required: true,
           message: '编号不能为空',
-          trigger: 'blur' },
-          { min: 11,  message: '电话号码要11位数', trigger: 'blur' }
+          trigger: 'blur'
+        },
+          {min: 11, message: '电话号码要11位数', trigger: 'blur'}
         ]
 
 
       },
-      informations_1:true,
-      informations_edit_1:false,
-      informations_bj_1:true,
-      informations_2:true,
-      informations_edit_2:false,
-      informations_bj_2:true,
-      informations_3:true,
-      informations_edit_3:false,
-      informations_bj_3:true
+      informations_1: true,
+      informations_edit_1: false,
+      informations_bj_1: true,
+      informations_2: true,
+      informations_edit_2: false,
+      informations_bj_2: true,
+      informations_3: true,
+      informations_edit_3: false,
+      informations_bj_3: true
     }
 
-  }
+  },
+  methods: {
 
-})
+  }
+}
 </script>
 
 <style scoped>

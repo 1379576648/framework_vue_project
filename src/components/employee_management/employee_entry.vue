@@ -28,17 +28,16 @@
             <el-tabs v-model="activeName" @tab-click="handleClick">
 
               <el-tab-pane name="book" label="待入职员工">
-                <employee_stock/>
+                <employee_stock :key="one"/>
               </el-tab-pane>
 
-              <el-tab-pane name="second" label="放弃入职员工">
-                <employee_abandon/>
+              <el-tab-pane name="second" label="放弃入职员工" >
+                <employee_abandon :key="one"/>
               </el-tab-pane>
 
             </el-tabs>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -62,9 +61,14 @@ export default {
   },
   data() {
     return {
+      one:1,
       activeName: 'book'
     }
-  }
+  },methods:{
+    handleClick(){
+      this.one=this.one+1;
+    }
+}
 }
 </script>
 
