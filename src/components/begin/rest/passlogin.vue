@@ -20,7 +20,7 @@ Object { "../components/HelloWorld.vue": vue(), "../components/LoginView.vue": v
 这样作后，在动态生态菜单时可以直接component:modules[`${comp}`]，comp是从后台读取的组件路径，这里
 则正好对应上modules中对象的键，如"../components/HelloWorld.vue"
 */
-const modules = import.meta.glob('../../../components/**/*.vue');
+const modules = import.meta.glob('../components/**/*.vue');
 export default {
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
       //菜单列表
       memuList1: [],
       memuList2: [],
-      oo:[],
+      oo: [],
     }
   }, methods: {
     //点击登录操作
@@ -127,64 +127,14 @@ export default {
                     //部门职位编号
                     "deptPostId": value.deptPostId,
                     //部门编号
-                    "deptId":value.deptId,
+                    "deptId": value.deptId,
                   }
                   //将形成的对象存放起来
                   this.$store.commit("staffInfo", obj);
                   this.$store.commit("updateMenuList", response.data.data.menuList);
-                  this.menu(this.$store.state.memuList);
-
-                  let ou = {
-                    path: "/home",
-                    component: modules[`${'../../../components/navigation.vue'}`],
-                    redirect: '',
-                    children: []
-                  }
-                  this.memuList2.push(ou);
-                  //循环菜单列表找出根节点
-                  for (let i = 0; i < this.memuList1.length; i++) {
-                    if (this.memuList1[i].menuPowerPid == 0 && this.memuList1[i].menuPowerType == 0) {
-                      if (i==0){
-                        this.memuList2[0].redirect=this.memuList1[i].menuPowerRoute;
-                      }
-                      let op ={
-                        path:this.memuList1[i].menuPowerRoute,
-                        id:this.memuList1[i].menuPowerId,
-                        component:modules[`${'../components'+this.memuList1[i].menuPowerModule+'.vue'}`],
-                        redirect:'',
-                        children:[],
-                      }
-                      this.memuList2[0].children.push(op);
-                    }
-                  }
-                  //为根菜单设置子菜单，getClild是递归调用的
-                  for (let j = 0; j < this.memuList2[0].children.length; j++) {
-                    /* 获取根节点下的所有子节点 使用getChild方法*/
-                    this.getChild(this.memuList2[0].children[j].id, this.memuList1);
-                    //给根节点设置子节点
-                    if (this.oo != null) {
-                      for (let i = 0; i < this.oo.length; i++) {
-                        if (this.oo[i].menuPowerLeaf == 1) {
-                          if (i==0){
-                            this.memuList2[0].children[j].redirect=this.oo[i].menuPowerRoute;
-                          }
-                          let op ={
-                            path:this.oo[i].menuPowerRoute,
-                            component:modules[`${'../../../components'+this.oo[i].menuPowerModule+'.vue'}`],
-                          }
-                          this.memuList2[0].children[j].children.push(op);
-                        }
-                      }
-                      this.oo=[];
-                    }
-                  }
-                  console.log(this.memuList1);
-                  console.log(this.memuList2);
-
-                  // this.$router.addRoute(this.memuList2);
-                  this.$store.commit("updateRouter", this.memuList2);
+                  sessionStorage.setItem("refresh", "true")
                   //跳转可以
-                  // this.$router.push({path: '/home', replace: true})
+                  this.$router.push({path: '/home', replace: true})
                 }
                 //如果数据里面没有员工信息
                 else {
@@ -215,72 +165,7 @@ export default {
           }
         })
       }
-    },    //递归菜单
-    menu(val) {
-      for (let i = 0; i < val.length; i++) {
-        if (val[i].menuPowerType == 0 && val[i].menuPowerLeaf == 1) {
-          let op = {
-            menuPowerId: val[i].menuPowerId,
-            menuPowerLeaf: val[i].menuPowerLeaf,
-            menuPowerModule: val[i].menuPowerModule,
-            menuPowerName: val[i].menuPowerName,
-            menuPowerOrder: val[i].menuPowerOrder,
-            menuPowerPid: val[i].menuPowerPid,
-            menuPowerRoute: val[i].menuPowerRoute,
-            menuPowerState: val[i].menuPowerState,
-            menuPowerType: val[i].menuPowerType,
-            pictureAddress: val[i].pictureAddress,
-            revision: val[i].revision,
-            updatedTime: val[i].updatedTime,
-            createdTime: val[i].createdTime,
-            isDeleted: val[i].isDeleted,
-            list: [],
-          }
-          this.memuList1.push(op)
-        } else if (val[i].menuPowerType == 0 && val[i].menuPowerLeaf == 0) {
-          let op = {
-            menuPowerId: val[i].menuPowerId,
-            menuPowerLeaf: val[i].menuPowerLeaf,
-            menuPowerModule: val[i].menuPowerModule,
-            menuPowerName: val[i].menuPowerName,
-            menuPowerOrder: val[i].menuPowerOrder,
-            menuPowerPid: val[i].menuPowerPid,
-            menuPowerRoute: val[i].menuPowerRoute,
-            menuPowerState: val[i].menuPowerState,
-            menuPowerType: val[i].menuPowerType,
-            pictureAddress: val[i].pictureAddress,
-            revision: val[i].revision,
-            updatedTime: val[i].updatedTime,
-            createdTime: val[i].createdTime,
-            isDeleted: val[i].isDeleted,
-            list: [],
-          }
-          this.memuList1.push(op)
-          this.menu(val[i].list);
-        }
-      }
-    }, getChild(id, val) {
-      let op=[];
-      //子菜单
-      for (let i = 0; i < val.length; i++) {
-        // 遍历所有节点，将所有菜单的父id与传过来的根节点的id比较
-        //相等说明：为该根节点的子节点。
-        if (val[i].menuPowerPid == id && val[i].menuPowerType == 0) {
-            op.push(val[i]);
-        }
-      }
-      //递归
-      for (let j = 0; j < op.length; j++) {
-        this.oo.push(op[j]);
-        op.list = this.getChild(op[j].menuPowerId, val);
-      }
-      //如果节点下没有子节点，返回一个空List（递归退出）
-      if (op.length == 0) {
-        return null;
-      }
-      return op;
-    }
-
+    },
   }, mounted() {
     //ip地址
     this.ip = returnCitySN['cip'];

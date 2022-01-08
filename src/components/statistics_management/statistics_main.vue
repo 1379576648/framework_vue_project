@@ -28,7 +28,7 @@
             <!-- 下拉菜单 -->
             <!--:default-active默认激活路由-->
             <!--:@select菜单点击事件-->
-            <el-menu id="el-menu" :default-active="default_route" background-color="#f2f6f8" mode="vertical"
+            <el-menu id="el-menu" :default-active="activate_router" background-color="#f2f6f8" mode="vertical"
                      @select="handleAsideSelect">
               <!-- 级联显示菜单 -->
               <menu-util :data="menuList"/>
@@ -46,6 +46,10 @@
 
 <script lang="ts">
 import menuUtil from '../../components/util/menu_util.vue'
+import {
+  useRouter
+} from 'vue-router'
+
 export default {
   components: {
     menuUtil,
@@ -53,79 +57,27 @@ export default {
   data() {
     return {
       //根据path动态获取store里面的菜单列表
-      menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
+      menuList: this.$store.getters.store_menuList('/' + window.location.pathname.substring(1, window.location.pathname.length).substring(0, window.location.pathname.substring(1, window.location.pathname.length).indexOf('/')))[0],
       //默认激活路由
-      activate_router: '',
+      activate_router: window.location.pathname.substring(0, window.location.pathname.length),
     }
-  }, computed: {
-    //默认激活路由
-    default_route() {
-      //如果存进去的默认激活路由不等于参数值
-      if (this.$store.state.router_versions != this.$route.query.path) {
-        //清空默认激活路由
-        this.activate_router = ''
-      } else {
-        //如果版本一致则默认激活路由取出来
-        this.activate_router = this.$store.state.default_route;
-      }
-      // //找出第一个没有叶子的菜单
-      this.inquire_1();
-      //返回默认激活路由的结果
-      return this.activate_router;
-    },
   }, methods: {
-    inquire_1() {
-      //如果有数据
-      if (this.menuList) {
-        //迭代循环
-        for (let i of this.menuList) {
-          //如果菜单有叶子 并且状态为启用
-          if (i.menuPowerLeaf == 0 && i.menuPowerState == 0) {
-            //梯归
-            this.inquire_2(i.list);
-            //如果菜单没有叶子 并且状态为禁用
-          } else if (i.menuPowerLeaf == 1 && i.menuPowerState == 0) {
-            //找出第一个路由为默认激活路由
-            if (this.activate_router == '') {
-              //替换默认激活地址
-              this.activate_router = i.menuPowerRoute
-            }
-          }
-        }
-      }
-    }, inquire_2(value) {
-      //如果有数据
-      if (value) {
-        //迭代器循环
-        for (let i of value) {
-          //如果菜单有叶子 并且状态为启用
-          if (i.menuPowerLeaf == 0 && i.menuPowerState == 0) {
-            //梯归
-            this.inquire_2(i.list);
-            //如果菜单没有叶子 并且状态为禁用
-          } else if (i.menuPowerLeaf == 1 && i.menuPowerState == 0) {
-            //找出第一个路由为默认激活路由
-            if (this.activate_router == '') {
-              //替换默认激活地址
-              this.activate_router = i.menuPowerRoute
-            }
-          }
-        }
-      }
+    defaultRouter() {
+      this.activate_router = window.location.pathname.substring(0, window.location.pathname.length);
     },
     //菜单点击事件
     handleAsideSelect(index, key, keyPath) {
       //默认激活的路由
-      this.$store.state.default_route = index
-      //更换默认二级路由名称版本
-      this.$store.state.router_versions = this.$route.query.path
+      this.activate_router = index
       //跳转路由 通过path 以及携带参数  参数是从一级目录传过来的
       this.$router.push({
-        path: index,
-        query: {path: this.$route.query.path}
+        path: index
       })
     }
 
+  }, created() {
+    //监听点击浏览器的前级跟回退按钮
+    window.addEventListener('popstate', this.defaultRouter, false);
   }
 }
 </script>
