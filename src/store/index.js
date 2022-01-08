@@ -6,12 +6,10 @@ const store = createStore({
         staffMessage: {},
         //动态菜单
         memuList: [],
-        //默认激活的一级菜单
-        activate_router: '',
         //默认激活的二级菜单
         default_route: '',
-        //动态路由
-        one: []
+        //菜单路由
+        menuRouter:[]
     },
     /* 同步修改值 */
     mutations: {
@@ -25,10 +23,10 @@ const store = createStore({
             // 通过传过来的值进行修改
             state.memuList = obj;
         },
-        //修改动态路由的值
-        updateRouter(state, obj) {
+        //修改菜单路由
+        updateMenuRouter(state, obj) {
             // 通过传过来的值进行修改
-            state.one = obj;
+            state.menuRouter = obj;
         }
     },
     getters: {

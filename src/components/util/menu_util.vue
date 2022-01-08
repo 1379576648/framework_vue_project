@@ -3,7 +3,7 @@
   <!--循环菜单列表-->
   <label v-for="(menu,index) in data">
     <!-- 如果菜单有叶子 并且 状态为可用 并且类型为菜单 并且 下一个菜单的类型为菜单   -->
-    <el-sub-menu v-if="menu.menuPowerLeaf==0&&menu.menuPowerState==0&&menu.menuPowerType==0 && data[index].list[0].menuPowerType==0"
+    <el-sub-menu v-if="menu.menuPowerLeaf==0 && menu.menuPowerState==0 && menu.menuPowerType==0 && data[index].list[0].menuPowerType==0"
                  :index="menu.menuPowerId">
       <template #title>
         <!--  菜单图标        -->
@@ -16,11 +16,12 @@
     </el-sub-menu>
     <!--如果菜单没有叶子 并且状态为可用 并且菜单类型为菜单 或者下一个类型为按钮    -->
     <el-menu-item
-        v-else-if="menu.menuPowerLeaf==1&&menu.menuPowerState==0&&menu.menuPowerType==0 ||  data[index].list[0].menuPowerType==1 "
+        v-else-if="menu.menuPowerLeaf==1 && menu.menuPowerState==0 && menu.menuPowerType==0 ||  data[index].list[0].menuPowerType==1 "
         :index="menu.menuPowerRoute">
       {{ menu.menuPowerName }}
     </el-menu-item>
   </label>
+
 </template>
 
 <script>
