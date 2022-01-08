@@ -132,7 +132,6 @@ export default {
                   //将形成的对象存放起来
                   this.$store.commit("staffInfo", obj);
                   this.$store.commit("updateMenuList", response.data.data.menuList);
-                  sessionStorage.setItem("refresh", "true")
                   //跳转可以
                   this.$router.push({path: '/home', replace: true})
                 }
@@ -140,7 +139,7 @@ export default {
                 else {
                   ElNotification.warning({
                     title: '提示',
-                    message: "请" + response.data.data.succeed + "分钟后再试",
+                    message: "请" + response.data.data.succeed.error + "分钟后再试",
                     offset: 100,
                   })
                 }
