@@ -68,7 +68,8 @@ export default {
       employee_dimission:false,
       //员工编辑
       employee_compile:false,
-      activeName:'book'
+      activeName:'book',
+      one:0,
     }
   },
   methods: {
