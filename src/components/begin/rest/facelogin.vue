@@ -144,7 +144,9 @@ export default {
                 //员工政治面貌
                 "staffOutlook": value.staffOutlook,
                 //部门职位编号
-                "deptPostId":value.deptPostId
+                "deptPostId":value.deptPostId,
+                //部门编号
+                "deptId":value.deptId,
               }
               //将形成的对象存放起来
               this.$store.commit("staffInfo", obj)

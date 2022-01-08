@@ -340,7 +340,6 @@
       </el-form>
     </template>
   </el-dialog>
-  {{ details }}
 </template>
 
 <script>

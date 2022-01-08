@@ -141,11 +141,11 @@
           <el-form-item label="异动类型：">
             <el-input v-model="details[0].transfertype" disabled></el-input>
           </el-form-item>
-          <el-form-item label="原部门编号：">
-            <el-input v-model="details[0].createddeptid" disabled></el-input>
+          <el-form-item label="原部门名称：">
+            <el-input v-model="details[0].createddeptname" disabled></el-input>
           </el-form-item>
-          <el-form-item label="变动后部门编号：">
-            <el-input v-model="details[0].updateddeptid" disabled></el-input>
+          <el-form-item label="变动后部门名称：">
+            <el-input v-model="details[0].updateddeptname" disabled></el-input>
           </el-form-item>
           <el-form-item label="生效日期：">
             <el-input v-model="details[0].takeeffectdate" disabled></el-input>
@@ -249,11 +249,11 @@
             <el-form-item label="异动类型：">
               <el-input v-model="details2[0].transfertype" disabled></el-input>
             </el-form-item>
-            <el-form-item label="原部门编号：">
-              <el-input v-model="details2[0].createddeptid" disabled></el-input>
+            <el-form-item label="原部门名称：">
+              <el-input v-model="details2[0].createddeptname" disabled></el-input>
             </el-form-item>
-            <el-form-item label="变动后部门编号：">
-              <el-input v-model="details2[0].updateddeptid" disabled></el-input>
+            <el-form-item label="变动后部门名称：">
+              <el-input v-model="details2[0].updateddeptname" disabled></el-input>
             </el-form-item>
             <el-form-item label="生效日期：">
               <el-input v-model="details2[0].takeeffectdate" disabled></el-input>
@@ -413,10 +413,10 @@ export default {
         auditflowstate: "",
         // 异动类型
         transfertype: "",
-        // 原部门编号
-        createddeptid: "",
-        //变动后部门编号
-        updateddeptid: "",
+        // 原部门名称
+        createddeptname: "",
+        //变动后部门名称
+        updateddeptname: "",
         // 生效日期
         takeeffectdate: "",
         // 审核人
@@ -438,10 +438,10 @@ export default {
         auditflowstate: "",
         // 异动类型
         transfertype: "",
-        // 原部门编号
-        createddeptid: "",
-        //变动后部门编号
-        updateddeptid: "",
+        // 原部门名称
+        createddeptname: "",
+        //变动后部门名称
+        updateddeptname: "",
         // 生效日期
         takeeffectdate: "",
         // 审核人
