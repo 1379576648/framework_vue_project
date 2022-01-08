@@ -871,6 +871,7 @@ export default {
     this.selectAuditflow();
     // 查询已处理的加班审批
     this.selectEndAuditflow();
+    this.$store.state.staffMessage.staffName;
   }
 };
 </script>
