@@ -24,7 +24,6 @@
                         <el-table-column prop="name" label="姓名" width="120" />
                         <el-table-column prop="depart" label="部门" width="150" />
                         <el-table-column prop="post" label="职位" width="150" />
-                        <el-table-column prop="workxz" label="工作性质" width="150" />
                         <el-table-column prop="phone" label="手机号" width="150" />
                         <el-table-column prop="email" label="邮箱" width="150" />
                         <el-table-column prop="leaf" label="工龄" width="150" />

@@ -82,8 +82,8 @@
               </template>
             </el-table-column>
             <el-table-column fixed="right" label="操作">
-              <template #default>
-                <el-button type="text" size="small" @click="become = true">办理转正</el-button>
+              <template #default="scope">
+                <el-button type="text" size="small" @click="become = true,work(scope.row)">办理转正</el-button>
               </template>
             </el-table-column>
 
@@ -268,7 +268,7 @@ export default defineComponent({
       }
     },
     //查询转正记录
-    selectpost() {
+    selectpost(index,row) {
       var _this = this
       this.axios({
         method: 'post',
@@ -309,6 +309,13 @@ export default defineComponent({
         }
       })
     },
+    work(row){
+      this.become_1.name=row.staffName;
+      this.become_1.dept=row.deptName;
+      this.become_1.post=row.postName;
+      this.become_1.entrydate=row.staffHiredate;
+      this.become_1.tryoutdate="三个月";
+    }
   },
   mounted() {
     //分页查询工作经历
