@@ -15,7 +15,7 @@
           >
             <el-button
                 type="text"
-                @click="become = true"
+                @click="selectStaffState()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_3.svg"/>
@@ -895,7 +895,6 @@
       </el-dialog>
     </div>
   </div>
-  {{deptid}}
 </template>
 
 <script lang="js">
@@ -905,7 +904,6 @@ import {regionData, CodeToText} from "element-china-area-data"; //地址选择�
 export default defineComponent({
   data() {
     return {
-      deptid:this.$store.state.staffMessage.deptId,
       // 地址选择器
       options: regionData,
       // 地址选择器
@@ -1531,6 +1529,7 @@ export default defineComponent({
     cancel_date7() {
       this.become_1.date1 = "";
     },
+    // 点击异动查询全部部门
     variation() {
       this.axios({
         method: 'get',
@@ -1554,7 +1553,10 @@ export default defineComponent({
             //循环部门列表
             for (let i = 0; i < response.data.data.info.length; i++) {
               //一个一个存起来
-              this.variation_dept.push({value: response.data.data.info[i].deptId, label: response.data.data.info[i].deptName})
+              this.variation_dept.push({
+                value: response.data.data.info[i].deptId,
+                label: response.data.data.info[i].deptName
+              })
               this.Change = true;
             }
           }
@@ -1568,7 +1570,62 @@ export default defineComponent({
           }
         }
       })
-    }
+    },
+    // 点击转正根据员工名称查询其员工状态
+    selectStaffState() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaffState',
+        data: this.become_1.present_user,
+      }).then((response) => {
+        console.log("点击转正根据员工名称查询其员工状态成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //  如果传过来的值为1，代表为实习员工 则去根据其部门编号查询其部门经理
+            if (response.data.data.info === 1) {
+              // 根据部门编号查询其部门经理
+              this.axios({
+                method: 'post',
+                url: this.url + '',
+              }).then((response) => {
+                console.log("点击转正查询其部门经理成功")
+                console.log(response);
+                if (response.data.data.data) {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "服务发生关闭",
+                    offset: 100,
+                  })//如果服务没有关闭
+                }else if (response.data.data) {
+                  //如果服务是正常的
+                  if (response.data.data.state == 200) {
+
+                  }
+                }
+              })
+            }
+            //如果服务是雪崩的
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    // 点击转正查询除
+
   },
 });
 </script>
