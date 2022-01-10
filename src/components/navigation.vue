@@ -239,7 +239,11 @@ export default {
     return {
       true: true,
       //默认激活的路由
-      activate_router: '',
+      activate_router: '/' + window.location.pathname
+          .substring(1, window.location.pathname.length)
+          .substring(0, window.location.pathname
+              .substring(1, window.location.pathname.length)
+              .indexOf('/')),
       activeName: 'second',
       //更多之外的菜单
       memuList1: this.$store.getters.menus_outer,
@@ -298,6 +302,14 @@ export default {
   min-width: 0px !important;
   width: 386px;
 }
+.el-menu--popup li{
+  width: 100px!important;
+  margin-right: 0px !important;
+  margin-left: 10px !important;
+}
+.el-menu--popup li:hover{
+  background-color: rgba(0,0,0,0.1) !important;
+}
 </style>
 
 <style type="text/css" scoped>
@@ -311,7 +323,16 @@ export default {
   padding: 8px;
   background-color: #fff;
 }
-
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+/deep/.el-menu--horizontal > .el-sub-menu .el-sub-menu__title:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+/deep/.el-menu--horizontal > .el-sub-menu:hover .el-sub-menu__title {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: white !important;
+}
 .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane, .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
   flex-shrink: 0;
   width: 100%;
@@ -458,7 +479,9 @@ export default {
   height: 70px !important;
 
 }
-
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover{
+  color: white;
+}
 .dh-span {
   height: 56px;
   width: 56px;
@@ -603,7 +626,9 @@ ul li {
   background-color: #49A782;
   color: #fff;
 }
-
+.el-menu-item:hover{
+  background-color: rgba(0,0,0,0.1) !important;
+}
 
 /* 消息样式 */
 .header_message {

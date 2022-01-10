@@ -92,7 +92,7 @@ export default {
         }).then((response) => {
           //如果服务关闭
           if (response.data.data.data) {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
@@ -133,7 +133,6 @@ export default {
                   this.$store.commit("staffInfo", obj);
                   console.log(response.data.data.menuList)
                   this.$store.commit("updateMenuList", response.data.data.menuList);
-                  sessionStorage.setItem("refresh", "true")
                   //跳转可以
                   this.$router.push({path: '/home', replace: true})
                 }
@@ -141,7 +140,7 @@ export default {
                 else {
                   ElNotification.warning({
                     title: '提示',
-                    message: "请" + response.data.data.succeed + "分钟后再试",
+                    message: "请" + response.data.data.succeed.error + "分钟后再试",
                     offset: 100,
                   })
                 }
@@ -157,7 +156,7 @@ export default {
             }
             //如果服务是雪崩的
             else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: "服务发生雪崩",
                 offset: 100,

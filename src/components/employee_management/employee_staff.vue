@@ -64,6 +64,7 @@
     <el-table-column prop="deptName" label="部门" width="160" />
     <el-table-column prop="postName" label="职位" width="160" />
 	 <el-table-column prop="staffPhone" label="手机" width="160" />
+   <el-table-column prop="workAge" label="工龄" width="160" />
 	  <!--<el-table-column prop="staffState" label="状态" width="160" />-->
    <el-table-column label="状态" width="100">
      <template #default="scope">
@@ -77,8 +78,9 @@
 	</el-table-column>
    <el-table-column  prop="workerDate" label="转正日期"   width="160"/>
     <el-table-column fixed="right" label="操作" width="160">
-      <template #default>
-        <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_compile=true"
+      <template #default="scope">
+        <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.one=scope.row.staffId,
+                                                     this.$parent.$parent.$parent.$data.employee_compile=true"
           >编辑 </el-button>
         <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_dimission=true">办理离职</el-button>
       </template>
@@ -128,6 +130,10 @@ export default {
       seek:"",
       value2:"",
       staffState:'',
+      fromvalue:{
+        staffId:'',
+      },
+
     }
   },
   methods:{
@@ -177,11 +183,12 @@ export default {
   mounted() {
     //查询员工花名册
     this.selectStaff();
+    // this.selectStaffAll();
   },
   // 挂载
   created() {
     //查询员工花名册
-    this.selectStaff();
+    //this.selectStaff();
   }
 }
 </script>

@@ -87,7 +87,7 @@ export default {
       src: '',
       isShow: false,
       book:'/employee/message/employee_roster',
-      activeName:'second',
+      activeName:'book',
       dialogImageUrl: "",
       dialogVisible: false,
     };

@@ -6,8 +6,6 @@ const store = createStore({
         staffMessage: {},
         //动态菜单
         memuList: [],
-        //默认激活的二级菜单
-        default_route: '',
         //菜单路由
         menuRouter:[]
     },
@@ -77,23 +75,6 @@ const store = createStore({
             }
             //返回结果集
             return store_menuList;
-        },
-        chart_menuList: (state) => (path) => {
-            //定义数组
-            let chart_menuList = [];
-            //循环菜单列表
-            for (let i = 0; i < state.memuList.length; i++) {
-                //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
-                if ((state.memuList[i].menuPowerRoute) == (path) && state.memuList[i].menuPowerState == 0) {
-                    //如果叶子下面有数据
-                    if (state.memuList[i].list) {
-                        //添加至数组
-                        chart_menuList.push(state.memuList[i]);
-                    }
-                }
-            }
-            //返回结果集
-            return chart_menuList;
         }
 
     }
