@@ -15,7 +15,7 @@
           >
             <el-button
                 type="text"
-                @click="become = true"
+                @click="selectStaffState()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_3.svg"/>
@@ -31,7 +31,7 @@
           >
             <el-button
                 type="text"
-                @click="Change = true"
+                @click="variation()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_4.svg"/>
@@ -217,10 +217,10 @@
       >
         <el-form ref="form_1" :model="become_1" label-width="120px">
           <el-form-item label="员工名称 :">
-            <el-input v-model="become_1.name" disabled></el-input>
+            <el-input v-model="NowStaffName" disabled></el-input>
           </el-form-item>
           <el-form-item label="部门名称 :">
-            <el-input v-model="become_1.dept" disabled></el-input>
+            <el-input v-model="NowDeptName" disabled></el-input>
           </el-form-item>
           <el-form-item label="转正类型 :">
             <el-input v-model="become_1.type_1" disabled></el-input>
@@ -249,7 +249,7 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                   <div class="sub-title" style="line-height: 10px">
-                    管理一号
+                    {{ NowManager[0].staffname }}
                   </div>
                 </div>
               </div>
@@ -260,7 +260,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  管理二号
+                  {{personnel_manager[0].staffname}}
                 </div>
               </div>
             </el-col>
@@ -270,8 +270,8 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  管理三号
-                 </div>
+                  {{ president[0].staffname }}
+                </div>
               </div>
             </el-col>
           </el-form-item>
@@ -293,7 +293,7 @@
       >
         <el-form ref="form_2" :model="Change_1" label-width="120px">
           <el-form-item label="员工名称">
-            <el-input v-model="Change_1.name" disabled></el-input>
+            <el-input v-model="NowStaffName" disabled></el-input>
           </el-form-item>
           <el-form-item label="异动类型">
             <el-input v-model="Change_1.type_1" disabled></el-input>
@@ -304,7 +304,7 @@
           <el-form-item label="异动后部门">
             <el-select v-model="Change_1.dept_1" placeholder="部门名称">
               <el-option
-                  v-for="item in dept"
+                  v-for="item in variation_dept"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -898,27 +898,30 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, toRefs} from "vue";
-import {ElMessage} from "element-plus";
+import {defineComponent, reactive, ref, toRefs, withScopeId} from "vue";
+import {ElMessage, ElNotification} from "element-plus";
 import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
 export default defineComponent({
   data() {
     return {
+      //当前登录用户所在部门编号
+      NowDeptId: this.$store.state.staffMessage.deptId,
+      // 当前登录者
+      NowStaffName: this.$store.state.staffMessage.staffName,
+      // 人事部经理名称(审批人2)
+      personnel_manager :"",
+      // 总裁名称(审批人3)
+      president:"",
+      // 根据当前部门编号查询其部门经理(审批人1)
+      NowManager: "",
+      // 当前登录者所在部门
+      NowDeptName: "",
+      // 地址选择器
       options: regionData,
+      // 地址选择器
       selectedOptions: [],
       //转正表单
-      become_1: {
-        //名称
-        name: "",
-        //部门
-        dept: "",
-        //类型
-        type_1: "",
-        //备注
-        remarks_1: "",
-        //日期
-        date1: "",
-      },
+      become_1: {},
       //异动表单
       Change_1: {
         //名称
@@ -1025,16 +1028,7 @@ export default defineComponent({
         date3: "",
       },
       // 异动后查部门
-      dept: ref([
-        {
-          value: '部门1',
-          label: '部门1',
-        },
-        {
-          value: '部门2',
-          label: '部门2',
-        }
-      ]),
+      variation_dept: [],
     };
   },
   setup() {
@@ -1067,6 +1061,8 @@ export default defineComponent({
       travel,
       sick,
       ...toRefs(state),
+      //访问路径
+      url: "http://localhost:80/",
     };
   },
   methods: {
@@ -1534,7 +1530,178 @@ export default defineComponent({
     cancel_date7() {
       this.become_1.date1 = "";
     },
+    // 点击异动查询全部部门
+    variation() {
+      this.axios({
+        method: 'get',
+        url: this.url + 'selectDeptList',
+      }).then((response) => {
+        console.log("点击异动查询全部部门成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.variation_dept = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.variation_dept.push({
+                value: response.data.data.info[i].deptId,
+                label: response.data.data.info[i].deptName
+              })
+              this.Change = true;
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    // 点击转正根据员工名称查询其员工状态
+    selectStaffState() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaffState',
+        data: {
+          staffName: this.NowStaffName,
+        }
+      }).then((response) => {
+        console.log("点击转正根据员工名称查询其员工状态成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.code == 200) {
+            // 等于1则为正式员工，则去再根据部门编号去查其的部门经理
+            if (response.data.data == 1) {
+              this.axios({
+                method: 'post',
+                url: this.url + 'selectDeptPostName',
+                data: {
+                  deptId: _this.NowDeptId,
+                }
+              }).then((response) => {
+                console.log("根据部门编号去查其部门经理成功")
+                console.log(response)
+                if (response.data.data.data) {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "服务发生关闭",
+                    offset: 100,
+                  })//如果服务没有关闭
+                } else if (response.data) {
+                  //如果服务是正常的
+                  this.NowManager = response.data.data.info;
+                  this.become = true;
+                }
+              })
+            } else if(response.data.data == 0){
+              // 如果大于1，有可能是数据出错了
+              ElNotification.warning({
+                title: '提示',
+                message: "已是正式员工，不支持转正",
+                offset: 100,
+              })//
+            }else {
+              // 如果大于1，有可能是数据出错了
+              ElNotification.warning({
+                title: '提示',
+                message: "数据出差，请稍后再试！",
+                offset: 100,
+              })//
+            }
+            //如果服务是雪崩的
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    // 查询人事经理和总裁
+    selectpresident() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectpresident',
+      }).then((response) => {
+        console.log("查询人事经理及总裁成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.personnel_manager  = response.data.data.info;
+            _this.president = response.data.data.info;
+          }
+        }
+      })
+    },
+    //根据其部门编号查询部门名称
+    selectDeptName() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDeptName',
+        data: {
+          deptId: this.NowDeptId,
+        }
+      }).then((response) => {
+        console.log("查询部门名称成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.NowDeptName = response.data.data.info[0].deptName;
+          }
+        }
+      })
+    }
   },
+  // 挂载
+  created() {
+    // 根据其部门编号查询部门名称
+    this.selectDeptName();
+    // 查询人事经理及总裁
+    this.selectpresident();
+  }
 });
 </script>
 

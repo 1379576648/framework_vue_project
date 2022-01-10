@@ -14,6 +14,7 @@
                   this.$parent.$data.attendanceplan=false,
                   this.$parent.$data.evectionplan=false,
                   this.$parent.$data.salary_insertplanthree=false,
+                  this.$parent.$data.salary_insertplantwo=false,
                   this.$parent.$data.insertplan_name='新增'">
             <i aria-label="图标: plus" class="anticon anticon-plus">
               <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="plus" width="1em" height="1em"
@@ -57,6 +58,7 @@
                   this.$parent.$data.attendanceplan=false,
                   this.$parent.$data.evectionplan=false,
                   this.$parent.$data.salary_insertplanthree=false,
+                   this.$parent.$data.salary_insertplantwo=false,
                   this.$parent.$data.insertplan_name='编辑'"
 
                 >编辑

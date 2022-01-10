@@ -3,7 +3,7 @@
 <div>
 <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input v-model="input3" placeholder="搜索" size="small">
+      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectwork">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -23,9 +23,8 @@
     <el-table-column prop="positionDescribe" label="离职原因" width="190" />
     <el-table-column fixed="right" label="操作">
     <template #default>
-      <router-link :to="{path:this.information,query:{path: this.$route.query.path}}">
-			<el-button type="text" size="small">编辑 </el-button>
-      </router-link>
+
+			<el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_compile=true">编辑 </el-button>
 	</template>
     </el-table-column>
   </el-table>
@@ -67,7 +66,7 @@ export default {
         pagesize: 4, // 页大小
         total: 0, // 总页数
       },
-      input3:"",
+      seek:"",
     }
   },
   methods:{
@@ -82,8 +81,8 @@ export default {
           'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
-          //员工名称
-          "resumeName": this.resumeName,
+          //名称
+          "staffName": this.seek,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

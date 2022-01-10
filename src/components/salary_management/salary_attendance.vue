@@ -5,15 +5,25 @@
       <div class="j-card-body">
         <span></span>
         <div style="margin-top: 20px">
-          <router-link :to="{path:this.insertattendanceplan,query:{path: this.$route.query.path,name:'新增'}}">
-            <button type="button" class="ant-btn ant-btn-primary">
+
+            <button type="button" class="ant-btn ant-btn-primary"
+
+                    @click="this.$parent.$data.salary_insertplantwo=true,
+                    this.$parent.$data.salary_insertplan=false,
+                    this.$parent.$data.salary_checkwage=false,
+                    this.$parent.$data.regular=false,
+                    this.$parent.$data.callbackpay=false,
+                    this.$parent.$data.attendanceplan=false,
+                    this.$parent.$data.evectionplan=false,
+                    this.$parent.$data.salary_insertplanthree=false,
+                    this.$parent.$data.insertplantwo_name='新增'">
               <i aria-label="图标: plus" class="anticon anticon-plus">
                 <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="plus" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"></path>
                   <path d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"></path>
                 </svg></i>
               <span>新增</span>
             </button>
-          </router-link>
+
         </div>
         <div style="margin-top:-32px;">
           <!--搜索输入框-->
@@ -37,11 +47,19 @@
             <el-table-column prop="name" label="状态" width="180" />
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
-                <router-link :to="{path:this.insertattendanceplan,query:{path: this.$route.query.path,name:'编辑'}}">
-                  <el-button type="text"  size="small" @click="handleClick"
-                  >编辑 </el-button
+
+                  <el-button type="text"  size="small"
+                             @click="this.$parent.$data.salary_insertplantwo=true,
+                    this.$parent.$data.salary_insertplan=false,
+                    this.$parent.$data.salary_checkwage=false,
+                    this.$parent.$data.regular=false,
+                    this.$parent.$data.callbackpay=false,
+                    this.$parent.$data.attendanceplan=false,
+                    this.$parent.$data.evectionplan=false,
+                    this.$parent.$data.salary_insertplanthree=false,
+                    this.$parent.$data.insertplantwo_name='编辑'">
+                    编辑 </el-button
                   >
-                </router-link>&nbsp;
                 <el-button type="text" size="small" @click="handleClick">禁用 </el-button>
 <!--                <el-button type="text" size="small">删除 </el-button>-->
                 <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"

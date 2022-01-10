@@ -47,7 +47,7 @@
 <div style="margin-top:10px;">
 		<!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input size="small" v-model="input3" placeholder="搜索" style="margin-top: 20px;margin-right: 2px;">
+      <el-input size="small" v-model="seek" placeholder="搜索" style="margin-top: 20px;margin-right: 2px;" @input="selectStaff">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -59,38 +59,49 @@
 <div style="margin-top:95px;">
  <el-table :data="tableData" style="width: 100%;"
            :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-    <el-table-column fixed="left" prop="date" label="姓名" width="160"/>
-    <el-table-column prop="name" label="出生日期" width="160" />
-    <el-table-column prop="city" label="部门" width="160" />
-    <el-table-column prop="state" label="职位" width="160" />
-	 <el-table-column prop="state" label="手机" width="160" />
-	  <el-table-column prop="state" label="状态" width="160" />
-    <el-table-column  prop="date" label="入职日期" sortable  width="160">
+    <el-table-column fixed="left" prop="staffName" label="姓名" width="160"/>
+    <el-table-column prop="staffBirthday" label="出生日期" width="160" />
+    <el-table-column prop="deptName" label="部门" width="160" />
+    <el-table-column prop="postName" label="职位" width="160" />
+	 <el-table-column prop="staffPhone" label="手机" width="160" />
+   <el-table-column prop="workAge" label="工龄" width="160" />
+	  <!--<el-table-column prop="staffState" label="状态" width="160" />-->
+   <el-table-column label="状态" width="100">
+     <template #default="scope">
+       <span class="button-await" v-if="scope.row.staffState===0">在职</span>
+       <span class="button-pass" v-if="scope.row.staffState===1">离职</span>
+       <span class="button-reject" v-if="scope.row.staffState===2">实习</span>
+       <span class="button-reject" v-if="scope.row.staffState===3">正式</span>
+     </template>
+   </el-table-column>
+    <el-table-column  prop="staffHiredate" label="入职日期" sortable  width="160">
 	</el-table-column>
-   <el-table-column  prop="date" label="转正日期"   width="160"/>
+   <el-table-column  prop="workerDate" label="转正日期"   width="160"/>
     <el-table-column fixed="right" label="操作" width="160">
-      <template #default>
-        <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_compile=true"
+      <template #default="scope">
+        <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.one=scope.row.staffId,
+                                                     this.$parent.$parent.$parent.$data.employee_compile=true"
           >编辑 </el-button>
         <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_dimission=true">办理离职</el-button>
       </template>
     </el-table-column>
   </el-table>
 </div>
-
   <!-- 分页插件 -->
   <div class="demo-pagination-block">
     <el-pagination
         v-model:currentPage="pageInfo.currentPage"
-        :page-sizes="[3, 5, 10, 50]"
+        :page-sizes="[4, 5, 10, 50]"
         v-model:page-size="pageInfo.pagesize"
         :default-page-size="pageInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.total"
         :pager-count="5"
+        prev-text="上一页"
+        next-text="下一页"
+        @size-change="selectStaff()"
+        @current-change="selectStaff()"
         background
-        @size-change="selectUsers"
-        @current-change="selectUsers"
     >
     </el-pagination>
   </div>
@@ -98,71 +109,86 @@
 
 </div>
 </template>
-<script lang="ts">
+<script>
 import {defineComponent,ref} from 'vue'
+import {ElNotification} from "element-plus";
 export default {
 //操作时间
   data() {
     const value2 = ref('')
     return {
+      url: "http://localhost:80/",
       leave:'/employee/message/employee_roster/leave',
       staffedit:'/employee/message/employee_roster/staffedit',
-      tableData: [
-        {
-          date: '2016-03-03',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-		{
-          date: '2016-07-04',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-		{
-          date: '2016-08-06',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-		{
-          date: '2016-06-07',
-          name: '小花',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 3, // 页大小
+        pagesize: 4, // 页大小
         total: 0, // 总页数
       },
-      input3:"",
+      seek:"",
       value2:"",
+      staffState:'',
+      fromvalue:{
+        staffId:'',
+      },
+
     }
+  },
+  methods:{
+    //查询员工花名册
+    selectStaff() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaff',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //名称
+          "staffName": this.seek,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+  },
+  mounted() {
+    //查询员工花名册
+    this.selectStaff();
+    // this.selectStaffAll();
+  },
+  // 挂载
+  created() {
+    //查询员工花名册
+    //this.selectStaff();
   }
 }
 </script>
@@ -185,5 +211,4 @@ export default {
   float: right;
   margin: 20px;
 }
-
 </style>

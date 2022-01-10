@@ -145,7 +145,7 @@
                     <el-input v-model="ruleForm.remark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
-                    <el-button style="width: 60px;" @click="this.$parent.$data.attendanceplan=false">取消</el-button>
+                    <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplan=false,this.$parent.$data.callbackpay=true">取消</el-button>
                     <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
                     >提交
                     </el-button

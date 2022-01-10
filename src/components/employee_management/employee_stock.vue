@@ -32,6 +32,8 @@
         <template #default="scope">
           <el-button type="text" size="small" @click="selectpage(scope.row.employmentId)
                                                ,fromValue.resumeId=scope.row.resumeId
+                                               ,fromValue.employmentId=scope.row.employmentId
+                                               ,fromValue.waiveReason=scope.row.waiveReason
                                                ,fromValue.resumeName=scope.row.resumeName
                                                ,fromValue.resumeSex=scope.row.resumeSex
                                                ,fromValue.resumePhone=scope.row.resumePhone
@@ -56,9 +58,9 @@
                                                ,fromValue.educationStudentname=scope.row.educationStudentname
                                                ,fromValue.educationMajor=scope.row.educationMajor
                                                ,fromValue.educationFullTime=scope.row.educationFullTime
-                                               ,insertStaff()">入职</el-button>
+                                               ,updateEmploymentState(scope.row.employmentId),insertStaff()">入职</el-button>
 
-          <el-button @click="become=true" type="text" size="small">放弃</el-button>
+          <el-button @click="id=scope.row.employmentId,abandon(id)"  type="text" size="small">放弃</el-button>
 
         </template>
       </el-table-column>
@@ -92,9 +94,8 @@
         <el-input v-model="cause" type="textarea" style="width:240px;"></el-input>
         <div style="margin-top:30px;margin-left: 30px;">
           <el-button @click="become=false">取消</el-button>
-          <el-button type="primary" @click="become=false">确定</el-button>
+          <el-button type="primary" @click="become=false,updateEmploymentStateAndWaiveReasonInt(id)">确定</el-button>
         </div>
-
       </el-dialog>
     </div>
 
@@ -124,6 +125,8 @@ export default defineComponent({
         resumeId:'',
         //录用编号
         employmentId: '',
+        //放弃原因
+        waiveReason:'',
         //简历姓名
         resumeName:'',
         //简历性别
@@ -182,7 +185,7 @@ export default defineComponent({
   },
   methods: {
     //查询已录用待入职的员工
-    selectpage(id) {
+    selectpage() {
       var _this = this
       this.axios({
         method: 'post',
@@ -192,7 +195,7 @@ export default defineComponent({
           'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
-          //员工名称
+          //名称
           "resumeName": this.seek,
         },
         responseType: 'json',
@@ -269,9 +272,81 @@ export default defineComponent({
         }
       })
     },
-
+    //修改状态为已录用
+    updateEmploymentState() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateEmploymentState',
+        data: {
+          employmentId: this.fromValue.employmentId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          this.selectpage();
+        } else if (response.data.data === 100) {
+        } else {
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //修改状态为已淘汰
+    updateEmploymentStateAndWaiveReasonInt(id) {
+      console.log(id)
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateEmploymentStateAndWaiveReasonInt',
+        data: {
+          employmentId: this.id,
+          waiveReason: this.cause,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectpage();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    abandon(id){
+      this.become=true;
+    },
   },
   mounted() {
+    //查询已录用待入职的员工
+    this.selectpage();
+  },
+  // 挂载
+  created() {
     //查询已录用待入职的员工
     this.selectpage();
   }

@@ -1,5 +1,5 @@
 <template>
-  <!--  补打卡审批页面-->
+  <!--  离职审批页面-->
   <div class="body_1">
     <el-tabs type="border-card">
       <!-- 待办申请页面 -->
@@ -340,7 +340,6 @@
       </el-form>
     </template>
   </el-dialog>
-  {{ details }}
 </template>
 
 <script>
@@ -377,9 +376,9 @@ export default {
       remark: "",
       //访问路径
       url: "http://localhost:80/",
-      // 待办加班审批列表
+      // 待办离职审批列表
       tableData: [],
-      // 已办转正审批列表
+      // 已办离职审批列表
       tableData1: [],
       // 待处理分页
       pageInfo: {
@@ -517,7 +516,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询待审批加班数据-不带数据
+    // 查询待审批离职数据-不带数据
     selectQuitAll2() {
       this.staffName1 = "";
       this.selectTime = "";
@@ -534,7 +533,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询待审批加班数据");
+        console.log("查询待审批离职数据");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -564,7 +563,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询已办审批加班数据
+    // 查询已办审批离职数据
     selectEndQuitAll() {
       var _this = this
       this.axios({
@@ -585,7 +584,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批离职数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -612,7 +611,7 @@ export default {
             console.log(error);
           });
     },
-    // 查询已办审批加班数据-不带数据
+    // 查询已办审批离职数据-不带数据
     selectEndQuitAll2() {
       this.staffName1 = "";
       this.selectTime2 = "";
@@ -629,7 +628,7 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询已办审批加班数据")
+        console.log("查询已办审批离职数据")
         console.log(response)
         if (response.data.data.data) {
           ElNotification.warning({
@@ -656,7 +655,7 @@ export default {
             console.log(error);
           });
     },
-    // 待我审批的加班数据详情
+    // 待我审批的离职数据详情
     particulars(value) {
       console.log(value.id)
       console.log(value.name1)
@@ -676,17 +675,17 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批离职数据详情");
         console.log(response)
         this.details = response.data.data.info;
 
       })
           .catch(function (error) {
-            console.log("查询待我审批加班数据详情失败")
+            console.log("查询待我审批离职数据详情失败")
             console.log(error);
           });
     },
-    // 已审批的加班数据详情
+    // 已审批的离职数据详情
     particulars2(value2) {
       var _this = this
       this.axios({
@@ -703,13 +702,13 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         this.drawer2 = true;
-        console.log("查询已审批加班数据详情");
+        console.log("查询已审批离职数据详情");
         console.log(response)
         this.details2 = response.data.data.info;
 
       })
           .catch(function (error) {
-            console.log("查询已审批的加班数据详情失败")
+            console.log("查询已审批的离职数据详情失败")
             console.log(error);
           });
     },
@@ -847,9 +846,9 @@ export default {
   },
   // 挂载
   created() {
-    // 查询待处理的补打卡审批
+    // 查询待处理的离职审批
     this.selectQuitAll();
-    // 查询已处理的补打卡审批
+    // 查询已处理的离职审批
     this.selectEndQuitAll();
   }
 };

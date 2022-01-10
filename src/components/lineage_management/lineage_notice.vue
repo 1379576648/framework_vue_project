@@ -470,7 +470,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -484,7 +484,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
@@ -518,7 +518,7 @@ export default {
         }).then((response) => {
           //如果服务关闭
           if (response.data.data.data) {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
@@ -543,7 +543,7 @@ export default {
             }
             //如果服务是雪崩的
             else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: "服务发生雪崩",
                 offset: 100,
@@ -583,7 +583,7 @@ export default {
         }).then((response) => {
           //如果服务关闭
           if (response.data.data.data) {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
@@ -608,7 +608,7 @@ export default {
             }
             //如果服务是雪崩的
             else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: "服务发生雪崩",
                 offset: 100,
@@ -638,7 +638,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -666,7 +666,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
@@ -686,7 +686,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -714,7 +714,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
@@ -798,7 +798,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -817,7 +817,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
@@ -834,7 +834,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -852,7 +852,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
@@ -869,7 +869,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -883,7 +883,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
@@ -900,7 +900,7 @@ export default {
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
@@ -914,7 +914,7 @@ export default {
           }
           //如果服务是雪崩的
           else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
               message: "服务发生雪崩",
               offset: 100,
