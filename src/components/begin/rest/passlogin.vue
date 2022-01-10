@@ -131,6 +131,7 @@ export default {
                   }
                   //将形成的对象存放起来
                   this.$store.commit("staffInfo", obj);
+                  console.log(response.data.data.menuList)
                   this.$store.commit("updateMenuList", response.data.data.menuList);
                   //跳转可以
                   this.$router.push({path: '/home', replace: true})

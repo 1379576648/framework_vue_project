@@ -54,20 +54,26 @@
         <div class="sub-Content__primary">
           <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
                     :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-            <el-table-column prop="ID" label="序号" width="150"/>
-            <el-table-column label="招聘计划名称" width="200">
+            <el-table-column prop="recruitmentPlanId" label="序号" width="150"/>
+            <el-table-column prop="recruitmentPlanName" label="招聘计划名称" width="200">
               <template #default="scope" >
-                <span @click="recruit_plan_details=true">
-                 {{ scope.row.zpname }}
+                <span @click="this.recruit_plan_details=true">
+                 {{ scope.row.recruitmentPlanName }}
                 </span>
 
               </template>
             </el-table-column>
-            <el-table-column prop="zpzw" label="招聘职位" width="200"/>
-            <el-table-column prop="zpdept" label="需求部门" width="200"/>
-            <el-table-column prop="zpnum" label="招聘人数" width="200"/>
-            <el-table-column prop="statetime" label="发布时间" width="200"/>
-            <el-table-column prop="zpzt" label="招聘状态" width="200"/>
+            <el-table-column prop="postName" label="招聘职位" width="200"/>
+            <el-table-column prop="deptName" label="需求部门" width="200"/>
+            <el-table-column prop="recruitmentPlanNumber" label="招聘人数" width="200"/>
+            <el-table-column prop="recruitmentPlanStartTime" label="发布时间" width="200"/>
+            <el-table-column prop="recruitmentZt" label="招聘状态" width="200">
+              <template #default="scope">
+                <span class="button-await" v-if="scope.row.recruitmentZt===0">招聘中</span>
+                <span class="button-pass" v-if="scope.row.recruitmentZt===1">已结束</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="zpzt" label="负责人" width="200"/>
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
                 <div v-if="tableData[scope.$index].zpzt=='招聘中'">
@@ -96,10 +102,10 @@
 
         </div>
       </div>
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 30px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currenPage"
+            v-model:currentPage="pageInfo.currentPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -107,14 +113,16 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="sele"
-            @current-change="sele"
+            @size-change="selectRecruitment"
+            @current-change="selectRecruitment"
             prev-text="上一页"
             next-text="下一页"
         >
         </el-pagination>
       </div>
     </div>
+    {{this.tableData}}
+    {{ this.$store.state.staffMessage.staffName}}
   </div>
 <!--  新增招聘计划-->
   <recruit_add_plan v-if="recruit_add_plan" :name="recruit_add_plan_name"/>
@@ -144,12 +152,16 @@ export default {
       recruit_add_plan_name:'',
       //招聘计划详情页面
       recruit_plan_details:false,
+      //访问路径
+      url:'http://localhost:80/',
+      //招聘状态
+      recruitmentZt:'',
       //分页
       pageInfo: {
-        currenPage: 3,
+        currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
-        total: 3,
+        pagesize: 5,
+        total: 0,
       },
       //下拉选择器
       options1: [
@@ -164,37 +176,9 @@ export default {
       ],
       value1: "",
       value2: "",
-      row1: {
-        ID: null,
-        zpname: null,
-        zpzw: null,
-        zpdept: null,
-        zpnum: null,
-        statetime: null,
-        zpzt: null
-      },
       //输入框数据
       input: "",
-      tableData: [
-        {
-          ID: '1',
-          zpname: 'HTR2001招聘计划',
-          zpzw: '研发人员',
-          zpdept: '市场部',
-          zpnum: '10',
-          statetime: '2016-05-03',
-          zpzt: '招聘中'
-        },
-        {
-          ID: '1',
-          zpname: 'HTR2001招聘计划',
-          zpzw: '研发人员',
-          zpdept: '市场部',
-          zpnum: '10',
-          statetime: '2016-05-03',
-          zpzt: '已结束'
-        },
-      ]
+      tableData: []
     }
   },
   methods: {
@@ -225,7 +209,33 @@ export default {
         message: '已取消该操作',
         type: 'warning',
       })
+    },
+    selectRecruitment(){
+        var _this=this
+        this.axios({
+          method:'post',
+          url:this.url+'selectRecruitment',
+          data:{
+            'currentPage': this.pageInfo.currentPage,
+            /* 当前的页 */
+            'pagesize': this.pageInfo.pagesize,
+          },
+          responseType:'json',
+          responseEncoding:'utf-8',
+
+        }).then((response)=>{
+          console.log("查询招聘计划")
+          console.log(response);
+          this.tableData=response.data.succed.records;
+          this.pageInfo.pagesize = response.data.succed.size;
+          this.pageInfo.total = response.data.succed.total;
+        }).catch(function (error){
+          console.log("失败")
+          console.log(error);
+        })
     }
+  },created() {
+    this.selectRecruitment();
   }
 }
 
