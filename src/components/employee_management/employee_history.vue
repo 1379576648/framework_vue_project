@@ -8,7 +8,7 @@
 				<!--搜索输入框-->
         <div style="margin-left: 1161px;">
 				<el-row style="width:150px;">
-				<el-input v-model="input3" placeholder="搜索" size="small">
+				<el-input v-model="seek" placeholder="搜索" size="small" @input="selectQuit">
 					<template #suffix>
 					<el-icon class="el-input__icon"><i-search/></el-icon>
 					</template>
@@ -38,15 +38,17 @@
         <div class="demo-pagination-block">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
+              :page-sizes="[4, 5, 10, 50]"
               v-model:page-size="pageInfo.pagesize"
               :default-page-size="pageInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageInfo.total"
               :pager-count="5"
+              prev-text="上一页"
+              next-text="下一页"
+              @size-change="selectQuit()"
+              @current-change="selectQuit()"
               background
-              @size-change="selectUsers"
-              @current-change="selectUsers"
           >
           </el-pagination>
         </div>
@@ -56,19 +58,71 @@
       </div>
 		</div>
 	</div>
+  {{this.tableData}}
 </template>
 
 <script>
-	export default {
+	import {ElNotification} from "element-plus";
+
+  export default {
     data(){
       return{
-          input3:"",
+        url: "http://localhost:80/",
+          seek:"",
         pageInfo: {
           // 分页参数
           currentPage: 1, //当前页
           pagesize: 3, // 页大小
           total: 0, // 总页数
         },
+        tableData:[],
+      }
+    },
+    methods:{
+      //查询历史花名册
+      selectQuit() {
+        var _this = this
+        this.axios({
+          method: 'post',
+          url: this.url + 'selectQuit',
+          data: {
+            //当前页
+            'currentPage': this.pageInfo.currentPage,
+            //页大小
+            "pagesize": this.pageInfo.pagesize,
+            //名称
+            "staffName": this.seek,
+          },
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      },
+      mounted(){
+        this.selectQuit();
       }
     }
   }
