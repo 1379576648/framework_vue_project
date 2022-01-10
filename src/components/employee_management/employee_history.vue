@@ -21,15 +21,15 @@
 					
 					 <el-table :data="tableData" stripe style="width: 100%"
                      :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-                        <el-table-column prop="name" label="姓名" width="120" />
-                        <el-table-column prop="depart" label="部门" width="150" />
-                        <el-table-column prop="post" label="职位" width="150" />
-                        <el-table-column prop="phone" label="手机号" width="150" />
-                        <el-table-column prop="email" label="邮箱" width="150" />
-                        <el-table-column prop="leaf" label="工龄" width="150" />
-                        <el-table-column prop="entrydate" label="入职日期" width="180" />
-                        <el-table-column prop="dimdate" label="离职日期" width="180" />
-                        <el-table-column prop="dimcause" label="离职原因" />
+                        <el-table-column prop="staffName" label="姓名" width="120" />
+                        <el-table-column prop="deptName" label="部门" width="150" />
+                        <el-table-column prop="postName" label="职位" width="150" />
+                        <el-table-column prop="staffPhone" label="手机号" width="150" />
+                        <el-table-column prop="staffEmail" label="邮箱" width="150" />
+                        <el-table-column prop="workAge" label="工龄" width="150" />
+                        <el-table-column prop="staffHiredate" label="入职日期" width="180" />
+                        <el-table-column prop="formalQuitDate" label="离职日期" width="180" />
+                        <el-table-column prop="quitType" label="离职原因" />
                     </el-table>
 					
 				</div>
@@ -58,7 +58,6 @@
       </div>
 		</div>
 	</div>
-  {{this.tableData}}
 </template>
 
 <script>
@@ -120,10 +119,10 @@
             }
           }
         })
-      },
-      mounted(){
-        this.selectQuit();
       }
+    },
+    mounted(){
+      this.selectQuit();
     }
   }
 
