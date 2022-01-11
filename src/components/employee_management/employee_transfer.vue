@@ -14,7 +14,7 @@
             </h3>
             <div style="width: 80%;margin: auto;margin-top: 30px;position: relative;padding-bottom:30px ">
 
-              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+              <el-form :model="tableData" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <div style="display: inline-block;">
 
                   <el-form-item label="姓名：" prop="name">
@@ -25,11 +25,11 @@
                   </el-form-item><br/>
 
                   <el-form-item label="调动前部门：" prop="formerdept">
-                    <el-input v-model="ruleForm.formerdept" style="width:240px"></el-input>
+                    <el-input v-model="ruleForm.formerdept" style="width:240px" disabled></el-input>
                   </el-form-item><br/>
 
                   <el-form-item label="调动前职位：" prop="formerpost">
-                    <el-input v-model="ruleForm.formerpost" style="width:240px"></el-input>
+                    <el-input v-model="tableData.transferRawpostName" style="width:240px" disabled></el-input>
                   </el-form-item><br/>
 
                   <el-form-item label="生效日期：" prop="takedate">
@@ -77,9 +77,9 @@
           </button>
         </div>
           <!--搜索输入框-->
-          <div style="margin-left: 1130px;margin-top: -57px;">
+          <div style="margin-left: 1155px;margin-top: -57px;">
           <el-row style="width: 150px;">
-            <el-input v-model="seek" placeholder="搜索" size="small">
+            <el-input v-model="seek" placeholder="搜索" size="small" @input="selectTransfer">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
@@ -92,13 +92,13 @@
         <div class="sub-Content__primary">
           <el-table :data="tableData" stripe style="width: 100%"
                     :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-            <el-table-column prop="name" label="姓名" width="180" />
-            <el-table-column prop="name" label="异动类型" width="180" />
-            <el-table-column prop="date" label="原部门" width="180" />
-            <el-table-column prop="name" label="变动后部门" width="180" />
-            <el-table-column prop="date" label="原职位" width="180" />
-            <el-table-column prop="name" label="变动后职位" width="180" />
-            <el-table-column prop="date" label="生效时间" width="180" />
+            <el-table-column prop="staffName" label="姓名" width="180" />
+            <el-table-column prop="transferType" label="异动类型" width="180" />
+            <el-table-column prop="createdDeptName" label="原部门" width="180" />
+            <el-table-column prop="updatedDeptName" label="变动后部门" width="180" />
+            <el-table-column prop="transferRawpostName" label="原职位" width="180" />
+            <el-table-column prop="transferAfterpostName" label="变动后职位" width="180" />
+            <el-table-column prop="takeEffectDate" label="生效时间" width="" />
           </el-table>
         </div>
       </div>
@@ -107,19 +107,20 @@
       <div class="demo-pagination-block">
         <el-pagination
             v-model:currentPage="pageInfo.currentPage"
-            :page-sizes="[3, 5, 10, 50]"
+            :page-sizes="[4, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="pageInfo.total"
             :pager-count="5"
+            prev-text="上一页"
+            next-text="下一页"
+            @size-change="selectTransfer()"
+            @current-change="selectTransfer()"
             background
-            @size-change="selectUsers"
-            @current-change="selectUsers"
         >
         </el-pagination>
       </div>
-
 <!--      <div>-->
 <!--        <el-dialog-->
 <!--            v-model="become"-->
@@ -174,6 +175,7 @@
 <script>
 // import {ref} from "vue/dist/vue";
 import { defineComponent, ref } from 'vue'
+import {ElNotification} from "element-plus";
 export default defineComponent({
   data(){
     const one = (rule, value, callback) => {
@@ -185,6 +187,7 @@ export default defineComponent({
 
     };
     return{
+      url: "http://localhost:80/",
       seek:"",
       seek2:'',
       changesadd:false,
@@ -223,53 +226,7 @@ export default defineComponent({
         ]
       },
       radio:"",
-      deptData: [{
-        zw: '2016-05-03',
-        name: '王小虎',
-        dept: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        dept: '2016-05-02',
-        name: '王小虎',
-        zw: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        zw: '2016-05-04',
-        name: '王小虎',
-        dept: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        zw: '2016-05-01',
-        name: '王小虎',
-        dept: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        dept: '2016-05-08',
-        name: '王小虎',
-        zw: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        dept: '2016-05-06',
-        name: '王小虎',
-        zw: '上海市普陀区金沙江路 1518 弄'
-      }],
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ],
+      tableData: [],
     }
   },
   methods: {
@@ -295,7 +252,51 @@ export default defineComponent({
             transferdept: '',
             transferpost: ''
       }
-    }
+    },
+    selectTransfer() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectTransfer',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //名称
+          "staffName": this.seek,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+  },
+  mounted() {
+    this.selectTransfer();
   },
   setup() {
     const become = ref(false)
