@@ -243,14 +243,40 @@
             </el-date-picker>
           </el-form-item>
           <!-- 审批人 -->
-          <el-form-item label="审批人 :">
+          <!-- 判断审批人是否相同 为0代表相同，则显示两个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 0">
             <el-col :span="12">
               <div class="demo-basic--circle">
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
-                  <div class="sub-title" style="line-height: 10px">
-                    {{ NowManager[0].staffname }}
-                  </div>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ personnel_manager[0].staffname }}
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ president[1].staffname }}
+                </div>
+              </div>
+            </el-col>
+          </el-form-item>
+          <!-- 判断审批人是否相同 为1代表不相同，则显示三个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 1">
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ NowManager[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -270,18 +296,28 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[0].staffname }}
+                  {{ president[1].staffname }}
                 </div>
               </div>
             </el-col>
           </el-form-item>
         </el-form>
+        <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="Submit_to_positive(become_1)">确定</el-button>
+            <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
+            <el-button type="primary" @click="Submit_to_positive3(become_1)" v-if="this.judging === 1">
+              确定
+            </el-button>
+            <!-- 判断为0，则代表审批人相同，则去调用添加两个审批人的方法-->
+            <el-button type="primary" @click="Submit_to_positive2(become_1)" v-if="this.judging === 0">
+              确定
+            </el-button>
             <el-button @click="cancel_1">取消</el-button>
           </span>
         </template>
+
+
       </el-dialog>
       <!-- 异动弹出框 -->
       <el-dialog
@@ -898,12 +934,15 @@
 </template>
 
 <script lang="js">
+
 import {defineComponent, reactive, ref, toRefs, withScopeId} from "vue";
 import {ElMessage, ElNotification} from "element-plus";
 import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
 export default defineComponent({
   data() {
     return {
+      //判断
+      judging: "",
       //当前登录用户所在部门编号
       NowDeptId: this.$store.state.staffMessage.deptId,
       // 当前登录者
@@ -1070,8 +1109,8 @@ export default defineComponent({
     };
   },
   methods: {
-    // 提交转正
-    Submit_to_positive(become_1) {
+    // 提交转正 （提交三个审批人）
+    Submit_to_positive3() {
       if (this.become_1.remarks_1.length === 0) {
         ElMessage("备注不能为空");
       } else if (this.become_1.date1.length === 0) {
@@ -1079,7 +1118,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'SubmitPositive',
+          url: this.url + 'SubmitPositive3',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -1097,6 +1136,66 @@ export default defineComponent({
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
             staffName3: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "转正",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + this.become_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加转正成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.become = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 提交转正 （提交两个审批人）
+    Submit_to_positive2(){
+      if (this.become_1.remarks_1.length === 0) {
+        ElMessage("备注不能为空");
+      } else if (this.become_1.date1.length === 0) {
+        ElMessage("日期不能为空");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'SubmitPositive2',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            // 部门编号
+            deptId: this.NowDeptId,
+            // 转正类型
+            workertype: this.become_1.type_1,
+            // 转正备注
+            workerremarks: this.become_1.remarks_1,
+            // 转正日期
+            workerdate: this.become_1.date1,
+            // 审批人1
+            staffName1: this.personnel_manager[0].staffname,
+            // 审批人3
+            staffName2: this.president[1].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1581,12 +1680,12 @@ export default defineComponent({
       this.become_1.date1 = "";
     },
     // 点击异动根据员工名称查询该员工是否有异动审批记录
-    selecttransferexamine(){
+    selecttransferexamine() {
       this.axios({
         method: 'get',
         url: this.url + 'selectTransferExamine',
-        data:{
-          staffName:this.NowStaffName
+        data: {
+          staffName: this.NowStaffName
         }
       }).then((response) => {
         console.log("点击异动查询全部部门成功")
@@ -1602,7 +1701,6 @@ export default defineComponent({
         }
       })
     },
-
     // 点击异动查询全部部门
     variation() {
       this.axios({
@@ -1657,15 +1755,8 @@ export default defineComponent({
       }).then((response) => {
         console.log("点击转正根据员工名称查询其员工状态成功")
         console.log(response)
-        //如果服务关闭
-        if (response.data === 300) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })//如果服务没有关闭
-        } else if (response.data) {
-          //如果服务是正常的
+        //如果服务是正常的
+        if (response.data) {
           if (response.data.code === 200) {
             // 等于1则为试用员工，再去查询当前有无转正审批记录
             if (response.data.data === 1) {
@@ -1689,14 +1780,8 @@ export default defineComponent({
                   console.log("查询是否有转正记录成功")
                   console.log(response);
                   // 查询成功，审批状态0代表正在审批中，则不能让登陆者再次申请转正
-                  if (response.data.code === 200 && response.data.data[0].auditflowState === 0) {
-                    ElNotification.warning({
-                      title: '提示',
-                      message: "查询到您有正在审批中的转正审批，请耐心等候结果！",
-                      offset: 100,
-                    })
-                    // 查询成功，审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理
-                  } else if (response.data.code === 200 && response.data.data[0].auditflowState === 2 || response.data.data[0].auditflowState === 3) {
+                  if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
+                      || response.data.data === 2) {
                     this.axios({
                       method: 'post',
                       url: this.url + 'selectDeptPostName',
@@ -1715,8 +1800,21 @@ export default defineComponent({
                       } else if (response.data.data.state === 200) {
                         //如果服务是正常的
                         this.NowManager = response.data.data.info;
+                        // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+                        if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
+                          this.judging = 0;
+                        } else {
+                          this.judging = 1;
+                        }
                         _this.become = true;
                       }
+                    })
+                    // 查询成功，审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理
+                  } else if (response.data.code === 200 && response.data.data === 0) {
+                    ElNotification.warning({
+                      title: '提示',
+                      message: "查询到您有正在审批中的转正审批，请耐心等候结果！",
+                      offset: 100,
                     })
                   }
                 }
@@ -1737,6 +1835,12 @@ export default defineComponent({
               })//
             }
             //如果服务是雪崩的
+          } else if (response.data.data.data.info === "服务发生关闭") {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭,请稍后再试",
+              offset: 100,
+            })
           } else {
             ElNotification.warning({
               title: '提示',
@@ -1798,6 +1902,7 @@ export default defineComponent({
         }
       })
     },
+
   },
   // 挂载
   created() {
