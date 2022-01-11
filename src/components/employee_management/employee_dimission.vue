@@ -207,13 +207,11 @@ export default {
           if (response.data.data.state == 200) {
             _this.tableData = response.data.data.info[0];
             if(this.tableData.staffState==0){
-              this.tableData.staffState="在职";
+              this.tableData.staffState="试用";
             }else if(this.tableData.staffState==1){
-              this.tableData.staffState="离职";
-            }else if(this.tableData.staffState==2){
-              this.tableData.staffState="实习";
-            }else if(this.tableData.staffState==3){
               this.tableData.staffState="正式";
+            }else if(this.tableData.staffState==2){
+              this.tableData.staffState="离职";
             }
 
 
