@@ -523,6 +523,7 @@ export default {
             message: '操作成功',
             type: 'success',
           })
+          this.selectStaffAll();
         } else if (response.data.data === 100) {
           ElMessage({
             showClose: true,
@@ -575,6 +576,7 @@ export default {
             message: '操作成功',
             type: 'success',
           })
+          this.selectStaffAll();
         } else if (response.data.data === 100) {
           ElMessage({
             showClose: true,
