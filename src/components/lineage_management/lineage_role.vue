@@ -47,7 +47,18 @@
 
           <!-- 对数据的增删改按钮 -->
           <div class="button">
-            <el-button class="button-new" size="mini" @click="outerVisible = true,judge='新增'"
+            <el-button class="button-new" size="mini" @click="
+            fromValue.roleName='',
+            fromValue.roleDescribe='',
+            fromValue.roleState='0',
+            fromValue.menuList=[],
+            outerVisible = true,
+            checked1=false,
+            checked2=false,
+            expands=false,
+            refreshTable=refreshTable+1,
+            judge='新增',
+            this.getMenuList('新增')"
                        style="margin-left: 5px;height: 33px">+
               新增
             </el-button>
@@ -55,13 +66,13 @@
                        v-bind:disabled="checkDeleteList.length==0?true:false" @click="remove"
                        style="height: 33px;margin-right: 875px">删除
             </el-button>
-            <el-button size="mini" class="search-ss" type="primary" @click="next">
+            <el-button size="mini"  class="search-ss" type="primary" @click="next">
               <i class="iconfont">
                 &#xe61b
               </i>
               搜索
             </el-button>
-            <el-button size="mini" class="search-cz" type="primary" @click="reset()">
+            <el-button size="mini"  class="search-cz" type="primary" @click="reset()">
               <i class="iconfont">
                 &#xe6b8
               </i>
@@ -74,10 +85,11 @@
           <el-dialog width="500px" v-model="outerVisible">
             <span class="headline"> {{ judge }}角色</span>
             <!-- form表单 -->
-            <el-form class="announcement" :rules="fromVerify" :model="fromValue">
+            <el-form ref="fromValue" class="announcement" :rules="fromVerify" :model="fromValue">
 
               <el-form-item prop="roleName" class="name" label="角色名称">
                 <el-input size="small" v-model="fromValue.roleName" style=" width: 345px;" clearable
+                          @input="selectRoleRoleName(fromValue.roleName)"
                           placeholder="请输入角色名称"></el-input>
               </el-form-item>
 
@@ -102,7 +114,7 @@
                         ref="tree1"
                         :data="menuList"
                         show-checkbox
-                        node-key="MENU_ID"
+                        node-key="menuPowerId"
                         :default-expand-all="expands"
                         highlight-current
                         :props="props"
@@ -122,7 +134,7 @@
                     取消
                   </el-button>
                   <!-- 修改按钮 -->
-                  <el-button size="mini" style=" width: 60px;" type="primary" @click="innerVisible = true,one()">
+                  <el-button size="mini" style=" width: 60px;" type="primary" @click="addUpdate('fromValue')">
                     {{ judge }}
                   </el-button>
                 </div>
@@ -152,7 +164,20 @@
               <el-table-column prop="createdTime" align="center" sortable label="创建时间" width="200"/>
               <el-table-column align="center" fixed="right" label="操作" min-width="280">
                 <template #default="scope">
-                  <span style="font-size: 13px;color: #5aaaff;cursor: pointer;" @click="outerVisible = true,judge='修改'">
+                  <span style="font-size: 13px;color: #5aaaff;cursor: pointer;"
+                        @click="
+                          fromValue.roleId=scope.row.roleId,
+                          fromValue.roleName=scope.row.roleName,
+                          fromValue.roleDescribe=scope.row.roleDescribe,
+                           fromValue.roleState=scope.row.roleState+'',
+                           fromValue.menuList=[],
+                           checked1=false,
+                           checked2=false,
+                            outerVisible = true,
+                               expands=false,
+                            refreshTable=refreshTable+1,
+                            judge='修改',
+                            this.getMenuList('修改')">
                     <i class="iconfont" style="font-size: 13px;color: #5aaaff">&#xe606</i>
                     修改&nbsp;&nbsp;&nbsp;
                   </span>
@@ -170,11 +195,17 @@
                   </span>
                     <template #dropdown>
                       <el-dropdown-menu style="width: 96px;text-align: center">
-                        <el-dropdown-item @click="data_permission=true">数据权限</el-dropdown-item>
-                        <!--                        <router-link :to="{path:this.route.grant,query:{path: this.$route.query.path}}">-->
+                        <el-dropdown-item @click="data_permission=true,
+                        fromValue.roleId=scope.row.roleId,
+                        fromValue.roleName=scope.row.roleName,
+                     checked3=false,
+                       checked4=false,
+                          expands=false,
+            refreshTable=refreshTable+1,
+this.getMenuList('数据权限')">数据权限
+                        </el-dropdown-item>
 
-                        <el-dropdown-item @click="allot_user=true">分配用户</el-dropdown-item>
-                        <!--                        </router-link>-->
+                        <el-dropdown-item @click="allot_user=true,this.fromValue.roleId=scope.row.roleId">分配用户</el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
@@ -204,7 +235,7 @@
                           ref="tree2"
                           :data="menuList"
                           show-checkbox
-                          node-key="MENU_ID"
+                          node-key="menuPowerId"
                           :default-expand-all="expands"
                           highlight-current
                           :props="props"
@@ -219,7 +250,7 @@
                       取消
                     </el-button>
                     <!-- 修改按钮 -->
-                    <el-button size="mini" style="width: 60px;" type="primary">
+                    <el-button size="mini" style="width: 60px;" type="primary" @click="this.allotMenu">
                       确定
                     </el-button>
                   </div>
@@ -251,7 +282,8 @@
       </div>
     </div>
   </div>
-<!--  分配用户-->
+  {{ fromValue }}
+  <!--  分配用户-->
   <allot_user v-if="allot_user"/>
 </template>
 
@@ -268,11 +300,32 @@ export default {
     allot_user,
   },
   data() {
+    let roleName = (rule, value, callback) => {
+      let re = true;
+      for (let i = 0; i < value.length; i++) {
+        if (value[i] != " ") {
+          re = false
+        }
+      }
+      if (this.fromValue.roleName != '') {
+        return true;
+      }
+      if (!value || re) {
+        return callback(new Error('名称不为空'));
+      } else if (value.length > 10) {
+        return callback(new Error('名称不能超过10个字符'));
+      } else if (this.roleNamePd != '成功') {
+        return callback(new Error(this.roleNamePd));
+      } else {
+        callback();
+      }
+    }
     return {
       //显示隐藏分配用户
       allot_user: false,
       //访问路径
       url: "http://localhost:80/role/",
+      url2: 'http://localhost:80/menuPower/',
       //跳转界面
       route: {
         grant: '/lineage/authority_management/allot_user',
@@ -356,152 +409,15 @@ export default {
       //被选择的列表
       checkDeleteList: [],
       props: {
-        label: 'MENU_NAME',
-        children: 'son',
-        isLeaf: 'MENU_ORDER',
+        label: 'menuPowerName',
+        children: 'list',
+        isLeaf: 'menuPowerLeaf',
       },
-      menuList: [
-        {
-          MENU_ID: 1,
-          MENU_NAME: '权限管理',
-          MENU_ROUTE: '/1',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: false
-          ,
-          son: [
-            {
-              MENU_ID: 2,
-              MENU_NAME: '权限设置',
-              MENU_ROUTE: '/permission_set',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: true
-            },
-            {
-              MENU_ID: 3,
-              MENU_NAME: '角色设置',
-              MENU_ROUTE: '/notice',
-              MENU_MODULE: '&#xe62c;',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: false,
-              son: [
-                {
-                  MENU_ID: 4,
-                  MENU_NAME: '权限设置',
-                  MENU_ROUTE: '/permission_set',
-                  MENU_MODULE: '&#xe62c;',
-                  MENU_state: 0,
-                  MENU_TYPE: 0,
-                  MENU_LEAF: 1,
-                  MENU_ORDER: false,
-                  son: [
-                    {
-                      MENU_ID: 5,
-                      MENU_NAME: '权限设置',
-                      MENU_ROUTE: '/permission_set',
-                      MENU_MODULE: '&#xe62c;',
-                      MENU_state: 0,
-                      MENU_TYPE: 0,
-                      MENU_LEAF: 1,
-                      MENU_ORDER: true
-                    }
-                  ]
-                }
-              ]
-            }]
-        }, {
-          MENU_ID: 7,
-          MENU_NAME: '角色管理',
-          MENU_ROUTE: '/2',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: false
-          ,
-          son: [
-            {
-              MENU_ID: 8,
-              MENU_NAME: '角色设置',
-              MENU_ROUTE: '/role',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: true
-            }]
-        },
-        {
-          MENU_ID: 9,
-          MENU_NAME: '公告管理',
-          MENU_ROUTE: '/2',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: false
-          ,
-          son: [
-            {
-              MENU_ID: 10,
-              MENU_NAME: '公告设置',
-              MENU_ROUTE: '/notice',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: true
-            }]
-        }, {
-          MENU_ID: 11,
-          MENU_NAME: '日志管理',
-          MENU_ROUTE: '/3',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: false
-          ,
-          son: [
-            {
-              MENU_ID: 12,
-              MENU_NAME: '登录日志',
-              MENU_ROUTE: '/login_log',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: true
-            },
-            {
-              MENU_ID: 13,
-              MENU_NAME: '操作日志',
-              MENU_ROUTE: '/operate_log',
-              MENU_MODULE: '',
-              MENU_state: 0,
-              MENU_TYPE: 0,
-              MENU_LEAF: 1,
-              MENU_ORDER: true
-            }]
-        }, {
-          MENU_ID: 14,
-          MENU_NAME: '权限管理',
-          MENU_ROUTE: '/1',
-          MENU_MODULE: '&#xe62c;',
-          MENU_state: 0,
-          MENU_TYPE: 0,
-          MENU_LEAF: 1,
-          MENU_ORDER: true
-        }],
+      menuList: [],
       //表单值
       fromValue: {
+        //角色编号
+        roleId: '',
         //角色名称
         roleName: '',
         //角色状态
@@ -509,7 +425,7 @@ export default {
         //角色描述
         roleDescribe: '',
         //权限菜单
-        muenuList: [],
+        menuList: [],
       },
       //表单验证
       fromVerify: {
@@ -517,15 +433,9 @@ export default {
         roleName: [
           {
             required: true,
-            message: '名称不为空',
-            trigger: 'blur',
-          },
-          {
-            min: 0,
-            max: 10,
-            message: '名称不能超过20个字符',
-            trigger: 'blur',
-          },
+            validator: roleName,
+            trigger: 'blur'
+          }
         ],
         //角色描述
         roleDescribe: [
@@ -545,11 +455,153 @@ export default {
       data_permission: false,
       //复选框角色编号列表
       listId: [],
+      //通过数据库验证角色名称
+      roleNamePd: '',
+      //通过角色编号获取菜单列表
+      menuPowerList: [],
     }
   },
   methods: {
-    one() {
-      console.log(this.$refs.tree1.getCheckedNodes());
+    //分配权限
+    allotMenu() {
+      this.fromValue.menuList = [];
+      for (let i = 0; i < this.$refs.tree2.getCheckedNodes().length; i++) {
+        this.fromValue.menuList.push(this.$refs.tree2.getCheckedNodes()[i].menuPowerId)
+      }
+      this.axios({
+        method: 'put',
+        url: this.url + 'allotMenu',
+        data: this.fromValue,
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              this.next();
+              //关闭对话框
+              this.data_permission = false;
+              ElMessage({
+                type: 'success',
+                message: '分配成功',
+              })
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //获取所有的菜单列表
+    getMenuList(value) {
+      if (value != '数据权限') {
+        //清空表单验证
+        this.$nextTick(function () {
+          this.$refs['fromValue'].clearValidate();
+        })
+      }
+      this.axios({
+        method: 'get',
+        url: this.url2 + 'menuPowerList',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.error({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.menuList = [];
+            this.menuList = response.data.data.info;
+            if (value == "修改") {
+              this.menuPowerListInRoleId();
+              window.setTimeout(this.loadUpdateMenuList, 600);
+            } else if (value == "数据权限") {
+              this.menuPowerListInRoleId();
+              window.setTimeout(this.loadElseMenuList, 600);
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //加载之前添加的菜单列表
+    loadUpdateMenuList() {
+      this.$nextTick(() => {
+        this.$refs.tree1.setCheckedNodes(this.menuPowerList)
+      })
+      this.fromValue.roleName = this.fromValue.roleName;
+    },
+    //加载之前添加的菜单列表
+    loadElseMenuList() {
+      this.$nextTick(() => {
+        this.$refs.tree2.setCheckedNodes(this.menuPowerList)
+      })
+      this.fromValue.roleName = this.fromValue.roleName;
+    },
+    //通过角色编号查询菜单列表
+    menuPowerListInRoleId() {
+      this.axios({
+        method: 'get',
+        url: this.url2 + 'menuPowerListInRoleId/' + this.fromValue.roleId,
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.error({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.menuPowerList = [];
+            this.menuPowerList = response.data.data.info;
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
     },
     /*分页查询*/
     next() {
@@ -669,7 +721,7 @@ export default {
     //单选删除
     radioRemove(id) {
       ElMessageBox.confirm(
-          '是否确认删除所选数据项?',
+          '是否确认删除点击数据项?',
           '系统提示',
           {
             cancelButtonText: '取消',
@@ -733,8 +785,28 @@ export default {
         this.refreshTable = this.refreshTable + 1;
         if (this.expands == true) {
           this.expands = false;
+          //如果选择是全选
+          if (this.checked2 == true) {
+            this.$nextTick(() => {
+              this.$refs.tree1.setCheckedNodes(this.menuList)
+            })
+          } else {
+            this.$nextTick(() => {
+              this.$refs.tree1.setCheckedNodes(this.menuPowerList)
+            })
+          }
         } else {
           this.expands = true;
+          //如果选择是全选
+          if (this.checked2 == true) {
+            this.$nextTick(() => {
+              this.$refs.tree1.setCheckedNodes(this.menuList)
+            })
+          } else {
+            this.$nextTick(() => {
+              this.$refs.tree1.setCheckedNodes(this.menuPowerList)
+            })
+          }
         }
       }
     },
@@ -757,8 +829,28 @@ export default {
         this.refreshTable = this.refreshTable + 1;
         if (this.expands == true) {
           this.expands = false;
+          //如果选择是全选
+          if (this.checked4 == true) {
+            this.$nextTick(() => {
+              this.$refs.tree2.setCheckedNodes(this.menuList)
+            })
+          } else {
+            this.$nextTick(() => {
+              this.$refs.tree2.setCheckedNodes(this.menuPowerList)
+            })
+          }
         } else {
           this.expands = true;
+          //如果选择是全选
+          if (this.checked4 == true) {
+            this.$nextTick(() => {
+              this.$refs.tree2.setCheckedNodes(this.menuList)
+            })
+          } else {
+            this.$nextTick(() => {
+              this.$refs.tree2.setCheckedNodes(this.menuPowerList)
+            })
+          }
         }
       }
     },
@@ -794,6 +886,142 @@ export default {
           this.roleState = '',
           //创建时间
           this.selectTime = []
+    },
+    //新增修改菜单操作
+    addUpdate(fromValue) {
+      this.$refs[fromValue].validate((valid) => {
+        if (valid) {
+          this.fromValue.menuList = [];
+          for (let i = 0; i < this.$refs.tree1.getCheckedNodes().length; i++) {
+            this.fromValue.menuList.push(this.$refs.tree1.getCheckedNodes()[i].menuPowerId)
+          }
+          if (this.judge === "新增") {
+            //新增
+            this.axios({
+              method: 'post',
+              url: this.url + 'addRole',
+              data: this.fromValue,
+              responseType: 'json',
+              responseEncoding: 'utf-8',
+            }).then((response) => {
+              //如果服务关闭
+              if (response.data.data.data) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "服务发生关闭",
+                  offset: 100,
+                })
+                //如果服务没有关闭
+              } else if (response.data.data) {
+                //如果服务是正常的
+                if (response.data.data.state == 200) {
+                  //如果是成功
+                  if (response.data.data.info == "成功") {
+                    //关闭弹出对话框
+                    this.outerVisible = false;
+                    this.next();
+                    ElMessage({
+                      type: 'success',
+                      message: '新增成功',
+                    })
+                  } else {
+                    ElMessage({
+                      type: 'warning',
+                      message: response.data.data.info,
+                    })
+                  }
+                }
+                //如果服务是雪崩的
+                else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "服务发生雪崩",
+                    offset: 100,
+                  })
+                }
+              }
+            })
+          } else {
+            //修改
+            this.axios({
+              method: 'put',
+              url: this.url + 'updateRole',
+              data: this.fromValue,
+              responseType: 'json',
+              responseEncoding: 'utf-8',
+            }).then((response) => {
+              //如果服务关闭
+              if (response.data.data.data) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "服务发生关闭",
+                  offset: 100,
+                })
+                //如果服务没有关闭
+              } else if (response.data.data) {
+                //如果服务是正常的
+                if (response.data.data.state == 200) {
+                  //如果是成功
+                  if (response.data.data.info == "成功") {
+                    //关闭弹出对话框
+                    this.outerVisible = false;
+                    this.next();
+                    ElMessage({
+                      type: 'success',
+                      message: '修改成功',
+                    })
+                  } else {
+                    ElMessage({
+                      type: 'warning',
+                      message: response.data.data.info,
+                    })
+                  }
+                }
+                //如果服务是雪崩的
+                else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "服务发生雪崩",
+                    offset: 100,
+                  })
+                }
+              }
+            })
+          }
+        } else {
+          return false
+        }
+      })
+    },
+    //通过角色名称查询角色名称是否被使用
+    selectRoleRoleName(name) {
+      this.axios({
+        method: 'get',
+        url: this.url + 'selectRoleRoleName/' + name + "/" + this.fromValue.roleId,
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.roleNamePd = response.data.data.info;
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
     }
   }
   ,
@@ -1013,6 +1241,7 @@ export default {
 .search-ss {
   background-color: #085FC3;
   color: white;
+  height: 33px !important;
   margin: 29px 0px 0px 5px;
   width: 90px;
   color: #fff;
@@ -1032,6 +1261,7 @@ export default {
 
 /* 重置按钮 */
 .search-cz {
+  height: 33px !important;
   color: black;
   margin: 29px 0px 0px 10px;
   width: 90px;

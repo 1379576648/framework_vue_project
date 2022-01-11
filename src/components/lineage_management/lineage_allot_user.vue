@@ -1,145 +1,97 @@
 <!-- 登录日志页面 -->
 
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
           <!-- 搜索导航部分-->
-          <el-form :inline="true" v-model="search">
+          <el-form :inline="true" v-model="searchOne">
             <el-form-item class="user-name" label="用户名称">
-              <el-input size="small" v-model="search.username" placeholder="请输入用户名称"></el-input>
+              <el-input size="small" v-model="searchOne.staffName" placeholder="请输入用户名称"></el-input>
             </el-form-item>
 
             <el-form-item class="phone" label="手机号码">
-              <el-input size="small" v-model="search.number" placeholder="请输入手机号码"></el-input>
+              <el-input size="small" v-model="searchOne.staffPhone" placeholder="请输入手机号码"></el-input>
             </el-form-item>
 
-            <el-form-item class="search">
-              <el-button size="mini" class="search-ss" type="primary">
-                <i class="iconfont" style="font-size: 13.5px;" >
-                  &#xe61b
-                </i>
-                搜索
-              </el-button>
-              <el-button size="mini" class="search-cz" type="primary">
-                <i class="iconfont" style="font-size: 13.5px;">
-                  &#xe6b8
-                </i>
-                重置
-              </el-button>
+            <el-form-item label="状态">
+              <el-select style="width: 190px" size="small" v-model="searchOne.staffState" clearable
+                         placeholder="请选择角色状态">
+                <el-option
+                    v-for="item in state"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
+            <span style="margin-left: 28%;cursor: pointer" @click="this.$parent.$data.allot_user=false">
+            <svg t="1641819317404" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="6044" width="40" height="40"><path
+                d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512z m0-992a480 480 0 1 0 480 480A480 480 0 0 0 512 32z m16 527.616v63.824a32 32 0 0 1-49.744 26.544l-192-127.632a31.856 31.856 0 0 1 0-53.104l192-127.632A32 32 0 0 1 528 368.16V432a191.728 191.728 0 0 1 192 191.44 114.624 114.624 0 0 1-16 64.368c-30.896-73.92-93.264-128.112-176-128.192zM496 464v-90.496a45.552 45.552 0 0 0-22.576 4.592L323.2 477.024a22.752 22.752 0 0 0-11.696 19.728A26.08 26.08 0 0 0 323.2 518.4l150.224 92.432a51.328 51.328 0 0 0 22.576 5.6V528c183.472 0 208.32 122.784 208.32 122.784C704.32 505.6 592 464 496 464z"
+                p-id="6045" fill="#2c2c2c"></path></svg>
+
+          </span>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
           <div class="button">
-            <el-button class="button-new" size="mini"  @click="outerVisible = true">+ 添加用户</el-button>
-            <el-button class="button-amend" size="mini" v-bind:disabled="disableds" @click="open">-  批量取消授权</el-button>
-              <el-button class="button-delete" size="mini" @click="this.$parent.$data.allot_user=false">X 关闭</el-button>
+            <el-button class="button-new" size="mini"
+                       @click="outerVisible = true,
+                       searchTwo.staffPhone='',
+                       searchTwo.staffName='',
+                        next_two()"
+                       style="margin-left: 5px;height: 33px">
+              添加用户
+            </el-button>
+            <el-button class="button-delete" size="mini" type="danger"
+                       v-bind:disabled="checkDeleteListOne.length==0?true:false" @click="checkcCancelImpower"
+                       style="height: 33px;margin-right: 870px">取消授权
+            </el-button>
+            <el-button size="mini" class="search-ss" type="primary" @click="next_one">
+              <i class="iconfont" style="font-size: 13.5px;height: 33px">
+                &#xe61b
+              </i>
+              搜索
+            </el-button>
+            <el-button size="mini" class="search-cz" type="primary" @click="resetOne">
+              <i class="iconfont" style="font-size: 13.5px;height: 33px">
+                &#xe6b8
+              </i>
+              重置
+            </el-button>
           </div>
-
-
-          <!--添加用户对话框-->
-          <el-dialog width="800px" title="选择用户" v-model="outerVisible" destroy-on-close="false">
-            <!-- form表单 -->
-            <el-form class="announcement" :inline="true" style="margin-top: 20px;" v-model="searchss">
-
-              <el-form-item class="username"  label="用户名称">
-                <el-input size="mini" v-model="searchss.username" placeholder="请输入用户名称"></el-input>
-              </el-form-item>
-
-              <el-form-item class="phones"  label="手机号码">
-                <el-input size="mini" v-model="searchss.number" placeholder="请输入手机号码"></el-input>
-              </el-form-item>
-
-              <el-form-item  style="margin-top: -32px;">
-                <el-button size="mini" class="dialog-box-ss" type="primary" @click="onSubmit">
-                  <i class="iconfont" style="font-size: 13px;" >
-                    &#xe600
-                  </i>
-                  &nbsp;搜索
-                </el-button>
-                <el-button size="mini" class="dialog-box-cz" type="primary" @click="resetss()">
-                  <i class="iconfont"  style="font-size: 13px;">
-                    &#xe6b8
-                  </i>
-                  &nbsp;重置
-                </el-button>
-              </el-form-item>
-
-              <!--添加用户表格-->
-              <el-form-item>
-                <!-- 表格内容部分 -->
-                <div class="el-form-table">
-                  <el-table :data="tableDatas" style="width: 100%;margin-left: 24px;margin-bottom: 20px;"
-                            :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
-                            :cell-style="{ textAlign: 'center' }"
-                            ref="xuanzhong"
-                            @selection-change="TheSelectedValue">
-                    <!-- 全选操作按钮 -->
-                    <el-table-column type="selection" width="50" />
-                    <el-table-column prop="name" label="用户名称" width="100" />
-                    <el-table-column prop="mailbox" label="邮箱" width="180" />
-                    <el-table-column prop="phone" label="手机号码" width="140" />
-                    <el-table-column prop="state" label="状态" width="100" />
-                    <el-table-column prop="creation_time" label="创建时间" width="185" />
-                  </el-table>
-                </div>
-              </el-form-item>
-
-              <!-- 分页 -->
-              <div class="paging">
-                <el-pagination
-                    v-model:currentPage="pageInfos.currenPage"
-                    :page-sizes="[3, 5, 10, 50]"
-                    v-model:page-size="pageInfos.pagesize"
-                    :default-page-size="pageInfos.pagesize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="pageInfos.total"
-                    :pager-count="5"
-                    background
-                    @size-change="sele"
-                    @current-change="sele"
-                >
-                </el-pagination>
-              </div>
-
-              <el-form-item >
-                <template #default="scope">
-                  <div style="margin-left: 611px;margin-top: 10px;">
-                    <el-button size="small" style="width: 60px;" type="primary" v-bind:disabled="disabledss" @click="confirm(tableDatas)">
-                      确定
-                    </el-button>
-                    <el-button size="small" style="width: 60px;" @click="outerVisible = false">
-                      取消
-                    </el-button>
-                  </div>
-                </template>
-              </el-form-item>
-
-            </el-form>
-          </el-dialog>
 
           <!-- 表格内容部分 -->
           <div class="sub-Content__primary">
-            <el-table :data="tableData" style="width: 100%;margin-left: 24px;margin-bottom: 20px;"
+            <el-table :data="tableDataOne" style="width: 100%;margin-left: 24px;margin-bottom: 20px;"
                       :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
                       :cell-style="{ textAlign: 'center' }"
-                      @selection-change="deletepl"
-                      >
+                      @selection-change="deleteListOne"
+            >
               <!-- 全选操作按钮 -->
-              <el-table-column type="selection" width="70" />
-              <el-table-column prop="name" label="用户名称" width="200" />
-              <el-table-column prop="mailbox" label="邮箱" width="202" />
-              <el-table-column prop="phone" label="手机号码" width="206" />
-              <el-table-column prop="state" label="状态" width="200" />
-              <el-table-column prop="creation_time" label="创建时间" width="210" />
-              <el-table-column align="center" label="操作" width="210">
+              <el-table-column type="selection" width="70"/>
+              <el-table-column fixed :index="indexMethod_one" align="center" label="序号" type="index" width="100"/>
+              <el-table-column prop="staff.staffName" label="用户名称" align="center" min-width="150"/>
+              <el-table-column prop="staff.staffEmail" label="邮箱" align="center" width="200"/>
+              <el-table-column prop="staff.staffPhone" label="手机号码" align="center" min-width="150"/>
+              <el-table-column prop="staff.staffState" label="状态" align="center" min-width="100">
                 <template #default="scope">
-                  <span class="cancel" @click="remove">
+                  <span v-if="scope.row.staff.staffState==0">试用</span>
+                  <span v-else-if="scope.row.staff.staffState==1">正式</span>
+                  <span v-else-if="scope.row.staff.staffState==2">离职</span>
+                  <span v-else>未知</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="createdTime" label="创建时间" align="center" min-width="150"/>
+              <el-table-column align="center" label="操作" width="200">
+                <template #default="scope">
+                  <span class="cancel" @click="cancelImpower(scope.row.roleStaffId)" style="cursor: pointer">
                     <i class="iconfont" style="position: absolute;top: 23px;left: 58px;">
                       &#xe631
-                    </i>
+                    </i>&nbsp;&nbsp;
                     取消权限
                   </span>
                 </template>
@@ -150,246 +102,517 @@
 
           <!-- 分页 -->
           <div class="demo-pagination-block">
-            <!-- <span class="demonstration">All combined</span> -->
-            <el-pagination
-                v-model:currentPage="pageInfo.currenPage"
-                :page-sizes="[3, 5, 10, 50]"
-                v-model:page-size="pageInfo.pagesize"
-                :default-page-size="pageInfo.pagesize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="pageInfo.total"
-                :pager-count="5"
-                background
-                @size-change="sele"
-                @current-change="sele"
-            >
+            <el-pagination v-model:current-page="pageInfo_one.currenPage"
+                           v-model:page-size="pageInfo_one.pageSize"
+                           :default-page-size="pageInfo_one.pageSize"
+                           :page-sizes="[5, 10,15,20]"
+                           :pager-count="5"
+                           :total="pageInfo_one.total"
+                           background
+                           layout="	total ,sizes, prev, pager, next, jumper"
+                           next-text="下一页"
+                           prev-text="上一页"
+                           @size-change="next_one()"
+                           @current-change="next_one()"
+                           @prev-click="next_one()"
+                           @next-click="next_one()">
             </el-pagination>
           </div>
+
+
+          <!--添加用户对话框-->
+          <el-dialog width="900px" title="选择用户" v-model="outerVisible" destroy-on-close="false">
+            <!-- form表单 -->
+            <el-form class="announcement" :inline="true" style="margin-top: 20px;" v-model="searchTwo">
+
+              <el-form-item class="username" label="用户名称" style="margin-left: 70px">
+                <el-input size="mini" v-model="searchTwo.staffName" placeholder="请输入用户名称"></el-input>
+              </el-form-item>
+
+              <el-form-item class="phones" label="手机号码">
+                <el-input size="mini" v-model="searchTwo.staffPhone" placeholder="请输入手机号码"></el-input>
+              </el-form-item>
+
+              <el-form-item style="margin-top: -32px;">
+                <el-button size="mini" class="dialog-box-ss" type="primary" @click="next_two">
+                  <i class="iconfont" style="font-size: 13.5px;">
+                    &#xe61b
+                  </i>
+                  &nbsp;搜索
+                </el-button>
+                <el-button size="mini" class="dialog-box-cz" type="primary" @click="resetTwo">
+                  <i class="iconfont" style="font-size: 13px;">
+                    &#xe6b8
+                  </i>
+                  &nbsp;重置
+                </el-button>
+              </el-form-item>
+
+              <!--添加用户表格-->
+              <el-form-item>
+                <!-- 表格内容部分 -->
+                <div class="el-form-table">
+                  <el-table :data="tableDataTwo" style="width: 100%;margin-left: 24px;margin-bottom: 20px;"
+                            :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
+                            :cell-style="{ textAlign: 'center' }"
+                            ref="xuanzhong"
+                            @selection-change="deleteListTwo">
+                    <!-- 全选操作按钮 -->
+                    <el-table-column type="selection" width="50"/>
+                    <el-table-column fixed :index="indexMethod_two" align="center" label="序号" type="index" width="50"/>
+                    <el-table-column prop="staffName" label="用户名称" width="150"/>
+                    <el-table-column prop="staffEmail" label="邮箱" width="180"/>
+                    <el-table-column prop="staffPhone" label="手机号码" width="140"/>
+                    <el-table-column prop="staffState" label="状态" width="100">
+                      <template #default="scope">
+                        <span v-if="scope.row.staffState==0">试用</span>
+                        <span v-else-if="scope.row.staffState==1">正式</span>
+                        <span v-else-if="scope.row.staffState==2">离职</span>
+                        <span v-else>未知</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="createdTime" label="入职时间" width="185"/>
+                  </el-table>
+                </div>
+              </el-form-item>
+
+              <!-- 分页 -->
+              <div class="demo-pagination-block">
+                <el-pagination v-model:current-page="pageInfo_two.currenPage"
+                               v-model:page-size="pageInfo_two.pageSize"
+                               :default-page-size="pageInfo_two.pageSize"
+                               :page-sizes="[5, 10,15,20]"
+                               :pager-count="5"
+                               :total="pageInfo_two.total"
+                               background
+                               layout="	total ,sizes, prev, pager, next, jumper"
+                               next-text="下一页"
+                               prev-text="上一页"
+                               @size-change="next_two()"
+                               @current-change="next_two()"
+                               @prev-click="next_two()"
+                               @next-click="next_two()">
+                </el-pagination>
+              </div>
+
+              <el-form-item>
+                <template #default="scope">
+                  <div style="margin-left: 700px;margin-top: 10px;">
+                    <el-button size="small" style="width: 60px;" @click="outerVisible = false">
+                      取消
+                    </el-button>
+                    <el-button size="small" style="width: 60px;" type="primary"
+                               v-bind:disabled="checkDeleteListTwo.length==0?true:false"
+                               @click="allot">
+                      确定
+                    </el-button>
+                  </div>
+                </template>
+              </el-form-item>
+
+            </el-form>
+          </el-dialog>
+
 
         </div>
       </div>
     </div>
   </div>
+  {{ tableDataTwo }}
 </template>
 
 <script>
 
 
 import {ref} from 'vue'
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 
 export default {
   data() {
-
-
-
-    //批量取消权限提示框
-    const open = () => {
-      ElMessageBox.confirm(
-          '是否取消一坨权限！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '取消权限成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    }
-
-    //取消权限提示框
-    const remove = () => {
-      ElMessageBox.confirm(
-          '是否取消权限！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '取消权限成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    }
-
     return {
-      two:'/system/authority_management/role',
+      url: 'http://localhost:80/role/',
+      // 搜索用户状态下拉框
+      state: ref([
+        {
+          value: 0,
+          label: '试用',
+        },
+        {
+          value: 1,
+          label: '正式',
+        },
+        {
+          value: 2,
+          label: '离职',
+        },
+      ]),
 
       // 分页
-      pageInfo: {
-        currenPage: 1,
+      pageInfo_one: {
         /* 当前的页 */
-        pagesize: 3,
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
         total: 0,
       },
 
       // 分页
-      pageInfos: {
-        currenPage: 1,
+      pageInfo_two: {
         /* 当前的页 */
-        pagesize: 3,
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
         total: 0,
       },
-
-      //批量取消权限弹出框
-      open,
-
-      //表格批量取消权限
-      remove,
-
       //搜索重置form
-      search:{
-        //用户名称
-        username:'',
-        //手机号
-        number:'',
+      searchOne: {
+        //员工状态
+        staffState: '',
+        //员工姓名
+        staffName: '',
+        //员工手机号
+        staffPhone: '',
       },
-
       //搜索重置form
-      searchss:{
-        //用户名称
-        username:'',
-        //手机号
-        number:'',
+      searchTwo: {
+        //员工姓名
+        staffName: '',
+        //员工手机号
+        staffPhone: '',
       },
-
-
-
       //表格
-      tableData: [{
-        name: "牛子琪·",
-        mailbox:"qq.com123456789",
-        phone: "1552233445",
-        state:"正常",
-        creation_time:"2002-2-02 11:12:11"
-      },
-        {
-          name: "官迷率·",
-          mailbox:"qq.com145656789",
-          phone: "15789233445",
-          state:"正常",
-          creation_time:"2002-3-03 12:13:12"
-        },
-        {
-          name: "川井毛毛",
-          mailbox:"qq.com785656789",
-          phone: "157892223145",
-          state:"正常",
-          creation_time:"2002-4-04 10:43:42"
-        },
-      ],
-
-
-      tableDatas: [{
-        name: "牛子琪·",
-        mailbox:"qq.com123456789",
-        phone: "1552233445",
-        state:"正常",
-        creation_time:"2002-2-02 11:12:11"
-      },
-        {
-          name: "官迷率·",
-          mailbox:"qq.com145656789",
-          phone: "15789233445",
-          state:"正常",
-          creation_time:"2002-3-03 12:13:12"
-        },
-        {
-          name: "川井毛毛",
-          mailbox:"qq.com785656789",
-          phone: "157892223145",
-          state:"正常",
-          creation_time:"2002-4-04 10:43:42"
-        },
-      ],
-      outerVisible:false,
-
-      //对话框确定按钮是否被禁用
-      disabledss:true,
-      //数组存取选中值
-      xuanzhong:[],
-
-      //按钮是否被禁用
-      disableds:true,
-      //接收表格数据
-      table:[],
+      tableDataOne: [],
+      tableDataTwo: [],
+      //添加用户对话框
+      outerVisible: false,
+      //复选框选择的列表
+      checkDeleteListOne: [],
+      //复选框选择的列表
+      checkDeleteListTwo: [],
+      //批量取消授权编号集合
+      listIdOne: [],
+      //批量取消授权编号集合
+      listIdTwo: [],
     }
   },
-  methods:{
-
-    //判断删除按钮是否可用
-    deletepl(val){
-      this.table=val
-      if(this.table != ''){
-        this.disableds=false
-      }else{
-        this.disableds=true
-      }
-    },
-    //选中值
-    TheSelectedValue(val){
-      this.xuanzhong=val;
-      if(this.xuanzhong !=''){
-        this.disabledss = false
-      }else {
-        this.disabledss = true
-      }
-      console.log(val)
-    },
-    //对话框循环输出选中的内容
-    confirm(){
-      for (var i=0;i<this.xuanzhong.length;i++){
-          var halo=this.xuanzhong[i]
-        console.log(halo)
-      }
-      ElMessage({
-        type: 'success',
-        message: '添加成功！！',
-
+  methods: {
+    //批量取消授权
+    checkcCancelImpower() {
+      ElMessageBox.confirm(
+          '是否确认对所选数据项取消授权?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        //初始化
+        this.listIdOne = [];
+        for (let i = 0; i < this.checkDeleteListOne.length; i++) {
+          this.listIdOne.push(this.checkDeleteListOne[i].roleStaffId)
+        }
+        this.axios({
+          method: 'post',
+          url: this.url + 'cancelImpower',
+          data: this.listIdOne,
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.next_one();
+                ElMessage({
+                  type: 'success',
+                  message: '取消授权成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
       })
-
-      this.outerVisible=false
     },
-
+    //取消授权
+    cancelImpower(id) {
+      ElMessageBox.confirm(
+          '是否确认对点击数据项取消授权?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.axios({
+          method: 'post',
+          url: this.url + 'cancelImpower',
+          data: [id],
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.next_one();
+                ElMessage({
+                  type: 'success',
+                  message: '取消授权成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    //序列
+    indexMethod_one(index) {
+      let curpage = this.pageInfo_one.currenPage; //单前页码，具体看组件取值
+      let limitpage = this.pageInfo_one.pageSize; //每页条数，具体是组件取值
+      return index + 1 + (curpage - 1) * limitpage;
+    },
+    //序列
+    indexMethod_two(index) {
+      let curpage = this.pageInfo_two.currenPage; //单前页码，具体看组件取值
+      let limitpage = this.pageInfo_two.pageSize; //每页条数，具体是组件取值
+      return index + 1 + (curpage - 1) * limitpage;
+    },
+    //分页查询通过角色编号分配的角色
+    next_one() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectRoleStaff',
+        data: {
+          //当前页
+          'currenPage': this.pageInfo_one.currenPage,
+          //页大小
+          "pageSize": this.pageInfo_one.pageSize,
+          //角色编号
+          "roleId": this.$parent.$data.fromValue.roleId,
+          //用户名称
+          "staffName": this.searchOne.staffName,
+          //用户手机号码
+          "staffPhone": this.searchOne.staffPhone,
+          //用户状态
+          "staffState": this.searchOne.staffState,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableDataOne = response.data.data.info.records
+            this.pageInfo_one.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //分页查询所以的在职员工
+    next_two() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaffInState',
+        data: {
+          //当前页
+          'currenPage': this.pageInfo_two.currenPage,
+          //页大小
+          "pageSize": this.pageInfo_two.pageSize,
+          //用户名称
+          "staffName": this.searchTwo.staffName,
+          //用户手机号码
+          "staffPhone": this.searchTwo.staffPhone,
+          //角色编号
+          'roleId': this.$parent.$data.fromValue.roleId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableDataTwo = response.data.data.info.records
+            this.pageInfo_two.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //分配用户
+    allot() {
+      //初始化
+      this.listIdTwo = [];
+      for (let i = 0; i < this.checkDeleteListTwo.length; i++) {
+        this.listIdTwo.push(this.checkDeleteListTwo[i].staffId)
+      }
+      this.axios({
+        method: 'post',
+        url: this.url + 'allotStaff',
+        data: {
+          //角色编号
+          'roleId': this.$parent.$data.fromValue.roleId,
+          //员工编号列表
+          "list": this.listIdTwo,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              this.next_one();
+              ElMessage({
+                type: 'success',
+                message: '授权成功',
+              })
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //判断删除按钮是否可用
+    deleteListOne(val) {
+      this.checkDeleteListOne = val;
+    },
+    deleteListTwo(val) {
+      this.checkDeleteListTwo = val;
+    },
     //对话框搜索重置方法
-    reset(){
-      this.search={
-        //用户名称
-        username :'',
-        //手机号
-        number:'',
+    resetOne() {
+      //搜索重置form
+      this.searchOne = {
+        //员工状态
+        staffState: '',
+        //员工姓名
+        staffName: '',
+        //员工手机号
+        staffPhone: '',
       }
     },
     //搜索重置方法
-    resetss(){
-      this.searchss={
-        //用户名称
-        username :'',
-        //手机号
-        number:'',
+    resetTwo() {
+      //搜索重置form
+      this.searchTwo = {
+        //员工姓名
+        staffName: '',
+        //员工手机号
+        staffPhone: '',
       }
     }
+  }, mounted() {
+    this.next_one();
   }
 
 }
@@ -398,6 +621,7 @@ export default {
 <style type="text/css" scoped>
 
 @import url("../../css/zpdaohang.css");
+
 @font-face {
   font-family: 'iconfont';  /* Project id 2994452 */
   src: url('//at.alicdn.com/t/font_2994452_zc48m96iud.woff2?t=1639381525619') format('woff2'),
@@ -405,27 +629,55 @@ export default {
   url('//at.alicdn.com/t/font_2994452_zc48m96iud.ttf?t=1639381525619') format('truetype');
 }
 
-.el-form-item{
+.el-form-item {
   margin-bottom: 10px;
 }
-/*分页*/
-.paging{
-  margin-top: -20px;
-  margin-left: 302px;
+
+.sub-Content__primary .el-table--fit {
+  margin-left: 0px !important;
 }
 
+/* 分页 */
+.demo-pagination-block {
+  margin: 10px 0 10px 10px;
+}
+
+
 /*对话框表格*/
-.el-form-table{
+.el-form-table {
   margin-left: -24px;
 }
 
 
+/*新增按钮样式*/
+.button-new {
+  color: #1890ff;
+  background: #e8f4ff;
+  border-color: #a3d3ff;
+  border: none;
+  width: 90px;
+}
+
+.button-new:hover {
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  border: none;
+  width: 90px;
+}
+
+/* 删除表格数据按钮 */
+.button-delete {
+  border: none;
+  width: 90px;
+}
 
 /*添加用户权限对话框*/
-.search{
+.search {
   margin-top: -22px;
   margin-left: 10px;
 }
+
 /*对话框搜索按钮样式*/
 .dialog-box-ss {
   background-color: #085FC3;
@@ -437,6 +689,7 @@ export default {
   border-color: #1890ff;
 
 }
+
 .dialog-box-ss:hover {
   background-color: #085FC3;
   color: white;
@@ -446,6 +699,7 @@ export default {
   background: #e8f4ff;
   border-color: #a3d3ff;
 }
+
 /* 对话框重置按钮样式 */
 .dialog-box-cz {
   color: black;
@@ -460,6 +714,7 @@ export default {
   border-color: #dcdfe6;
   color: #606266;
 }
+
 .dialog-box-cz:hover {
   color: black;
   margin: 29px 0px 0px 5px;
@@ -470,105 +725,79 @@ export default {
   background: #e8f4ff;
   border-color: #a3d3ff;
 }
-.phones{
+
+.phones {
   width: 250px;
   margin-top: -10px;
   margin-left: 10px;
 }
+
 /**/
-.username{
+.username {
   width: 250px;
   margin-top: -10px;
   margin-left: 10px;
 }
 
 
-/* 分页 */
-.demo-pagination-block{
-  margin-left: 800px;
-  margin-bottom: 20px;
-}
-
-.cancel{
+.cancel {
   color: #5aaaff;
 }
-.sub-Content__primary{
-  margin-left: -27px;
-}
 
-.button{
+
+.button {
 
   margin-bottom: 15px;
 
 }
+
 /*新增按钮样式*/
-.button-new{
+.button-new {
   color: #1890ff;
   background: #e8f4ff;
   border-color: #a3d3ff;
   border: none;
   width: 110px;
 }
-.button-new:hover{
+
+.button-new:hover {
   color: #fff;
   background-color: #1890ff;
   border-color: #1890ff;
   border: none;
   width: 110px;
 }
-/* 返回角色表格数据按钮 */
-.button-delete{
-  color: #ffba00;
-  background: #fff8e6;
-  border-color: #ffe399;
-  border: none;
-  width: 90px;
-  margin-left: 10px;
-}
-.button-delete:hover{
-  color: #fff;
-  background-color: #ffba00;
-  border-color: #ffba00;
-  border: none;
-  width: 90px;
-  margin-left: 10px;
-}
-/* 修改表格数据按钮 */
-.button-amend{
-  width: 140px;
-  border: none;
-}
 
-
-/* 搜索按钮 */
-.search{
-
-}
 
 /* 搜索按钮 */
 .search-ss {
   background-color: #085FC3;
   color: white;
+  height: 33px !important;
   margin: 29px 0px 0px 5px;
   width: 90px;
   color: #fff;
   background-color: #1890ff;
   border-color: #1890ff;
 }
+
 .search-ss:hover {
   background-color: #085FC3;
   color: white;
   margin: 29px 0px 0px 5px;
   width: 90px;
   color: #1890ff;
+  height: 33px !important;
   background: #e8f4ff;
   border-color: #a3d3ff;
 }
+
 /* 重置按钮 */
 .search-cz {
   color: black;
   margin: 29px 0px 0px 5px;
   width: 90px;
+  height: 33px !important;
   background: #fff;
   border: 1px solid #dcdfe6;
   border-top-color: rgb(220, 223, 230);
@@ -578,8 +807,9 @@ export default {
   border-color: #dcdfe6;
   color: #606266;
 }
-.search-cz:hover {
 
+.search-cz:hover {
+  height: 33px !important;
   color: black;
   margin: 29px 0px 0px 5px;
   width: 90px;
@@ -589,17 +819,16 @@ export default {
   background: #e8f4ff;
   border-color: #a3d3ff;
 }
+
 /*手机号码搜索样式*/
-.phone{
+.phone {
   width: 300px;
 }
+
 /*用户名称搜索样式*/
-.user-name{
+.user-name {
   width: 300px;
 }
-
-
-
 
 
 .saas-main-content {
@@ -749,9 +978,6 @@ button, html [type="button"], [type="reset"], [type="submit"] {
   border-color: #085fc3;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
 }
-
-
-
 
 
 </style>
