@@ -36,7 +36,7 @@
             </li>
             <li>
               <label>年龄</label>
-              <p>22</p>
+              <p>{{tableData.staffAge}}</p>
             </li>
             <li>
               <label>婚姻状况</label>
@@ -95,7 +95,7 @@
               <el-form-item label="出生日期：" style="width:600px;margin-left: -220px;">
                 <el-col :span="11">
                   <el-form-item>
-                    <el-date-picker type="date" placeholder="选择日期" v-model="tableData.staffBirthday" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="tableData.staffBirthday" style="width: 100%;" @change="ages()"></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-form-item><br/>
@@ -115,9 +115,9 @@
 
               <el-form-item label="政治面貌：" prop="politics" style="width:300px;margin-left: -220px;">
                 <el-select v-model="tableData.staffOutlook">
-                  <el-option label="团员" value="ty"></el-option>
-                  <el-option label="党员" value="dy"></el-option>
-                  <el-option label="群众" value="qz"></el-option>
+                  <el-option label="团员" value="团员"></el-option>
+                  <el-option label="党员" value="党员"></el-option>
+                  <el-option label="群众" value="群众"></el-option>
                 </el-select>
               </el-form-item><br/>
 
@@ -150,8 +150,8 @@
 
 
 
-              <el-form-item label="年龄：" prop="emp_age">
-                <el-input style="width:240px;"></el-input>
+              <el-form-item label="年龄：" prop="age">
+                <el-input style="width:240px;" v-model="tableData.staffAge"></el-input>
               </el-form-item><br/>
 
 
@@ -187,8 +187,21 @@
               </el-form-item><br/>
 
 
-              <el-form-item label="星座：" prop="constellation">
-                <el-input v-model="tableData.staffSign" style="width:240px;"></el-input>
+              <el-form-item label="星座：" prop="official">
+                <el-select v-model="tableData.staffSign" placeholder="请选择" style="width:240px;">
+                  <el-option label="白羊座" value="白羊座"></el-option>
+                  <el-option label="金牛座" value="金牛座"></el-option>
+                  <el-option label="双子座" value="双子座"></el-option>
+                  <el-option label="巨蟹座" value="巨蟹座"></el-option>
+                  <el-option label="狮子座" value="狮子座"></el-option>
+                  <el-option label="处女座" value="处女座"></el-option>
+                  <el-option label="天秤座" value="天秤座"></el-option>
+                  <el-option label="天蝎座" value="天蝎座"></el-option>
+                  <el-option label="射手座" value="射手座"></el-option>
+                  <el-option label="摩羯座" value="摩羯座"></el-option>
+                  <el-option label="水瓶座" value="水瓶座"></el-option>
+                  <el-option label="双鱼座" value="双鱼座"></el-option>
+                </el-select>
               </el-form-item>
             </div>
 
@@ -416,30 +429,6 @@ export default {
     return {
       url: "http://localhost:80/",
       tableData:{},
-
-      rules: {
-        name:
-
-            {
-              required: true,
-              message: '请输入活动名称',
-              trigger: 'blur'
-            },
-        id: {
-          required: true,
-          message: '编号不能为空',
-          trigger: 'blur'
-        },
-        phone: [{
-          required: true,
-          message: '编号不能为空',
-          trigger: 'blur'
-        },
-          {min: 11, message: '电话号码要11位数', trigger: 'blur'}
-        ]
-
-
-      },
       informations_1: true,
       informations_edit_1: false,
       informations_bj_1: true,
@@ -520,6 +509,8 @@ export default {
           staffBlood:this.tableData.staffBlood,
           //星座
           staffSign:this.tableData.staffSign,
+          //年龄
+          staffAge:this.tableData.staffAge,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -602,6 +593,21 @@ export default {
         console.log(error);
       });
     },
+    //计算年龄
+    ages(){
+      const birthdays = new Date(this.tableData.staffBirthday + "".replace(/-/g, "/"));
+      const d = new Date();
+      const age =
+          d.getFullYear() -
+          birthdays.getFullYear() -
+          (d.getMonth() < birthdays.getMonth() ||
+          (d.getMonth() == birthdays.getMonth() &&
+              d.getDate() < birthdays.getDate())
+              ? 1
+              : 0);
+      this.tableData.staffAge=age;
+
+    }
   },mounted() {
     this.selectStaffAll(this.$parent.$parent.$parent.$parent.$data.one)
   }

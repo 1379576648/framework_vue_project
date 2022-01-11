@@ -163,7 +163,7 @@
 </template>
 
 
-<script lang="ts">
+<script>
 import {ElMessage} from 'element-plus'
 
 export default {
