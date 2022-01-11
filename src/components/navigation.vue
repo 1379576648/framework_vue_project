@@ -45,6 +45,7 @@
 						<img style="width: 26px; height: 26px; border-radius: 50%;" alt="" src="../assets/aaa.jpg">
 						&nbsp;&nbsp;
 						{{this.$store.state.staffMessage.staffName}}
+
                 <el-dropdown>
                   <span class="el-dropdown-link">
                      <i class="iconfont" style="color: white">&#xe600;</i>
@@ -56,7 +57,7 @@
                     <el-dropdown-menu>
                       <el-dropdown-item>账户信息</el-dropdown-item>
                       <el-dropdown-item>SAAS PC</el-dropdown-item>
-                      <el-dropdown-item>退出</el-dropdown-item>
+                      <el-dropdown-item @click="this.$store.state=''">退出</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>

@@ -68,10 +68,9 @@
 	  <!--<el-table-column prop="staffState" label="状态" width="160" />-->
    <el-table-column label="状态" width="100">
      <template #default="scope">
-       <span class="button-await" v-if="scope.row.staffState===0"><span style="color: #5aaaff">在职</span></span>
-       <span class="button-pass" v-if="scope.row.staffState===1"><span style="color: #5aaaff">离职</span></span>
-       <span class="button-reject" v-if="scope.row.staffState===2"><span style="color: #5aaaff">实习</span></span>
-       <span class="button-reject" v-if="scope.row.staffState===3"><span style="color: #5aaaff">正式</span></span>
+       <span class="button-await" v-if="scope.row.staffState===0"><span style="color: #5aaaff">试用</span></span>
+       <span class="button-pass" v-if="scope.row.staffState===1"><span style="color: #5aaaff">正式</span></span>
+       <span class="button-reject" v-if="scope.row.staffState===2"><span style="color: #5aaaff">离职</span></span>
      </template>
    </el-table-column>
     <el-table-column  prop="staffHiredate" label="入职日期" sortable  width="160">
@@ -80,6 +79,7 @@
     <el-table-column fixed="right" label="操作" width="160">
       <template #default="scope">
         <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.one=scope.row.staffId,
+                                                     this.$parent.$parent.$parent.$data.two='book',
                                                      this.$parent.$parent.$parent.$data.employee_compile=true"
           >编辑 </el-button>
         <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.one=scope.row.staffId,
@@ -119,8 +119,6 @@ export default {
     const value2 = ref('')
     return {
       url: "http://localhost:80/",
-      leave:'/employee/message/employee_roster/leave',
-      staffedit:'/employee/message/employee_roster/staffedit',
       tableData: [],
       pageInfo: {
         // 分页参数

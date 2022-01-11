@@ -31,28 +31,29 @@
           </div>
         </div>
         <!--  添加的工作经历  -->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="gzjlwhite">
-          <div class="information_text">
+        <div style="width:100%;position: relative;margin-top: 20px;"  v-show="gzjlwhite">
+          <div v-for="(obj,index) in tableData"
+               class="information_text">
             <ul style="list-style-type: none; ">
               <li>
                 <label>开始时间</label>
-                <p></p>
+                <p>{{obj.workStareTime}}</p>
               </li>
               <li>
                 <label>结束时间</label>
-                <p></p>
+                <p>{{obj.workEndTime}}</p>
               </li>
               <li>
                 <label>任职公司</label>
-                <p>23</p>
+                <p>{{ obj.companyName }}</p>
               </li>
               <li>
                 <label>职位</label>
-                <p></p>
+                <p>{{obj.positionName}}</p>
               </li>
               <li>
                 <label style="margin-left: -438px;">离职原因</label>
-                <p></p>
+                <p>{{obj.positionDescribe}}</p>
               </li>
             </ul>
           </div>
@@ -611,15 +612,19 @@
 
 <!--      </div>-->
 
-
+{{tableData}}
     </div>
   </div>
 </template>
 
 <script>
+import {ElNotification} from "element-plus";
+
 export default {
   data() {
     return {
+      url: "http://localhost:80/",
+      tableData:{},
       ruleForm: {
         name: '',
         rzgs: '',
@@ -715,6 +720,14 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    //点击编辑判断是否有数据
+    workBJ(){
+      if(this.tableData.length>0){}
+        this.gzjlwhite=true;
+        this.tianjiagzjl=false;
+        this.jianjia=true;
+
     },
     // 点击添加工作经历按钮
     clickwork(){
@@ -821,6 +834,44 @@ export default {
       this.jyhs=true;
       this.jywhite=false;
     },
+    //根据id查询工作经历
+    selectWorkAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectWorkAll',
+        data:{
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info,
+                this.workBJ()
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
     //点击编辑离职按钮
     // redactleave(){
     //   this.lzhs=true;
@@ -837,6 +888,11 @@ export default {
     // }
 
 
+  },
+  mounted() {
+    //根据id查询工作经历
+    alert(this.$parent.$parent.$parent.$parent.$data.one)
+    this.selectWorkAll(this.$parent.$parent.$parent.$parent.$data.one)
   }
 }
 </script>

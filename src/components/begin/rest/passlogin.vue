@@ -15,12 +15,6 @@
 <script>
 import {ElNotification} from 'element-plus'
 import {ElLoading} from 'element-plus';
-/*import.meta.glob添加页面可以自动生成映射关系，而不用手动添加,生成类似如下对象
-Object { "../components/HelloWorld.vue": vue(), "../components/LoginView.vue": vue())
-这样作后，在动态生态菜单时可以直接component:modules[`${comp}`]，comp是从后台读取的组件路径，这里
-则正好对应上modules中对象的键，如"../components/HelloWorld.vue"
-*/
-const modules = import.meta.glob('../components/**/*.vue');
 export default {
   data() {
     return {
@@ -133,6 +127,7 @@ export default {
                   this.$store.commit("staffInfo", obj);
                   console.log(response.data.data.menuList)
                   this.$store.commit("updateMenuList", response.data.data.menuList);
+                  sessionStorage.setItem("refresh", "true")
                   //跳转可以
                   this.$router.push({path: '/home', replace: true})
                 }
@@ -165,7 +160,7 @@ export default {
           }
         })
       }
-    },
+    }
   }, mounted() {
     //ip地址
     this.ip = returnCitySN['cip'];
