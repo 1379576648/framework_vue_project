@@ -738,6 +738,7 @@ export default {
     callwork(){
       this.gzjlhs=false;
       this.tianjiagzjl=true;
+      this.gzjlwhite=true;
     },
     // 点击确定添加工作记录按钮
     addwork(){
@@ -891,7 +892,6 @@ export default {
   },
   mounted() {
     //根据id查询工作经历
-    alert(this.$parent.$parent.$parent.$parent.$data.one)
     this.selectWorkAll(this.$parent.$parent.$parent.$parent.$data.one)
   }
 }
