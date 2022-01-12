@@ -305,6 +305,7 @@
         <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
+              <el-button @click="cancel_1">取消</el-button>
             <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
             <el-button type="primary" @click="Submit_to_positive3(become_1)" v-if="this.judging === 1">
               确定
@@ -313,7 +314,6 @@
             <el-button type="primary" @click="Submit_to_positive2(become_1)" v-if="this.judging === 0">
               确定
             </el-button>
-            <el-button @click="cancel_1">取消</el-button>
           </span>
         </template>
 
@@ -427,6 +427,7 @@
         <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
+             <el-button @click="cancel_2">取消</el-button>
             <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
             <el-button type="primary" @click="Submit_to_transfer3" v-if="this.judging === 1">
               确定
@@ -435,7 +436,6 @@
             <el-button type="primary" @click="Submit_to_transfer2" v-if="this.judging === 0">
               确定
             </el-button>
-            <el-button @click="cancel_1">取消</el-button>
           </span>
         </template>
 
@@ -1178,8 +1178,8 @@ export default defineComponent({
           data: {
             // 申请人
             staffName: this.NowStaffName,
-            // 部门编号
-            deptId: this.NowDeptId,
+            // 部门名称
+            deptname: this.NowDeptName,
             // 转正类型
             workertype: this.become_1.type_1,
             // 转正备注
@@ -1240,12 +1240,12 @@ export default defineComponent({
           data: {
             // 申请人
             staffName: this.NowStaffName,
-            // 部门编号
-            deptId: this.NowDeptId,
+            // 部门名称
+            deptname: this.NowDeptName,
             // 转正类型
             workertype: this.become_1.type_1,
             // 转正备注
-            workerremarks: this.become_1.remarks_1,
+            auditflowdetaiRemarks: this.become_1.remarks_1,
             // 转正日期
             workerdate: this.become_1.date1,
             // 审批人1
@@ -1289,14 +1289,8 @@ export default defineComponent({
     },
     // 提交调动 （提交三个审批人）
     Submit_to_transfer3() {
-      console.log(this.NowStaffName);
-      console.log(this.NowDeptName);
-      console.log(this.Change_1.type_1);
-      console.log(this.Change_1.dept_1);
-      console.log(this.Change_1.remarks_1);
-      console.log(this.Change_1.date1);
-      if (this.Change_1.dept_1.length === 0) {
-        ElMessage("部门不能为空");
+      if (this.Change_1.remarks_1.length === 0) {
+        ElMessage("备注不能为空");
       } else {
         this.axios({
           method: 'post',
@@ -1326,7 +1320,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.become_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加转正成功")
+          console.log("添加调动成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -1343,7 +1337,7 @@ export default defineComponent({
                 message: '操作成功，请等待审批结果',
                 type: 'success',
               })
-              this.become = false;
+              this.Change = false;
             }
           } else {
             ElNotification.warning({
@@ -1357,33 +1351,33 @@ export default defineComponent({
     },
     // 提交调动 （提交两个审批人）
     Submit_to_transfer2() {
-      if (this.become_1.remarks_1.length === 0) {
+      if (this.Change_1.remarks_1.length === 0) {
         ElMessage("备注不能为空");
-      } else if (this.become_1.date1.length === 0) {
-        ElMessage("日期不能为空");
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'SubmitPositive2',
+          url: this.url + 'SubmitTransfer2',
           data: {
             // 申请人
             staffName: this.NowStaffName,
-            // 部门编号
-            deptId: this.NowDeptId,
-            // 转正类型
-            workertype: this.become_1.type_1,
-            // 转正备注
-            workerremarks: this.become_1.remarks_1,
-            // 转正日期
-            workerdate: this.become_1.date1,
+            // 异动类型
+            transferType: this.Change_1.type_1,
+            //　原部门
+            createddeptname:this.NowDeptName,
+            //　异动后部门
+            updatedeptname:this.Change_1.dept_1,
+            // 异动备注
+            transferremark: this.Change_1.remarks_1,
+            // 调动日期
+            takeeffectdate: this.Change_1.date1,
             // 审批人1
-            staffName1: this.personnel_manager[0].staffname,
+            staffName1: this.NowManager[0].staffname,
             // 审批人3
             staffName2: this.president[1].staffname,
             // 审批类型
-            auditflowType: "转正",
+            auditflowType: "调动",
             // 审批标题
-            auditflowTitle: this.NowStaffName + "的" + this.become_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
+            auditflowTitle: this.NowStaffName + "的" + this.Change_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
           console.log("添加转正成功")
@@ -1403,7 +1397,7 @@ export default defineComponent({
                 message: '操作成功，请等待审批结果',
                 type: 'success',
               })
-              this.become = false;
+              this.Change = false;
             }
           } else {
             ElNotification.warning({
@@ -1906,13 +1900,14 @@ export default defineComponent({
                 } else {
                   this.judging = 1;
                 }
+                this.Change = true;
               }
             })
             // 查询成功，审批状态0代表正在审批中，则不能让登陆者再次申请调动
           } else if (response.data.code === 200 && response.data.data === 0) {
             ElNotification.warning({
               title: '提示',
-              message: "查询到您有正在审批中的转正审批，请耐心等候结果！",
+              message: "查询到您有正在审批中的调动审批，请耐心等候结果！",
               offset: 100,
             })
           }
@@ -1947,7 +1942,7 @@ export default defineComponent({
                 value: response.data.data.info[i].deptId,
                 label: response.data.data.info[i].deptName
               })
-              this.Change = true;
+
             }
           }
           //如果服务是雪崩的
