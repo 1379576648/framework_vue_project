@@ -31,7 +31,7 @@
           >
             <el-button
                 type="text"
-                @click="selecttransferexamine(),variation()"
+                @click="selectTransferExamine(),variaTion()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_4.svg"/>
@@ -43,7 +43,7 @@
           <div title="调薪" class="link-list-item">
             <el-button
                 type="text"
-                @click="selectadjustexamine(),selectPay()"
+                @click="selectAdjustExamine(),selectPay()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_5.svg"/>
@@ -55,7 +55,7 @@
           <div title="离职" class="link-list-item">
             <el-button
                 type="text"
-                @click="quit = true"
+                @click="selectDimissionExamine()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_6.svg"/>
@@ -565,10 +565,10 @@
       >
         <el-form ref="form" :model="quit_1" label-width="120px">
           <el-form-item label="员工名称">
-            <el-input v-model="quit_1.name" disabled></el-input>
+            <el-input v-model="NowStaffName" disabled></el-input>
           </el-form-item>
           <el-form-item label="部门名称">
-            <el-input v-model="quit_1.dept" disabled></el-input>
+            <el-input v-model="NowDeptName" disabled></el-input>
           </el-form-item>
           <el-form-item label="离职原因">
             <el-select v-model="quit_1.type_1" placeholder="请选择离职原因">
@@ -627,15 +627,17 @@
                 @change="difference5"
             ></el-date-picker>
           </el-form-item>
-          <!-- 头像 -->
-          <el-form-item label="审批人">
+          <!-- 审批人 -->
+          <!-- 判断审批人是否相同 为0代表相同，则显示两个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 0">
             <el-col :span="12">
               <div class="demo-basic--circle">
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
-                  <div class="sub-title" style="line-height: 10px">
-                    管理一号
-                  </div>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ personnel_manager[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -644,7 +646,23 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理二号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ president[1].staffname }}
+                </div>
+              </div>
+            </el-col>
+          </el-form-item>
+          <!-- 判断审批人是否相同 为1代表不相同，则显示三个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 1">
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ NowManager[0].staffname }}
+                </div>
               </div>
             </el-col>
             <el-col :span="12">
@@ -652,15 +670,35 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理三号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ personnel_manager[0].staffname }}
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ president[1].staffname }}
+                </div>
               </div>
             </el-col>
           </el-form-item>
         </el-form>
+        <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="submitForm_4">确定</el-button>
-            <el-button @click="cancel_4">取消</el-button>
+             <el-button @click="cancel_4">取消</el-button>
+            <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
+            <el-button type="primary" @click="submitToLeave3" v-if="this.judging === 1">
+              确定
+            </el-button>
+            <!-- 判断为0，则代表审批人相同，则去调用添加两个审批人的方法-->
+            <el-button type="primary" @click="submitToLeave2" v-if="this.judging === 0">
+              确定
+            </el-button>
           </span>
         </template>
       </el-dialog>
@@ -1569,6 +1607,132 @@ export default defineComponent({
         })
       }
     },
+    // 提交离职 (提交三个审批人)
+    submitToLeave3() {
+      if (this.quit_1.type_1.length === 0) {
+        ElMessage("请选择您的离职原因");
+      } else if (this.quit_1.remarks_1.length === 0) {
+        ElMessage("请输入您的离职说明");
+      } else if (this.quit_1.date1.length === 0) {
+        ElMessage("请选择日期");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'submitToLeave3',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            //　部门
+            deptName:this.NowDeptName,
+            // 离职原因
+            quitType:this.quit_1.type_1,
+            // 离职说明
+            quitExplain:this.quit_1.remarks_1,
+            // 离职日期
+            applyQuitDate: this.quit_1.date1,
+            // 审批人1
+            staffName1: this.NowManager[0].staffname,
+            // 审批人2
+            staffName2: this.personnel_manager[0].staffname,
+            // 审批人3
+            staffName3: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "调动",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加调动成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.quit = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 提交离职 （提交两个审批人）
+    submitToLeave2() {
+      if (this.quit_1.type_1.length === 0) {
+        ElMessage("请选择您的离职原因");
+      } else if (this.quit_1.remarks_1.length === 0) {
+        ElMessage("请输入您的离职说明");
+      } else if (this.quit_1.date1.length === 0) {
+        ElMessage("请选择日期");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'submitToLeave2',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            //　部门
+            deptName:this.NowDeptName,
+            // 离职原因
+            quitType:this.quit_1.type_1,
+            // 离职说明
+            quitExplain:this.quit_1.remarks_1,
+            // 申请离职日期
+            applyQuitDate: this.quit_1.date1,
+            // 审批人1
+            staffName1: this.NowManager[0].staffname,
+            // 审批人2
+            staffName2: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "调动",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加调动成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.quit = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
     // 转正取消
     cancel_1() {
       this.become_1 = {
@@ -1605,18 +1769,6 @@ export default defineComponent({
         remarks_1: "",
       };
       this.salary = false;
-    },
-    // 提交离职
-    submitForm_4() {
-      if (this.quit_1.type_1.length === 0) {
-        ElMessage("请选择您的离职原因");
-      } else if (this.quit_1.remarks_1.length === 0) {
-        ElMessage("请输入您的离职说明");
-      } else if (this.quit_1.date1.length === 0) {
-        ElMessage("请选择日期");
-      } else {
-        alert(1);
-      }
     },
     // 取消离职
     cancel_4() {
@@ -2000,7 +2152,7 @@ export default defineComponent({
       this.become_1.date1 = "";
     },
     // 点击异动根据员工名称查询该员工是否有异动审批记录
-    selecttransferexamine() {
+    selectTransferExamine() {
       var _this = this;
       this.axios({
         method: 'post',
@@ -2063,7 +2215,7 @@ export default defineComponent({
       })
     },
     // 点击异动查询全部部门
-    variation() {
+    variaTion() {
       this.axios({
         method: 'get',
         url: this.url + 'selectDeptList',
@@ -2265,7 +2417,7 @@ export default defineComponent({
     },
     // 点击调薪 去查询是否符合条件
     // 根据名称去查询是否目前有调薪审批记录
-    selectadjustexamine(){
+    selectAdjustExamine(){
       var _this = this;
       this.axios({
         method: 'post',
@@ -2344,7 +2496,70 @@ export default defineComponent({
           this.base_pay=response.data.data;
         }
       })
-    }
+    },
+    // 根据名称去查询是否目前有离职审批记录
+    selectDimissionExamine(){
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDimissionRecord',
+        data: {
+          staffName: this.NowStaffName
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询是否有离职记录成功")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          // 审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理，返回5则代表暂无记录
+          if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
+              || response.data.data === 2) {
+            // 符合条件再根据部门编号去查询其部门经理
+            this.axios({
+              method: 'post',
+              url: this.url + 'selectDeptPostName',
+              data: {
+                deptId: _this.NowDeptId,
+              }
+            }).then((response) => {
+              console.log("根据部门编号去查其部门经理成功")
+              console.log(response)
+              if (response.data === 300) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "服务发生关闭",
+                  offset: 100,
+                })//如果服务没有关闭
+              } else if (response.data.data.state === 200) {
+                //如果服务是正常的
+                this.NowManager = response.data.data.info;
+                // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+                if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
+                  this.judging = 0;
+                } else {
+                  this.judging = 1;
+                }
+                this.quit = true
+              }
+            })
+            // 查询成功，审批状态0代表正在审批中，则不能让登陆者再次申请调动
+          } else if (response.data.code === 200 && response.data.data === 0) {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询到您有正在审批中的离职审批，请耐心等候结果！",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
   },
   // 挂载
   created() {
