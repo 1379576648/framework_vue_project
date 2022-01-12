@@ -34,14 +34,16 @@
             <el-tab-pane name="daiInterview" label="待面试(99)">
               <recruit_zp_daiInterview/>
             </el-tab-pane>
-            <el-tab-pane name="interviewPass" label="面试中(99)">
-              <recruit_zp_interviewPass/>
-            </el-tab-pane>
-            <el-tab-pane name="daiSecondInterview" label="复试中(99)">
+            <el-tab-pane name="daiSecondInterview" label="面试中(99)">
               <recruit_zp_daiSecondInterview/>
+
             </el-tab-pane>
-            <el-tab-pane name="daiSecondInterviewPass" label="面试通过(99)">
+            <el-tab-pane name="daiSecondInterviewPass" label="复试中(99)">
               <recruit_zp_daiSecondInterviewPass/>
+
+            </el-tab-pane>
+            <el-tab-pane name="interviewPass" label="面试通过(99)">
+              <recruit_zp_interviewPass/>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -58,7 +60,7 @@
 <script>
 //待面试
 import recruit_zp_daiInterview from '../recruit_management/recruit_zp_daiInterview.vue';
-//面试中
+//面试通过
 import recruit_zp_interviewPass from '../recruit_management/recruit_zp_interviewPass.vue';
 //复试中
 import recruit_zp_daiSecondInterview from '../recruit_management/recruit_zp_daiSecondInterview.vue';
