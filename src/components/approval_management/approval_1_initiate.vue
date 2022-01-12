@@ -43,7 +43,7 @@
           <div title="调薪" class="link-list-item">
             <el-button
                 type="text"
-                @click="salary = true"
+                @click="selectadjustexamine(),selectPay()"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_5.svg"/>
@@ -450,25 +450,19 @@
       >
         <el-form ref="form" :model="salary_1" label-width="120px">
           <el-form-item label="员工名称">
-            <el-input v-model="salary_1.name" disabled></el-input>
+            <el-input v-model="NowStaffName" disabled></el-input>
           </el-form-item>
           <el-form-item label="部门名称">
-            <el-input v-model="salary_1.dept" disabled></el-input>
+            <el-input v-model="NowDeptName" disabled></el-input>
           </el-form-item>
           <el-form-item label="调薪前基本工资">
-            <el-input v-model="salary_1.qjbgz" disabled></el-input>
-          </el-form-item>
-          <el-form-item label="调薪前岗位工资">
-            <el-input v-model="salary_1.qgwgz" disabled></el-input>
+            <el-input v-model="base_pay" disabled></el-input>
           </el-form-item>
           <el-form-item label="调薪后基本工资">
             <el-input-number :precision="2" :step="100" :max="30000" :min="0"
                              v-model="salary_1.hjbgz"
-                             oninput="value=value.toString().match(/^\d+(?:\.\d{0,2})?/)"
+                             oninput="value.toString().match(/^\d+(?:\.\d{0,2})?/)"
             ></el-input-number>
-          </el-form-item>
-          <el-form-item label="调薪后岗位工资">
-            <el-input v-model="salary_1.hgwgz" disabled></el-input>
           </el-form-item>
           <el-form-item label="调薪备注">
             <el-input
@@ -486,15 +480,17 @@
                 @change="difference6"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="审批人">
-            <!-- 头像 -->
+          <!-- 审批人 -->
+          <!-- 判断审批人是否相同 为0代表相同，则显示两个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 0">
             <el-col :span="12">
               <div class="demo-basic--circle">
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
-                  <div class="sub-title" style="line-height: 10px">
-                    管理一号
-                  </div>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ personnel_manager[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -503,7 +499,23 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理二号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ president[1].staffname }}
+                </div>
+              </div>
+            </el-col>
+          </el-form-item>
+          <!-- 判断审批人是否相同 为1代表不相同，则显示三个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 1">
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ NowManager[0].staffname }}
+                </div>
               </div>
             </el-col>
             <el-col :span="12">
@@ -511,15 +523,35 @@
                 <div class="block">
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
-                <div class="sub-title" style="line-height: 10px">管理三号</div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ personnel_manager[0].staffname }}
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ president[1].staffname }}
+                </div>
               </div>
             </el-col>
           </el-form-item>
         </el-form>
+        <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
-            <el-button type="primary" @click="submitForm_3">确定</el-button>
-            <el-button @click="cancel_3">取消</el-button>
+             <el-button @click="cancel_3">取消</el-button>
+            <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
+            <el-button type="primary" @click="Submit_to_salary3" v-if="this.judging === 1">
+              确定
+            </el-button>
+            <!-- 判断为0，则代表审批人相同，则去调用添加两个审批人的方法-->
+            <el-button type="primary" @click="Submit_to_salary2" v-if="this.judging === 0">
+              确定
+            </el-button>
           </span>
         </template>
       </el-dialog>
@@ -1003,6 +1035,8 @@ export default defineComponent({
       NowDeptId: this.$store.state.staffMessage.deptId,
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
+      // 当前登陆者ID
+      staffid: this.$store.state.staffMessage.staffId,
       // 人事部经理名称(审批人2)
       personnel_manager: "",
       // 总裁名称(审批人3)
@@ -1011,6 +1045,8 @@ export default defineComponent({
       NowManager: "",
       // 当前登录者所在部门
       NowDeptName: "",
+      // 调薪前基本工资
+      base_pay:"",
       // 地址选择器
       options: regionData,
       // 地址选择器
@@ -1040,12 +1076,8 @@ export default defineComponent({
         dept: "",
         //调薪后基本工资
         qjbgz: "",
-        //调薪前岗位工资
-        qgwgz: "",
         //调薪后基本工资
         hjbgz: "",
-        //调薪后岗位工资
-        hgwgz: "",
         //日期
         date1: "",
         //备注
@@ -1409,6 +1441,134 @@ export default defineComponent({
         })
       }
     },
+    // 提交调薪 （提交三个审批人）
+    Submit_to_salary3() {
+      if (this.salary_1.hjbgz === 0){
+        ElMessage("请选择调薪后基本工资");
+      } else if (this.salary_1.remarks_1.length === 0) {
+        ElMessage("备注不能为空");
+      }else if (this.salary_1.date1.length === 0){
+        ElMessage("日期不能为空");
+      }else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'SubmitSalary3',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            //　部门
+            deptname:this.NowDeptName,
+            // 调薪前基本工资
+            frontsalary:this.base_pay,
+            // 调薪后基本工资
+            aftersalary:this.salary_1.hjbgz,
+            // 备注
+            salaryremarks:this.salary_1.remarks_1,
+            // 期望调薪日期
+            takeEffectDate: this.salary_1.date1,
+            // 审批人1
+            staffName1: this.NowManager[0].staffname,
+            // 审批人2
+            staffName2: this.personnel_manager[0].staffname,
+            // 审批人3
+            staffName3: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "调动",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + "调薪" + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加调动成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.salary = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 提交调薪 （提交两个审批人）
+    Submit_to_salary2() {
+      if (this.salary_1.remarks_1.length === 0) {
+        ElMessage("备注不能为空");
+      }else if (this.salary_1.date1.length === 0){
+        ElMessage("日期不能为空");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'SubmitSalary2',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            //　部门
+            deptname:this.NowDeptName,
+            // 调薪前基本工资
+            frontsalary:this.base_pay,
+            // 调薪后基本工资
+            aftersalary:this.salary_1.hjbgz,
+            // 备注
+            salaryremarks:this.salary_1.remarks_1,
+            // 期望调薪日期
+            takeEffectDate: this.salary_1.date1,
+            // 审批人1
+            staffName1: this.NowManager[0].staffname,
+            // 审批人2
+            staffName2: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "调薪",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + "调薪" + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加转正成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.Change = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
     // 转正取消
     cancel_1() {
       this.become_1 = {
@@ -1431,18 +1591,6 @@ export default defineComponent({
         date1:"",
       };
       this.Change = false;
-    },
-    // 提交调薪
-    submitForm_3() {
-      if (this.salary_1.hjbgz.length === 0) {
-        ElMessage("请输入您期望的调薪后基本工资");
-      } else if (this.salary_1.remarks_1.length === 0) {
-        ElMessage("请输入备注");
-      } else if (this.salary_1.date1.length === 0) {
-        ElMessage("请选择日期");
-      } else {
-        alert(1);
-      }
     },
     // 取消调薪
     cancel_3() {
@@ -2115,7 +2263,88 @@ export default defineComponent({
         }
       })
     },
-
+    // 点击调薪 去查询是否符合条件
+    // 根据名称去查询是否目前有调薪审批记录
+    selectadjustexamine(){
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectSalaryRecord',
+        data: {
+          staffName: this.NowStaffName
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询是否有调薪记录成功")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          // 审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理，返回5则代表暂无记录
+          if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
+              || response.data.data === 2) {
+            // 符合条件再根据部门编号去查询其部门经理
+            this.axios({
+              method: 'post',
+              url: this.url + 'selectDeptPostName',
+              data: {
+                deptId: _this.NowDeptId,
+              }
+            }).then((response) => {
+              console.log("根据部门编号去查其部门经理成功")
+              console.log(response)
+              if (response.data === 300) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "服务发生关闭",
+                  offset: 100,
+                })//如果服务没有关闭
+              } else if (response.data.data.state === 200) {
+                //如果服务是正常的
+                this.NowManager = response.data.data.info;
+                // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+                if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
+                  this.judging = 0;
+                } else {
+                  this.judging = 1;
+                }
+                this.salary = true
+              }
+            })
+            // 查询成功，审批状态0代表正在审批中，则不能让登陆者再次申请调动
+          } else if (response.data.code === 200 && response.data.data === 0) {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询到您有正在审批中的调薪审批，请耐心等候结果！",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    // 查询当前员工的基本工资
+    selectPay(){
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectPay',
+        data: {
+          staffid: this.staffid,
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询其基本工资成功")
+        console.log(response);
+        if (response.data.code == 200){
+          this.base_pay=response.data.data;
+        }
+      })
+    }
   },
   // 挂载
   created() {
