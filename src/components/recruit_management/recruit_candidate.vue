@@ -30,78 +30,34 @@
 
         </div>
       </div>
-      <!--
-        筛选框
-      -->
-      <div class="icon-s" v-show="icons">
 
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues1" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="formInline.vlues2" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues3" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues4" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="" size="mini">确定</el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="" size="mini">重置</el-button>
-          </el-form-item>
-
-          <el-form-item>
-            <span style="cursor: pointer" @click="icons =! icons"> 收起 <i class="iconfont">&#xe76e;</i></span>
-          </el-form-item>
-
-        </el-form>
-
-
-      </div>
     </div>
     <br/>
     <!-- 表格数据 -->
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left"  align="center" type="selection" width="80" />
-        <el-table-column fixed="left" prop="name" label="姓名" width="150">
+        <el-table-column fixed="left" label="姓名" width="150">
           <template #default="scope">
-            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
+            <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
+             {{ scope.row.resumeName }}
+            </span>
+
           </template>
         </el-table-column>
-        <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
-        <el-table-column prop="gender" label="性别" width="140"/>
-        <el-table-column prop="schoolli" label="学历" width="140"/>
-        <el-table-column prop="phone" label="手机号" width="140"/>
-        <el-table-column prop="age" label="年龄" width="140"/>
-        <el-table-column prop="email" label="邮箱" width="140"/>
-        <el-table-column prop="professional" label="专业" width="140"/>
-        <el-table-column prop="birth" label="出生日期" width="140"/>
-        <el-table-column prop="face" label="政治面貌" width="140"/>
-        <el-table-column prop="gradschool" label="毕业学校" width="140"/>
-        <el-table-column prop="invitation" label="是否邀约" width="140"/>
-        <el-table-column prop="state" label="状态" width="140"/>
+        <el-table-column fixed="left" prop="postName" label="投递部门" width="140"/>
+        <el-table-column prop="resumeSex" label="性别" width="140"/>
+        <el-table-column prop="resumeEducation" label="学历" width="140"/>
+        <el-table-column prop="resumePhone" label="手机号" width="140"/>
+        <!--        <el-table-column prop="age" label="年龄" width="140"/>-->
+        <el-table-column prop="resumeMailbox" label="邮箱" width="140"/>
+        <!--        <el-table-column prop="professional" label="专业" width="140"/>-->
+        <el-table-column prop="resumeBirthday" label="出生日期" width="140"/>
+        <!--        <el-table-column prop="face" label="政治面貌" width="140"/>-->
+        <!--        <el-table-column prop="gradschool" label="毕业学校" width="140"/>-->
+        <!--        <el-table-column prop="invitation" label="是否邀约" width="140"/>-->
+        <!--        <el-table-column prop="state" label="状态" width="140"/>-->
+
 
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
@@ -159,17 +115,12 @@ export default {
       icons:false,
       //搜索框
       input: "",
+      //访问路径
+      url: "http://localhost:80/",
       //表格数据
       tableData: [],
       //筛选框数据
-      formInline:{
-        vlues1:'',
-        vlues2:'',
-        vlues3:'',
-        vlues4:'',
-        user:''
-
-      }
+      formInline:[],
 
 
     }

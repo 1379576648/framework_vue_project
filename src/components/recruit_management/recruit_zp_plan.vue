@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import {ElMessage} from 'element-plus'
+import {ElMessage, ElNotification} from 'element-plus'
 //新增招聘计划
 import recruit_add_plan from '../recruit_management/recruit_add_plan.vue';
 //招聘计划详情页面
@@ -211,30 +211,44 @@ export default {
       })
     },
     selectRecruitment(){
-        var _this=this
         this.axios({
-          method:'post',
-          url:this.url+'selectRecruitment',
-          data:{
-            'currentPage': this.pageInfo.currentPage,
-            /* 当前的页 */
-            'pagesize': this.pageInfo.pagesize,
+          method: 'post',
+          url: this.url + 'selectRecruitment',
+          data: {
+            "currentPage": this.pageInfo.currentPage,
+            "pagesize": this.pageInfo.pagesize,
           },
-          responseType:'json',
-          responseEncoding:'utf-8',
-
-        }).then((response)=>{
-          console.log("查询招聘计划")
-          console.log(response);
-          this.tableData=response.data.succed.records;
-          this.pageInfo.pagesize = response.data.succed.size;
-          this.pageInfo.total = response.data.succed.total;
-        }).catch(function (error){
-          console.log("失败")
-          console.log(error);
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              this.tableData=response.data.data.succed.records;
+              this.pageInfo.pagesize = response.data.data.succed.size;
+              this.pageInfo.total = response.data.data.succed.total;
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
         })
+
     }
-  },created() {
+  },mounted() {
     this.selectRecruitment();
   }
 }
