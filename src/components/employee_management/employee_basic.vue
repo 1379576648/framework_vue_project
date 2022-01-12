@@ -36,7 +36,7 @@
             </li>
             <li>
               <label>年龄</label>
-              <p>22</p>
+              <p>{{tableData.staffAge}}</p>
             </li>
             <li>
               <label>婚姻状况</label>
@@ -95,17 +95,16 @@
               <el-form-item label="出生日期：" style="width:600px;margin-left: -220px;">
                 <el-col :span="11">
                   <el-form-item>
-                    <el-date-picker type="date" placeholder="选择日期" v-model="tableData.staffBirthday" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="tableData.staffBirthday" style="width: 100%;" @change="ages()"></el-date-picker>
                   </el-form-item>
                 </el-col>
               </el-form-item><br/>
 
               <el-form-item label="婚姻状态：" prop="marital" style="width:300px;margin-left: -220px;">
                 <el-select v-model="tableData.staffMarital">
-                  <el-option label="已婚" value="yh"></el-option>
-                  <el-option label="未婚" value="wh"></el-option>
-                  <el-option label="离异" value="ly"></el-option>
-
+                  <el-option label="已婚" value="已婚"></el-option>
+                  <el-option label="未婚" value="未婚"></el-option>
+                  <el-option label="离异" value="离异"></el-option>
                 </el-select>
               </el-form-item><br/>
 
@@ -116,9 +115,9 @@
 
               <el-form-item label="政治面貌：" prop="politics" style="width:300px;margin-left: -220px;">
                 <el-select v-model="tableData.staffOutlook">
-                  <el-option label="团员" value="ty"></el-option>
-                  <el-option label="党员" value="dy"></el-option>
-                  <el-option label="群众" value="qz"></el-option>
+                  <el-option label="团员" value="团员"></el-option>
+                  <el-option label="党员" value="党员"></el-option>
+                  <el-option label="群众" value="群众"></el-option>
                 </el-select>
               </el-form-item><br/>
 
@@ -127,8 +126,14 @@
               </el-form-item><br/>
 
 
-              <el-form-item label="血型：" prop="blood" style="width:280px;margin-left: -200px;">
-                <el-input v-model="tableData.staffBlood"></el-input>
+              <el-form-item label="血型：" style="width:300px;margin-left: -220px;">
+                <el-select v-model="tableData.staffBlood">
+                  <el-option label="O型" value="O型"></el-option>
+                  <el-option label="A型" value="A型"></el-option>
+                  <el-option label="B型" value="B型"></el-option>
+                  <el-option label="AB型" value="AB型"></el-option>
+                  <el-option label="RH型" value="RH型"></el-option>
+                </el-select>
               </el-form-item><br/>
 
 
@@ -145,20 +150,20 @@
 
 
 
-              <el-form-item label="年龄：" prop="emp_age">
-                <el-input style="width:240px;"></el-input>
+              <el-form-item label="年龄：" prop="age">
+                <el-input style="width:240px;" v-model="tableData.staffAge"></el-input>
               </el-form-item><br/>
 
 
 
               <el-form-item label="最高学历：" prop="official">
-                <el-select v-model="tableData.staffEducation" placeholder="请选择活动区域" style="width:240px;">
-                  <el-option label="硕士" value="ss"></el-option>
-                  <el-option label="本科" value="bk"></el-option>
-                  <el-option label="大专" value="dz"></el-option>
-                  <el-option label="中专" value="zz"></el-option>
-                  <el-option label="高中" value="gz"></el-option>
-                  <el-option label="其他" value="qt"></el-option>
+                <el-select v-model="tableData.staffEducation" placeholder="请选择" style="width:240px;">
+                  <el-option label="硕士" value="硕士"></el-option>
+                  <el-option label="本科" value="本科"></el-option>
+                  <el-option label="大专" value="大专"></el-option>
+                  <el-option label="中专" value="中专"></el-option>
+                  <el-option label="高中" value="高中"></el-option>
+                  <el-option label="其他" value="其他"></el-option>
                 </el-select>
               </el-form-item><br/>
 
@@ -182,8 +187,21 @@
               </el-form-item><br/>
 
 
-              <el-form-item label="星座：" prop="constellation">
-                <el-input v-model="tableData.staffSign" style="width:240px;"></el-input>
+              <el-form-item label="星座：" prop="official">
+                <el-select v-model="tableData.staffSign" placeholder="请选择" style="width:240px;">
+                  <el-option label="白羊座" value="白羊座"></el-option>
+                  <el-option label="金牛座" value="金牛座"></el-option>
+                  <el-option label="双子座" value="双子座"></el-option>
+                  <el-option label="巨蟹座" value="巨蟹座"></el-option>
+                  <el-option label="狮子座" value="狮子座"></el-option>
+                  <el-option label="处女座" value="处女座"></el-option>
+                  <el-option label="天秤座" value="天秤座"></el-option>
+                  <el-option label="天蝎座" value="天蝎座"></el-option>
+                  <el-option label="射手座" value="射手座"></el-option>
+                  <el-option label="摩羯座" value="摩羯座"></el-option>
+                  <el-option label="水瓶座" value="水瓶座"></el-option>
+                  <el-option label="双鱼座" value="双鱼座"></el-option>
+                </el-select>
               </el-form-item>
             </div>
 
@@ -192,7 +210,7 @@
             <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
                 <el-button @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1">取消</el-button>
-                <el-button type="primary" @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1">保存</el-button>
+                <el-button type="primary" @click="informations_1=!informations_1,informations_edit_1=!informations_edit_1,informations_bj_1=!informations_bj_1,updateStaff(this.tableData.staffId)">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -289,7 +307,7 @@
               <div style="width:20%;height:50px;margin:auto;">
 
                 <el-button @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2">取消</el-button>
-                <el-button type="primary">保存</el-button>
+                <el-button type="primary"  @click="informations_2=!informations_2,informations_edit_2=!informations_edit_2,informations_bj_2=!informations_bj_2,updateStaffTwo(this.tableData.staffId)">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -300,7 +318,7 @@
       <div class="information">
         <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">在职信息</h3>
         <div style="width:860px;border-top:1px solid silver;display: inline-block;margin-left: 20px;margin-bottom: 5px;"></div>
-        <h3 @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3" v-show="informations_bj_3" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>
+<!--        <h3 @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3" v-show="informations_bj_3" style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;"><i class="iconfont">&#xe600;</i>编辑</h3>-->
 
       </div>
 
@@ -337,104 +355,80 @@
           </ul>
         </div>
 
-        <div class="information_from" v-show="informations_edit_3">
-          <el-form style="width: 90%;margin: auto;" ref="informationForm">
+<!--        <div class="information_from" v-show="informations_edit_3">-->
+<!--          <el-form style="width: 90%;margin: auto;" ref="informationForm">-->
 
-            <br/>
-            <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">
+<!--            <br/>-->
+<!--            <div style="display: inline-block;margin:20px 0px 0px 50px;text-align: right">-->
 
-              <el-form-item label="部门：" prop="dept" style="width:300px;margin-left: -320px;">
-                <el-input v-model="tableData.deptName"></el-input>
-              </el-form-item><br/>
+<!--              <el-form-item label="部门：" prop="dept" style="width:300px;margin-left: -320px;">-->
+<!--                <el-input v-model="tableData.deptName"></el-input>-->
+<!--              </el-form-item><br/>-->
 
-              <el-form-item label="职位：" prop="position" style="width:300px;margin-left: -320px;">
-                <el-input v-model="tableData.postName"></el-input>
-              </el-form-item><br/>
-
-
-              <el-form-item label="工龄：" prop="service" style="width:300px;margin-left: -320px;">
-                <el-input v-model="tableData.workAge"></el-input>
-              </el-form-item><br/>
-
-            </div>
+<!--              <el-form-item label="职位：" prop="position" style="width:300px;margin-left: -320px;">-->
+<!--                <el-input v-model="tableData.postName"></el-input>-->
+<!--              </el-form-item><br/>-->
 
 
+<!--              <el-form-item label="工龄：" prop="service" style="width:300px;margin-left: -320px;">-->
+<!--                <el-input v-model="tableData.workAge"></el-input>-->
+<!--              </el-form-item><br/>-->
 
-            <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">
-              <br/>
-
-
-              <el-form-item label="入职日期：" prop="boardDate">
-                <el-date-picker
-                    v-model="tableData.staffHiredate"
-                    type="date"
-                    placeholder="选择日期" style="width: 240px">
-                </el-date-picker>
-              </el-form-item><br/>
-
-              <el-form-item label="员工状态：" prop="state">
-                <el-radio-group  style="position: absolute;left:4px" v-model="tableData.staffState">
-                  <el-radio label="实习"></el-radio>
-                  <el-radio label="正式"></el-radio>
-                </el-radio-group>
-              </el-form-item><br/>
-
-              <el-form-item label="转正日期：" prop="positive">
-                <el-date-picker
-                    v-model="tableData.workerDate"
-                    type="date"
-                    placeholder="选择日期" style="width: 240px">
-                </el-date-picker>
-              </el-form-item><br/>
+<!--            </div>-->
 
 
 
-            </div>
+<!--            <div style="display: inline-block;position: absolute;top:20px;right:150px;text-align: right">-->
+<!--              <br/>-->
 
-            <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">
-              <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3">取消</el-button>
-                <el-button type="primary">保存</el-button>
-              </div>
-            </div>
-          </el-form>
-        </div>
-      </div>
+
+<!--              <el-form-item label="入职日期：" prop="boardDate">-->
+<!--                <el-date-picker-->
+<!--                    v-model="tableData.staffHiredate"-->
+<!--                    type="date"-->
+<!--                    placeholder="选择日期" style="width: 240px">-->
+<!--                </el-date-picker>-->
+<!--              </el-form-item><br/>-->
+
+<!--              <el-form-item label="员工状态：" prop="state">-->
+<!--                <el-radio-group  style="position: absolute;left:4px" v-model="tableData.staffState">-->
+<!--                  <el-radio label="实习"></el-radio>-->
+<!--                  <el-radio label="正式"></el-radio>-->
+<!--                </el-radio-group>-->
+<!--              </el-form-item><br/>-->
+
+<!--              <el-form-item label="转正日期：" prop="positive">-->
+<!--                <el-date-picker-->
+<!--                    v-model="tableData.workerDate"-->
+<!--                    type="date"-->
+<!--                    placeholder="选择日期" style="width: 240px">-->
+<!--                </el-date-picker>-->
+<!--              </el-form-item><br/>-->
+
+
+
+<!--            </div>-->
+
+<!--            <div style="width:90%;height:60px;margin: auto;margin-top: 20px;padding: 0px 0px 30px 0px">-->
+<!--              <div style="width:20%;height:50px;margin:auto;">-->
+<!--                <el-button @click="informations_3=!informations_3,informations_edit_3=!informations_edit_3,informations_bj_3=!informations_bj_3">取消</el-button>-->
+<!--                <el-button type="primary">保存</el-button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </el-form>-->
+<!--        </div>-->
+     </div>
 
     </div>
   </div>
 </template>
 <script>
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 export default {
   data() {
     return {
       url: "http://localhost:80/",
       tableData:{},
-
-      rules: {
-        name:
-
-            {
-              required: true,
-              message: '请输入活动名称',
-              trigger: 'blur'
-            },
-        id: {
-          required: true,
-          message: '编号不能为空',
-          trigger: 'blur'
-        },
-        phone: [{
-          required: true,
-          message: '编号不能为空',
-          trigger: 'blur'
-        },
-          {min: 11, message: '电话号码要11位数', trigger: 'blur'}
-        ]
-
-
-      },
       informations_1: true,
       informations_edit_1: false,
       informations_bj_1: true,
@@ -483,6 +477,139 @@ export default {
         }
       })
     },
+    //修改员工信息
+    updateStaff(id) {
+      console.log(id)
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateStaff',
+        data: {
+          //员工编号
+          staffId:this.tableData.staffId,
+          //出生日期
+          staffBirthday: this.tableData.staffBirthday,
+          //婚姻状态
+          staffMarital:this.tableData.staffMarital,
+          //学历
+          staffEducation:this.tableData.staffEducation,
+          //身份证
+          staffIdentity:this.tableData.staffIdentity,
+          //性别
+          staffSex:this.tableData.staffSex,
+          //政治面貌
+          staffOutlook:this.tableData.staffOutlook,
+          //户口所在地
+          staffRegistered:this.tableData.staffRegistered,
+          //毕业学校
+          staffSchool:this.tableData.staffSchool,
+          //银行卡号
+          staffCredit:this.tableData.staffCredit,
+          //血型
+          staffBlood:this.tableData.staffBlood,
+          //星座
+          staffSign:this.tableData.staffSign,
+          //年龄
+          staffAge:this.tableData.staffAge,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectStaffAll();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //修改员工信息2
+    updateStaffTwo(id) {
+      console.log(id)
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateStaffTwo',
+        data: {
+          //员工编号
+          staffId:this.tableData.staffId,
+          //手机号码
+          staffPhone: this.tableData.staffPhone,
+          //个人邮箱
+          staffEmail:this.tableData.staffEmail,
+          //微信
+          staffWechat:this.tableData.staffWechat,
+          //QQ
+          staffQq:this.tableData.staffQq,
+          //现住地址
+          staffAddress:this.tableData.staffAddress,
+          //紧急联系人
+          staffEmergency:this.tableData.staffEmergency,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectStaffAll();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //计算年龄
+    ages(){
+      const birthdays = new Date(this.tableData.staffBirthday + "".replace(/-/g, "/"));
+      const d = new Date();
+      const age =
+          d.getFullYear() -
+          birthdays.getFullYear() -
+          (d.getMonth() < birthdays.getMonth() ||
+          (d.getMonth() == birthdays.getMonth() &&
+              d.getDate() < birthdays.getDate())
+              ? 1
+              : 0);
+      this.tableData.staffAge=age;
+
+    }
   },mounted() {
     this.selectStaffAll(this.$parent.$parent.$parent.$parent.$data.one)
   }

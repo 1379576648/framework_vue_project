@@ -18,18 +18,23 @@
                 <div style="display: inline-block;">
 
                   <el-form-item label="姓名：" prop="name">
-                    <el-select v-model="ruleForm.name" placeholder="请选择" style="width: 239px;">
-                      <el-option label="88" value="xm" style="margin-left: 20px;"></el-option>
-                      <el-option label="小花" value="xm2" style="margin-left: 20px;"></el-option>
+                    <el-select v-model="tableData.staffName" placeholder="请选择" style="width: 239px;" @change="selectTransferByName(staffName=this.tableData.staffName)">
+                      <el-option  style="margin-left: 20px;"
+                                  v-for="item in staff_name"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value"
+                      >
+                      </el-option>
                     </el-select>
                   </el-form-item><br/>
 
                   <el-form-item label="调动前部门：" prop="formerdept">
-                    <el-input v-model="ruleForm.formerdept" style="width:240px"></el-input>
+                    <el-input v-model="tableDatas.deptName" style="width:240px" disabled></el-input>
                   </el-form-item><br/>
 
                   <el-form-item label="调动前职位：" prop="formerpost">
-                    <el-input v-model="ruleForm.formerpost" style="width:240px"></el-input>
+                    <el-input v-model="tableDatas.postName" style="width:240px" disabled></el-input>
                   </el-form-item><br/>
 
                   <el-form-item label="生效日期：" prop="takedate">
@@ -40,19 +45,43 @@
                 </div>
                 <div style="display: inline-block;position: absolute;left:500px;" >
                   <el-form-item label="异动类型：" prop="type">
-                    <el-select v-model="ruleForm.type" placeholder="请选择活动区域" style="width:240px;">
-                      <el-option label="调岗" value="tg" style="margin-left: 20px;"></el-option>
-                      <el-option label="普升" value="ps" style="margin-left: 20px;"></el-option>
-                      <el-option label="降职" value="jj" style="margin-left: 20px;"></el-option>
+                    <el-select v-model="ruleForm.type" placeholder="请选择" style="width:240px;">
+                      <el-option label="调岗" value="调岗" style="margin-left: 20px;"></el-option>
+                      <el-option label="普升" value="普升" style="margin-left: 20px;"></el-option>
+                      <el-option label="降职" value="降职" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item><br/>
 
                   <el-form-item label="调动后部门：" prop="transferdept">
-                    <el-input v-model="ruleForm.transferdept" style="width:240px"></el-input>
+                    <el-select v-model="ruleForm.transferdept" placeholder="请选择" style="width: 239px;">
+                      <el-option  style="margin-left: 20px;"
+                                  v-for="item in dept_name"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-form-item><br/>
 
                   <el-form-item label="调动后职位：" prop="transferpost">
-                    <el-input v-model="ruleForm.transferpost" style="width:240px"></el-input>
+                    <el-select v-model="ruleForm.transferpost" placeholder="请选择" style="width: 239px;">
+                      <el-option  style="margin-left: 20px;"
+                                  v-for="item in post_name"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item><br/>
+
+                  <el-form-item label="备注：">
+
+                    <el-form-item prop="rzgs" style="width:240px;">
+                      <el-input type="textarea" v-model="ruleForm.remark" style="width: 100%;"></el-input>
+                    </el-form-item>
+
                   </el-form-item>
 
                 </div>
@@ -77,9 +106,9 @@
           </button>
         </div>
           <!--搜索输入框-->
-          <div style="margin-left: 1130px;margin-top: -57px;">
+          <div style="margin-left: 1155px;margin-top: -57px;">
           <el-row style="width: 150px;">
-            <el-input v-model="seek" placeholder="搜索" size="small">
+            <el-input v-model="seek" placeholder="搜索" size="small" @input="selectTransfer">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
@@ -92,13 +121,13 @@
         <div class="sub-Content__primary">
           <el-table :data="tableData" stripe style="width: 100%"
                     :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-            <el-table-column prop="name" label="姓名" width="180" />
-            <el-table-column prop="name" label="异动类型" width="180" />
-            <el-table-column prop="date" label="原部门" width="180" />
-            <el-table-column prop="name" label="变动后部门" width="180" />
-            <el-table-column prop="date" label="原职位" width="180" />
-            <el-table-column prop="name" label="变动后职位" width="180" />
-            <el-table-column prop="date" label="生效时间" width="180" />
+            <el-table-column prop="staffName" label="姓名" width="180" />
+            <el-table-column prop="transferType" label="异动类型" width="180" />
+            <el-table-column prop="createdDeptName" label="原部门" width="180" />
+            <el-table-column prop="updatedDeptName" label="变动后部门" width="180" />
+            <el-table-column prop="transferRawpostName" label="原职位" width="180" />
+            <el-table-column prop="transferAfterpostName" label="变动后职位" width="180" />
+            <el-table-column prop="takeEffectDate" label="生效时间" width="" />
           </el-table>
         </div>
       </div>
@@ -107,19 +136,20 @@
       <div class="demo-pagination-block">
         <el-pagination
             v-model:currentPage="pageInfo.currentPage"
-            :page-sizes="[3, 5, 10, 50]"
+            :page-sizes="[4, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="pageInfo.total"
             :pager-count="5"
+            prev-text="上一页"
+            next-text="下一页"
+            @size-change="selectTransfer()"
+            @current-change="selectTransfer()"
             background
-            @size-change="selectUsers"
-            @current-change="selectUsers"
         >
         </el-pagination>
       </div>
-
 <!--      <div>-->
 <!--        <el-dialog-->
 <!--            v-model="become"-->
@@ -172,10 +202,10 @@
 </template>
 
 <script>
-// import {ref} from "vue/dist/vue";
-import { defineComponent, ref } from 'vue'
-export default defineComponent({
+import {ElNotification} from "element-plus";
+export default{
   data(){
+    //对生效日期做判断
     const one = (rule, value, callback) => {
       if (new Date()>value){
         callback(new Error("生效日期不能小于当前时间"));
@@ -185,6 +215,8 @@ export default defineComponent({
 
     };
     return{
+      //请求的路径
+      url: "http://localhost:80/",
       seek:"",
       seek2:'',
       changesadd:false,
@@ -194,15 +226,13 @@ export default defineComponent({
         pagesize: 3, // 页大小
         total: 0, // 总页数
       },
+      //新增调动的表单
       ruleForm: {
-        name: '',
-        formerdept: '',
-        formerpost: '',
         takedate: '',
         type: '',
-        transferdept: '',
-        transferpost: ''
+        remark:'',
       },
+      //验证
       rules: {
         takedate: [
           {
@@ -222,59 +252,19 @@ export default defineComponent({
           }
         ]
       },
-      radio:"",
-      deptData: [{
-        zw: '2016-05-03',
-        name: '王小虎',
-        dept: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        dept: '2016-05-02',
-        name: '王小虎',
-        zw: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        zw: '2016-05-04',
-        name: '王小虎',
-        dept: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        zw: '2016-05-01',
-        name: '王小虎',
-        dept: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        dept: '2016-05-08',
-        name: '王小虎',
-        zw: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        dept: '2016-05-06',
-        name: '王小虎',
-        zw: '上海市普陀区金沙江路 1518 弄'
-      }],
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ],
+      //radio:"",
+      //表格数据
+      tableData: [],
+      tableDatas: {},
+      //员工名称
+      staff_name:[],
+      //部门名称
+      dept_name:[],
+      //职位名称
+      post_name:[],
     }
   },
   methods: {
-    getCurrentRow(row){ //获取选中数据this.templateSelection = row;
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -285,27 +275,228 @@ export default defineComponent({
         }
       })
     },
+    //清空表单
     RestForm(){
       this.ruleForm= {
-        name: '',
-            formerdept: '',
-            formerpost: '',
             takedate: '',
             type: '',
             transferdept: '',
-            transferpost: ''
+            transferpost: '',
+            remark:'',
       }
-    }
+    },
+    //分页查询调动管理
+    selectTransfer() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectTransfer',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //名称
+          "staffName": this.seek,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //查询所有的员工名称
+    selectStaffName() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaffName',
+        data: {
+          staffId:this.tableData.staffId,
+        }
+      }).then((response) => {
+        console.log("查询员工名称成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.staff_name = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.staff_name.push({
+                value: response.data.data.info[i].staffName,
+                label: response.data.data.info[i].staffName
+              })
+            }
+
+          }
+        }
+      })
+    },
+    //查询部门名称
+    selectSect() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectSect',
+        data: {
+          staffId:this.tableData.staffId,
+        }
+      }).then((response) => {
+        console.log("查询部门名称成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.dept_name = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.dept_name.push({
+                value: response.data.data.info[i].deptName,
+                label: response.data.data.info[i].deptName
+              })
+            }
+
+          }
+        }
+      })
+    },
+    //查询职位名称
+    selectJob() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectJob',
+        data: {
+          staffId:this.tableData.staffId,
+        }
+      }).then((response) => {
+        console.log("查询职位名称成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.post_name = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.post_name.push({
+                value: response.data.data.info[i].postName,
+                label: response.data.data.info[i].postName
+              })
+            }
+
+          }
+        }
+      })
+    },
+    //根据名称查询部门名称和职位名称
+    selectTransferByName(staffName) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectTransferByName',
+        data:{
+          staffName:this.tableData.staffName,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDatas = response.data.data.info[0]
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
   },
-  setup() {
-    const become = ref(false)
-    return{
-      become,
-    }
-  }
+  //挂载
+  created() {
+    //查询所有员工名称
+    this.selectStaffName();
+    //查询所有部门名称
+    this.selectSect();
+    //查询所有职位名称
+    this.selectJob();
+    //根据名称查询部门名称和职位名称
+    // alert(this.tableData.staffName)
+    // this.selectTransferByName(this.tableData.staffName);
+  },
+  mounted() {
+    //分页查询调动管理
+    this.selectTransfer();
+  },
+  // setup() {
+  //   const become = ref(false)
+  //   return{
+  //     become,
+  //   }
+  // }
 
 
-})
+}
 </script>
 
 

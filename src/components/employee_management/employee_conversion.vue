@@ -20,7 +20,7 @@
 
         <div style="margin-top:20px;margin-left:20px;" class="icon-p">
           <el-row :gutter="10">
-            <el-col :span="8">
+            <el-col :span="12">
               <el-card
                   shadow="always"
                   style="
@@ -34,21 +34,8 @@
                 <p>2</p>
               </el-card>
             </el-col>
-            <el-col :span="8">
-              <el-card
-                  shadow="hover"
-                  style="
-                  background-color: rgb(73, 167, 130);
-                  color: white;
-                  font-size: 14px;
-                 
-                "
-              >
-                <p>转正待生效</p>
-                <p>1</p>
-              </el-card>
-            </el-col>
-            <el-col :span="8" style="margin-left:-20px;">
+
+            <el-col :span="12" style="margin-left:-20px;">
               <el-card
                   shadow="never"
                   style="

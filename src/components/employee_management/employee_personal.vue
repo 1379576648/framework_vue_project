@@ -31,28 +31,29 @@
           </div>
         </div>
         <!--  添加的工作经历  -->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="gzjlwhite">
-          <div class="information_text">
+        <div style="width:100%;position: relative;margin-top: 20px;"  v-show="gzjlwhite">
+          <div v-for="(obj,index) in tableData"
+               class="information_text">
             <ul style="list-style-type: none; ">
               <li>
                 <label>开始时间</label>
-                <p></p>
+                <p>{{obj.workStareTime}}</p>
               </li>
               <li>
                 <label>结束时间</label>
-                <p></p>
+                <p>{{obj.workEndTime}}</p>
               </li>
               <li>
                 <label>任职公司</label>
-                <p>23</p>
+                <p>{{ obj.companyName }}</p>
               </li>
               <li>
                 <label>职位</label>
-                <p></p>
+                <p>{{obj.positionName}}</p>
               </li>
               <li>
                 <label style="margin-left: -438px;">离职原因</label>
-                <p></p>
+                <p>{{obj.positionDescribe}}</p>
               </li>
             </ul>
           </div>
@@ -487,143 +488,143 @@
       </div>
 
 
-      <!--      离职信息-->
-      <div style="margin-top: 20px; ">
-        <h3>
-          <span style="margin-left:10px;">离职信息</span>
-        </h3>
-      </div>
+<!--      &lt;!&ndash;      离职信息&ndash;&gt;-->
+<!--      <div style="margin-top: 20px; ">-->
+<!--        <h3>-->
+<!--          <span style="margin-left:10px;">离职信息</span>-->
+<!--        </h3>-->
+<!--      </div>-->
 
-      <!--      离职信息-->
-      <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">离职信息<i class="iconfont"
-                                                                                                   style="color: #085fc3;margin-right:2px;">&#xe604;</i>
-        </h3>
-        <div
-            style="width:845px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
-        <h3 v-show="lzbj"
-            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
-          <el-button type="text" @click="redactleave()"><i class="iconfont"
-                                                                                    style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑
-          </el-button>
-        </h3>
-      </div>
+<!--      &lt;!&ndash;      离职信息&ndash;&gt;-->
+<!--      <div class="information">-->
+<!--        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">离职信息<i class="iconfont"-->
+<!--                                                                                                   style="color: #085fc3;margin-right:2px;">&#xe604;</i>-->
+<!--        </h3>-->
+<!--        <div-->
+<!--            style="width:845px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>-->
+<!--        <h3 v-show="lzbj"-->
+<!--            style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">-->
+<!--          <el-button type="text" @click="redactleave()"><i class="iconfont"-->
+<!--                                                                                    style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑-->
+<!--          </el-button>-->
+<!--        </h3>-->
+<!--      </div>-->
 
-      <div style="width: 100%;margin-top: 20px;">
+<!--      <div style="width: 100%;margin-top: 20px;">-->
 
-        <!--离职表单-->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="lzwhite">
-          <div class="information_text">
-            <ul style="list-style-type: none; ">
-              <li>
-                <label>员工状态</label>
-                <p></p>
-              </li>
-              <li>
-                <label>离职原因</label>
-                <p>23</p>
-              </li>
-              <li>
-                <label>离职时间</label>
-                <p></p>
-              </li>
-              <li>
-                <label>薪资结算日期</label>
-                <p></p>
-              </li>
-              <li>
-                <label style="margin-left: -438px;">备注</label>
-                <p></p>
-              </li>
+<!--        &lt;!&ndash;离职表单&ndash;&gt;-->
+<!--        <div style="width:100%;position: relative;margin-top: 20px;" v-show="lzwhite">-->
+<!--          <div class="information_text">-->
+<!--            <ul style="list-style-type: none; ">-->
+<!--              <li>-->
+<!--                <label>员工状态</label>-->
+<!--                <p></p>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <label>离职原因</label>-->
+<!--                <p>23</p>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <label>离职时间</label>-->
+<!--                <p></p>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <label style="margin-left: -15px;">备注</label>-->
+<!--                <p></p>-->
+<!--              </li>-->
 
-            </ul>
-          </div>
+<!--            </ul>-->
+<!--          </div>-->
 
-        </div>
+<!--        </div>-->
 
-        <div class="information_from" v-show="lzhs">
-          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
-            <br/>
-            <div style="display: inline-block;margin:20px 0px 0px 50px">
-              <el-form-item label="离职原因:" prop="region" style="width:240px;margin-left: -400px;">
-                <el-select
-                    v-model="ruleForm.region"
-                    placeholder="请选择" style="width:240px">
-                  <el-option label="家庭原因" value="jtyy"></el-option>
-                  <el-option label="实习生返校" value="sxsfx"></el-option>
-                  <el-option label="回校深造" value="hxsz"></el-option>
-                  <el-option label="交通不便" value="jtbb"></el-option>
-                  <el-option label="身体健康因素" value="stjkys"></el-option>
-                  <el-option label="薪资原因" value="xzyy"></el-option>
-                  <el-option label="福利原因" value="flyy"></el-option>
-                  <el-option label="个人发展原因" value="grfzyy"></el-option>
-                  <el-option label="人际关系不融洽" value="rjgxyy"></el-option>
-                  <el-option label="工作环境不适应" value="gzhjbsy"></el-option>
-                  <el-option label="团队气氛不适应" value="tdqfbsy"></el-option>
-                  <el-option label="企业文化不适应" value="qyehbsy"></el-option>
-                  <el-option label="工作职责及目标不明确" value="gzzejmbbmq"></el-option>
-                  <el-option label="未得到充分的支持和授权" value="wddcfdzchsq"></el-option>
-                  <el-option label="其它" value="qt"></el-option>
-                </el-select>
-              </el-form-item>
-              <br>
+<!--        <div class="information_from" v-show="lzhs">-->
+<!--          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">-->
+<!--            <br/>-->
+<!--            <div style="display: inline-block;margin:20px 0px 0px 50px">-->
+<!--              <el-form-item label="离职原因:" prop="region" style="width:240px;margin-left: -400px;">-->
+<!--                <el-select-->
+<!--                    v-model="ruleForm.region"-->
+<!--                    placeholder="请选择" style="width:240px">-->
+<!--                  <el-option label="家庭原因" value="jtyy"></el-option>-->
+<!--                  <el-option label="实习生返校" value="sxsfx"></el-option>-->
+<!--                  <el-option label="回校深造" value="hxsz"></el-option>-->
+<!--                  <el-option label="交通不便" value="jtbb"></el-option>-->
+<!--                  <el-option label="身体健康因素" value="stjkys"></el-option>-->
+<!--                  <el-option label="薪资原因" value="xzyy"></el-option>-->
+<!--                  <el-option label="福利原因" value="flyy"></el-option>-->
+<!--                  <el-option label="个人发展原因" value="grfzyy"></el-option>-->
+<!--                  <el-option label="人际关系不融洽" value="rjgxyy"></el-option>-->
+<!--                  <el-option label="工作环境不适应" value="gzhjbsy"></el-option>-->
+<!--                  <el-option label="团队气氛不适应" value="tdqfbsy"></el-option>-->
+<!--                  <el-option label="企业文化不适应" value="qyehbsy"></el-option>-->
+<!--                  <el-option label="工作职责及目标不明确" value="gzzejmbbmq"></el-option>-->
+<!--                  <el-option label="未得到充分的支持和授权" value="wddcfdzchsq"></el-option>-->
+<!--                  <el-option label="其它" value="qt"></el-option>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+<!--              <br>-->
 
-              <el-form-item label="最后工作时间:" required style="width:240px;margin-left: -400px;">
-                <el-col :span="11">
-                  <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
-                                    style="width: 100%;"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-form-item>
-              <br>
+<!--              <el-form-item label="最后工作时间:" required style="width:240px;margin-left: -400px;">-->
+<!--                <el-col :span="11">-->
+<!--                  <el-form-item prop="date2" style="width:240px;">-->
+<!--                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"-->
+<!--                                    style="width: 100%;"></el-date-picker>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-form-item>-->
+<!--              <br>-->
 
 
-            </div>
+<!--            </div>-->
 
-            <div style="display: inline-block;position: absolute;top:20px;right:150px">
-              <br>
-              <el-form-item label="离职时间:" required>
-                <el-col :span="11">
-                  <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
-                                    style="width: 100%;"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-form-item>
-              <br>
-
-
-              <el-form-item label="备注：" style="position: absolute;left:28px;">
-                <el-col :span="11">
-                  <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-form-item>
-            </div>
+<!--            <div style="display: inline-block;position: absolute;top:20px;right:150px">-->
+<!--              <br>-->
+<!--              <el-form-item label="离职时间:" required>-->
+<!--                <el-col :span="11">-->
+<!--                  <el-form-item prop="date2" style="width:240px;">-->
+<!--                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"-->
+<!--                                    style="width: 100%;"></el-date-picker>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-form-item>-->
+<!--              <br>-->
 
 
-            <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
-              <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="callleave()">取消</el-button>
-                <el-button type="primary" @click="addleave()">保存</el-button>
-              </div>
-            </div>
-          </el-form>
-        </div>
-
-      </div>
+<!--              <el-form-item label="备注：" style="position: absolute;left:28px;">-->
+<!--                <el-col :span="11">-->
+<!--                  <el-form-item prop="rzgs" style="width:240px;">-->
+<!--                    <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-form-item>-->
+<!--            </div>-->
 
 
+<!--            <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">-->
+<!--              <div style="width:20%;height:50px;margin:auto;">-->
+<!--                <el-button @click="callleave()">取消</el-button>-->
+<!--                <el-button type="primary" @click="addleave()">保存</el-button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </el-form>-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+{{tableData}}
     </div>
   </div>
 </template>
 
 <script>
+import {ElNotification} from "element-plus";
+
 export default {
   data() {
     return {
+      url: "http://localhost:80/",
+      tableData:{},
       ruleForm: {
         name: '',
         rzgs: '',
@@ -697,12 +698,12 @@ export default {
       //教育经历表单
       jyhs: false,
 
-      //添加的离职
-      lzwhite: true,
-      //离职表单
-      lzhs: false,
-      //离职编辑
-      lzbj: true
+      // //添加的离职
+      // lzwhite: true,
+      // //离职表单
+      // lzhs: false,
+      // //离职编辑
+      // lzbj: true
 
     };
   },
@@ -720,6 +721,14 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    //点击编辑判断是否有数据
+    workBJ(){
+      if(this.tableData.length>0){}
+        this.gzjlwhite=true;
+        this.tianjiagzjl=false;
+        this.jianjia=true;
+
+    },
     // 点击添加工作经历按钮
     clickwork(){
       this.gzjlhs=true;
@@ -729,6 +738,7 @@ export default {
     callwork(){
       this.gzjlhs=false;
       this.tianjiagzjl=true;
+      this.gzjlwhite=true;
     },
     // 点击确定添加工作记录按钮
     addwork(){
@@ -825,22 +835,64 @@ export default {
       this.jyhs=true;
       this.jywhite=false;
     },
+    //根据id查询工作经历
+    selectWorkAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectWorkAll',
+        data:{
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info,
+                this.workBJ()
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
     //点击编辑离职按钮
-    redactleave(){
-      this.lzhs=true;
-      this.lzwhite=false;
-    },
-    //点击取消离职按钮
-    callleave(){
-      this.lzhs=false;
-    },
-    //点击保存离职按钮
-    addleave(){
-      this.lzhs=false;
-      this.lzwhite=true;
-    }
+    // redactleave(){
+    //   this.lzhs=true;
+    //   this.lzwhite=false;
+    // },
+    // //点击取消离职按钮
+    // callleave(){
+    //   this.lzhs=false;
+    // },
+    // //点击保存离职按钮
+    // addleave(){
+    //   this.lzhs=false;
+    //   this.lzwhite=true;
+    // }
 
 
+  },
+  mounted() {
+    //根据id查询工作经历
+    this.selectWorkAll(this.$parent.$parent.$parent.$parent.$data.one)
   }
 }
 </script>
