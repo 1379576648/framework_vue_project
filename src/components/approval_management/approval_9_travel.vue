@@ -51,7 +51,8 @@
           <el-table-column prop="staffName2" label="当前审批人" width="150"/>
           <el-table-column prop="updatedTime" label="最近处理" width="150"/>
           <el-table-column label="操作">
-            <template #default="scope">
+            <!-- 判断审批明细表编号数量 -->
+            <template #default="scope" v-if="this.serial=3">
               <el-popconfirm
                   confirm-button-text="确定"
                   cancel-button-text="取消"
@@ -62,7 +63,7 @@
                     auditflowdetailId1:state1[0].auditflowdetailId,
                     auditflowdetailId2:state1[1].auditflowdetailId,
                     auditflowdetailId3:state1[2].auditflowdetailId,
-                  }),through_approval(id)"
+                  }),through_approval3(id)"
               >
                 <template #reference>
                   <el-button type="success" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
@@ -80,6 +81,57 @@
                     auditflowdetailId1:state1[0].auditflowdetailId,
                     auditflowdetailId2:state1[1].auditflowdetailId,
                     auditflowdetailId3:state1[2].auditflowdetailId,
+                    auditflowId:scope.row.auditflowId
+                  }),rejected_apply(id)"
+              >
+                <template #reference>
+                  <el-button type="danger" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
+                    驳回
+                  </el-button>
+                </template>
+              </el-popconfirm>
+              <el-button
+                  type="primary"
+                  style="margin-left: 16px"
+                  @click="
+                  (value = {
+                    id: scope.row.auditflowId,
+                    name1: scope.row.staffName1,
+                    name2: scope.row.staffName2,
+                    }),
+                   particulars(value)"
+              >
+                详情
+              </el-button>
+            </template>
+            <!-- 判断审批明细表编号数量 -->
+            <template #default="scope" v-if="this.serial=2">
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定通过吗?"
+                  @confirm="(id ={
+                    auditflowdetailId1:state1[0].auditflowdetailId,
+                    auditflowdetailId2:state1[1].auditflowdetailId,
+                  }),through_approval2(id)"
+              >
+                <template #reference>
+                  <el-button type="success" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
+                    通过
+                  </el-button>
+                </template>
+              </el-popconfirm>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定驳回吗?"
+                  @confirm="(id ={
+                    auditflowdetailId1:state1[0].auditflowdetailId,
+                    auditflowdetailId2:state1[1].auditflowdetailId,
                     auditflowId:scope.row.auditflowId
                   }),rejected_apply(id)"
               >
@@ -366,6 +418,8 @@ export default {
   },
   data() {
     return {
+      // 当前登录者
+      NowStaffName: this.$store.state.staffMessage.staffName,
       // 添加通过备注弹出框
       add_remark: false,
       // 添加驳回备注弹出框
@@ -477,7 +531,10 @@ export default {
   },
   methods: {
     // 通过点击气泡确认框弹出添加备注对话框
-    through_approval(id) {
+    through_approval3(id) {
+      this.add_remark = true;
+    },
+    through_approval2(id) {
       this.add_remark = true;
     },
     // 驳回时点击气泡确认框弹出添加备注对话框
@@ -497,6 +554,8 @@ export default {
           "pagesize": this.pageInfo.pagesize,
           //申请人名称
           "staffName1": this.staffName,
+          // 审批人名称
+          "staffName2": this.NowStaffName,
           //起始时间
           "startTime": this.selectTime == null ? null : this.selectTime[0],
           //结束时间
@@ -546,6 +605,8 @@ export default {
           "currentPage": this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
+          // 审批人名称
+          "staffName2": this.NowStaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -591,6 +652,8 @@ export default {
           "pagesize": this.pageInfo1.pagesize,
           //申请人名称
           "staffName1": this.staffName1,
+          // 审批人名称
+          "staffName2": this.NowStaffName,
           //起始时间
           "startTime": this.selectTime2[0],
           //结束时间
@@ -639,6 +702,8 @@ export default {
           "currentPage": this.pageInfo1.currentPage,
           //页大小
           "pagesize": this.pageInfo1.pagesize,
+          // 审批人名称
+          "staffName2": this.NowStaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -770,6 +835,13 @@ export default {
       }).then((response) => {
         console.log("根据审批编号查询审批明细表编号成功")
         console.log(response)
+        if (response.data.data.info.length === 3){
+          this.serial=3
+        }else if (response.data.data.info.length === 2){
+          this.serial=2
+        }else {
+          this.serial=1
+        }
         this.state1 = response.data.data.info;
       }).catch(function (error) {
         console.log(" 根据审批编号查询审批明细表失败")

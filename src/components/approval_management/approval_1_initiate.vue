@@ -1387,7 +1387,7 @@ export default defineComponent({
             // 审批类型
             auditflowType: "调动",
             // 审批标题
-            auditflowTitle: this.NowStaffName + "的" + this.become_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
+            auditflowTitle: this.NowStaffName + "的" + this.Change_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
           console.log("添加调动成功")
@@ -1511,7 +1511,7 @@ export default defineComponent({
             // 审批人3
             staffName3: this.president[1].staffname,
             // 审批类型
-            auditflowType: "调动",
+            auditflowType: "调薪",
             // 审批标题
             auditflowTitle: this.NowStaffName + "的" + "调薪" + "审批" + Math.round(Math.random() * 100000000)
           }
@@ -1595,7 +1595,7 @@ export default defineComponent({
                 message: '操作成功，请等待审批结果',
                 type: 'success',
               })
-              this.Change = false;
+              this.salary = false;
             }
           } else {
             ElNotification.warning({
@@ -1637,7 +1637,7 @@ export default defineComponent({
             // 审批人3
             staffName3: this.president[1].staffname,
             // 审批类型
-            auditflowType: "调动",
+            auditflowType: "离职",
             // 审批标题
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
@@ -1699,7 +1699,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.president[1].staffname,
             // 审批类型
-            auditflowType: "调动",
+            auditflowType: "离职",
             // 审批标题
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
