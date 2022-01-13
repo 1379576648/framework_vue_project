@@ -25,11 +25,11 @@
           >
           </el-date-picker>
         </div>
-        <el-button round class="be_on_duty_text ">上班</el-button>
+        <el-button round class="be_on_duty_text ">上班  </el-button>
         <span class="reality1">实际上班时间：<span>00:00:00</span></span>
         <!--  打卡开关1-->
         <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949" class="switch"/>
-        <el-button round class="off_duty_text ">下班</el-button>
+        <el-button round class="off_duty_text ">下班  </el-button>
         <span class="reality2">实际下班时间：<span>00:00:00</span></span>
         <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949" class="switch2"/>
       </div>
@@ -67,7 +67,7 @@ export default {
   }
 
   .be_on_duty_text {
-    width: 55px;
+    width: 70px;
     top: -10px;
     left: 30px;
     position: absolute;
@@ -75,7 +75,7 @@ export default {
   .switch{
     width: 70px;
     top: 45px;
-    left: 35px;
+    left: 45px;
     position: absolute;
   }
   .reality1 {
@@ -87,7 +87,7 @@ export default {
    }
 
   .off_duty_text {
-    width: 55px;
+    width: 70px;
     top: -10px;
     left: 525px;
     position: absolute;
@@ -95,7 +95,7 @@ export default {
   .switch2{
      width: 70px;
      top: 45px;
-     left: 530px;
+     left: 540px;
      position: absolute;
    }
   .reality2 {
