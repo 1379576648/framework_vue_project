@@ -49,6 +49,7 @@
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
                 :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left" align="center" type="selection" width="80"/>
+        <el-table-column fixed :index="indexMethod" align="center" prop="resumeId" label="序号" type="index" min-width="100"/>
         <el-table-column fixed="left" label="姓名" width="150" prop="resumeName">
           <template #default="scope">
    <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
@@ -112,7 +113,6 @@
       </div>
     </div>
 
-
   </div>
 
 </template>
@@ -167,9 +167,9 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            this.tableData = response.data.data.succed.records;
-            this.pageInfo.pagesize = response.data.data.succed.size;
-            this.pageInfo.total = response.data.data.succed.total;
+            this.tableData = response.data.data.succeed.records;
+            this.pageInfo.pagesize = response.data.data.succeed.size;
+            this.pageInfo.total = response.data.data.succeed.total;
           }
           //如果服务是雪崩的
           else {
@@ -185,7 +185,12 @@ export default {
     }
   },mounted() {
     this.selectResume();
-  }
+  },  //序号1
+  indexMethod(index) {
+    let curpage = this.pageInfo.currentPage; //单前页码，具体看组件取值
+    let limitpage = this.pageInfo.pagesize; //每页条数，具体是组件取值
+    return index + 1 + (curpage - 1) * limitpage;
+  },
 }
 
 </script>

@@ -1,4 +1,4 @@
-<!--招聘过程 人才库-->
+<!--简历管理 人才库-->
 <template>
   <div class="saas-main-content" v-if="recruit_addresume==false&&recruit_plan_details==false">
     <div class="j-card j-card-bordered mainContent">

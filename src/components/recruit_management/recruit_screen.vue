@@ -25,10 +25,10 @@
 
           <!--          </ul>-->
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane name="candidate" label="面试候选人(99)">
+            <el-tab-pane name="candidate" label="面试候选人">
               <recruit_candidate/>
             </el-tab-pane>
-            <el-tab-pane name="Invited" label="已邀约 (99)">
+            <el-tab-pane name="Invited" label="已邀约">
               <recruit_Invited/>
             </el-tab-pane>
           </el-tabs>

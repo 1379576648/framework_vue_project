@@ -1,4 +1,4 @@
-<!-- 招聘计划详情页面 -->
+<!-- 简历详情页面 -->
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
