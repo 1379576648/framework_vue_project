@@ -22,9 +22,11 @@
     <el-table-column prop="positionName" label="职位" width="190" />
     <el-table-column prop="positionDescribe" label="离职原因" width="190" />
     <el-table-column fixed="right" label="操作">
-    <template #default>
-
-			<el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.employee_compile=true">编辑 </el-button>
+    <template #default="scope">
+			<el-button type="text" size="small" @click="
+			this.$parent.$parent.$parent.$data.one=scope.row.staffId,
+			this.$parent.$parent.$parent.$data.two='second',
+			this.$parent.$parent.$parent.$data.employee_compile=true">编辑 </el-button>
 	</template>
     </el-table-column>
   </el-table>

@@ -29,7 +29,7 @@
 
                   <el-form-item label="离职原因" prop="cause" style="width:500px;">
                     <el-select
-                        v-model="ruleForm.cause"
+                        v-model="tableData.cause"
                         placeholder="请选择"
                     >
                       <el-option label="家庭原因" value="家庭原因" style="margin-left: 20px"></el-option>
@@ -67,7 +67,7 @@
                     <el-col :span="11">
                       <el-form-item prop="dimisiondate">
                         <el-date-picker
-                            v-model="ruleForm.dimisiondate"
+                            v-model="tableData.dimisiondate"
                             type="date"
                             placeholder="请选择日期"
                             style="width: 100%"
@@ -77,7 +77,7 @@
                   </el-form-item>
 
                   <el-form-item label="备注" style="width:500px" prop="remark">
-                    <el-input v-model="ruleForm.remark" type="textarea"></el-input>
+                    <el-input v-model="tableData.remark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button style="width: 80px;"
@@ -126,18 +126,20 @@ export default {
       }
     };
     return {
-      tableData: {},
-      url: "http://localhost:80/",
-      //员工花名册
-      book: '/employee/message/employee_roster/book',
-      ruleForm: {
-        name: "",
-        state: "",
+      tableData: {
         cause: "",
         workdate: '',
         dimisiondate: '',
         remark: "",
       },
+      url: "http://localhost:80/",
+      //员工花名册
+      book: '/employee/message/employee_roster/book',
+      // ruleForm: {
+      //   name: "",
+      //   state: "",
+      //
+      // },
       rules: {
         cause: [
           {
@@ -146,17 +148,17 @@ export default {
             trigger: "change",
           },
         ],
-        workdate: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择最后工作时间",
-            trigger: "change",
-          },
-          // {
-          //   validator: one, trigger: "change"
-          // }
-        ],
+        // workdate: [
+        //   {
+        //     type: "date",
+        //     required: true,
+        //     message: "请选择最后工作时间",
+        //     trigger: "change",
+        //   },
+        //   // {
+        //   //   validator: one, trigger: "change"
+        //   // }
+        // ],
         dimisiondate: [
           {
             type: "date",

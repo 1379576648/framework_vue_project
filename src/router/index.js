@@ -46,6 +46,7 @@ router.beforeEach(function (to, from, next) {
         next({path: '/beginIndex'})
     } else {
         if (sessionStorage.getItem("refresh") == "true" && store.state.memuList[0] != null) {
+            console.log(store.state.memuList)
             //通过后台返回过来的级联菜单 遍历出所有的菜单
             menu(store.state.memuList);
             let ou = {
@@ -119,6 +120,7 @@ router.beforeEach(function (to, from, next) {
             //将菜单路由添加到vuex中
             store.commit("updateMenuRouter", memuList2[0])
             sessionStorage.setItem("refresh", "false")
+            console.log(memuList2[0])
             next({
                 path: to.path
             })

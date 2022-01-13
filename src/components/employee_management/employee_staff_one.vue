@@ -70,6 +70,7 @@ export default {
       employee_compile:false,
       activeName:'book',
       one:0,
+      two:'',
     }
   },
   methods: {
