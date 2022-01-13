@@ -4,10 +4,6 @@
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!--筛选框-->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt" @click="icons =! icons">
-            <span> + 筛选</span>
-          </button>
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -24,78 +20,34 @@
 
         </div>
       </div>
-      <!--
-        筛选框
-      -->
-      <div class="icon-s" v-show="icons">
-
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues1" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="formInline.vlues2" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues3" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues4" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="" size="mini">确定</el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="" size="mini">重置</el-button>
-          </el-form-item>
-
-          <el-form-item>
-            <span style="cursor: pointer" @click="icons =! icons"> 收起 <i class="iconfont">&#xe76e;</i></span>
-          </el-form-item>
-
-        </el-form>
-
-
-      </div>
     </div>
     <br/>
     <!-- 表格数据 -->
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left"  align="center" type="selection" width="80" />
-        <el-table-column fixed="left" prop="name" label="姓名" width="150">
+        <el-table-column fixed="left" label="姓名" width="150">
           <template #default="scope">
-            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
+            <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
+             {{ scope.row.resumeName}}
+            </span>
+
           </template>
         </el-table-column>
-        <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
-        <el-table-column prop="gender" label="性别" width="140"/>
-        <el-table-column prop="schoolli" label="学历" width="140"/>
-        <el-table-column prop="phone" label="手机号" width="140"/>
-        <el-table-column prop="age" label="年龄" width="140"/>
-        <el-table-column prop="email" label="邮箱" width="140"/>
-        <el-table-column prop="professional" label="专业" width="140"/>
-        <el-table-column prop="birth" label="出生日期" width="140"/>
-        <el-table-column prop="face" label="政治面貌" width="140"/>
-        <el-table-column prop="gradschool" label="毕业学校" width="140"/>
-        <el-table-column prop="invitation" label="是否邀约" width="140"/>
-        <el-table-column prop="state" label="状态" width="140"/>
+        <el-table-column fixed="left" prop="postName" label="投递部门" width="140"/>
+        <el-table-column prop="resumeSex" label="性别" width="140"/>
+        <el-table-column prop="resumeEducation" label="学历" width="140"/>
+        <el-table-column prop="resumePhone" label="手机号" width="140"/>
+        <!--        <el-table-column prop="age" label="年龄" width="140"/>-->
+        <el-table-column prop="resumeMailbox" label="邮箱" width="140"/>
+        <!--        <el-table-column prop="professional" label="专业" width="140"/>-->
+        <el-table-column prop="resumeBirthday" label="出生日期" width="140"/>
+        <el-table-column prop="interviewName" label="面试官" width="140"/>
+        <!--        <el-table-column prop="face" label="政治面貌" width="140"/>-->
+        <!--        <el-table-column prop="gradschool" label="毕业学校" width="140"/>-->
+        <!--        <el-table-column prop="invitation" label="是否邀约" width="140"/>-->
+        <!--        <el-table-column prop="state" label="状态" width="140"/>-->
+
 
         <el-table-column fixed="right" label="操作" width="220">
           <template #default>
@@ -112,7 +64,7 @@
       <div class="demo-pagination-block">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currenPage"
+            v-model:currentPage="pageInfo.currentPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -120,13 +72,13 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="sele"
-            @current-change="sele"
+            @size-change="selectInterviewPass"
+            @current-change="selectInterviewPass"
         >
         </el-pagination>
       </div>
     </div>
-
+{{this.tableData}}
 
 
 
@@ -142,39 +94,46 @@ import {
 export default {
   data() {
     return {
-      details:'/recruit/resume/details',
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
       },
       //筛选框显示隐藏
       icons:false,
+      //访问路径
+      url: "http://localhost:80/",
       //搜索框
       input: "",
       //表格数据
-      tableData: [
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-        {name:'tom',departm:'tom',gender:'tom',schoolli:'tom',phone:'tom',age:'tom',email:'tom',professional:'tom',birth:'tom',face:'tom',gradschool:'tom   ',invitation:'tom',state:'tom'},
-
-      ],
-      //筛选框数据
-      formInline:{
-        vlues1:'',
-        vlues2:'',
-        vlues3:'',
-        vlues4:'',
-        user:''
-
-      }
-
+      tableData: [],
+      formInline:[],
 
     }
   },
   methods:{
+    selectInterviewPass(){
+      this.axios({
+          method:'post',
+          url: this.url+ 'selectInterviewPass',
+          data:{
+            "currentPage": this.pageInfo.currentPage,
+            "pagesize": this.pageInfo.pagesize,
+          },
+          responseType:'json',
+          responseEncoding:'utf-8',
+      }).then((response)=>{
+          console.log("查询面试通过")
+          console.log(response)
+          this.tableData = response.data.data.succed.records;
+          this.pageInfo.pagesize = response.data.data.succed.size;
+          this.pageInfo.total = response.data.data.succed.total;
+      })
+    }
+  },mounted() {
+    this.selectInterviewPass();
   }
-
 }
 
 </script>

@@ -41,55 +41,7 @@
 
         </div>
       </div>
-      <!--
-        筛选框
-      -->
-      <div class="icon-s" v-show="icons">
 
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues1" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="formInline.vlues2" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues3" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-select v-model="formInline.vlues4" placeholder="Activity zone">
-              <el-option label="Zone one" value="shanghai"></el-option>
-              <el-option label="Zone two" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="" size="mini">确定</el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="" size="mini">重置</el-button>
-          </el-form-item>
-
-          <el-form-item>
-            <span style="cursor: pointer" @click="icons =! icons"> 收起 <i class="iconfont">&#xe76e;</i></span>
-          </el-form-item>
-
-        </el-form>
-
-
-      </div>
     </div>
     <br/>
     <!-- 表格数据 -->
@@ -188,23 +140,12 @@ export default {
       input: "",
       //表格数据
       tableData: [],
-      //筛选框数据
-      formInline: {
-        vlues1: '',
-        vlues2: '',
-        vlues3: '',
-        vlues4: '',
-        user: ''
-
-      }
-
-
+      formInline:[],
     }
   },
   methods: {
     //查询新简历
     selectResume() {
-      var _this = this
       this.axios({
         method: 'post',
         url: this.url + 'selectResume',
@@ -215,36 +156,36 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询新简历数据")
-        console.log(response);
-        if (response.data.state == 300) {
-          ElNotification.warning({
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.error({
             title: '提示',
             message: "服务发生关闭",
             offset: 100,
           })
-        } else if (response.data.state == 200) {
-          this.tableData = response.data.succed.records;
-          this.pageInfo.pagesize = response.data.succed.size;
-          this.pageInfo.total = response.data.succed.total;
-        } else {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生雪崩",
-            offset: 100,
-          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.succed.records;
+            this.pageInfo.pagesize = response.data.data.succed.size;
+            this.pageInfo.total = response.data.data.succed.total;
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
 
     }
-  },
-  created() {
+  },mounted() {
     this.selectResume();
   }
-
 }
 
 </script>
