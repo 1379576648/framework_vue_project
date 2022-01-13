@@ -1,6 +1,5 @@
 <!--角色设置界面-->
 <template>
-  {{ruleForm}}
   <div class="saas-main-content" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
@@ -346,7 +345,7 @@ export default {
         url: this.url + 'menuPowerAddSingle',
         data: {
           //菜单状态
-          menuPowerState: this.ruleForm.menuState==true?0:1,
+          menuPowerState: this.ruleForm.menuState==true?1:0,
           //菜单类型
           menuPowerType: this.ruleForm.menuType=='菜单'?0:1,
           //菜单名称

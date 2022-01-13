@@ -464,7 +464,6 @@ export default {
     }
   },
   methods: {
-
     //分配权限
     allotMenu() {
       //所有的菜单编号
