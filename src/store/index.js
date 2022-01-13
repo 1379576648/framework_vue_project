@@ -67,9 +67,9 @@ const store = createStore({
                 //如果找到路由地址跟传过来的是一致则返回结果集 并且 状态需为启用
                 if ((state.memuList[i].menuPowerRoute) == (path) && state.memuList[i].menuPowerState == 0) {
                     //如果叶子下面有数据
-                    if (state.memuList[i].list) {
+                    if (state.memuList[i].children) {
                         //添加至数组
-                        store_menuList.push(state.memuList[i].list);
+                        store_menuList.push(state.memuList[i].children);
                     }
                 }
             }

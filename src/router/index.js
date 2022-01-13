@@ -150,7 +150,7 @@ var menu = function (val) {
                 updatedTime: val[i].updatedTime,
                 createdTime: val[i].createdTime,
                 isDeleted: val[i].isDeleted,
-                list: [],
+                children: [],
             }
             //添加到菜单列表中
             memuList1.push(op);
@@ -171,12 +171,12 @@ var menu = function (val) {
                 updatedTime: val[i].updatedTime,
                 createdTime: val[i].createdTime,
                 isDeleted: val[i].isDeleted,
-                list: [],
+                children: [],
             }
             //添加到菜单列表中
             memuList1.push(op);
             //执行递归
-            menu(val[i].list);
+            menu(val[i].children);
         }
     }
 }
@@ -193,7 +193,7 @@ var getChild = function (id, val) {
     //递归
     for (let j = 0; j < op.length; j++) {
         oo.push(op[j]);
-        op.list = getChild(op[j].menuPowerId, val);
+        op.children = getChild(op[j].menuPowerId, val);
     }
     //如果节点下没有子节点，返回一个空List（递归退出）
     if (op.length == 0) {

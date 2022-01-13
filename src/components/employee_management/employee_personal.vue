@@ -18,7 +18,7 @@
             style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="jianjia"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
-          <el-button type="text" @click="addwork2()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
+          <el-button type="text" @click="addwork2(),this.workupdateinsert='新增'"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加</el-button>
         </h3>
       </div>
 
@@ -31,8 +31,8 @@
           </div>
         </div>
         <!--  添加的工作经历  -->
-        <div style="width:100%;position: relative;margin-top: 20px;"  v-show="gzjlwhite">
-          <div v-for="(obj,index) in tableData"
+        <div v-for="(obj,index) in tableData"  style="width:100%;position: relative;margin-top: 20px;"  v-show="gzjlwhite">
+          <div
                class="information_text">
             <ul style="list-style-type: none; ">
               <li>
@@ -58,19 +58,19 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;" @click="redactwork()">编辑</el-button>
-            <el-button type="text" style="color: red;">删除</el-button>
+            <el-button type="text" style="color: #085fc3;" @click="redactwork(),selectWorkOne(workExperienceId=this.tableData[index].workExperienceId),this.workupdateinsert='编辑'">编辑</el-button>
+            <el-button type="text" style="color: red;" @click="deleteWork(this.tableData[index].workExperienceId)">删除</el-button>
           </div>
         </div>
         <!--  工作经历表单 -->
         <div class="information_from" v-show="gzjlhs">
-          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
+          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="tableDate" :model="tableDate">
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px">
               <el-form-item label="开始时间:" required style="width:600px;margin-left: -212px;">
                 <el-col :span="11">
                   <el-form-item prop="date1">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+                    <el-date-picker type="date" placeholder="选择日期" v-model="tableDataFive.workStareTime"
                                     style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -80,7 +80,7 @@
               <el-form-item label="任职公司：" class="el-form-item" style="width:240px;margin-left: -212px;">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
+                    <el-input v-model="tableDataFive.companyName" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
               </el-form-item>
@@ -89,7 +89,7 @@
               <el-form-item label="离职原因：" style="width:240px;margin-left: -212px;">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>
+                    <el-input type="textarea" v-model="tableDataFive.positionDescribe" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
               </el-form-item>
@@ -100,7 +100,7 @@
               <el-form-item label="结束时间:" required>
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                    <el-date-picker type="date" placeholder="选择日期" v-model="tableDataFive.workEndTime"
                                     style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -111,7 +111,7 @@
                 <el-form-item label="职位：">
 
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input v-model="ruleForm.zw" style="width: 100%;"></el-input>
+                    <el-input v-model="tableDataFive.positionName" style="width: 100%;"></el-input>
                   </el-form-item>
 
                 </el-form-item>
@@ -120,8 +120,8 @@
 
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="callwork()">取消</el-button>
-                <el-button type="primary" @click="addwork()">保存</el-button>
+                <el-button @click="callwork(),restWork()">取消</el-button>
+                <el-button type="primary" @click="addwork(),updateinsertWork(),restWork()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -160,24 +160,24 @@
           </div>
         </div>
         <!--  添加的荣誉表单 -->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="jlwhite">
+        <div v-for="(obj2,index) in tableDatatwo" style="width:100%;position: relative;margin-top: 20px;" v-show="jlwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
               <li>
                 <label>荣誉/奖项名称</label>
-                <p></p>
+                <p>{{obj2.gloryName}}</p>
               </li>
               <li>
                 <label>奖励日期</label>
-                <p></p>
+                <p>{{obj2.createdTime}}</p>
               </li>
               <li>
                 <label>颁发单位名称</label>
-                <p>23</p>
+                <p>{{ obj2.gloryUnitname }}</p>
               </li>
               <li>
                 <label>备注</label>
-                <p></p>
+                <p>{{obj2.gloryRemark}}</p>
               </li>
 
             </ul>
@@ -270,28 +270,28 @@
           </div>
         </div>
         <!--惩罚表单-->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="cfwhite">
+        <div v-for="(obj3,index) in tableDatathree" style="width:100%;position: relative;margin-top: 20px;" v-show="cfwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
               <li>
                 <label>惩罚类型</label>
-                <p></p>
+                <p>{{obj3.punishType}}</p>
               </li>
               <li>
                 <label>惩罚原因</label>
-                <p></p>
+                <p>{{obj3.punishCause}}</p>
               </li>
               <li>
                 <label>惩罚单位</label>
-                <p>23</p>
+                <p>{{ obj3.punishUnit }}</p>
               </li>
               <li>
                 <label>是否撤销</label>
-                <p></p>
+                <p>{{obj3.isRevocation==0?'否':'是'}}</p>
               </li>
               <li>
                 <label style="margin-left: -438px;">备注</label>
-                <p></p>
+                <p>{{obj3.punishRemark}}</p>
               </li>
             </ul>
           </div>
@@ -400,24 +400,24 @@
         </div>
 
         <!--教育经历表单-->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="jywhite">
+        <div v-for="(obj4,index) in tableDataFour" style="width:100%;position: relative;margin-top: 20px;" v-show="jywhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
               <li>
                 <label>开始时间</label>
-                <p></p>
+                <p>{{obj4.educationStartTime}}</p>
               </li>
               <li>
                 <label>结束时间</label>
-                <p></p>
+                <p>{{obj4.educationEndTime}}</p>
               </li>
               <li>
                 <label>学校名称</label>
-                <p>23</p>
+                <p>{{ obj4.educationStudentname }}</p>
               </li>
               <li>
-                <label>备注</label>
-                <p></p>
+                <label>所属专业</label>
+                <p>{{obj4.educationMajor}}</p>
               </li>
             </ul>
           </div>
@@ -612,19 +612,32 @@
 
 <!--      </div>-->
 
-{{tableData}}
     </div>
   </div>
 </template>
 
 <script>
-import {ElNotification} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      //判断添加还是修改
+      workupdateinsert:'',
       url: "http://localhost:80/",
+      //工作经历表单
       tableData:{},
+      //奖励表单
+      tableDatatwo:{},
+      //惩罚表单
+      tableDatathree:{},
+      //教育经历表单
+      tableDataFour:{},
+      //工作经历表单2
+      tableDataFive:[],
+      //选中的id
+      listId:[],
+      listIdTwo:[],
       ruleForm: {
         name: '',
         rzgs: '',
@@ -634,34 +647,34 @@ export default {
         delivery: false,
         type: [],
         resource: '',
-        zx: '',
+        zw: '',
         cftype: '',
         desc: ''
       },
-      rules: {
-        name: [
-          {required: true, message: '请输入活动名称', trigger: 'blur'},
-          {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-        ],
-        region: [
-          {required: true, message: '请选择活动区域', trigger: 'change'}
-        ],
-        date1: [
-          {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
-        ],
-        date2: [
-          {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
-        ],
-        type: [
-          {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
-        ],
-        resource: [
-          {required: true, message: '请选择活动资源', trigger: 'change'}
-        ],
-        desc: [
-          {required: true, message: '请填写活动形式', trigger: 'blur'}
-        ]
-      },
+      // rules: {
+      //   name: [
+      //     {required: true, message: '请输入活动名称', trigger: 'blur'},
+      //     {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+      //   ],
+      //   region: [
+      //     {required: true, message: '请选择活动区域', trigger: 'change'}
+      //   ],
+      //   date1: [
+      //     {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+      //   ],
+      //   date2: [
+      //     {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+      //   ],
+      //   type: [
+      //     {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
+      //   ],
+      //   resource: [
+      //     {required: true, message: '请选择活动资源', trigger: 'change'}
+      //   ],
+      //   desc: [
+      //     {required: true, message: '请填写活动形式', trigger: 'blur'}
+      //   ]
+      // },
       // 小添加按钮
       jianjia: false,
       // 大添加按钮
@@ -708,27 +721,48 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    },
-    //点击编辑判断是否有数据
+    //点击工作经历编辑判断是否有数据
     workBJ(){
-      if(this.tableData.length>0){}
+      if(this.tableData.length>0){
+      //判断工作经历是否有数据，有则循环显示
         this.gzjlwhite=true;
         this.tianjiagzjl=false;
         this.jianjia=true;
-
+      }
     },
+    //判断奖励是否有数据
+    gloryBJ(){
+      if(this.tableDatatwo.length>0){
+        //判断荣誉奖励是否有数据，有则循环显示
+        this.jlwhite=true;
+        this.tianjiajl=false;
+        this.jljianjia=true;
+      }
+    },
+    //判断惩罚是否有数据
+    punishBJ(){
+      if(this.tableDatathree.length>0){
+        //判断惩罚是否有数据，有则循环显示
+        this.cfwhite=true;
+        this.tianjiacf=false;
+        this.cfjianjia=true;
+      }
+    },
+
+    //判断教育经历是否有数据
+    educationBJ(){
+      if(this.tableDataFour.length>0){
+        //判断教育经历是否有数据，有则循环显示
+        this.jywhite=true;
+        this.jytianjia=false;
+        this.tianjiajy=true;
+      }
+    },
+    //清空
+    restWork(){
+      this.tableDataFive={}
+    },
+
     // 点击添加工作经历按钮
     clickwork(){
       this.gzjlhs=true;
@@ -737,7 +771,7 @@ export default {
     // 点击取消添加工作记录按钮
     callwork(){
       this.gzjlhs=false;
-      this.tianjiagzjl=true;
+      this.tianjiagzjl=false;
       this.gzjlwhite=true;
     },
     // 点击确定添加工作记录按钮
@@ -860,7 +894,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             _this.tableData = response.data.data.info,
-                this.workBJ()
+                this.workBJ();
           }
           //如果服务是雪崩的
           else {
@@ -873,26 +907,349 @@ export default {
         }
       })
     },
-    //点击编辑离职按钮
-    // redactleave(){
-    //   this.lzhs=true;
-    //   this.lzwhite=false;
-    // },
-    // //点击取消离职按钮
-    // callleave(){
-    //   this.lzhs=false;
-    // },
-    // //点击保存离职按钮
-    // addleave(){
-    //   this.lzhs=false;
-    //   this.lzwhite=true;
-    // }
-
-
+    //根据id查询奖励
+    selectGloryAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectGloryAll',
+        data:{
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDatatwo = response.data.data.info,
+                this.gloryBJ();
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //根据id查询惩罚
+    selectPunishAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectPunishAll',
+        data:{
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDatathree = response.data.data.info,
+                this.punishBJ();
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //根据id查询教育经历
+    selectEducationAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectEducationAll',
+        data:{
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataFour = response.data.data.info,
+                this.educationBJ();
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //根据工作经历id查询工作经历
+    selectWorkOne(workExperienceId) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectWorkOne',
+        data:{
+          workExperienceId:this.workExperienceId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataFive = response.data.data.info[0]
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改工作经历
+    updateWork(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateWork',
+        data: {
+          //工作经历编号
+          workExperienceId:this.tableDataFive.workExperienceId,
+          //开始时间
+          workStareTime:this.tableDataFive.workStareTime,
+          //结束时间
+          workEndTime: this.tableDataFive.workEndTime,
+          //公司名称
+          companyName:this.tableDataFive.companyName,
+          //职位名称
+          positionName:this.tableDataFive.positionName,
+          //工作描述
+          positionDescribe:this.tableDataFive.positionDescribe,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectWorkAll();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //添加工作经历
+    insertWorkExperience() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertWorkExperience',
+        data: {
+          //开始时间
+          workStareTime:this.tableDataFive.workStareTime,
+          //结束时间
+          workEndTime:this.tableDataFive.workEndTime,
+          //员工编号
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+          //任职公司
+          companyName:this.tableDataFive.companyName,
+          //职位
+          positionName:this.tableDataFive.positionName,
+          //离职原因
+          positionDescribe:this.tableDataFive.positionDescribe,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("添加成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.code == 200) {
+            //如果是成功
+            if (response.data.data == 1) {
+              this.selectWorkAll();
+              ElNotification({
+                title: '提示',
+                message: '添加成功',
+                type: 'success',
+              })
+              this.selectWorkAll()
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: '添加失败',
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //添加和修改工作经历调用
+    updateinsertWork(){
+      if(this.workupdateinsert=='编辑'){
+        //修改工作经历
+        this.updateWork(this.tableDataFive.workExperienceId)
+      }else {
+        //添加工作经历
+        this.insertWorkExperience();
+      }
+    },
+    //删除工作经历
+    deleteWork(id) {
+      ElMessageBox.confirm(
+          '是否确认删除所选数据项?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.axios({
+          method: 'delete',
+          url: this.url + 'deleteWork',
+          data:[id],
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+                this.selectWorkAll();
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
   },
   mounted() {
     //根据id查询工作经历
     this.selectWorkAll(this.$parent.$parent.$parent.$parent.$data.one)
+    //根据id查询奖励
+    this.selectGloryAll(this.$parent.$parent.$parent.$parent.$data.one)
+    //根据id查询惩罚
+    this.selectPunishAll(this.$parent.$parent.$parent.$parent.$data.one)
+    //根据id查询教育经历
+    this.selectEducationAll(this.$parent.$parent.$parent.$parent.$data.one)
   }
 }
 </script>

@@ -254,6 +254,7 @@ export default defineComponent({
                 message: '入职成功',
                 type: 'success',
               })
+              this.selectpage()
             } else {
               ElMessage({
                 type: 'warning',
@@ -276,7 +277,7 @@ export default defineComponent({
     updateEmploymentState() {
       var _this = this
       this.axios({
-        method: 'post',
+        method: 'put',
         url: this.url + 'updateEmploymentState',
         data: {
           employmentId: this.fromValue.employmentId,
@@ -301,7 +302,7 @@ export default defineComponent({
       console.log(id)
       var _this = this
       this.axios({
-        method: 'post',
+        method: 'put',
         url: this.url + 'updateEmploymentStateAndWaiveReasonInt',
         data: {
           employmentId: this.id,

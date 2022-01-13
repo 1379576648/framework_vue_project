@@ -212,13 +212,10 @@
 
             </el-form>
           </el-dialog>
-
-
         </div>
       </div>
     </div>
   </div>
-  {{ tableDataTwo }}
 </template>
 
 <script>
@@ -315,7 +312,7 @@ export default {
           this.listIdOne.push(this.checkDeleteListOne[i].roleStaffId)
         }
         this.axios({
-          method: 'post',
+          method: 'delete',
           url: this.url + 'cancelImpower',
           data: this.listIdOne,
           responseType: 'json',
@@ -375,7 +372,7 @@ export default {
           }
       ).then(() => {
         this.axios({
-          method: 'post',
+          method: 'delete',
           url: this.url + 'cancelImpower',
           data: [id],
           responseType: 'json',
@@ -513,6 +510,7 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
+            console.log(response.data.data)
             this.tableDataTwo = response.data.data.info.records
             this.pageInfo_two.total = response.data.data.info.total
           }
@@ -529,57 +527,73 @@ export default {
     },
     //分配用户
     allot() {
-      //初始化
-      this.listIdTwo = [];
-      for (let i = 0; i < this.checkDeleteListTwo.length; i++) {
-        this.listIdTwo.push(this.checkDeleteListTwo[i].staffId)
-      }
-      this.axios({
-        method: 'post',
-        url: this.url + 'allotStaff',
-        data: {
-          //角色编号
-          'roleId': this.$parent.$data.fromValue.roleId,
-          //员工编号列表
-          "list": this.listIdTwo,
-        },
-        responseType: 'json',
-        responseEncoding: 'utf-8',
-      }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              this.next_one();
-              ElMessage({
-                type: 'success',
-                message: '授权成功',
-              })
-            } else {
-              ElMessage({
-                type: 'warning',
-                message: response.data.data.info,
+      ElMessageBox.confirm(
+          '是否确认对选择数据项进行授权?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        //初始化
+        this.listIdTwo = [];
+        for (let i = 0; i < this.checkDeleteListTwo.length; i++) {
+          this.listIdTwo.push(this.checkDeleteListTwo[i].staffId)
+        }
+        this.axios({
+          method: 'post',
+          url: this.url + 'allotStaff',
+          data: {
+            //角色编号
+            'roleId': this.$parent.$data.fromValue.roleId,
+            //员工编号列表
+            "list": this.listIdTwo,
+          },
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.next_one();
+                this.next_two();
+                ElMessage({
+                  type: 'success',
+                  message: '授权成功',
+                })
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
-        }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
       })
     },
     //判断删除按钮是否可用
