@@ -59,7 +59,7 @@
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
             <el-button type="text" style="color: #085fc3;" @click="redactwork(),selectWorkOne(workExperienceId=this.tableData[index].workExperienceId),this.workupdateinsert='编辑'">编辑</el-button>
-            <el-button type="text" style="color: red;">删除</el-button>
+            <el-button type="text" style="color: red;" @click="deleteWork(this.tableData[index].workExperienceId)">删除</el-button>
           </div>
         </div>
         <!--  工作经历表单 -->
@@ -617,32 +617,27 @@
 </template>
 
 <script>
-import {ElMessage, ElNotification} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      //判断添加还是修改
       workupdateinsert:'',
       url: "http://localhost:80/",
       //工作经历表单
-      tableData:{
-        workExperienceId:'',
-        workStareTime:'',
-        workEndTime:'',
-        companyName:'',
-        positionName:'',
-        positionIndustry:'',
-        positionDescribe:'',
-        positionSqmonthly:'',
-      },
+      tableData:{},
       //奖励表单
       tableDatatwo:{},
       //惩罚表单
       tableDatathree:{},
       //教育经历表单
       tableDataFour:{},
-      //
+      //工作经历表单2
       tableDataFive:[],
+      //选中的id
+      listId:[],
+      listIdTwo:[],
       ruleForm: {
         name: '',
         rzgs: '',
@@ -1135,6 +1130,8 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
+        console.log("添加成功")
+        console.log(response)
         //如果服务关闭
         if (response.data.data.data) {
           ElNotification.warning({
@@ -1143,21 +1140,22 @@ export default {
             offset: 100,
           })
           //如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.code == 200) {
             //如果是成功
             if (response.data.data == 1) {
+              this.selectWorkAll();
               ElNotification({
                 title: '提示',
                 message: '添加成功',
                 type: 'success',
               })
-              this.selectWorkAll();
+              this.selectWorkAll()
             } else {
               ElMessage({
                 type: 'warning',
-                message: response.data.data.info,
+                message: '添加失败',
               })
             }
           }
@@ -1181,23 +1179,67 @@ export default {
         //添加工作经历
         this.insertWorkExperience();
       }
-    }
-    //点击编辑离职按钮
-    // redactleave(){
-    //   this.lzhs=true;
-    //   this.lzwhite=false;
-    // },
-    // //点击取消离职按钮
-    // callleave(){
-    //   this.lzhs=false;
-    // },
-    // //点击保存离职按钮
-    // addleave(){
-    //   this.lzhs=false;
-    //   this.lzwhite=true;
-    // }
-
-
+    },
+    //删除工作经历
+    deleteWork(id) {
+      ElMessageBox.confirm(
+          '是否确认删除所选数据项?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.axios({
+          method: 'delete',
+          url: this.url + 'deleteWork',
+          data:[id],
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+                this.selectWorkAll();
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
   },
   mounted() {
     //根据id查询工作经历
