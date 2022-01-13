@@ -482,7 +482,7 @@ export default {
       console.log(id)
       var _this = this
       this.axios({
-        method: 'post',
+        method: 'put',
         url: this.url + 'updateStaff',
         data: {
           //员工编号
@@ -544,10 +544,9 @@ export default {
     },
     //修改员工信息2
     updateStaffTwo(id) {
-      console.log(id)
       var _this = this
       this.axios({
-        method: 'post',
+        method: 'put',
         url: this.url + 'updateStaffTwo',
         data: {
           //员工编号
