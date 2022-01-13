@@ -69,7 +69,7 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-<!--              <el-button type="text" size="small" @click="">设为候选人</el-button>-->
+              <el-button type="text" size="small" @click="">查看</el-button>
 <!--              <el-button type="text" size="small" @click="open()">删除</el-button>-->
             </div>
 

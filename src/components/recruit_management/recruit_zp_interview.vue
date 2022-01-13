@@ -31,18 +31,18 @@
 
           <!--          </ul>-->
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane name="daiInterview" label="待面试(99)">
+            <el-tab-pane name="daiInterview" label="待面试">
               <recruit_zp_daiInterview/>
             </el-tab-pane>
-            <el-tab-pane name="daiSecondInterview" label="面试中(99)">
+            <el-tab-pane name="daiSecondInterview" label="面试中">
               <recruit_zp_daiSecondInterview/>
 
             </el-tab-pane>
-            <el-tab-pane name="daiSecondInterviewPass" label="复试中(99)">
+            <el-tab-pane name="daiSecondInterviewPass" label="复试中">
               <recruit_zp_daiSecondInterviewPass/>
 
             </el-tab-pane>
-            <el-tab-pane name="interviewPass" label="面试通过(99)">
+            <el-tab-pane name="interviewPass" label="面试通过">
               <recruit_zp_interviewPass/>
             </el-tab-pane>
           </el-tabs>

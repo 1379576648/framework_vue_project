@@ -59,7 +59,7 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">填写评论</el-button>
+              <el-button type="text" size="small" @click="">查看</el-button>
               <el-row class="block-col-2" style="float: right;">
                 <el-col :span="8">
                   <el-dropdown trigger="click">

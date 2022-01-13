@@ -1,4 +1,4 @@
-<!--简历：候选人-->
+  <!--简历：候选人-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -59,7 +59,7 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">删除</el-button>
+              <el-button type="text" size="small" @click="">设为面试候选人</el-button>
               <el-button type="text" size="small" @click="">移出</el-button>
             </div>
 

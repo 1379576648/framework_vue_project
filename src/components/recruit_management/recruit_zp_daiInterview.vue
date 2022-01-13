@@ -14,17 +14,11 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>淘汰/放弃</el-dropdown-item>
-                <el-dropdown-item>安排复试</el-dropdown-item>
-                <el-dropdown-item>面试通过</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
 
 
-          <!--筛选框-->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt" @click="icons =! icons">
-            <span>筛选</span>
-          </button>
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
