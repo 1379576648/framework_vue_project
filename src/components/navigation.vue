@@ -43,7 +43,7 @@
         <div class="ant-col header_3_s header_2_s">
 					<span style="margin-left: 15px; margin-right: 15px;">
 						<img style="width: 26px; height: 26px; border-radius: 50%;" alt="" src="../assets/aaa.jpg">
-						&nbsp;&nbsp;
+						&nbsp;&nbsp;{{this.$store.state.staffMessage.staffName}}
                 <el-dropdown>
                   <span class="el-dropdown-link">
                      <i class="iconfont" style="color: white">&#xe600;</i>
