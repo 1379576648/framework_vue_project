@@ -712,7 +712,10 @@
       >
         <el-form ref="form" :model="overtime_1" label-width="120px">
           <el-form-item label="员工名称">
-            <el-input v-model="overtime_1.name" disabled></el-input>
+            <el-input v-model="this.NowStaffName" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="部门名称">
+            <el-input v-model="NowDeptName" disabled></el-input>
           </el-form-item>
           <el-form-item label="加班类型">
             <el-select v-model="overtime_1.type_1" placeholder="选择类型">
@@ -743,7 +746,7 @@
             </el-date-picker>
           </el-form-item>
           <!--  加班总时长-->
-          <el-form-item label="加班总时长">
+          <el-form-item label="加班时长(小时)">
             <el-input v-model="overtime_1.date3" disabled></el-input>
           </el-form-item>
           <el-form-item label="加班事由">
@@ -1770,6 +1773,149 @@ export default defineComponent({
         })
       }
     },
+    // 提交加班 (提交三个审批人)
+    submitToOvertime3() {
+      console.log(this.overtime_1.type_1)
+      console.log(this.overtime_1.date2)
+      console.log(this.overtime_1.date1)
+      console.log(this.overtime_1.date3)
+      console.log(this.overtime_1.remarks_1)
+      if (this.overtime_1.type_1.length === 0) {
+        ElMessage("请选择您的加班类型");
+      } else if (this.overtime_1.date1.length === 0) {
+        ElMessage("请选择开始时间");
+      } else if (this.overtime_1.date2.length === 0) {
+        ElMessage("请选择结束时间");
+      } else if (this.overtime_1.remarks_1.length === 0) {
+        ElMessage("请输入加班事由");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'submitToOvertime3',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            // 部门名称
+            deptName:this.NowDeptName,
+            // 加班类型
+            overtimeaskType: this.overtime_1.type_1,
+            // 加班开始时间
+            overtimeaskSDate:this.overtime_1.date1,
+            // 加班结束时间
+            overtimeaskEDate:this.overtime_1.date2,
+            // 加班总时长
+            overtimeaskTotalDate: this.overtime_1.date3,
+            //加班事由
+            overtimeaskMatter:this.overtime_1.remarks_1,
+            // 审批人1
+            staffName1: this.NowManager[0].staffname,
+            // 审批人2
+            staffName2: this.personnel_manager[0].staffname,
+            // 审批人3
+            staffName3: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "加班",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加调动成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.overtime = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 提交加班 (提交两个审批人)
+    submitToOvertime2() {
+      if (this.overtime_1.type_1.length === 0) {
+        ElMessage("请选择您的加班类型");
+      } else if (this.overtime_1.date1.length === 0) {
+        ElMessage("请选择开始时间");
+      } else if (this.overtime_1.date2.length === 0) {
+        ElMessage("请选择结束时间");
+      } else if (this.overtime_1.remarks_1.length === 0) {
+        ElMessage("请输入加班事由");
+      } else {
+          this.axios({
+            method: 'post',
+            url: this.url + 'submitToOvertime2',
+            data: {
+              // 申请人
+              staffName: this.NowStaffName,
+              // 部门名称
+              deptName:this.NowDeptName,
+              // 加班类型
+              overtimeaskType: this.overtime_1.type_1,
+              // 加班开始时间
+              overtimeaskSDate: this.overtime_1.date1,
+              // 加班结束时间
+              overtimeaskEDate: this.overtime_1.date2,
+              // 加班总时长
+              overtimeaskTotalDate: this.overtime_1.date3,
+              //加班事由
+              overtimeaskMatter: this.overtime_1.remarks_1,
+              // 审批人1
+              staffName1: this.personnel_manager[0].staffname,
+              // 审批人2
+              staffName2: this.president[1].staffname,
+              // 审批类型
+              auditflowType: "加班",
+              // 审批标题
+              auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
+            }
+          }).then((response) => {
+            console.log("添加调动成功")
+            console.log(response);
+            if (response.data.code == 300) {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生关闭",
+                offset: 100,
+              })
+              //如果服务没有关闭
+            } else if (response.data) {
+              //如果服务是正常的
+              if (response.data.code == 200 && response.data.data == 1111) {
+                ElMessage({
+                  showClose: true,
+                  message: '操作成功，请等待审批结果',
+                  type: 'success',
+                })
+                this.overtime = false;
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          })
+      }
+    },
     // 转正取消
     cancel_1() {
       this.become_1 = {
@@ -1817,34 +1963,6 @@ export default defineComponent({
         date1: "",
       };
       this.quit = false;
-    },
-    // 提交加班 (提交三个审批人)
-    submitToOvertime3() {
-      if (this.overtime_1.type_1.length === 0) {
-        ElMessage("请选择您的加班类型");
-      } else if (this.overtime_1.date1.length === 0) {
-        ElMessage("请选择开始时间");
-      } else if (this.overtime_1.date2.length === 0) {
-        ElMessage("请选择结束时间");
-      } else if (this.overtime_1.remarks_1.length === 0) {
-        ElMessage("请输入加班事由");
-      } else {
-        alert(1);
-      }
-    },
-    // 提交加班 (提交两个审批人)
-    submitToOvertime2() {
-      if (this.overtime_1.type_1.length === 0) {
-        ElMessage("请选择您的加班类型");
-      } else if (this.overtime_1.date1.length === 0) {
-        ElMessage("请选择开始时间");
-      } else if (this.overtime_1.date2.length === 0) {
-        ElMessage("请选择结束时间");
-      } else if (this.overtime_1.remarks_1.length === 0) {
-        ElMessage("请输入加班事由");
-      } else {
-        alert(1);
-      }
     },
     // 取消加班
     cancel_5() {
@@ -2040,7 +2158,7 @@ export default defineComponent({
             });
             this.cancel_date();
           } else {
-            this.overtime_1.date3 = hours + "小时";
+            this.overtime_1.date3 = hours;
           }
         } else if (jbtype === "休息日加班") {
           if (hours > 8) {
@@ -2050,7 +2168,7 @@ export default defineComponent({
             });
             this.cancel_date();
           } else {
-            this.overtime_1.date3 = hours + "小时";
+            this.overtime_1.date3 = hours;
           }
         } else if (jbtype === "节假日加班") {
           if (hours > 8) {
@@ -2060,7 +2178,7 @@ export default defineComponent({
             });
             this.cancel_date();
           } else {
-            this.overtime_1.date3 = hours + "小时";
+            this.overtime_1.date3 = hours ;
           }
         }
       }
@@ -2622,7 +2740,7 @@ export default defineComponent({
         }
       }).then((response) => {
         //如果服务是正常的
-        console.log("查询是否有离职记录成功")
+        console.log("查询是否有加班记录成功")
         console.log(response);
         //如果服务关闭
         if (response.data.data.data) {
@@ -2667,7 +2785,7 @@ export default defineComponent({
           } else if (response.data.code === 200 && response.data.data === 0) {
             ElNotification.warning({
               title: '提示',
-              message: "查询到您有正在审批中的离职审批，请耐心等候结果！",
+              message: "查询到您有正在审批中的加班审批，请耐心等候结果！",
               offset: 100,
             })
           }
