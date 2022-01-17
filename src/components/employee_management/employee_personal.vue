@@ -384,7 +384,7 @@
             style="width:840px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="tianjiajy"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 10px;display: inline-block;">
-          <el-button type="text" @click="addexperien2()"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
+          <el-button type="text" @click="addexperien2(),this.educationupdateinsert='新增'"><i class="iconfont" style="color: #085fc3;margin-right:2px;">&#xe613;</i>添加
           </el-button>
         </h3>
       </div>
@@ -422,19 +422,19 @@
             </ul>
           </div>
           <div style="position: absolute;right: 6px;top:-5px">
-            <el-button type="text" style="color: #085fc3;" @click="redactexperien()">编辑</el-button>
-            <el-button type="text" style="color: red;">删除</el-button>
+            <el-button type="text" style="color: #085fc3;" @click="redactexperien(),selectEducationOne(educationId=this.tableDataFour[index].educationId),this.educationupdateinsert='编辑'">编辑</el-button>
+            <el-button type="text" style="color: red;" @click="deleteEducation(this.tableDataFour[index].educationId)">删除</el-button>
           </div>
         </div>
 
         <div class="information_from" v-show="jyhs">
-          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
+          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="tableDataAight" :model="tableDataAight">
             <br/>
             <div style="display: inline-block;margin:20px 0px 0px 50px">
               <el-form-item label="开始时间:" required style="width:240px;margin-left: -400px;">
                 <el-col :span="11">
                   <el-form-item prop="date1" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1"
+                    <el-date-picker type="date" placeholder="选择日期" v-model="tableDataAight.educationStartTime"
                                     style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -444,7 +444,7 @@
               <el-form-item label="学校名称：" class="el-form-item" style="width:240px;margin-left: -400px;">
                 <el-col :span="11">
                   <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input v-model="ruleForm.rzgs" style="width: 100%;"></el-input>
+                    <el-input v-model="tableDataAight.educationStudentname" style="width: 100%;"></el-input>
                   </el-form-item>
                 </el-col>
               </el-form-item>
@@ -456,7 +456,7 @@
               <el-form-item label="结束时间:" required>
                 <el-col :span="11">
                   <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
+                    <el-date-picker type="date" placeholder="选择日期" v-model="tableDataAight.educationEndTime"
                                     style="width: 100%;"></el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -465,10 +465,10 @@
 
 
               <div style="float: right">
-                <el-form-item label="备注：">
+                <el-form-item label="所属专业：">
                   <el-col :span="11">
                     <el-form-item prop="rzgs" style="width:240px;">
-                      <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>
+                      <el-input type="text" v-model="tableDataAight.educationMajor" style="width: 100%;"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-form-item>
@@ -478,8 +478,8 @@
 
             <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
               <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="callexperien()">取消</el-button>
-                <el-button type="primary" @click="addexperien()">保存</el-button>
+                <el-button @click="callexperien(),restEducation()">取消</el-button>
+                <el-button type="primary" @click="addexperien(),updateinsertEducation(),restEducation()">保存</el-button>
               </div>
             </div>
           </el-form>
@@ -491,22 +491,22 @@
       <!--      离职信息-->
       <div style="margin-top: 20px; ">
         <h3>
-          <span style="margin-left:10px;">离职信息</span>
+          <span style="margin-left:10px;">调动信息</span>
         </h3>
       </div>
 
       <!--      离职信息-->
       <div class="information">
-        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">离职信息<i class="iconfont"
+        <h3 style="color: #085fc3;font-size: 14px;margin-left: 10px;display: inline-block;">调动信息<i class="iconfont"
                                                                                                    style="color: #085fc3;margin-right:2px;">&#xe604;</i>
         </h3>
         <div
             style="width:845px;border-top:1px solid silver;display: inline-block;margin-left: 7px;margin-bottom: 5px;"></div>
         <h3 v-show="lzbj"
             style="color: #085fc3;font-size: 14px;position: relative;margin-left: 5px;display: inline-block;">
-          <el-button type="text" @click="redactleave()"><i class="iconfont"
-                                                                                    style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑
-          </el-button>
+<!--          <el-button type="text" @click="redactleave()"><i class="iconfont"-->
+<!--                                                                                    style="color: #085fc3;margin-right:2px;">&#xe600;</i>编辑-->
+<!--          </el-button>-->
         </h3>
       </div>
 
@@ -517,20 +517,32 @@
           <div class="information_text">
             <ul style="list-style-type: none; ">
               <li>
-                <label>员工状态</label>
-                <p></p>
+                <label>调动类型</label>
+                <p>{{tableDataNine.transferType}}</p>
               </li>
               <li>
-                <label>离职原因</label>
-                <p>23</p>
+                <label>调动前部门</label>
+                <p>{{tableDataNine.createdDeptName}}</p>
               </li>
               <li>
-                <label>离职时间</label>
-                <p></p>
+                <label>调动后部门</label>
+                <p>{{tableDataNine.updatedDeptName}}</p>
               </li>
               <li>
-                <label style="margin-left: -15px;">备注</label>
-                <p></p>
+                <label>调动前职位</label>
+                <p>{{tableDataNine.transferRawpostName}}</p>
+              </li>
+              <li>
+                <label>调动后职位</label>
+                <p>{{tableDataNine.transferAfterpostName}}</p>
+              </li>
+              <li>
+                <label>生效日期</label>
+                <p>{{tableDataNine.takeEffectDate}}</p>
+              </li>
+              <li style="margin-left: 400px">
+                <label>备注</label>
+                <p>{{tableDataNine.transferRemark}}</p>
               </li>
 
             </ul>
@@ -538,77 +550,77 @@
 
         </div>
 
-        <div class="information_from" v-show="lzhs">
-          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">
-            <br/>
-            <div style="display: inline-block;margin:20px 0px 0px 50px">
-              <el-form-item label="离职原因:" prop="region" style="width:240px;margin-left: -400px;">
-                <el-select
-                    v-model="ruleForm.region"
-                    placeholder="请选择" style="width:240px">
-                  <el-option label="家庭原因" value="jtyy"></el-option>
-                  <el-option label="实习生返校" value="sxsfx"></el-option>
-                  <el-option label="回校深造" value="hxsz"></el-option>
-                  <el-option label="交通不便" value="jtbb"></el-option>
-                  <el-option label="身体健康因素" value="stjkys"></el-option>
-                  <el-option label="薪资原因" value="xzyy"></el-option>
-                  <el-option label="福利原因" value="flyy"></el-option>
-                  <el-option label="个人发展原因" value="grfzyy"></el-option>
-                  <el-option label="人际关系不融洽" value="rjgxyy"></el-option>
-                  <el-option label="工作环境不适应" value="gzhjbsy"></el-option>
-                  <el-option label="团队气氛不适应" value="tdqfbsy"></el-option>
-                  <el-option label="企业文化不适应" value="qyehbsy"></el-option>
-                  <el-option label="工作职责及目标不明确" value="gzzejmbbmq"></el-option>
-                  <el-option label="未得到充分的支持和授权" value="wddcfdzchsq"></el-option>
-                  <el-option label="其它" value="qt"></el-option>
-                </el-select>
-              </el-form-item>
-              <br>
+<!--        <div class="information_from" v-show="lzhs">-->
+<!--          <el-form style="width: 90%;margin: auto; " :rules="rules" ref="ruleForm" :model="ruleForm">-->
+<!--            <br/>-->
+<!--            <div style="display: inline-block;margin:20px 0px 0px 50px">-->
+<!--              <el-form-item label="离职原因:" prop="region" style="width:240px;margin-left: -400px;">-->
+<!--                <el-select-->
+<!--                    v-model="ruleForm.region"-->
+<!--                    placeholder="请选择" style="width:240px">-->
+<!--                  <el-option label="家庭原因" value="jtyy"></el-option>-->
+<!--                  <el-option label="实习生返校" value="sxsfx"></el-option>-->
+<!--                  <el-option label="回校深造" value="hxsz"></el-option>-->
+<!--                  <el-option label="交通不便" value="jtbb"></el-option>-->
+<!--                  <el-option label="身体健康因素" value="stjkys"></el-option>-->
+<!--                  <el-option label="薪资原因" value="xzyy"></el-option>-->
+<!--                  <el-option label="福利原因" value="flyy"></el-option>-->
+<!--                  <el-option label="个人发展原因" value="grfzyy"></el-option>-->
+<!--                  <el-option label="人际关系不融洽" value="rjgxyy"></el-option>-->
+<!--                  <el-option label="工作环境不适应" value="gzhjbsy"></el-option>-->
+<!--                  <el-option label="团队气氛不适应" value="tdqfbsy"></el-option>-->
+<!--                  <el-option label="企业文化不适应" value="qyehbsy"></el-option>-->
+<!--                  <el-option label="工作职责及目标不明确" value="gzzejmbbmq"></el-option>-->
+<!--                  <el-option label="未得到充分的支持和授权" value="wddcfdzchsq"></el-option>-->
+<!--                  <el-option label="其它" value="qt"></el-option>-->
+<!--                </el-select>-->
+<!--              </el-form-item>-->
+<!--              <br>-->
 
-              <el-form-item label="最后工作时间:" required style="width:240px;margin-left: -400px;">
-                <el-col :span="11">
-                  <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
-                                    style="width: 100%;"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-form-item>
-              <br>
-
-
-            </div>
-
-            <div style="display: inline-block;position: absolute;top:20px;right:150px">
-              <br>
-              <el-form-item label="离职时间:" required>
-                <el-col :span="11">
-                  <el-form-item prop="date2" style="width:240px;">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"
-                                    style="width: 100%;"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-form-item>
-              <br>
+<!--              <el-form-item label="最后工作时间:" required style="width:240px;margin-left: -400px;">-->
+<!--                <el-col :span="11">-->
+<!--                  <el-form-item prop="date2" style="width:240px;">-->
+<!--                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"-->
+<!--                                    style="width: 100%;"></el-date-picker>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-form-item>-->
+<!--              <br>-->
 
 
-              <el-form-item label="备注：" style="position: absolute;left:28px;">
-                <el-col :span="11">
-                  <el-form-item prop="rzgs" style="width:240px;">
-                    <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-form-item>
-            </div>
+<!--            </div>-->
+
+<!--            <div style="display: inline-block;position: absolute;top:20px;right:150px">-->
+<!--              <br>-->
+<!--              <el-form-item label="离职时间:" required>-->
+<!--                <el-col :span="11">-->
+<!--                  <el-form-item prop="date2" style="width:240px;">-->
+<!--                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date2"-->
+<!--                                    style="width: 100%;"></el-date-picker>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-form-item>-->
+<!--              <br>-->
 
 
-            <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">
-              <div style="width:20%;height:50px;margin:auto;">
-                <el-button @click="callleave()">取消</el-button>
-                <el-button type="primary" @click="addleave()">保存</el-button>
-              </div>
-            </div>
-          </el-form>
-        </div>
+<!--              <el-form-item label="备注：" style="position: absolute;left:28px;">-->
+<!--                <el-col :span="11">-->
+<!--                  <el-form-item prop="rzgs" style="width:240px;">-->
+<!--                    <el-input type="textarea" v-model="ruleForm.yy" style="width: 100%;"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-form-item>-->
+<!--            </div>-->
+
+
+<!--            <div style="width:90%;height:60px;margin: auto;margin-top:30px;padding: 0px 0px 30px 0px">-->
+<!--              <div style="width:20%;height:50px;margin:auto;">-->
+<!--                <el-button @click="callleave()">取消</el-button>-->
+<!--                <el-button type="primary" @click="addleave()">保存</el-button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </el-form>-->
+<!--        </div>-->
 
       </div>
 
@@ -628,6 +640,8 @@ export default {
       gloryupdateinsert:'',
       //判断惩罚添加还是修改
       punishupdateinsert:'',
+      //判断教育经历添加还是修改
+      educationupdateinsert:'',
       url: "http://localhost:80/",
       //工作经历表单
       tableData:{},
@@ -643,6 +657,10 @@ export default {
       tableDataSix:[],
       //惩罚表单2
       tableDataSeven:[],
+      //教育经历表单2
+      tableDataAight:[],
+      //调动记录
+      tableDataNine:[],
       ruleForm: {
         name: '',
         rzgs: '',
@@ -778,6 +796,11 @@ export default {
       this.tableDataSeven={}
     },
 
+    //教育经历清空
+    restEducation(){
+      this.tableDataAight={}
+    },
+
     // 点击添加工作经历按钮
     clickwork(){
       this.gzjlhs=true;
@@ -868,7 +891,8 @@ export default {
     //点击取消教育经历按钮
     callexperien(){
       this.jyhs=false;
-      this.jytianjia=true;
+      this.jytianjia=false;
+      this.jywhite=true;
     },
     //点击确定教育经历按钮
     addexperien(){
@@ -1691,6 +1715,259 @@ export default {
         })
       })
     },
+    //根据教育经历id查询教育经历
+    selectEducationOne(educationId) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectEducationOne',
+        data:{
+          educationId:this.educationId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataAight = response.data.data.info[0]
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //添加教育经历
+    insertEducation() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertEducation',
+        data: {
+          //开始时间
+          educationStartTime:this.tableDataAight.educationStartTime,
+          //结束时间
+          educationEndTime:this.tableDataAight.educationEndTime,
+          //员工编号
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+          //学校名称
+          educationStudentname:this.tableDataAight.educationStudentname,
+          //所属专业
+          educationMajor:this.tableDataAight.educationMajor,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("添加成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.code == 200) {
+            //如果是成功
+            if (response.data.data == 1) {
+              ElNotification({
+                title: '提示',
+                message: '添加成功',
+                type: 'success',
+              })
+              this.selectEducationAll();
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: '添加失败',
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改教育经历
+    updateEducation(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateEducation',
+        data: {
+          //教育经历编号
+          educationId:this.tableDataAight.educationId,
+          //开始时间
+          educationStartTime:this.tableDataAight.educationStartTime,
+          //结束时间
+          educationEndTime:this.tableDataAight.educationEndTime,
+          //员工编号
+          staffId:this.$parent.$parent.$parent.$parent.$data.one,
+          //学校名称
+          educationStudentname:this.tableDataAight.educationStudentname,
+          //所属专业
+          educationMajor:this.tableDataAight.educationMajor,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectEducationAll();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //添加和修改教育经历调用
+    updateinsertEducation(){
+      if(this.educationupdateinsert=='编辑'){
+        //修改教育经历
+        this.updateEducation(this.tableDataAight.educationId)
+      }else {
+        //添加教育经历
+        this.insertEducation();
+      }
+    },
+    //删除教育经历
+    deleteEducation(id) {
+      ElMessageBox.confirm(
+          '是否确认删除所选数据项?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.axios({
+          method: 'delete',
+          url: this.url + 'deleteEducation',
+          data:[id],
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+                this.selectEducationAll();
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    //根据员工姓名查询调动记录
+    selectTransferAlls() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectTransferAlls',
+        data:{
+          staffName:this.$parent.$parent.$parent.$parent.$data.three,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataNine = response.data.data.info[0]
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
 
   },
   mounted() {
@@ -1702,6 +1979,8 @@ export default {
     this.selectPunishAll(this.$parent.$parent.$parent.$parent.$data.one)
     //根据id查询教育经历
     this.selectEducationAll(this.$parent.$parent.$parent.$parent.$data.one)
+    //根据员工姓名查询调动记录
+    this.selectTransferAlls(this.$parent.$parent.$parent.$parent.$data.three)
   }
 }
 </script>

@@ -79,6 +79,7 @@ export default {
       activeName:'book',
       one:0,
       two:'',
+      three:0,
     }
   },
   methods: {
