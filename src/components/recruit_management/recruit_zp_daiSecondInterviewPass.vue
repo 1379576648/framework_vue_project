@@ -4,30 +4,33 @@
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 新增招聘计划按钮 -->
-          <a style="margin-top: 4px;">
-            <button type="button" class="ant-btn ant-btn-primary">
-              <span>+ 新增</span>
-            </button>
-          </a>
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
-          <!-- 批量批量删除按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量删除</span>
-          </button>
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量设为候选人</span>
-          </button>
 
+<!--          &lt;!&ndash; 批量导入按钮 &ndash;&gt;-->
+<!--          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">-->
+<!--            <span>批量导入</span>-->
+<!--          </button>-->
+<!--          &lt;!&ndash; 批量批量删除按钮 &ndash;&gt;-->
+<!--          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">-->
+<!--            <span>批量删除</span>-->
+<!--          </button>-->
+<!--          &lt;!&ndash; 批量设为候选人 &ndash;&gt;-->
+<!--          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">-->
+<!--            <span>批量设为候选人</span>-->
+<!--          </button>-->
+          <el-dropdown :hide-on-click="false">
+            <span class="el-dropdown-link">
+                <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
+                  <span>批量操作</span>
+                </button>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>淘汰/放弃</el-dropdown-item>
+                <el-dropdown-item>面试通过</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
 
-          <!--筛选框-->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt" @click="icons =! icons">
-            <span>筛选</span>
-          </button>
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">

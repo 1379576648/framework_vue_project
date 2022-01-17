@@ -1,6 +1,6 @@
 <!--角色设置界面-->
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="j-set-big">
@@ -8,10 +8,14 @@
             <div style="margin-bottom: 30px" v-show="menuShow">
               <div class="j-set-name">
                 <label class="j-menu-name">菜单名称</label>
-                <el-input v-model="menuName" placeholder="请输入菜单名称" clearable/>
+                <el-input v-model="menuPowerName" placeholder="请输入菜单名称" clearable style="width: 180px"/>
+              </div>
+              <div class="j-set-name">
+                <label class="j-menu-name">路由地址</label>
+                <el-input v-model="menuPowerRoute" placeholder="请输入路由地址" clearable style="width: 180px"/>
               </div>
               <div class="j-set-date">
-                <label class="j-menu-name">日期时间</label>
+                <label class="j-menu-name">创建时间</label>
                 <el-date-picker
                     v-model="date"
                     type="datetimerange"
@@ -19,11 +23,10 @@
                     range-separator="-"
                     start-placeholder="开始时间"
                     end-placeholder="结束时间"
-                >
-                </el-date-picker>
+                ></el-date-picker>
               </div>
               <div class="j-set-button">
-                <el-button type="primary">
+                <el-button type="primary" @click="menuPowerInCondition">
                   <svg t="1639013390453" class="icon" viewBox="0 0 1024 1024" version="1.1"
                        xmlns="http://www.w3.org/2000/svg" p-id="2683" width="17" height="17">
                     <path
@@ -35,7 +38,7 @@
                   </svg>
                   搜索
                 </el-button>
-                <el-button style="color: #606266" @click="menuName='',date=[]">
+                <el-button style="color: #606266" @click="menuPowerName='',menuPowerRoute='',date=[]">
                   <svg t="1639014771399" class="icon" viewBox="0 0 1024 1024" version="1.1"
                        xmlns="http://www.w3.org/2000/svg" p-id="4267" width="17" height="17">
                     <path
@@ -48,7 +51,7 @@
             </div>
             <div class="j-set-top-bottom">
               <el-button type="primary"
-                         @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目'">
+                         @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目',this.channel=0">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
@@ -93,7 +96,7 @@
                     content="刷新"
                     placement="top"
                 >
-                  <el-button style="color: #606266;">
+                  <el-button style="color: #606266;" @click="menuPowerInCondition">
                     <svg t="1639014771399" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="4267" width="17" height="17">
                       <path
@@ -111,25 +114,25 @@
                 :data="tableData"
                 style="width: 100%; margin-bottom: 20px;"
                 :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
-                row-key="MENU_ID"
+                row-key="menuPowerId"
                 :default-expand-all="expands"
                 @expand-change="expands=true"
             >
-              <el-table-column prop="MENU_NAME" label="菜单名称" min-width="200"/>
-              <el-table-column prop="MENU_MODULE" label="图标" min-width="130"/>
-              <el-table-column prop="MENU_ORDER" label="排序" min-width="100"/>
-              <el-table-column prop="MENU_ROUTE" label="组件路径" min-width="200"/>
+              <el-table-column prop="menuPowerName" label="菜单名称" min-width="200"/>
+              <el-table-column prop="pictureAddress" label="图标" min-width="130"/>
+              <el-table-column prop="menuPowerOrder" label="排序" min-width="100"/>
+              <el-table-column prop="menuPowerRoute" label="路由路径" min-width="200"/>
               <el-table-column label="状态" min-width="150">
                 <template #default="scope">
-                  <span class="button-enable" v-if="scope.row.MENU_STATE==0">启用</span>
-                  <span class="button-forbidden" v-if="scope.row.MENU_STATE==1">禁用</span>
+                  <span class="button-enable" v-if="scope.row.menuPowerState==0">启用</span>
+                  <span class="button-forbidden" v-if="scope.row.menuPowerState==1">禁用</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="CREATED_TIME" label="创建时间" min-width="220"/>
+              <el-table-column prop="createdTime" label="创建时间" min-width="220"/>
               <el-table-column label="操作" min-width="180">
                 <template #default="scope">
                   <el-button type="text"
-                             @click="this.insertMenu=true,this.boxName='修改菜单',this.ruleForm.previousMenu=scope.row.MENU_NAME">
+                             @click="this.channel=1,this.insertMenu=true,this.boxName='修改菜单',this.ruleForm.previousMenu=scope.row.menuPowerName">
                     <svg t="1639052797619" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="9054" width="12" height="12">
                       <path
@@ -139,7 +142,7 @@
                     修改
                   </el-button>
                   <el-button type="text"
-                             @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu=scope.row.MENU_NAME">
+                             @click="this.channel=2,this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu=scope.row.menuPowerName">
                     <svg t="1639053259858" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="11914" width="12" height="12">
                       <path
@@ -148,7 +151,7 @@
                     </svg>
                     新增
                   </el-button>
-                  <el-button type="text" @click="deleteMenu(scope.row.MENU_NAME)">
+                  <el-button type="text" @click="deleteMenu(scope.row.menuPowerName)">
                     <svg t="1639053106665" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="10997" width="12" height="12">
                       <path
@@ -178,7 +181,7 @@
   <el-dialog
       v-model="insertMenu"
       :title="this.boxName"
-      width="50%"
+      width="48%"
       destroy-on-close
       left
   >
@@ -194,78 +197,44 @@
         <el-input v-model="ruleForm.previousMenu" style="width: 203px" disabled></el-input>
       </el-form-item>
       <el-form-item label="菜单名称" prop="menuName" style="margin-bottom: 25px">
-        <el-select v-model="ruleForm.menuName" slot="prepend" style="width: 203px"
-                   filterable
-                   allow-create
-                   default-first-option>
-          <el-option label="公交" value="2"></el-option>
-          <el-option label="地铁" value="3"></el-option>
-          <el-option label="高铁" value="4"></el-option>
-          <el-option label="其他" value="5"></el-option>
-        </el-select>
+        <el-input type="text" v-model="ruleForm.menuName" style="width: 203px" clearable/>
       </el-form-item>
       <el-form-item label="菜单类型" prop="menuType" class="insert_menuType" style="margin-bottom: 25px">
         <el-radio-group v-model="ruleForm.menuType">
-          <el-radio label="目录" style="margin: 10px"></el-radio>
-          <el-radio label="菜单" style="margin: 10px"></el-radio>
+          <el-radio label="菜单"  style="margin: 10px"></el-radio>
           <el-radio label="按钮" style="margin: 10px"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="菜单状态" prop="menuState" class="insert_menuState" style="margin-bottom: 25px">
+      <el-form-item label="菜单状态" prop="menuState" class="insert_menuState"
+                    style="margin-bottom: 25px;margin-left:70px ">
         <el-switch v-model="ruleForm.menuState" active-text="禁用" inactive-text="启用"/>
       </el-form-item>
       <el-form-item label="菜单图标" prop="menuImage" style="margin-bottom: 25px">
-        <el-select v-model="ruleForm.menuImage" slot="prepend" style="width: 535px"
-                   filterable
-                   allow-create
-                   default-first-option>
-          <el-option label="公交" value="2"></el-option>
-          <el-option label="地铁" value="3"></el-option>
-          <el-option label="高铁" value="4"></el-option>
-          <el-option label="其他" value="5"></el-option>
-        </el-select>
+        <el-input type="text" v-model="ruleForm.menuImage" style="width: 535px" clearable/>
       </el-form-item>
       <el-form-item label="路由地址" prop="menuRouter" style="margin-bottom: 25px">
-        <el-select v-model="ruleForm.menuRouter" slot="prepend" style="width: 535px"
-                   filterable
-                   allow-create
-                   default-first-option
-        >
-          <el-option label="公交" value="2"></el-option>
-          <el-option label="地铁" value="3"></el-option>
-          <el-option label="高铁" value="4"></el-option>
-          <el-option label="其他" value="5"></el-option>
-        </el-select>
+        <el-input type="text" v-model="ruleForm.menuRouter" style="width: 535px" clearable/>
       </el-form-item>
       <el-form-item label="组件地址" prop="menuModule" style="margin-bottom: 25px">
-        <el-select v-model="ruleForm.menuModule" slot="prepend" style="width: 535px"
-                   filterable
-                   allow-create
-                   default-first-option
-                   max-height="50px"
-        >
-          <el-option label="公交" value="2"></el-option>
-          <el-option label="地铁" value="3"></el-option>
-          <el-option label="高铁" value="4"></el-option>
-          <el-option label="其他" value="5"></el-option>
-        </el-select>
+        <el-input type="text" v-model="ruleForm.menuModule" style="width: 535px" clearable/>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
         <el-button @click="resetForm('ruleForm')">取消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script>
-import {ElMessageBox, ElMessage} from 'element-plus'
+import {ElMessageBox, ElMessage, ElNotification} from 'element-plus'
 
 export default {
   data() {
     return {
+      url: 'http://localhost:80/menuPower/',
       //弹出框名称
       boxName: '',
       ruleForm: {
@@ -274,7 +243,7 @@ export default {
         //菜单名称
         menuName: '',
         //菜单类型
-        menuType: '目录',
+        menuType: '菜单',
         //菜单状态
         menuState: false,
         //菜单图标
@@ -290,7 +259,7 @@ export default {
           {
             required: true,
             message: '菜单名称不能为空',
-            trigger: 'change',
+            trigger: 'blur',
           }
         ],
         //菜单图标
@@ -298,7 +267,7 @@ export default {
           {
             required: true,
             message: '图标地址不能为空',
-            trigger: 'change',
+            trigger: 'blur',
           }
         ],
         //菜单路由
@@ -306,7 +275,7 @@ export default {
           {
             required: true,
             message: '路由地址不能为空',
-            trigger: 'change',
+            trigger: 'blur',
           }
         ],
         //菜单组件
@@ -314,7 +283,7 @@ export default {
           {
             required: true,
             message: '组件地址不能为空',
-            trigger: 'change',
+            trigger: 'blur',
           }
         ]
       },
@@ -324,8 +293,10 @@ export default {
       expands: false,
       //渲染展开菜单
       refreshTable: true,
-      //输入的菜单名称值
-      menuName: '',
+      //菜单名称
+      menuPowerName: '',
+      //路由地址
+      menuPowerRoute: '',
       //日期选择组件
       shortcuts: [
         {
@@ -362,131 +333,117 @@ export default {
       //显示隐藏菜单
       menuShow: true,
       //表格数据
-      tableData: [
-        {
-          MENU_ID: 1,
-          MENU_NAME: '工作台',
-          MENU_MODULE: '',
-          MENU_ORDER: 1,
-          MENU_ROUTE: '',
-          MENU_STATE: 0,
-          CREATED_TIME: '2016-05-02'
-        },
-        {
-          MENU_ID: 2,
-          MENU_NAME: '组织管理',
-          MENU_MODULE: '',
-          MENU_ORDER: 2,
-          MENU_ROUTE: '',
-          MENU_STATE: 0,
-          CREATED_TIME: '2016-05-04',
-        },
-        {
-          MENU_ID: 3,
-          MENU_NAME: '员工管理',
-          MENU_MODULE: '',
-          MENU_ORDER: 3,
-          MENU_ROUTE: '',
-          MENU_STATE: 0,
-          CREATED_TIME: '2016-05-01',
-          children: [
-            {
-              MENU_ID: 31,
-              MENU_NAME: '员工信息',
-              MENU_MODULE: '',
-              MENU_ORDER: 1,
-              MENU_ROUTE: '',
-              MENU_STATE: 0,
-              CREATED_TIME: '2016-05-01',
-              children: [
-                {
-                  MENU_ID: 33,
-                  MENU_NAME: '员工花名册',
-                  MENU_MODULE: '',
-                  MENU_ORDER: 1,
-                  MENU_ROUTE: '',
-                  MENU_STATE: 0,
-                  CREATED_TIME: '2016-05-01'
-                },
-                {
-                  MENU_ID: 34,
-                  MENU_NAME: '人才展示',
-                  MENU_MODULE: '',
-                  MENU_ORDER: 2,
-                  MENU_ROUTE: '',
-                  MENU_STATE: 0,
-                  CREATED_TIME: '2016-05-01'
-                },
-                {
-                  MENU_ID: 35,
-                  MENU_NAME: '人才统计',
-                  MENU_MODULE: '',
-                  MENU_ORDER: 3,
-                  MENU_ROUTE: '',
-                  MENU_STATE: 1,
-                  CREATED_TIME: '2016-05-01'
-                },
-                {
-                  MENU_ID: 36,
-                  MENU_NAME: '员工审核',
-                  MENU_MODULE: '',
-                  MENU_ORDER: 4,
-                  MENU_ROUTE: '',
-                  MENU_STATE: 0,
-                  CREATED_TIME: '2016-05-01'
-                },
-                {
-                  MENU_ID: 37,
-                  MENU_NAME: '历史花名册',
-                  MENU_MODULE: '',
-                  MENU_ORDER: 5,
-                  MENU_ROUTE: '',
-                  MENU_STATE: 0,
-                  CREATED_TIME: '2016-05-01'
-                }
-              ]
-            },
-            {
-              MENU_ID: 32,
-              MENU_NAME: '兼职管理',
-              MENU_MODULE: '',
-              MENU_ORDER: 2,
-              MENU_ROUTE: '',
-              MENU_STATE: 0,
-              CREATED_TIME: '2016-05-01',
-            },
-            {
-              MENU_ID: 33,
-              MENU_NAME: '档案管理',
-              MENU_MODULE: '',
-              MENU_ORDER: 3,
-              MENU_ROUTE: '',
-              MENU_STATE: 0,
-              CREATED_TIME: '2016-05-01',
-            },
-          ],
-        },
-        {
-          MENU_ID: 4,
-          MENU_NAME: '时间管理',
-          MENU_MODULE: '',
-          MENU_ORDER: 4,
-          MENU_ROUTE: '',
-          MENU_STATE: 0,
-          CREATED_TIME: '2016-05-03',
-        },
-        {
-          MENU_ID: 5,
-          MENU_NAME: '招聘管理',
-          MENU_MODULE: '',
-          MENU_ORDER: 5,
-          MENU_ROUTE: '',
-          MENU_STATE: 0,
-          CREATED_TIME: '2016-05-03',
-        }
-      ],
+      tableData: [],
+      //判断点击的哪一个按钮
+      channel:0,
     }
   }, methods: {
+    //新增一级菜单
+    menuPowerAddSingle(formName) {
+      this.axios({
+        method: 'post',
+        url: this.url + 'menuPowerAddSingle',
+        data: {
+          //菜单状态
+          menuPowerState: this.ruleForm.menuState==true?1:0,
+          //菜单类型
+          menuPowerType: this.ruleForm.menuType=='菜单'?0:1,
+          //菜单名称
+          menuPowerName: this.ruleForm.menuName,
+          //路由地址
+          menuPowerRoute: this.ruleForm.menuRouter,
+          //图片地址
+          pictureAddress: this.ruleForm.menuImage,
+          //组件地址
+          menuPowerModule: this.ruleForm.menuModule,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+           if (response.data.data.info=="成功"){
+             //刷新数据
+             this.menuPowerInCondition();
+             //关闭弹出框
+             this.insertMenu = false;
+             ElMessage({
+               type: 'success',
+               message:'新增成功',
+             })
+             //清空表单
+             this.$refs[formName].resetFields();
+           }else{
+             ElMessage({
+               type: 'warning',
+               message: response.data.data.info,
+             })
+           }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //通过条件查询菜单
+    menuPowerInCondition() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'menuPowerInCondition',
+        data: {
+          //菜单名称
+          menuPowerName: this.menuPowerName,
+          //路由地址
+          menuPowerRoute: this.menuPowerRoute,
+          //起始时间
+          startTime: this.date == null ? null : this.date[0],
+          //结束时间
+          endTime: this.date == null ? null : this.date[1],
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            this.tableData = response.data.data.info;
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
     deleteMenu(value) {
       ElMessageBox.confirm(
           '是否确认删除名称为“' + value + '"的数据项?',
@@ -512,18 +469,19 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.boxName === '新增菜单') {
-
-          } else {
-
+            if (this.channel==0){
+              this.menuPowerAddSingle(formName);
+            }else if (this.channel==2){
+              alert(2)
+            }
+          } else if(this.boxName==="修改菜单") {
+            //关闭弹出框
+            this.insertMenu = false;
+            ElMessage({
+              type: 'success',
+              message:'修改成功',
+            })
           }
-          //清空表单
-          this.$refs[formName].resetFields();
-          //关闭弹出框
-          this.insertMenu = false;
-          ElMessage({
-            type: 'success',
-            message: this.boxName == '新增菜单' ? '新增成功' : '修改成功',
-          })
         } else {
           return false
         }
@@ -552,6 +510,8 @@ export default {
         this.refreshTable = true;
       });
     }
+  }, mounted() {
+    this.menuPowerInCondition();
   }
 }
 </script>
@@ -591,6 +551,11 @@ export default {
 
 .el-scrollbar__view .el-select-dropdown__item {
   text-align: center;
+}
+
+/deep/ .el-input__suffix .el-input__suffix-inner .el-icon {
+  position: relative;
+  top: 3px;
 }
 
 /deep/ .el-input__suffix .el-input__suffix-inner .el-icon svg {
@@ -684,7 +649,7 @@ export default {
 
 .j-set-name {
   display: inline-block;
-  min-width: 23%
+  min-width: 22%
 }
 
 .j-set-date {
@@ -742,7 +707,7 @@ export default {
 
 .j-set-button {
   display: inline-block;
-  min-width: 35%;
+  min-width: 5%;
 }
 
 /deep/ .j-set-button .el-button--primary {

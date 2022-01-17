@@ -18,10 +18,6 @@
           <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
             <span>批量删除</span>
           </button>
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量设为候选人</span>
-          </button>
 
 
           <!--搜索框-->
@@ -29,7 +25,7 @@
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item>
-                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+                <el-input v-model="formInline.user" placeholder="姓名、投递部门名称" clearable></el-input>
               </el-form-item>
 
               <el-form-item>
@@ -48,6 +44,7 @@
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
                 :header-cell-style="{background:'#eef1f6',color:'#606266'}">
         <el-table-column fixed="left" align="center" type="selection" width="80"/>
+        <el-table-column fixed :index="indexMethod" align="center" prop="resumeId" label="序号" type="index" min-width="100"/>
         <el-table-column fixed="left" label="姓名" width="150">
           <template #default="scope">
             <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
@@ -72,8 +69,8 @@
         <el-table-column fixed="right" label="操作" width="180">
           <template #default>
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
-              <el-button type="text" size="small" @click="open()">删除</el-button>
+              <el-button type="text" size="small" @click="">查看</el-button>
+<!--              <el-button type="text" size="small" @click="open()">删除</el-button>-->
             </div>
 
           </template>
@@ -178,9 +175,9 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            this.tableData = response.data.data.succed.records;
-            this.pageInfo.pagesize = response.data.data.succed.size;
-            this.pageInfo.total = response.data.data.succed.total;
+            this.tableData = response.data.data.succeed.records;
+            this.pageInfo.pagesize = response.data.data.succeed.size;
+            this.pageInfo.total = response.data.data.succeed.total;
           }
           //如果服务是雪崩的
           else {
@@ -195,7 +192,12 @@ export default {
     }
   },mounted() {
     this.selectAllresume();
-  }
+  },  //序号
+  indexMethod(index) {
+    let curpage = this.pageInfo.currentPage; //单前页码，具体看组件取值
+    let limitpage = this.pageInfo.pagesize; //每页条数，具体是组件取值
+    return index + 1 + (curpage - 1) * limitpage;
+  },
 }
 </script>
 <style type="text/css" scoped>

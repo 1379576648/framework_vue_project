@@ -44,10 +44,10 @@
               ></el-date-picker>
             </el-form-item>
           </el-form>
-
           <!-- 对数据的增删改按钮 -->
           <div class="button">
             <el-button class="button-new" size="mini" @click="
+            fromValue.roleId='',
             fromValue.roleName='',
             fromValue.roleDescribe='',
             fromValue.roleState='0',
@@ -66,13 +66,13 @@
                        v-bind:disabled="checkDeleteList.length==0?true:false" @click="remove"
                        style="height: 33px;margin-right: 875px">删除
             </el-button>
-            <el-button size="mini"  class="search-ss" type="primary" @click="next">
+            <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
                 &#xe61b
               </i>
               搜索
             </el-button>
-            <el-button size="mini"  class="search-cz" type="primary" @click="reset()">
+            <el-button size="mini" class="search-cz" type="primary" @click="reset()">
               <i class="iconfont">
                 &#xe6b8
               </i>
@@ -205,7 +205,8 @@
 this.getMenuList('数据权限')">数据权限
                         </el-dropdown-item>
 
-                        <el-dropdown-item @click="allot_user=true,this.fromValue.roleId=scope.row.roleId">分配用户</el-dropdown-item>
+                        <el-dropdown-item @click="allot_user=true,this.fromValue.roleId=scope.row.roleId">分配用户
+                        </el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
@@ -282,7 +283,6 @@ this.getMenuList('数据权限')">数据权限
       </div>
     </div>
   </div>
-  {{ fromValue }}
   <!--  分配用户-->
   <allot_user v-if="allot_user"/>
 </template>
@@ -307,7 +307,7 @@ export default {
           re = false
         }
       }
-      if (this.fromValue.roleName != '') {
+      if (this.fromValue.roleName != '' && value.length < 10 && this.roleNamePd == '') {
         return true;
       }
       if (!value || re) {
@@ -410,7 +410,7 @@ export default {
       checkDeleteList: [],
       props: {
         label: 'menuPowerName',
-        children: 'list',
+        children: 'children',
         isLeaf: 'menuPowerLeaf',
       },
       menuList: [],
@@ -426,6 +426,8 @@ export default {
         roleDescribe: '',
         //权限菜单
         menuList: [],
+        //半选状态的树形控件
+        moietyList: []
       },
       //表单验证
       fromVerify: {
@@ -464,10 +466,10 @@ export default {
   methods: {
     //分配权限
     allotMenu() {
-      this.fromValue.menuList = [];
-      for (let i = 0; i < this.$refs.tree2.getCheckedNodes().length; i++) {
-        this.fromValue.menuList.push(this.$refs.tree2.getCheckedNodes()[i].menuPowerId)
-      }
+      //所有的菜单编号
+      this.fromValue.menuList = this.$refs.tree1.getCheckedKeys().concat(this.$refs.tree1.getHalfCheckedKeys());
+      //半选状态的菜单编号
+      this.fromValue.moietyList = this.$refs.tree1.getHalfCheckedKeys();
       this.axios({
         method: 'put',
         url: this.url + 'allotMenu',
@@ -540,10 +542,10 @@ export default {
             this.menuList = response.data.data.info;
             if (value == "修改") {
               this.menuPowerListInRoleId();
-              window.setTimeout(this.loadUpdateMenuList, 600);
+              window.setTimeout(this.loadUpdateMenuList, 800);
             } else if (value == "数据权限") {
               this.menuPowerListInRoleId();
-              window.setTimeout(this.loadElseMenuList, 600);
+              window.setTimeout(this.loadElseMenuList, 800);
             }
           }
           //如果服务是雪崩的
@@ -891,10 +893,10 @@ export default {
     addUpdate(fromValue) {
       this.$refs[fromValue].validate((valid) => {
         if (valid) {
-          this.fromValue.menuList = [];
-          for (let i = 0; i < this.$refs.tree1.getCheckedNodes().length; i++) {
-            this.fromValue.menuList.push(this.$refs.tree1.getCheckedNodes()[i].menuPowerId)
-          }
+          //所有的菜单编号
+          this.fromValue.menuList = this.$refs.tree1.getCheckedKeys().concat(this.$refs.tree1.getHalfCheckedKeys());
+          //半选状态的菜单编号
+          this.fromValue.moietyList = this.$refs.tree1.getHalfCheckedKeys();
           if (this.judge === "新增") {
             //新增
             this.axios({
@@ -995,9 +997,10 @@ export default {
     },
     //通过角色名称查询角色名称是否被使用
     selectRoleRoleName(name) {
+      let value = this.fromValue.roleId == '' ? 0 : this.fromValue.roleId;
       this.axios({
         method: 'get',
-        url: this.url + 'selectRoleRoleName/' + name + "/" + this.fromValue.roleId,
+        url: this.url + 'selectRoleRoleName/' + name + "/" + value,
       }).then((response) => {
         //如果服务关闭
         if (response.data.data.data) {
