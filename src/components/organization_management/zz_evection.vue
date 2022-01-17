@@ -32,9 +32,12 @@
 
 <script lang="ts">
 import { ref, defineComponent } from "vue";
+import {ElNotification} from "element-plus";
 export default {
   data() {
     return {
+      //访问路径
+      url: "http://localhost:80/",
         tableData: [
                 {
                   id: '01',
@@ -78,7 +81,49 @@ export default {
                 },
               ],
             };
+
   },
+  methods: {
+    // 查询所有部门
+    selectDept() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDept',
+        data: {
+          //当前页
+          "currentPage": this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("查询部门成功");
+        console.log(response);
+        if (response.data.data.data) {
+          alert("服务发生关闭")
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+            this.pageInfo.pagesize = response.data.data.info.size;
+            this.pageInfo.total = response.data.data.info.total;
+          }
+        } else {
+          alert("服务发生雪崩")
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    // 挂载
+    created() {
+      // 查询部门
+      this.selectDept();
+    }
+  }
 };
 </script>
 
