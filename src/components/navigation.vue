@@ -43,7 +43,7 @@
         <div class="ant-col header_3_s header_2_s">
 					<span style=" margin-left: 15px; margin-right: 15px;">
 						<img style="width: 26px; height: 26px; border-radius: 50%;" alt="" src="../assets/aaa.jpg">
-						{{this.$store.state.staffMessage.staffPhone}}
+						&nbsp;&nbsp;{{this.$store.state.staffMessage.staffName}}
                 <el-dropdown>
                   <span class="el-dropdown-link">
                      <i class="iconfont" style="color: white">&#xe600;</i>
@@ -494,11 +494,9 @@ export default {
   height: 70px !important;
 
 }
-
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover{
   color: white;
 }
-
 .dh-span {
   height: 56px;
   width: 56px;
@@ -643,9 +641,8 @@ ul li {
   background-color: #49A782;
   color: #fff;
 }
-
-.el-menu-item:hover {
-  background-color: rgba(0, 0, 0, 0.1) !important;
+.el-menu-item:hover{
+  background-color: rgba(0,0,0,0.1) !important;
 }
 
 /* 消息样式 */
