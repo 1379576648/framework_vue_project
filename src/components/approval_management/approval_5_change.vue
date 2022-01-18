@@ -155,6 +155,56 @@
                 详情
               </el-button>
             </template>
+            <!-- 判断审批明细表编号数量 当为1时则是最后一个审批人-->
+            <template #default="scope" v-if="this.serial=1">
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定通过吗?"
+                  @confirm="(id ={
+                    auditflowdetailId1:state1[0].auditflowdetailId,
+                    auditflowId:scope.row.auditflowId
+                  }),through_approval2(id)"
+              >
+                <template #reference>
+                  <el-button type="success" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
+                    通过
+                  </el-button>
+                </template>
+              </el-popconfirm>
+              <el-popconfirm
+                  confirm-button-text="确定"
+                  cancel-button-text="取消"
+                  :icon="InfoFilled"
+                  icon-color="red"
+                  title="确定驳回吗?"
+                  @confirm="(id ={
+                    auditflowdetailId1:state1[0].auditflowdetailId,
+                    auditflowId:scope.row.auditflowId
+                  }),rejected_apply(id)"
+              >
+                <template #reference>
+                  <el-button type="danger" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
+                    驳回
+                  </el-button>
+                </template>
+              </el-popconfirm>
+              <el-button
+                  type="primary"
+                  style="margin-left: 16px"
+                  @click="
+                  (value = {
+                    id: scope.row.auditflowId,
+                    name1: scope.row.staffName1,
+                    name2: scope.row.staffName2,
+                    }),
+                   particulars(value)"
+              >
+                详情
+              </el-button>
+            </template>
           </el-table-column>
         </el-table>
         <!-- 分页插件 -->
@@ -849,6 +899,7 @@ export default {
           auditflowdetailId: id.auditflowdetailId1,
           auditflowdetailId2: id.auditflowdetailId2,
           auditflowdetaiRemarks: this.remark,
+          auditflowId: id.auditflowId,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
