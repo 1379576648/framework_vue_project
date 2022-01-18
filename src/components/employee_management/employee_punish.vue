@@ -1,7 +1,7 @@
-<!--员工花名册工作经历-->
+<!--员工花名册奖惩记录-->
 <template>
-<div>
-<!--搜索输入框-->
+  <div>
+    <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
       <el-input v-model="seek" placeholder="搜索" size="small" @input="selectwork">
         <template #suffix>
@@ -9,29 +9,28 @@
         </template>
       </el-input>
     </el-row>
-</div>
+  </div>
   <br/>
   <br/>
-<div>
-  <el-table :data="tableData" stripe style="width: 100%"
-            :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-    <el-table-column prop="staffName" label="姓名" width="190" />
-    <el-table-column prop="workStareTime" label="开始时间" width="190" />
-    <el-table-column prop="workEndTime" label="结束时间" width="190" />
-    <el-table-column prop="companyName" label="任职公司" width="190" />
-    <el-table-column prop="positionName" label="职位" width="190" />
-    <el-table-column prop="positionDescribe" label="离职原因" width="190" />
-    <el-table-column fixed="right" label="操作">
-    <template #default="scope">
-			<el-button type="text" size="small" @click="
+  <div>
+    <el-table :data="tableData" stripe style="width: 100%"
+              :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+      <el-table-column prop="staffName" label="姓名" width="190" />
+      <el-table-column prop="workStareTime" label="开始时间" width="190" />
+      <el-table-column prop="workEndTime" label="结束时间" width="190" />
+      <el-table-column prop="companyName" label="任职公司" width="190" />
+      <el-table-column prop="positionName" label="职位" width="190" />
+      <el-table-column prop="positionDescribe" label="离职原因" width="190" />
+      <el-table-column fixed="right" label="操作">
+        <template #default="scope">
+          <el-button type="text" size="small" @click="
 			this.$parent.$parent.$parent.$data.one=scope.row.staffId,
-			this.$parent.$parent.$parent.$data.three=scope.row.staffName,
 			this.$parent.$parent.$parent.$data.two='second',
 			this.$parent.$parent.$parent.$data.employee_compile=true">编辑 </el-button>
-	</template>
-    </el-table-column>
-  </el-table>
-</div>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 
   <!-- 分页插件 -->
   <div class="demo-pagination-block">
