@@ -51,146 +51,15 @@
           <el-table-column prop="staffName2" label="当前审批人" width="150"/>
           <el-table-column prop="updatedTime" label="最近处理" width="150"/>
           <el-table-column label="操作">
-            <!-- 判断审批明细表编号数量 -->
-            <template #default="scope" v-if="this.serial=3">
-              <el-popconfirm
-                  confirm-button-text="确定"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="red"
-                  title="确定通过吗?"
-                  @confirm="(id ={
-                    auditflowdetailId1:state1[0].auditflowdetailId,
-                    auditflowdetailId2:state1[1].auditflowdetailId,
-                    auditflowdetailId3:state1[2].auditflowdetailId,
-                  }),through_approval3(id)"
-              >
-                <template #reference>
-                  <el-button type="success" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
-                    通过
-                  </el-button>
-                </template>
-              </el-popconfirm>
-              <el-popconfirm
-                  confirm-button-text="确定"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="red"
-                  title="确定驳回吗?"
-                  @confirm="(id ={
-                    auditflowdetailId1:state1[0].auditflowdetailId,
-                    auditflowdetailId2:state1[1].auditflowdetailId,
-                    auditflowdetailId3:state1[2].auditflowdetailId,
-                    auditflowId:scope.row.auditflowId
-                  }),rejected_apply(id)"
-              >
-                <template #reference>
-                  <el-button type="danger" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
-                    驳回
-                  </el-button>
-                </template>
-              </el-popconfirm>
-              <el-button
-                  type="primary"
-                  style="margin-left: 16px"
-                  @click="
-                  (value = {
-                    id: scope.row.auditflowId,
-                    name1: scope.row.staffName1,
-                    name2: scope.row.staffName2,
-                    }),
-                   particulars(value)"
-              >
-                详情
+            <template #default="scope">
+              <el-button type="success" plain
+                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='通过')">
+                通过
               </el-button>
-            </template>
-            <!-- 判断审批明细表编号数量 -->
-            <template #default="scope" v-if="this.serial=2">
-              <el-popconfirm
-                  confirm-button-text="确定"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="red"
-                  title="确定通过吗?"
-                  @confirm="(id ={
-                    auditflowdetailId1:state1[0].auditflowdetailId,
-                    auditflowdetailId2:state1[1].auditflowdetailId,
-                  }),through_approval2(id)"
-              >
-                <template #reference>
-                  <el-button type="success" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
-                    通过
-                  </el-button>
-                </template>
-              </el-popconfirm>
-              <el-popconfirm
-                  confirm-button-text="确定"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="red"
-                  title="确定驳回吗?"
-                  @confirm="(id ={
-                    auditflowdetailId1:state1[0].auditflowdetailId,
-                    auditflowdetailId2:state1[1].auditflowdetailId,
-                    auditflowId:scope.row.auditflowId
-                  }),rejected_apply(id)"
-              >
-                <template #reference>
-                  <el-button type="danger" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
-                    驳回
-                  </el-button>
-                </template>
-              </el-popconfirm>
-              <el-button
-                  type="primary"
-                  style="margin-left: 16px"
-                  @click="
-                  (value = {
-                    id: scope.row.auditflowId,
-                    name1: scope.row.staffName1,
-                    name2: scope.row.staffName2,
-                    }),
-                   particulars(value)"
-              >
-                详情
+              <el-button type="danger" plain
+                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='驳回')">
+                驳回
               </el-button>
-            </template>
-            <!-- 判断审批明细表编号数量 当为1时则是最后一个审批人-->
-            <template #default="scope" v-if="this.serial=1">
-              <el-popconfirm
-                  confirm-button-text="确定"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="red"
-                  title="确定通过吗?"
-                  @confirm="(id ={
-                    auditflowdetailId1:state1[0].auditflowdetailId,
-                    auditflowId:scope.row.auditflowId
-                  }),through_approval2(id)"
-              >
-                <template #reference>
-                  <el-button type="success" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
-                    通过
-                  </el-button>
-                </template>
-              </el-popconfirm>
-              <el-popconfirm
-                  confirm-button-text="确定"
-                  cancel-button-text="取消"
-                  :icon="InfoFilled"
-                  icon-color="red"
-                  title="确定驳回吗?"
-                  @confirm="(id ={
-                    auditflowdetailId1:state1[0].auditflowdetailId,
-                    auditflowId:scope.row.auditflowId
-                  }),rejected_apply(id)"
-              >
-                <template #reference>
-                  <el-button type="danger" plain @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId)">
-                    驳回
-                  </el-button>
-                </template>
-              </el-popconfirm>
               <el-button
                   type="primary"
                   style="margin-left: 16px"
@@ -410,9 +279,9 @@
       </el-tab-pane>
     </el-tabs>
   </div>
-  <!-- 点击气泡确认框弹出添加通过备注对话框-->
+  <!-- 添加通过备注弹出框(适用最后一个审批人)-->
   <el-dialog
-      v-model="add_remark"
+      v-model="add_pass_remark2"
       title="添加该记录的通过备注"
       width="30%"
       :close-on-click-modal=false
@@ -423,18 +292,41 @@
         <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
         &nbsp;
         <el-form-item>
-          <el-button type="primary" @click="pass_overtime(id)"
+          <el-button type="primary" @click="pass_overtime2()"
           >确定
           </el-button
           >
-          <el-button @click="add_remark=false,remark=''">取消</el-button>
+          <el-button @click="add_pass_remark2=false,remark=''">取消</el-button>
         </el-form-item>
       </el-form>
     </template>
   </el-dialog>
-  <!-- 点击气泡确认框弹出添加驳回备注对话框-->
+  <!-- 添加通过备注弹出框(适用查到两个审批人或三个审批人)-->
   <el-dialog
-      v-model="add_remark2"
+      v-model="add_pass_remark1"
+      title="添加该记录的通过备注"
+      width="30%"
+      :close-on-click-modal=false
+      :show-close=false
+  >
+    <template #footer>
+      <el-form :model="formInline" class="demo-form-inline">
+        <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
+        &nbsp;
+        <el-form-item>
+          <el-button type="primary" @click="pass_overtime()"
+          >确定
+          </el-button
+          >
+          <el-button @click="add_pass_remark1=false,remark=''">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </template>
+  </el-dialog>
+
+  <!-- 添加驳回备注弹出框 (适用查到三个审批人)-->
+  <el-dialog
+      v-model="add_reject_remark1"
       title="添加该记录的驳回备注"
       width="30%"
       :close-on-click-modal=false
@@ -445,11 +337,55 @@
         <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
         &nbsp;
         <el-form-item>
-          <el-button type="primary" @click="reject_overtime(id)"
+          <el-button type="primary" @click="reject_overtime()"
           >确定
           </el-button
           >
-          <el-button @click="add_remark2=false,remark=''">取消</el-button>
+          <el-button @click="add_reject_remark1=false,remark=''">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </template>
+  </el-dialog>
+  <!-- 添加驳回备注弹出框 (适用查到两个审批人)-->
+  <el-dialog
+      v-model="add_reject_remark2"
+      title="添加该记录的驳回备注"
+      width="30%"
+      :close-on-click-modal=false
+      :show-close=false
+  >
+    <template #footer>
+      <el-form :model="formInline" class="demo-form-inline">
+        <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
+        &nbsp;
+        <el-form-item>
+          <el-button type="primary" @click="reject_overtime2()"
+          >确定
+          </el-button
+          >
+          <el-button @click="add_reject_remark2=false,remark=''">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </template>
+  </el-dialog>
+  <!-- 添加驳回备注弹出框 (适用查到一个审批人)-->
+  <el-dialog
+      v-model="add_reject_remark3"
+      title="添加该记录的驳回备注"
+      width="30%"
+      :close-on-click-modal=false
+      :show-close=false
+  >
+    <template #footer>
+      <el-form :model="formInline" class="demo-form-inline">
+        <el-input :rows="2" maxlength="50" show-word-limit type="textarea" v-model="remark"></el-input>
+        &nbsp;
+        <el-form-item>
+          <el-button type="primary" @click="reject_overtime3()"
+          >确定
+          </el-button
+          >
+          <el-button @click="add_reject_remark3=false,remark=''">取消</el-button>
         </el-form-item>
       </el-form>
     </template>
@@ -468,14 +404,23 @@ export default {
   },
   data() {
     return {
+      // 审批明细编号
+      serialID: [],
+      // 审批主表编号
+      auditflowId: "",
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
-      // 添加通过备注弹出框
-      add_remark: false,
-      // 添加驳回备注弹出框
-      add_remark2: false,
-      // 审批明细表编号
-      id: [],
+      // 添加通过备注弹出框(适用查到两个审批人或三个审批人)
+      add_pass_remark1: false,
+      // 添加通过备注弹出框(适用查到一个审批人)
+      add_pass_remark2: false,
+
+      // 添加驳回备注弹出框 (适用查到三个审批人)
+      add_reject_remark1: false,
+      // 添加驳回备注弹出框(适用查到两个审批人)
+      add_reject_remark2: false,
+      // 添加驳回备注弹出框(适用查到一个审批人)
+      add_reject_remark3: false,
       // 详情抽屉1
       drawer: false,
       // 详情抽屉2
@@ -872,7 +817,7 @@ export default {
           });
     },
     // 根据审批编号查询审批明细表编号
-    queryDetail(auditflowId) {
+    queryDetail(auditflowId, handle) {
       var _this = this
       this.axios({
         method: 'post',
@@ -885,30 +830,50 @@ export default {
       }).then((response) => {
         console.log("根据审批编号查询审批明细表编号成功")
         console.log(response)
-        if (response.data.data.info.length === 3){
-          this.serial=3
-        }else if (response.data.data.info.length === 2){
-          this.serial=2
-        }else {
-          this.serial=1
+        // 当查询只有一个明细编号时，说明是最后一个审批人
+        if (response.data.data.info.length == 1) {
+          this.serialID = response.data.data.info[0]
+          this.auditflowId = auditflowId
+          if (handle == '通过') {
+            this.add_pass_remark2 = true;
+          } else if (handle == '驳回') {
+            this.add_reject_remark3 = true;
+          }
+          // 当查询有两个明细编号时，说明还有下一个审批人
+        } else if (response.data.data.info.length == 2) {
+          this.serialID = response.data.data.info
+          this.auditflowId = auditflowId
+          if (handle == '通过') {
+            this.add_pass_remark1 = true;
+          } else if (handle == '驳回') {
+            this.add_reject_remark2 = true;
+          }
+          // 当查询有三个明细编号时，说明还有两个审批人
+        } else if (response.data.data.info.length == 3) {
+          this.serialID = response.data.data.info
+          this.auditflowId = auditflowId
+          if (handle == '通过') {
+            this.add_pass_remark1 = true;
+          } else if (handle == '驳回') {
+            this.add_reject_remark1 = true;
+          }
         }
-        this.state1 = response.data.data.info;
       }).catch(function (error) {
         console.log(" 根据审批编号查询审批明细表失败")
         console.log(error);
       });
     },
-    // 备注弹出框点击确定 通过当前审批
-    pass_overtime(id) {
+    // 备注弹出框点击确定 通过当前审批 (两三个审批人)
+    pass_overtime() {
       var _this = this
       this.axios({
         method: 'post',
         url: this.url + 'update_Approval_State',
         data: {
-          auditflowdetailId: id.auditflowdetailId1,
-          auditflowdetailId2: id.auditflowdetailId2,
+          auditflowdetailId: this.serialID[0].auditflowdetailId,
+          auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowdetaiRemarks: this.remark,
-          auditflowId: id.auditflowId,
+          auditflowId: this.auditflowId,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -921,9 +886,11 @@ export default {
             message: '操作成功',
             type: 'success',
           })
-          this.selectTravelAll();
-          this.selectEndTravelAll();
-          this.add_remark = false;
+         // 查询待处理的出差审批
+    this.selectTravelAll();
+    // 查询已处理的出差审批
+    this.selectEndTravelAll();
+          this.add_pass_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
           ElMessage({
@@ -931,7 +898,7 @@ export default {
             message: '操作失败',
             type: 'error',
           })
-          this.add_remark = false;
+          this.add_pass_remark1 = false;
           this.remark = "";
         } else {
           ElMessage({
@@ -939,7 +906,7 @@ export default {
             message: '操作失败',
             type: 'error',
           })
-          this.add_remark = false;
+          this.add_pass_remark1 = false;
           this.remark = "";
         }
       }).catch(function (error) {
@@ -947,17 +914,67 @@ export default {
         console.log(error);
       });
     },
-    // 备注弹出框点击确定 驳回当前审批
-    reject_overtime(id) {
+    // 备注弹出框点击确定 通过当前审批 (一个审批人)
+    pass_overtime2() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'update_Approval_State',
+        data: {
+          auditflowdetailId: this.serialID.auditflowdetailId,
+          auditflowdetaiRemarks: this.remark,
+          auditflowId: this.auditflowId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+         // 查询待处理的出差审批
+    this.selectTravelAll();
+    // 查询已处理的出差审批
+    this.selectEndTravelAll();
+          this.add_pass_remark2 = false;
+          this.remark = "";
+        } else if (response.data.data === 999) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+          this.add_pass_remark2 = false;
+          this.remark = "";
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败',
+            type: 'error',
+          })
+          this.add_pass_remark2 = false;
+          this.remark = "";
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    // 备注弹出框点击确定 驳回当前审批 (三个审批人)
+    reject_overtime() {
       var _this = this
       this.axios({
         method: 'post',
         url: this.url + 'reject_Approval_State',
         data: {
-          auditflowdetailId: id.auditflowdetailId1,
-          auditflowdetailId2: id.auditflowdetailId2,
-          auditflowdetailId3: id.auditflowdetailId3,
-          auditflowId: id.auditflowId,
+          auditflowdetailId: this.serialID[0].auditflowdetailId,
+          auditflowdetailId2: this.serialID[1].auditflowdetailId,
+          auditflowdetailId3: this.serialID[2].auditflowdetailId,
+          auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
         },
         responseType: 'json',
@@ -971,9 +988,11 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-          this.selectTravelAll();
-          this.selectEndTravelAll();
-          this.add_remark2 = false;
+         // 查询待处理的出差审批
+    this.selectTravelAll();
+    // 查询已处理的出差审批
+    this.selectEndTravelAll();
+          this.add_reject_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
           ElMessage({
@@ -981,7 +1000,7 @@ export default {
             message: '驳回失败',
             type: 'error',
           })
-          this.add_remark2 = false;
+          this.add_reject_remark1 = false;
           this.remark = "";
         } else {
           ElMessage({
@@ -989,7 +1008,7 @@ export default {
             message: '驳回失败',
             type: 'error',
           })
-          this.add_remark2 = false;
+          this.add_reject_remark1 = false;
           this.remark = "";
         }
       }).catch(function (error) {
@@ -997,6 +1016,107 @@ export default {
         console.log(error);
       });
 
+    },
+    // 备注弹出框点击确定 驳回当前审批 (两个审批人)
+    reject_overtime2() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'reject_Approval_State',
+        data: {
+          auditflowdetailId: this.serialID[0].auditflowdetailId,
+          auditflowdetailId2: this.serialID[1].auditflowdetailId,
+          auditflowId: this.auditflowId,
+          auditflowdetaiRemarks: this.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("驳回该审批")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '驳回成功',
+            type: 'success',
+          })
+         // 查询待处理的出差审批
+    this.selectTravelAll();
+    // 查询已处理的出差审批
+    this.selectEndTravelAll();
+          this.add_reject_remark2 = false;
+          this.remark = "";
+        } else if (response.data.data === 999) {
+          ElMessage({
+            showClose: true,
+            message: '驳回失败',
+            type: 'error',
+          })
+          this.add_reject_remark2 = false;
+          this.remark = "";
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '驳回失败',
+            type: 'error',
+          })
+          this.add_reject_remark2 = false;
+          this.remark = "";
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    // 备注弹出框点击确定 驳回当前审批 (一个审批人)
+    reject_overtime3() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'reject_Approval_State',
+        data: {
+          auditflowdetailId:  this.serialID.auditflowdetailId,
+          auditflowId: this.auditflowId,
+          auditflowdetaiRemarks: this.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("驳回该审批")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '驳回成功',
+            type: 'success',
+          })
+         // 查询待处理的出差审批
+    this.selectTravelAll();
+    // 查询已处理的出差审批
+    this.selectEndTravelAll();
+          this.add_reject_remark3 = false;
+          this.remark = "";
+        } else if (response.data.data === 999) {
+          ElMessage({
+            showClose: true,
+            message: '驳回失败',
+            type: 'error',
+          })
+          this.add_reject_remark3 = false;
+          this.remark = "";
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '驳回失败',
+            type: 'error',
+          })
+          this.add_reject_remark3 = false;
+          this.remark = "";
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     //序号1
     indexMethod(index) {
