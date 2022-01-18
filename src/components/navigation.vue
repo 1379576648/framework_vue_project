@@ -41,13 +41,13 @@
         </div>
         <!--  导航栏: 个人信息  -->
         <div class="ant-col header_3_s header_2_s">
-					<span style="margin-left: 15px; margin-right: 15px;">
+					<span style=" margin-left: 15px; margin-right: 15px;">
 						<img style="width: 26px; height: 26px; border-radius: 50%;" alt="" src="../assets/aaa.jpg">
-						&nbsp;&nbsp;
+						{{this.$store.state.staffMessage.staffPhone}}
                 <el-dropdown>
                   <span class="el-dropdown-link">
                      <i class="iconfont" style="color: white">&#xe600;</i>
-                    <el-icon class="el-icon--right">
+                      <el-icon class="el-icon--right">
                       <arrow-down/>
                     </el-icon>
                   </span>
@@ -55,7 +55,7 @@
                     <el-dropdown-menu>
                       <el-dropdown-item>账户信息</el-dropdown-item>
                       <el-dropdown-item>SAAS PC</el-dropdown-item>
-                      <el-dropdown-item @click="this.$store.state=''">退出</el-dropdown-item>
+                      <el-dropdown-item @click="exit">退出</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -251,6 +251,16 @@ export default {
     }
   },
   methods: {
+    //退出操作
+    exit() {
+      this.$store.state.staffMessage = {};
+      this.$store.state.memuList = [];
+      this.$store.state.menuRouter = [];
+      sessionStorage.setItem('refresh', "false");
+      this.$router.push({
+        path: "/beginIndex"
+      })
+    },
     //菜单更多之内路由跳转
     routerSkip(key) {
       this.activate_router = key;
@@ -279,7 +289,7 @@ export default {
     },
     defaultRouter() {
       //默认路由等于浏览器路径的字段
-      this.activate_router='/' + window.location.pathname
+      this.activate_router = '/' + window.location.pathname
           .substring(1, window.location.pathname.length)
           .substring(0, window.location.pathname
               .substring(1, window.location.pathname.length)
@@ -301,13 +311,15 @@ export default {
   min-width: 0px !important;
   width: 386px;
 }
-.el-menu--popup li{
-  width: 100px!important;
+
+.el-menu--popup li {
+  width: 100px !important;
   margin-right: 0px !important;
   margin-left: 10px !important;
 }
-.el-menu--popup li:hover{
-  background-color: rgba(0,0,0,0.1) !important;
+
+.el-menu--popup li:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 </style>
 
@@ -322,16 +334,20 @@ export default {
   padding: 8px;
   background-color: #fff;
 }
+
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
-/deep/.el-menu--horizontal > .el-sub-menu .el-sub-menu__title:hover {
+
+/deep/ .el-menu--horizontal > .el-sub-menu .el-sub-menu__title:hover {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
-/deep/.el-menu--horizontal > .el-sub-menu:hover .el-sub-menu__title {
+
+/deep/ .el-menu--horizontal > .el-sub-menu:hover .el-sub-menu__title {
   background-color: rgba(0, 0, 0, 0.1) !important;
   color: white !important;
 }
+
 .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane, .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane {
   flex-shrink: 0;
   width: 100%;
@@ -478,9 +494,11 @@ export default {
   height: 70px !important;
 
 }
-.el-menu--horizontal .el-menu-item:not(.is-disabled):hover{
+
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
   color: white;
 }
+
 .dh-span {
   height: 56px;
   width: 56px;
@@ -625,8 +643,9 @@ ul li {
   background-color: #49A782;
   color: #fff;
 }
-.el-menu-item:hover{
-  background-color: rgba(0,0,0,0.1) !important;
+
+.el-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* 消息样式 */

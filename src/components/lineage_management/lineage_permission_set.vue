@@ -26,7 +26,7 @@
                 ></el-date-picker>
               </div>
               <div class="j-set-button">
-                <el-button type="primary" @click="menuPowerInCondition">
+                <el-button type="primary" @click="menuPowerInCondition" style="margin-left: 5px">
                   <svg t="1639013390453" class="icon" viewBox="0 0 1024 1024" version="1.1"
                        xmlns="http://www.w3.org/2000/svg" p-id="2683" width="17" height="17">
                     <path
@@ -132,7 +132,19 @@
               <el-table-column label="操作" min-width="180">
                 <template #default="scope">
                   <el-button type="text"
-                             @click="this.channel=1,this.insertMenu=true,this.boxName='修改菜单',this.ruleForm.previousMenu=scope.row.menuPowerName">
+                             @click="this.channel=1,
+                             this.insertMenu=true,this.boxName='修改菜单',
+                             this.ruleForm.menuName=scope.row.menuPowerName,
+                             this.ruleForm.menuState=scope.row.menuPowerState==0?false:true,
+                             this.ruleForm.menuImage=scope.row.pictureAddress,
+                             this.ruleForm.menuModule=scope.row.menuPowerModule,
+                             this.ruleForm.menuRouter=scope.row.menuPowerRoute,
+                             this.ruleForm.menuType=scope.row.menuPowerType==0?'菜单':'按钮',
+                             this.ruleForm.menuPowerLeaf=scope.row.menuPowerLeaf,
+                             this.ruleForm.menuPowerOrder=scope.row.menuPowerOrder,
+                             this.ruleForm.menuPowerId=scope.row.menuPowerId,
+                             this.ruleForm.menuPowerPid=scope.row.menuPowerPid,
+                              menuPowerInPid(scope.row.menuPowerPid)">
                     <svg t="1639052797619" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="9054" width="12" height="12">
                       <path
@@ -142,7 +154,11 @@
                     修改
                   </el-button>
                   <el-button type="text"
-                             @click="this.channel=2,this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu=scope.row.menuPowerName">
+                             @click="this.channel=2,
+                             this.insertMenu=true,
+                             this.boxName='新增菜单',
+                             this.ruleForm.previousMenu=scope.row.menuPowerName,
+                             this.ruleForm.menuPowerPid=scope.row.menuPowerId">
                     <svg t="1639053259858" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="11914" width="12" height="12">
                       <path
@@ -151,7 +167,7 @@
                     </svg>
                     新增
                   </el-button>
-                  <el-button type="text" @click="deleteMenu(scope.row.menuPowerName)">
+                  <el-button type="text" @click="deleteMenu(scope.row.menuPowerName,scope.row.menuPowerId)">
                     <svg t="1639053106665" class="icon" viewBox="0 0 1024 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="10997" width="12" height="12">
                       <path
@@ -201,7 +217,7 @@
       </el-form-item>
       <el-form-item label="菜单类型" prop="menuType" class="insert_menuType" style="margin-bottom: 25px">
         <el-radio-group v-model="ruleForm.menuType">
-          <el-radio label="菜单"  style="margin: 10px"></el-radio>
+          <el-radio label="菜单" style="margin: 10px"></el-radio>
           <el-radio label="按钮" style="margin: 10px"></el-radio>
         </el-radio-group>
       </el-form-item>
@@ -221,8 +237,8 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="resetForm('ruleForm')">取消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
+        <el-button @click="resetForm('ruleForm')" style="position: relative;left: -50px">取消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" style="position: relative;left: -45px">确认</el-button>
       </span>
     </template>
   </el-dialog>
@@ -251,7 +267,16 @@ export default {
         //菜单路由
         menuRouter: '',
         //菜单组件
-        menuModule: ''
+        menuModule: '',
+        //是否有叶子
+        menuPowerLeaf: '',
+        //菜单序号
+        menuPowerOrder: '',
+        //父级菜单
+        menuPowerPid: '',
+        //菜单编号
+        menuPowerId: '',
+
       },
       rules: {
         //菜单名称
@@ -335,19 +360,140 @@ export default {
       //表格数据
       tableData: [],
       //判断点击的哪一个按钮
-      channel:0,
+      channel: 0,
     }
   }, methods: {
-    //新增一级菜单
-    menuPowerAddSingle(formName) {
+    //通过实体类添加菜单
+    menuPowerAdd(formName) {
       this.axios({
         method: 'post',
-        url: this.url + 'menuPowerAddSingle',
+        url: this.url + 'menuPowerAdd',
         data: {
+          //父菜单编号
+          menuPowerPid: this.ruleForm.menuPowerPid,
           //菜单状态
-          menuPowerState: this.ruleForm.menuState==true?1:0,
+          menuPowerState: this.ruleForm.menuState == true ? 1 : 0,
           //菜单类型
-          menuPowerType: this.ruleForm.menuType=='菜单'?0:1,
+          menuPowerType: this.ruleForm.menuType == '菜单' ? 0 : 1,
+          //状态名称
+          menuPowerName: this.ruleForm.menuName,
+          //菜单路由
+          menuPowerRoute: this.ruleForm.menuRouter,
+          //菜单图片
+          pictureAddress: this.ruleForm.menuImage,
+          //组件地址
+          menuPowerModule: this.ruleForm.menuModule,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              //刷新数据
+              this.menuPowerInCondition();
+              //关闭弹出框
+              this.insertMenu = false;
+              ElMessage({
+                type: 'success',
+                message: '新增成功',
+              })
+              //清空表单
+              this.$refs[formName].resetFields();
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //通过编号删除菜单
+    menuPowerDelete(id) {
+      this.axios({
+        method: 'delete',
+        url: this.url + 'menuPowerDelete/' + id,
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              //刷新数据
+              this.menuPowerInCondition();
+              //关闭弹出框
+              this.insertMenu = false;
+              ElMessage({
+                type: 'success',
+                message: '删除成功',
+              })
+
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //通过实体类修改菜单数据
+    menuPowerUpdate(formName) {
+      this.axios({
+        method: 'post',
+        url: this.url + 'menuPowerUpdate',
+        data: {
+          //菜单编号
+          menuPowerId: this.ruleForm.menuPowerId,
+          //菜单父编号
+          menuPowerPid: this.ruleForm.menuPowerPid,
+          //菜单顺序
+          menuPowerOrder: this.ruleForm.menuPowerOrder,
+          //是否有叶子
+          menuPowerLeaf: this.ruleForm.menuPowerLeaf,
+          //菜单状态
+          menuPowerState: this.ruleForm.menuState == true ? 1 : 0,
+          //菜单类型
+          menuPowerType: this.ruleForm.menuType == '菜单' ? 0 : 1,
           //菜单名称
           menuPowerName: this.ruleForm.menuName,
           //路由地址
@@ -372,23 +518,121 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             //如果是成功
-           if (response.data.data.info=="成功"){
-             //刷新数据
-             this.menuPowerInCondition();
-             //关闭弹出框
-             this.insertMenu = false;
-             ElMessage({
-               type: 'success',
-               message:'新增成功',
-             })
-             //清空表单
-             this.$refs[formName].resetFields();
-           }else{
-             ElMessage({
-               type: 'warning',
-               message: response.data.data.info,
-             })
-           }
+            if (response.data.data.info == "成功") {
+              //刷新数据
+              this.menuPowerInCondition();
+              //关闭弹出框
+              this.insertMenu = false;
+              ElMessage({
+                type: 'success',
+                message: '修改成功',
+              })
+              //清空表单
+              this.$refs[formName].resetFields();
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //通过父级菜单编号获取菜单名称
+    menuPowerInPid(id) {
+      this.axios({
+        method: 'get',
+        url: this.url + 'menuPowerInPid/' + id,
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info == null) {
+              this.ruleForm.previousMenu = "主类目";
+            } else {
+              this.ruleForm.previousMenu = response.data.data.info.menuPowerName
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //新增一级菜单
+    menuPowerAddSingle(formName) {
+      this.axios({
+        method: 'post',
+        url: this.url + 'menuPowerAddSingle',
+        data: {
+          //菜单状态
+          menuPowerState: this.ruleForm.menuState == true ? 1 : 0,
+          //菜单类型
+          menuPowerType: this.ruleForm.menuType == '菜单' ? 0 : 1,
+          //菜单名称
+          menuPowerName: this.ruleForm.menuName,
+          //路由地址
+          menuPowerRoute: this.ruleForm.menuRouter,
+          //图片地址
+          pictureAddress: this.ruleForm.menuImage,
+          //组件地址
+          menuPowerModule: this.ruleForm.menuModule,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              //刷新数据
+              this.menuPowerInCondition();
+              //关闭弹出框
+              this.insertMenu = false;
+              ElMessage({
+                type: 'success',
+                message: '新增成功',
+              })
+              //清空表单
+              this.$refs[formName].resetFields();
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
           }
           //如果服务是雪崩的
           else {
@@ -444,7 +688,7 @@ export default {
         }
       })
     },
-    deleteMenu(value) {
+    deleteMenu(value, id) {
       ElMessageBox.confirm(
           '是否确认删除名称为“' + value + '"的数据项?',
           '系统提示',
@@ -454,10 +698,7 @@ export default {
             type: 'warning',
           }
       ).then(() => {
-        ElMessage({
-          type: 'success',
-          message: '删除成功',
-        })
+        this.menuPowerDelete(id);
       }).catch(() => {
         ElMessage({
           type: 'info',
@@ -469,18 +710,13 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.boxName === '新增菜单') {
-            if (this.channel==0){
+            if (this.channel == 0) {
               this.menuPowerAddSingle(formName);
-            }else if (this.channel==2){
-              alert(2)
+            } else if (this.channel == 2) {
+              this.menuPowerAdd(formName);
             }
-          } else if(this.boxName==="修改菜单") {
-            //关闭弹出框
-            this.insertMenu = false;
-            ElMessage({
-              type: 'success',
-              message:'修改成功',
-            })
+          } else if (this.boxName === "修改菜单") {
+            this.menuPowerUpdate(formName);
           }
         } else {
           return false
@@ -489,6 +725,30 @@ export default {
     },
     //清空表单数据
     resetForm(formName) {
+      this.ruleForm = {
+        //上级菜单名称
+        previousMenu: '',
+        //菜单名称
+        menuName: '',
+        //菜单类型
+        menuType: '菜单',
+        //菜单状态
+        menuState: false,
+        //菜单图标
+        menuImage: '',
+        //菜单路由
+        menuRouter: '',
+        //菜单组件
+        menuModule: '',
+        //是否有叶子
+        menuPowerLeaf: '',
+        //菜单序号
+        menuPowerOrder: '',
+        //父级菜单
+        menuPowerPid: '',
+        //菜单编号
+        menuPowerId: '',
+      }
       //清空表单数据
       this.$refs[formName].resetFields();
       //关闭弹出框

@@ -1,7 +1,6 @@
 <!-- 角色设置页面 -->
-
 <template>
-  <div class="saas-main-content" v-if="allot_user==false">
+  <div class="saas-main-content" v-if="allot_user==false" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
@@ -33,7 +32,7 @@
             </el-form-item>
 
             <!-- 创建 时间搜索 -->
-            <el-form-item class="form-time" label="创建时间">
+            <el-form-item class="form-time" label="创建时间" style="margin-left: -10px">
               <el-date-picker
                   v-model="selectTime"
                   type="datetimerange"
@@ -59,12 +58,12 @@
             refreshTable=refreshTable+1,
             judge='新增',
             this.getMenuList('新增')"
-                       style="margin-left: 5px;height: 33px">+
+                       style="margin-left: 0px;height: 33px">+
               新增
             </el-button>
             <el-button class="button-delete" size="mini" type="danger"
                        v-bind:disabled="checkDeleteList.length==0?true:false" @click="remove"
-                       style="height: 33px;margin-right: 875px">删除
+                       style="height: 33px;margin-right: 865px">删除
             </el-button>
             <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
@@ -1079,7 +1078,7 @@ export default {
 
 .el-form--inline .el-form-item {
   margin-right: -40px !important;
-  margin-left: 12px !important;
+  margin-left: 9px !important;
 }
 
 /deep/ .el-range-editor.el-input__inner .el-range-separator {
