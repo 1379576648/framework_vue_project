@@ -88,7 +88,7 @@
 
                 <div style="width:25%;height: 50px;margin: auto;margin-top: 20px;">
                   <el-button @click="RestForm(),changesadd=!changesadd" style="width: 60px;">取消</el-button>
-                  <el-button  type="primary" style="width: 60px;" @click="submitForm('ruleForm')">提交</el-button>
+                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(deptId=this.tableDatas.deptId),changesadd=!changesadd">提交</el-button>
                 </div>
 
               </el-form>
@@ -202,7 +202,7 @@
 </template>
 
 <script>
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 export default{
   data(){
     //对生效日期做判断
@@ -231,6 +231,8 @@ export default{
         takedate: '',
         type: '',
         remark:'',
+        transferdept: '',
+        transferpost:'',
       },
       //验证
       rules: {
@@ -265,16 +267,6 @@ export default{
     }
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     //清空表单
     RestForm(){
       this.ruleForm= {
@@ -470,6 +462,113 @@ export default{
           }
         }
       })
+    },
+    //添加调动记录
+    insertTransfer() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertTransfer',
+        data: {
+          //员工姓名
+          staffName:this.tableData.staffName,
+          //异动类型
+          transferType:this.ruleForm.type,
+          //调动前部门
+          createdDeptName:this.tableDatas.deptName,
+          //调动后部门
+          updatedDeptName:this.ruleForm.transferdept,
+          //调动前职位
+          transferRawpostName:this.tableDatas.postName,
+          //调动后职位
+          transferAfterpostName:this.ruleForm.transferpost,
+          //生效日期
+          takeEffectDate:this.ruleForm.takedate,
+          //备注
+          transferRemark:this.ruleForm.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("添加成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.code == 200) {
+            //如果是成功
+            if (response.data.data == 1) {
+              ElNotification({
+                title: '提示',
+                message: '添加成功',
+                type: 'success',
+              })
+              this.selectTransfer()
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: '添加失败',
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改部门
+    updateDeptName(deptId) {
+      alert(deptId)
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateDeptName',
+        data: {
+          //部门编号
+          deptId:this.tableDatas.deptId,
+          //部门名称
+          updatedDeptName:this.ruleForm.transferdept,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
   },
   //挂载
