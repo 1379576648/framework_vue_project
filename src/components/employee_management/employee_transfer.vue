@@ -88,7 +88,7 @@
 
                 <div style="width:25%;height: 50px;margin: auto;margin-top: 20px;">
                   <el-button @click="RestForm(),changesadd=!changesadd" style="width: 60px;">取消</el-button>
-                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(deptId=this.tableDatas.deptId),changesadd=!changesadd">提交</el-button>
+                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(deptId=this.tableDatas.deptId),insertTransfer(),changesadd=!changesadd">提交</el-button>
                 </div>
 
               </el-form>
@@ -530,7 +530,6 @@ export default{
     },
     //修改部门
     updateDeptName(deptId) {
-      alert(deptId)
       var _this = this
       this.axios({
         method: 'put',
@@ -539,7 +538,7 @@ export default{
           //部门编号
           deptId:this.tableDatas.deptId,
           //部门名称
-          updatedDeptName:this.ruleForm.transferdept,
+          deptName:this.ruleForm.transferdept,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -547,23 +546,8 @@ export default{
         console.log("修改状态")
         console.log(response)
         if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
         } else if (response.data.data === 100) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败1',
-            type: 'error',
-          })
         } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败2',
-            type: 'error',
-          })
         }
       }).catch(function (error) {
         console.log("失败")
