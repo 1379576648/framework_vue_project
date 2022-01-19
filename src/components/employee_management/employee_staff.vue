@@ -79,6 +79,7 @@
     <el-table-column fixed="right" label="操作" width="160">
       <template #default="scope">
         <el-button type="text" size="small" @click="this.$parent.$parent.$parent.$data.one=scope.row.staffId,
+                                                     this.$parent.$parent.$parent.$data.three=scope.row.staffName,
                                                      this.$parent.$parent.$parent.$data.two='book',
                                                      this.$parent.$parent.$parent.$data.employee_compile=true"
           >编辑 </el-button>

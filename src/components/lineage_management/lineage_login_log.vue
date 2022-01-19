@@ -1,7 +1,7 @@
 <!-- 登录日志页面 -->
 
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
@@ -48,7 +48,10 @@
             <el-button size="mini" style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled"
                        @click="remove">删除
             </el-button>
-            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 882px" v-bind:disabled="tableData==''?true:false">清空</el-button>
+            <el-button class="button-empty" size="mini" @click="clearTime=[],dialogVisible=true"
+                       style="margin-right: 878px"
+                       v-bind:disabled="tableData===''">清除
+            </el-button>
             <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
                 &#xe61b
@@ -116,6 +119,29 @@
       </div>
     </div>
   </div>
+  <el-dialog
+      v-model="dialogVisible"
+      title="请选择需要清除的时间段"
+      width="29%"
+  >
+    <el-date-picker
+        v-model="clearTime"
+        type="datetimerange"
+        :shortcuts="shortcuts"
+        range-separator="-"
+        start-placeholder="开始时间"
+        end-placeholder="结束时间"
+    >
+    </el-date-picker>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button size="mini" @click="call" style="height: 33px">取消</el-button>
+        <el-button size="mini" type="primary" @click="empty"
+        >确认</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -124,6 +150,10 @@ import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 export default {
   data() {
     return {
+      //清空弹出框
+      dialogVisible: false,
+      //清除时间段
+      clearTime: [],
       //访问路径
       url: "http://localhost:80/registerLog/",
       //ip所在地
@@ -220,20 +250,32 @@ export default {
         this.disabled = true;
       }
     },
+    //清除取消按钮
+    call() {
+      this.dialogVisible = false
+      ElMessage({
+        type: 'info',
+        message: '取消成功',
+      })
+    },
     //清空提示框
     empty() {
-      ElMessageBox.confirm(
-          '是否确认清空所有数据?',
-          '系统提示',
-          {
-            cancelButtonText: '取消',
-            confirmButtonText: '确认',
-            type: 'warning',
-          }
-      ).then(() => {
+      if (this.clearTime == null||this.clearTime=='') {
+        ElMessage({
+          type: 'warning',
+          message: '请选择具体时间段',
+        })
+      } else {
         this.axios({
           method: 'delete',
           url: this.url + 'emptyRegisterLogList',
+          data: {
+            //起始时间
+            "startTime": this.clearTime == null ? null : this.clearTime[0],
+            //结束时间
+            "endTime": this.clearTime == null ? null : this.clearTime[1]
+          },
+          responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
           //如果服务关闭
@@ -250,9 +292,10 @@ export default {
               //如果返回成功
               if (response.data.data.info == "成功") {
                 this.next();
+                this.dialogVisible = false;
                 ElMessage({
                   type: 'success',
-                  message: '清空成功',
+                  message: '清除成功',
                 })
               } else {
                 ElMessage({
@@ -271,12 +314,8 @@ export default {
             }
           }
         })
-      }).catch(() => {
-        ElMessage({
-          type: 'info',
-          message: '取消成功',
-        })
-      })
+      }
+
     },
     //批量删除提示框
     remove() {
@@ -379,8 +418,8 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-              _this.tableData = response.data.data.info.records
-              _this.pageInfo.total = response.data.data.info.total
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
           }
           //如果服务是雪崩的
           else {
@@ -401,10 +440,10 @@ export default {
     },
   }, mounted() {
     this.next();
-  },computed(){
+  }, computed() {
     //清空按钮
-    emptyButton(function (){
-      return this.tableData==null?true:false;
+    emptyButton(function () {
+      return this.tableData == null ? true : false;
     })
   }
 
