@@ -53,8 +53,8 @@
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="success" plain
-                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,staffName=scope.row.staffName1),
-                         queryDetail(auditflowId,handle='通过',auditflowType,staffName)">
+                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,StaffName=scope.row.staffName1),
+                         queryDetail(auditflowId,handle='通过',auditflowType,StaffName)">
                 通过
               </el-button>
               <el-button type="danger" plain
@@ -420,6 +420,8 @@ export default {
       selectTime: [],
       // 选择开始日期/结束日期
       selectTime2: [],
+      // 待审批查询申请人
+      StaffName: "",
       // 待审批查询申请人
       staffName: "",
       // 已审批查询申请人
@@ -858,8 +860,8 @@ export default {
             message: '操作成功',
             type: 'success',
           })
-          this.selectWorkerlAll();
-          this.selectEndWorkerlAll();
+          this.selectWorkerlAll2();
+          this.selectEndWorkerlAll2();
           this.add_pass_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -900,7 +902,7 @@ export default {
           // 审批类型（流程名称）
           auditflowType:this.auditflowType,
           // 审批申请人
-          staffName1:this.staffName,
+          staffName1:this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

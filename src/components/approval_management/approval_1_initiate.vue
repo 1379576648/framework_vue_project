@@ -338,12 +338,13 @@
             <el-input v-model="NowDeptName" disabled></el-input>
           </el-form-item>
           <el-form-item label="调岗后部门">
-            <el-select v-model="Change_1.dept_1" placeholder="部门名称">
+            <el-select v-model="Change_1.dept_1" placeholder="部门名称" @change="judgingDept">
               <el-option
                   v-for="item in variation_dept"
                   :key="item.value"
                   :label="item.label"
                   :value="item.label"
+
               ></el-option>
             </el-select>
           </el-form-item>
@@ -2491,7 +2492,7 @@ export default defineComponent({
       };
       this.overtime = false;
     },
-    // 时间
+    // 清空时间
     cancel_date() {
       this.overtime_1.type_1 = "";
       this.overtime_1.date1 = "";
@@ -2579,6 +2580,20 @@ export default defineComponent({
 
       console.log(dz)
       console.log(value)
+    },
+    // 判断部门是否相同
+    judgingDept(){
+      if (this.NowDeptName == this.Change_1.dept_1){
+        ElMessage({
+          message: "原部门与变动后部门相同，请重新选择!",
+          type: "warning",
+        });
+        this.emptyDept();
+      }
+    },
+    // 清空变动后部门
+    emptyDept(){
+      this.Change_1.dept_1=""
     },
     // 判断加班开始时间
     difference1_1: function (beginTime) {
@@ -2831,8 +2846,8 @@ export default defineComponent({
           })//如果服务没有关闭
         } else if (response.data) {
           // 审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理，返回5则代表暂无记录
-          if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
-              || response.data.data === 2) {
+          if (response.data.code === 200 && response.data.data === 5 || response.data.data === 3
+              || response.data.data === 2 || response.data.data === 1) {
             // 符合条件再根据部门编号去查询其部门经理
             this.axios({
               method: 'post',
@@ -3073,8 +3088,7 @@ export default defineComponent({
         }
       })
     },
-    // 点击调薪 去查询是否符合条件
-    // 根据名称去查询是否目前有调薪审批记录
+    // 点击调薪 去查询是否符合条件 根据名称去查询是否目前有调薪审批记录
     selectAdjustExamine() {
       var _this = this;
       this.axios({
