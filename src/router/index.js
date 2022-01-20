@@ -23,7 +23,6 @@ const routes = [
         path: '/', redirect: '/beginIndex'
     }, {//登录
         path: '/beginIndex',
-        name: 'admin',
         component: modules[`${'../components/begin/index.vue'}`],
         redirect: '/beginIndex/faceLogin',
         children: [{//人脸登录

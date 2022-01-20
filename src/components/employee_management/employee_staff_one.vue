@@ -30,6 +30,10 @@
           <el-tab-pane name="second" label="工作经历">
             <employee_work/>
           </el-tab-pane>
+
+          <el-tab-pane name="three" label="奖惩记录">
+            <employee_punish/>
+          </el-tab-pane>
         </el-tabs>
         </div>
       </div>
@@ -47,6 +51,8 @@
 import employee_staff from '../employee_management/employee_staff.vue';
 //工作经历
 import employee_work from '../employee_management/employee_work.vue';
+//奖惩记录
+import employee_punish from '../employee_management/employee_punish.vue';
 //办理离职
 import employee_dimission from '../employee_management/employee_dimission.vue';
 //员工编辑
@@ -57,6 +63,8 @@ export default {
     employee_staff,
     //工作经历
     employee_work,
+    //奖惩记录
+    employee_punish,
     //办理离职
     employee_dimission,
     //员工编辑
@@ -71,6 +79,7 @@ export default {
       activeName:'book',
       one:0,
       two:'',
+      three:0,
     }
   },
   methods: {

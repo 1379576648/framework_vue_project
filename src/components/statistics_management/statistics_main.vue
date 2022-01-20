@@ -103,7 +103,7 @@ export default {
 
 .custom-menu {
   padding: 0px !important;
-  height: 90% !important;
+  height: 89% !important;
 }
 
 /deep/ label li div span {
