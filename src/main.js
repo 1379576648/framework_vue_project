@@ -18,6 +18,7 @@ import * as ElIcons from '@element-plus/icons'
 //导入转换图标名称的函数,主要是在原有图标的名称前加入前缀el-，
 //如果不加前缀则有些图标组件的名称和原有vue组件名称冲突.
 //，
+
 function prefixIconName(iconName){
     //将图标文件名称对应官网SVG图标集合进行重新命名，如文件名为AddLocation，则更名为
     //el-add-location。其中add-location为官方网站上的名称

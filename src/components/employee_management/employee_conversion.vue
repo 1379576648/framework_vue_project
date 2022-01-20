@@ -59,7 +59,7 @@
                     :header-cell-style="{background:'#eef1f6',color:'#606266'}">
             <el-table-column prop="staffName" label="姓名" width="180"/>
             <el-table-column prop="staffIdentity" label="证件号码" width="180"/>
-            <el-table-column prop="deptName" label="部门" width="180"/>
+            <el-table-column prop="deptname" label="部门" width="180"/>
             <el-table-column prop="postName" label="职位" width="180"/>
             <el-table-column prop="staffHiredate" label="入职日期" width="180"/>
             <!--       <el-table-column prop="testtime" label="试用期限" width="180" />-->
@@ -70,7 +70,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作">
               <template #default="scope">
-                <el-button type="text" size="small" @click="become = true,work(scope.row)">办理转正</el-button>
+                <el-button type="text" size="small" @click="work(scope.row),id=scope.row.staffId,abandon(id)">办理转正</el-button>
               </template>
             </el-table-column>
 
@@ -133,8 +133,8 @@
               v-model="become_1.type"
               placeholder="请选择"
           >
-            <el-option label="转正" value="zz" style="margin-left: 20px"></el-option>
-            <el-option label="提前转正" value="tqzz" style="margin-left: 20px"></el-option>
+            <el-option label="转正" value="转正" style="margin-left: 20px"></el-option>
+            <el-option label="提前转正" value="提前转正" style="margin-left: 20px"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="转正日期 :" prop="becomedate">
@@ -158,7 +158,7 @@
       </el-form>
       <template #footer>
           <span class="dialog-footer">
-            <el-button style="width: 60px" type="primary" @click="submitForm('form_1')"
+            <el-button style="width: 60px" type="primary" @click="updateStaffState(id),insertWorker(),become = false"
             >确定</el-button
             >
             <el-button style="width: 60px" @click="become = false,RestForm()">取消</el-button>
@@ -172,7 +172,7 @@
 
 <script>
 import {defineComponent, ref} from 'vue'
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default defineComponent({
 
@@ -232,16 +232,6 @@ export default defineComponent({
     }
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     RestForm() {
       this.become_1 = {
         name: '',
@@ -255,7 +245,7 @@ export default defineComponent({
       }
     },
     //查询转正记录
-    selectpost(index,row) {
+    selectpost() {
       var _this = this
       this.axios({
         method: 'post',
@@ -298,14 +288,101 @@ export default defineComponent({
     },
     work(row){
       this.become_1.name=row.staffName;
-      this.become_1.dept=row.deptName;
+      this.become_1.dept=row.deptname;
       this.become_1.post=row.postName;
       this.become_1.entrydate=row.staffHiredate;
       this.become_1.tryoutdate="三个月";
-    }
+    },
+    //添加转正
+    insertWorker() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertWorker',
+        data: {
+          //员工名称
+          staffName:this.become_1.name,
+          //部门名称
+          deptName:this.become_1.dept,
+          //转正类型
+          workerType:this.become_1.type,
+          //转正日期
+          workerDate:this.become_1.becomedate,
+          //转正备注
+          workerRemarks:this.become_1.remarks,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          console.log("转正")
+          console.log(response)
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              this.selectpost();
+              ElNotification({
+                title: '提示',
+                message: '转正成功',
+                type: 'success',
+              })
+              this.selectpost()
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改员工状态为正式
+    updateStaffState(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateStaffState',
+        data: {
+          staffId: this.id,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          this.selectpost();
+        } else if (response.data.data === 100) {
+        } else {
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    abandon(id){
+      this.become=true;
+    },
   },
   mounted() {
-    //分页查询工作经历
+    //分页查询转正
     this.selectpost();
   }
 })
