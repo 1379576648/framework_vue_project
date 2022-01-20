@@ -462,13 +462,13 @@ export default {
         //审批状态
         auditflowstate: "",
         // 调薪前基本工资
-        frontsalary:"",
+        frontsalary: "",
         // 调薪后基本工资
-        aftersalary:"",
+        aftersalary: "",
         //备注
-        salaryremarks:"",
+        salaryremarks: "",
         // 生效日期
-        takeeffectdate:"",
+        takeeffectdate: "",
         // 审核人
         staffName2: "",
         //审核时间
@@ -487,13 +487,13 @@ export default {
         //审批状态
         auditflowstate: "",
         // 调薪前基本工资
-        frontsalary:"",
+        frontsalary: "",
         // 调薪后基本工资
-        aftersalary:"",
+        aftersalary: "",
         //备注
-        salaryremarks:"",
+        salaryremarks: "",
         // 生效日期
-        takeeffectdate:"",
+        takeeffectdate: "",
         // 审核人
         staffName2: "",
         //审核时间
@@ -517,17 +517,6 @@ export default {
     };
   },
   methods: {
-    // 通过点击气泡确认框弹出添加备注对话框
-    through_approval3(id) {
-      this.add_remark = true;
-    },
-    through_approval2(id) {
-      this.add_remark = true;
-    },
-    // 驳回时点击气泡确认框弹出添加备注对话框
-    rejected_apply(id) {
-      this.add_remark2 = true;
-    },
     // 查询待审批调薪数据
     selectSalaryAll() {
       var _this = this
@@ -573,11 +562,10 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询待审批调薪数据-不带数据
     selectSalaryAll2() {
@@ -620,11 +608,10 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询已办审批调薪数据
     selectEndSalaryAll() {
@@ -670,11 +657,10 @@ export default {
             })
           }
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询已办审批调薪数据-不带数据
     selectEndSalaryAll2() {
@@ -716,11 +702,10 @@ export default {
             })
           }
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 待我审批的调薪数据详情
     particulars(value) {
@@ -759,11 +744,10 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
-            console.log("查询已审批调薪数据详情失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("查询已审批调薪数据详情失败")
+        console.log(error);
+      });
     },
     // 已审批的调薪数据详情
     particulars2(value2) {
@@ -802,11 +786,10 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
-            console.log("查询已审批调薪数据详情失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("查询已审批调薪数据详情失败")
+        console.log(error);
+      });
     },
     // 根据审批编号查询审批明细表编号
     queryDetail(auditflowId, handle) {
@@ -867,7 +850,7 @@ export default {
           auditflowdetaiRemarks: this.remark,
           auditflowId: this.auditflowId,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -880,10 +863,10 @@ export default {
             message: '操作成功',
             type: 'success',
           })
-         // 查询待处理的调薪审批
-    this.selectSalaryAll();
-    // 查询已处理的调薪审批
-    this.selectEndSalaryAll();
+          // 查询待处理的调薪审批
+          this.selectSalaryAll();
+          // 查询已处理的调薪审批
+          this.selectEndSalaryAll();
           this.add_pass_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -922,9 +905,9 @@ export default {
           // 审批主表编号
           auditflowId: this.auditflowId,
           // 审批类型（流程名称）
-          auditflowType:this.auditflowType,
+          auditflowType: this.auditflowType,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -937,10 +920,10 @@ export default {
             message: '操作成功',
             type: 'success',
           })
-         // 查询待处理的调薪审批
-    this.selectSalaryAll();
-    // 查询已处理的调薪审批
-    this.selectEndSalaryAll();
+          // 查询待处理的调薪审批
+          this.selectSalaryAll();
+          // 查询已处理的调薪审批
+          this.selectEndSalaryAll();
           this.add_pass_remark2 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -989,10 +972,10 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-         // 查询待处理的调薪审批
-    this.selectSalaryAll();
-    // 查询已处理的调薪审批
-    this.selectEndSalaryAll();
+          // 查询待处理的调薪审批
+          this.selectSalaryAll();
+          // 查询已处理的调薪审批
+          this.selectEndSalaryAll();
           this.add_reject_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -1041,10 +1024,10 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-         // 查询待处理的调薪审批
-    this.selectSalaryAll();
-    // 查询已处理的调薪审批
-    this.selectEndSalaryAll();
+          // 查询待处理的调薪审批
+          this.selectSalaryAll();
+          // 查询已处理的调薪审批
+          this.selectEndSalaryAll();
           this.add_reject_remark2 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -1076,7 +1059,7 @@ export default {
         method: 'post',
         url: this.url + 'reject_Approval_State',
         data: {
-          auditflowdetailId:  this.serialID.auditflowdetailId,
+          auditflowdetailId: this.serialID.auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
         },
@@ -1091,10 +1074,10 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-         // 查询待处理的调薪审批
-    this.selectSalaryAll();
-    // 查询已处理的调薪审批
-    this.selectEndSalaryAll();
+          // 查询待处理的调薪审批
+          this.selectSalaryAll();
+          // 查询已处理的调薪审批
+          this.selectEndSalaryAll();
           this.add_reject_remark3 = false;
           this.remark = "";
         } else if (response.data.data === 999) {

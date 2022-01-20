@@ -519,17 +519,6 @@ export default {
     };
   },
   methods: {
-    // 通过点击气泡确认框弹出添加备注对话框
-    through_approval3(id) {
-      this.add_remark = true;
-    },
-    through_approval2(id) {
-      this.add_remark = true;
-    },
-    // 驳回时点击气泡确认框弹出添加备注对话框
-    rejected_apply(id) {
-      this.add_remark2 = true;
-    },
     // 查询待审批异动数据
     selectTransferAll() {
       var _this = this
@@ -847,7 +836,11 @@ export default {
           } else if (handle == '驳回') {
             this.add_reject_remark1 = true;
           }
-        }
+        } ElMessage({
+          showClose: true,
+          message: '系统繁忙，请联系管理员',
+          type: 'error',
+        })
       }).catch(function (error) {
         console.log(" 根据审批编号查询审批明细表失败")
         console.log(error);
@@ -902,7 +895,7 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("操作失败")
         console.log(error);
       });
     },
@@ -959,7 +952,7 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("操作成功")
         console.log(error);
       });
     },
@@ -1011,10 +1004,9 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("驳回失败")
         console.log(error);
       });
-
     },
     // 备注弹出框点击确定 驳回当前审批 (两个审批人)
     reject_overtime2() {
@@ -1063,7 +1055,7 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("驳回失败")
         console.log(error);
       });
     },
@@ -1113,7 +1105,7 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("驳回失败")
         console.log(error);
       });
     },

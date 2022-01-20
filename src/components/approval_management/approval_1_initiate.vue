@@ -1219,11 +1219,11 @@ import {ElMessage, ElNotification} from "element-plus";
 import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
 
 export default defineComponent({
-  components: { VDistpicker },
+  components: {VDistpicker},
   data() {
     return {
       // 地址选择器 值
-      address:"",
+      address: "",
       //判断
       judging: "",
       //当前登录用户所在部门编号
@@ -1262,6 +1262,10 @@ export default defineComponent({
         dept: "",
         //部门二
         dept_1: "",
+        // 备注
+        remarks_1: "",
+        // 调动日期
+        date1: "",
       },
       //调薪表单
       salary_1: {
@@ -1443,6 +1447,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.become = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.become = false;
             }
           } else {
             ElNotification.warning({
@@ -1503,6 +1514,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.become = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.become = false;
             }
           } else {
             ElNotification.warning({
@@ -1516,8 +1534,12 @@ export default defineComponent({
     },
     // 提交调动 （提交三个审批人）
     Submit_to_transfer3() {
-      if (this.Change_1.remarks_1.length === 0) {
+      if (this.Change_1.dept_1.length === 0) {
+        ElMessage("请选择调岗后部门");
+      } else if (this.Change_1.remarks_1.length === 0) {
         ElMessage("备注不能为空");
+      } else if (this.Change_1.date1.length === 0) {
+        ElMessage("调动日期不能为空");
       } else {
         this.axios({
           method: 'post',
@@ -1565,6 +1587,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.Change = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.Change = false;
             }
           } else {
             ElNotification.warning({
@@ -1578,8 +1607,12 @@ export default defineComponent({
     },
     // 提交调动 （提交两个审批人）
     Submit_to_transfer2() {
-      if (this.Change_1.remarks_1.length === 0) {
+      if (this.Change_1.dept_1.length === 0) {
+        ElMessage("请选择调岗后部门");
+      } else if (this.Change_1.remarks_1.length === 0) {
         ElMessage("备注不能为空");
+      } else if (this.Change_1.date1.length === 0) {
+        ElMessage("调动日期不能为空");
       } else {
         this.axios({
           method: 'post',
@@ -1623,6 +1656,13 @@ export default defineComponent({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
                 type: 'success',
+              })
+              this.Change = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
               })
               this.Change = false;
             }
@@ -1691,6 +1731,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.salary = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.salary = false;
             }
           } else {
             ElNotification.warning({
@@ -1751,6 +1798,13 @@ export default defineComponent({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
                 type: 'success',
+              })
+              this.salary = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
               })
               this.salary = false;
             }
@@ -1817,6 +1871,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.quit = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.quit = false;
             }
           } else {
             ElNotification.warning({
@@ -1879,6 +1940,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.quit = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.quit = false;
             }
           } else {
             ElNotification.warning({
@@ -1892,11 +1960,6 @@ export default defineComponent({
     },
     // 提交加班 (提交三个审批人)
     submitToOvertime3() {
-      console.log(this.overtime_1.type_1)
-      console.log(this.overtime_1.date2)
-      console.log(this.overtime_1.date1)
-      console.log(this.overtime_1.date3)
-      console.log(this.overtime_1.remarks_1)
       if (this.overtime_1.type_1.length === 0) {
         ElMessage("请选择您的加班类型");
       } else if (this.overtime_1.date1.length === 0) {
@@ -1952,6 +2015,13 @@ export default defineComponent({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
                 type: 'success',
+              })
+              this.overtime = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
               })
               this.overtime = false;
             }
@@ -2022,6 +2092,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.overtime = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.overtime = false;
             }
           } else {
             ElNotification.warning({
@@ -2086,6 +2163,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.punch = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.punch = false;
             }
           } else {
             ElNotification.warning({
@@ -2146,6 +2230,13 @@ export default defineComponent({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
                 type: 'success',
+              })
+              this.punch = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
               })
               this.punch = false;
             }
@@ -2218,6 +2309,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.travel = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.travel = false;
             }
           } else {
             ElNotification.warning({
@@ -2284,6 +2382,13 @@ export default defineComponent({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
                 type: 'success',
+              })
+              this.travel = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
               })
               this.travel = false;
             }
@@ -2354,6 +2459,13 @@ export default defineComponent({
                 type: 'success',
               })
               this.sick = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.sick = false;
             }
           } else {
             ElNotification.warning({
@@ -2418,6 +2530,13 @@ export default defineComponent({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
                 type: 'success',
+              })
+              this.sick = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
               })
               this.sick = false;
             }
@@ -2582,8 +2701,8 @@ export default defineComponent({
       console.log(value)
     },
     // 判断部门是否相同
-    judgingDept(){
-      if (this.NowDeptName == this.Change_1.dept_1){
+    judgingDept() {
+      if (this.NowDeptName == this.Change_1.dept_1) {
         ElMessage({
           message: "原部门与变动后部门相同，请重新选择!",
           type: "warning",
@@ -2592,8 +2711,8 @@ export default defineComponent({
       }
     },
     // 清空变动后部门
-    emptyDept(){
-      this.Change_1.dept_1=""
+    emptyDept() {
+      this.Change_1.dept_1 = ""
     },
     // 判断加班开始时间
     difference1_1: function (beginTime) {
@@ -2915,10 +3034,8 @@ export default defineComponent({
                 value: response.data.data.info[i].deptId,
                 label: response.data.data.info[i].deptName
               })
-
             }
-          }
-          //如果服务是雪崩的
+          }//如果服务是雪崩的
           else {
             ElNotification.warning({
               title: '提示',
@@ -3009,7 +3126,7 @@ export default defineComponent({
               // 已是正式员工
               ElNotification.warning({
                 title: '提示',
-                message: "您不是试用员工，不能发起转正申请",
+                message: "您已是正式员工，不能发起转正申请",
                 offset: 100,
               })
             } else {
@@ -3034,6 +3151,12 @@ export default defineComponent({
               offset: 100,
             })
           }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
         }
       })
     },
@@ -3058,7 +3181,19 @@ export default defineComponent({
           if (response.data.data.state == 200) {
             _this.personnel_manager = response.data.data.info;
             _this.president = response.data.data.info;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "系统繁忙，请稍后再试",
+              offset: 100,
+            })
           }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
         }
       })
     },
@@ -3084,7 +3219,19 @@ export default defineComponent({
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.NowDeptName = response.data.data.info[0].deptName;
+          }else {
+            ElNotification.warning({
+              title: '提示',
+              message: "系统繁忙，请稍后再试",
+              offset: 100,
+            })
           }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
         }
       })
     },
@@ -3166,6 +3313,12 @@ export default defineComponent({
         console.log(response);
         if (response.data.code == 200) {
           this.base_pay = response.data.data;
+        }else {
+          ElNotification.warning({
+            title: '提示',
+            message: "系统繁忙，请稍后再试",
+            offset: 100,
+          })
         }
       })
     },
@@ -3359,7 +3512,7 @@ export default defineComponent({
       })
     },
     // 根据名称去查询是否目前有出差审批记录
-    selectEvectionExamine(){
+    selectEvectionExamine() {
       var _this = this;
       this.axios({
         method: 'post',
@@ -3422,7 +3575,7 @@ export default defineComponent({
       })
     },
     // 根据名称及请假类型（病假）去查询是否目前有请假审批记录
-    selectLeaveExamine(){
+    selectLeaveExamine() {
       var _this = this;
       this.axios({
         method: 'post',

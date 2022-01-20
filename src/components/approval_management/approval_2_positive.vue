@@ -398,7 +398,7 @@ export default {
       // 审批主表编号
       auditflowId: "",
       // 审批流程
-      auditflowType:"",
+      auditflowType: "",
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
       // 添加通过备注弹出框(适用查到两个审批人或三个审批人)
@@ -555,11 +555,10 @@ export default {
             offset: 100,
           })
         }
-      })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
     // 查询待审批转正数据-不带数据
     selectWorkerlAll2() {
@@ -831,6 +830,12 @@ export default {
           } else if (handle == '驳回') {
             this.add_reject_remark1 = true;
           }
+        }else {
+          ElMessage({
+            showClose: true,
+            message: '系统繁忙，请联系管理员',
+            type: 'error',
+          })
         }
       }).catch(function (error) {
         console.log(" 根据审批编号查询审批明细表失败")
@@ -900,9 +905,9 @@ export default {
           // 审批主表编号
           auditflowId: this.auditflowId,
           // 审批类型（流程名称）
-          auditflowType:this.auditflowType,
+          auditflowType: this.auditflowType,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -987,10 +992,9 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("驳回失败")
         console.log(error);
       });
-
     },
     // 备注弹出框点击确定 驳回当前审批 (两个审批人)
     reject_overtime2() {
@@ -1037,7 +1041,7 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("驳回失败")
         console.log(error);
       });
     },
@@ -1048,7 +1052,7 @@ export default {
         method: 'post',
         url: this.url + 'reject_Approval_State',
         data: {
-          auditflowdetailId:  this.serialID.auditflowdetailId,
+          auditflowdetailId: this.serialID.auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
         },
@@ -1085,7 +1089,7 @@ export default {
           this.remark = "";
         }
       }).catch(function (error) {
-        console.log("失败")
+        console.log("驳回失败")
         console.log(error);
       });
     },
