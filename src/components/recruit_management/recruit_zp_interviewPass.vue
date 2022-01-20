@@ -52,10 +52,11 @@
 
 
         <el-table-column fixed="right" label="操作" width="220">
-          <template #default>
+          <template #default="scope">
             <div style="width: 200px">
               <el-button type="text" size="small" @click="">填写评价</el-button>
-              <el-button type="text" size="small" @click="">录用</el-button>
+              <el-button type="text" size="small" @click="(resumeId=scope.row.resumeId),employ(resumeId)">录用</el-button>
+
               <el-button type="text" size="small" @click="">淘汰/放弃</el-button>
             </div>
 
@@ -83,17 +84,46 @@
 {{this.tableData}}
 
 
+    <el-dialog v-model="EmployAddRemark" title="录用">
+      <span >试用工资：</span>
+      <el-input-number v-model="num" :precision="2" :step="0.1" :max="10" style="margin-bottom: 30px"/>
+      <el-form :model="Remark">
+        <el-input
+            v-model="textarea"
+            :rows="2"
+            type="textarea"
+            placeholder="填写评价"
+        />
+
+      </el-form>
+      <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="cancel">取消</el-button>
+        <el-button type="primary" @click="confirm" :plain="true"
+        >确定</el-button
+        >
+      </span>
+      </template>
+    </el-dialog>
+
 
   </div>
 
 </template>
 
 <script>
-import {
-  ref
-} from 'vue'
+import {ref} from 'vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 export default {
+  setup() {
+    const EmployAddRemark = ref(false);
+    const textarea = ref('');
+    const num = ref(1);
+    return {
+      EmployAddRemark,
+    };
+  },
   data() {
     return {
       pageInfo: {
@@ -101,6 +131,11 @@ export default {
         /* 当前的页 */
         pagesize: 3,
         total: 0,
+      },
+      // 点击录用弹出框表单
+      Remark:{
+        name : "",
+        region : "",
       },
       //筛选框显示隐藏
       icons:false,
@@ -132,6 +167,22 @@ export default {
           this.pageInfo.pagesize = response.data.data.succeed.size;
           this.pageInfo.total = response.data.data.succeed.total;
       })
+    },
+    // 点击录用弹出弹出框
+    employ(resumeId){
+      console.log(resumeId)
+      this.EmployAddRemark=true;
+    },
+    confirm(resumeId){
+      console.log(resumeId)
+      this.EmployAddRemark=false;
+      ElMessage({
+        message: '录用成功',
+        type: 'success',
+      })
+    },
+    cancel(){
+      this.EmployAddRemark=false;
     }
   },mounted() {
     this.selectInterviewPass();
