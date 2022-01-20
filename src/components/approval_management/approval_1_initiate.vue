@@ -3111,7 +3111,7 @@ export default defineComponent({
         } else if (response.data) {
           // 审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理，返回5则代表暂无记录
           if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
-              || response.data.data === 2) {
+              || response.data.data === 2 || response.data.data === 1) {
             // 符合条件再根据部门编号去查询其部门经理
             this.axios({
               method: 'post',
