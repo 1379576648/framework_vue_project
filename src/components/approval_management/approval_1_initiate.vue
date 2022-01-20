@@ -932,7 +932,7 @@
         <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
-             <el-button @click="cancel_5">取消</el-button>
+             <el-button @click="cancel_6">取消</el-button>
             <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
             <el-button type="primary" @click="submitToCard3()" v-if="this.judging === 1">
               确定
@@ -1066,7 +1066,7 @@
         <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
-             <el-button @click="cancel_5">取消</el-button>
+             <el-button @click="cancel_7">取消</el-button>
             <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
             <el-button type="primary" @click="submitToTravel3()" v-if="this.judging === 1">
               确定
@@ -1195,7 +1195,7 @@
         <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
-             <el-button @click="cancel_5">取消</el-button>
+             <el-button @click="cancel_8">取消</el-button>
             <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
             <el-button type="primary" @click="submitToAskForLeave3()" v-if="this.judging === 1">
               确定

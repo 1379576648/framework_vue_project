@@ -853,6 +853,8 @@ export default {
           auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowdetaiRemarks: this.remark,
           auditflowId: this.auditflowId,
+          // 审批申请人
+          staffName1:this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

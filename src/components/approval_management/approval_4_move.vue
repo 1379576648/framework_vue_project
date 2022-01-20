@@ -836,11 +836,13 @@ export default {
           } else if (handle == '驳回') {
             this.add_reject_remark1 = true;
           }
-        } ElMessage({
-          showClose: true,
-          message: '系统繁忙，请联系管理员',
-          type: 'error',
-        })
+        }else {
+          ElMessage({
+            showClose: true,
+            message: '系统繁忙，请联系管理员',
+            type: 'error',
+          })
+        }
       }).catch(function (error) {
         console.log(" 根据审批编号查询审批明细表失败")
         console.log(error);
