@@ -58,7 +58,8 @@
                 通过
               </el-button>
               <el-button type="danger" plain
-                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='驳回')">
+                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,StaffName=scope.row.staffName1),
+                         queryDetail(auditflowId,handle='驳回',auditflowType,StaffName)">
                 驳回
               </el-button>
               <el-button
@@ -960,6 +961,10 @@ export default {
           auditflowdetailId3: this.serialID[2].auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -1009,6 +1014,10 @@ export default {
           auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -1057,6 +1066,10 @@ export default {
           auditflowdetailId: this.serialID.auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

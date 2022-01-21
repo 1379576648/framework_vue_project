@@ -3587,6 +3587,12 @@ export default defineComponent({
                     offset: 100,
                   })
                 }
+              }else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "服务发生雪崩",
+                  offset: 100,
+                })
               }
             })
           } else if (response.data.data.info == 2) {
