@@ -276,7 +276,6 @@ export default {
     },
     //修改员工状态为离职
     updateStaffStateTwo(id) {
-      alert(id)
       var _this = this
       this.axios({
         method: 'put',
