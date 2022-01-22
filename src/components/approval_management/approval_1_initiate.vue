@@ -1214,9 +1214,9 @@
 <script lang="js">
 
 import VDistpicker from 'v-distpicker'
-import {defineComponent, reactive, ref, toRefs, withScopeId} from "vue";
+import {defineComponent, reactive, ref, toRefs} from "vue";
 import {ElMessage, ElNotification} from "element-plus";
-import {regionData, CodeToText} from "element-china-area-data"; //地址选择器导入
+import {CodeToText, regionData} from "element-china-area-data"; //地址选择器导入
 
 export default defineComponent({
   components: {VDistpicker},
@@ -2878,14 +2878,30 @@ export default defineComponent({
         var dateEnd = new Date(endTime);
         var dateDiff = dateEnd.getTime() - dateBegin.getTime(); //时间差的毫秒数
         var days = Math.floor(dateDiff / (24 * 60 * 60 * 1000));
-        var hours = Math.floor(days * 8);
-        if (hours == 0) {
+        // var hours = Math.floor(days * 8);
+
+        var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000)); //计算出相差天数
+        console.log("计算出相差天数:" + dayDiff)
+        var leave1 = dateDiff % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+        console.log("计算天数后剩余的毫秒数:" + leave1)
+        var hours = Math.floor(leave1 / (3600 * 1000)); //计算出小时数
+        console.log("计算出小时数:" + hours)
+        var hour = Math.floor(dayDiff * 8); // 天数换算成小时，一天工作8小时
+        //  如果选择相同的时间
+        if (dayDiff === 0 && leave1 === 0 && hours === 0) {
           ElMessage({
             message: "开始时间与结束时间相同，请重新选择!",
             type: "warning",
           });
           this.cancel_date3();
-        } else {
+          // 如果小时数等于0，并且相差天数大于1，则取相差天数换算成小时
+        } else if (hours == 0 && dayDiff >= 1) {
+          this.sick_1.date3 = hour;
+          // 如果相差天数大于一天时，并且还余有小时数时，则取之间相加的数
+        } else if (hours != 0 && dayDiff >= 1) {
+          this.sick_1.date3 = Math.floor(hours + hour);
+          // 如果相差天数等于0并且小时数不等于0
+        } else if (dayDiff == 0 && hours != 0) {
           this.sick_1.date3 = hours;
         }
       }
@@ -3448,7 +3464,7 @@ export default defineComponent({
               } else if (response.data) {
                 // 审批状态2代表驳回过，3代表撤销，则可以再次申请转正，则去查询该员工的部门经理，返回5则代表暂无记录
                 if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
-                    || response.data.data === 2 ) {
+                    || response.data.data === 2) {
                   // 符合条件再根据部门编号去查询其部门经理
                   this.axios({
                     method: 'post',
@@ -3548,46 +3564,56 @@ export default defineComponent({
                   offset: 100,
                 })//如果服务没有关闭
               } else if (response.data) {
-                // 审批状态2代表驳回过，3代表撤销，则可以再次申请加班，则去查询该员工的部门经理，返回5则代表暂无记录 1为有成功的记录
-                if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
-                    || response.data.data === 2 || response.data.data === 1) {
-                  // 符合条件再根据部门编号去查询其部门经理
-                  this.axios({
-                    method: 'post',
-                    url: this.url + 'selectDeptPostName',
-                    data: {
-                      deptId: _this.NowDeptId,
-                    }
-                  }).then((response) => {
-                    console.log("根据部门编号去查其部门经理成功")
-                    console.log(response)
-                    if (response.data === 300) {
-                      ElNotification.warning({
-                        title: '提示',
-                        message: "服务发生关闭",
-                        offset: 100,
-                      })//如果服务没有关闭
-                    } else if (response.data.data.state === 200) {
-                      //如果服务是正常的
-                      this.NowManager = response.data.data.info;
-                      // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
-                      if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
-                        this.judging = 0;
-                      } else {
-                        this.judging = 1;
+                // 循环出来 审批状态2代表驳回过，3代表撤销，则可以再次申请加班，则去查询该员工的部门经理，返回5则代表暂无记录 1为有成功的记录
+                for (let i = 0; i < response.data.data.length; i++) {
+                  if (response.data.data[i].auditflowState == 0) {
+                    ElNotification.warning({
+                      title: '提示',
+                      message: "查询到您有正在审批中的加班审批，请耐心等候结果！",
+                      offset: 100,
+                    })
+                  } else if (response.data.data[i].auditflowState == 1 || response.data.data[i].auditflowState == 2 ||
+                      response.data.data[i].auditflowState == 3 || response.data.data[i].auditflowState == 5 |
+                      response.data.data[i].auditflowState != 0
+                  ) {
+                    // 符合条件再根据部门编号去查询其部门经理
+                    this.axios({
+                      method: 'post',
+                      url: this.url + 'selectDeptPostName',
+                      data: {
+                        deptId: _this.NowDeptId,
                       }
-                      this.overtime = true
-                    }
-                  })
-                  // 查询成功，审批状态0代表正在审批中，则不能让登陆者再次申请调动
-                } else if (response.data.code === 200 && response.data.data === 0) {
-                  ElNotification.warning({
-                    title: '提示',
-                    message: "查询到您有正在审批中的加班审批，请耐心等候结果！",
-                    offset: 100,
-                  })
+                    }).then((response) => {
+                      console.log("根据部门编号去查其部门经理成功")
+                      console.log(response)
+                      if (response.data === 300) {
+                        ElNotification.warning({
+                          title: '提示',
+                          message: "服务发生关闭",
+                          offset: 100,
+                        })//如果服务没有关闭
+                      } else if (response.data.data.state === 200) {
+                        //如果服务是正常的
+                        this.NowManager = response.data.data.info;
+                        // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+                        if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
+                          this.judging = 0;
+                        } else {
+                          this.judging = 1;
+                        }
+                        this.overtime = true
+                      }
+                    })
+
+                  } else {
+                    ElNotification.warning({
+                      title: '提示',
+                      message: "数据有误！请联系管理员",
+                      offset: 100,
+                    })
+                  }
                 }
-              }else {
+              } else {
                 ElNotification.warning({
                   title: '提示',
                   message: "服务发生雪崩",
