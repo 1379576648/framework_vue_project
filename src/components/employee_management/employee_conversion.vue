@@ -158,7 +158,7 @@
       </el-form>
       <template #footer>
           <span class="dialog-footer">
-            <el-button style="width: 60px" type="primary" @click="updateStaffState(id),insertWorker(),become = false"
+            <el-button style="width: 60px" type="primary" @click="updateStaffState(id),updateWorkerDate(),insertWorker(),become = false"
             >确定</el-button
             >
             <el-button style="width: 60px" @click="become = false,RestForm()">取消</el-button>
@@ -286,6 +286,7 @@ export default defineComponent({
         }
       })
     },
+    //获取值赋值到弹出框
     work(row){
       this.become_1.name=row.staffName;
       this.become_1.dept=row.deptname;
@@ -361,6 +362,33 @@ export default defineComponent({
         url: this.url + 'updateStaffState',
         data: {
           staffId: this.id,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          this.selectpost();
+        } else if (response.data.data === 100) {
+        } else {
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //修改转正日期
+    updateWorkerDate(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateWorkerDate',
+        data: {
+          //员工编号
+          staffId: this.id,
+          //转正日期
+          workerDate:this.become_1.becomedate,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

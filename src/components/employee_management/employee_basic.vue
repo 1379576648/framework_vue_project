@@ -464,7 +464,15 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info[0]
+            _this.tableData = response.data.data.info[0];
+            if(this.tableData.staffState==0){
+              this.tableData.staffState="试用";
+            }else if(this.tableData.staffState==1){
+              this.tableData.staffState="正式";
+            }else if(this.tableData.staffState==2){
+              this.tableData.staffState="离职";
+            }
+
           }
           //如果服务是雪崩的
           else {
