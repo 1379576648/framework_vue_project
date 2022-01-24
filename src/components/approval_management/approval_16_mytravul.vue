@@ -1,10 +1,10 @@
 <template>
-  <!--  我的转正申请页面-->
+  <!--  我的出差申请页面-->
   <div class="body_1">
     <el-tabs type="border-card">
-      <!-- 转正—待审批     -->
+      <!-- 出差—待审批     -->
       <el-tab-pane label="待审批">
-        <el-button @click="selectMyWorker()">重置</el-button>
+        <el-button @click="selectMyWorker1()">重置</el-button>
         &nbsp;
         <el-date-picker
             v-model="selectTime"
@@ -88,12 +88,12 @@
           </el-pagination>
         </div>
       </el-tab-pane>
-      <!-- 转正—已审批 -->
+      <!-- 出差—已审批 -->
       <el-tab-pane label="已审批">
-        <el-button @click="selectMyEndWorker()">重置</el-button>
+        <el-button @click="selectMyEndWorker1()">重置</el-button>
         &nbsp;
         <el-date-picker
-            v-model="selectTime"
+            v-model="selectTime2"
             type="daterange"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
@@ -205,6 +205,8 @@ export default {
       tableData1:[],
       // 选择开始日期/结束日期
       selectTime: [],
+      // 选择开始日期/结束日期
+      selectTime2: [],
       // 总裁名称
       president: "",
       pageInfo: {
@@ -257,7 +259,7 @@ export default {
         }
       })
     },
-    // 查询我的转正审批申请 待处理
+    // 查询我的出差审批申请 待处理
     selectMyWorker() {
       var _this = this
       this.axios({
@@ -274,11 +276,13 @@ export default {
           "startTime": this.selectTime == null ? null : this.selectTime[0],
           //结束时间
           "endTime": this.selectTime == null ? null : this.selectTime[1],
+          // 审批类型
+          "auditflowType": "出差"
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询我的转正申请-待处理");
+        console.log("查询我的出差申请-待处理");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -302,7 +306,51 @@ export default {
         }
       })
     },
-    // 查询我的转正审批申请 已处理
+    // 查询我的出差审批申请 待处理 不带数据
+    selectMyWorker1() {
+      this.selectTime = "";
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectMyWorker',
+        data: {
+          //当前页
+          "currentPage": this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //当前登录者
+          "staffName1": this.NowStaffName,
+          // 审批类型
+          "auditflowType": "出差"
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("查询我的出差申请-待处理");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+            this.pageInfo.pagesize = response.data.data.info.size;
+            this.pageInfo.total = response.data.data.info.total;
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询我的出差审批申请 已处理
     selectMyEndWorker() {
       var _this = this
       this.axios({
@@ -318,14 +366,62 @@ export default {
           // 总裁
           "staffName2":this.president[1].staffname,
           //起始时间
-          "startTime": this.selectTime == null ? null : this.selectTime[0],
+          "startTime": this.selectTime2 == null ? null : this.selectTime2[0],
           //结束时间
-          "endTime": this.selectTime == null ? null : this.selectTime[1],
+          "endTime": this.selectTime2 == null ? null : this.selectTime2[1],
+          // 审批类型
+          "auditflowType": "出差"
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询我的转正申请-已处理");
+        console.log("查询我的出差申请-已处理");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData1 = response.data.data.info.records;
+            this.pageInfo.pagesize = response.data.data.info.size;
+            this.pageInfo.total = response.data.data.info.total;
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询我的出差审批申请 已处理 -不带数据
+    selectMyEndWorker1() {
+      this.selectTime = "";
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectMyEndWorker',
+        data: {
+          //当前页
+          "currentPage": this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //当前登录者
+          "staffName1": this.NowStaffName,
+          // 总裁
+          "staffName2":this.president[1].staffname,
+          // 审批类型
+          "auditflowType": "出差"
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("查询我的出差申请-已处理");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -354,7 +450,7 @@ export default {
   created() {
     // 查询总裁
     this.selectpresident();
-    // 查询我的转正审批申请 待处理
+    // 查询我的出差审批申请 待处理
     this.selectMyWorker();
   }
 }

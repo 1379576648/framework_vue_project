@@ -276,6 +276,9 @@ export default {
           "startTime": this.selectTime == null ? null : this.selectTime[0],
           //结束时间
           "endTime": this.selectTime == null ? null : this.selectTime[1],
+          // 审批类型
+          "auditflowType": "加班"
+
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -318,6 +321,8 @@ export default {
           "pagesize": this.pageInfo.pagesize,
           //当前登录者
           "staffName1": this.NowStaffName,
+          // 审批类型
+          "auditflowType": "加班"
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -365,6 +370,8 @@ export default {
           "startTime": this.selectTime2 == null ? null : this.selectTime2[0],
           //结束时间
           "endTime": this.selectTime2 == null ? null : this.selectTime2[1],
+          // 审批类型
+          "auditflowType": "加班"
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -409,6 +416,8 @@ export default {
           "staffName1": this.NowStaffName,
           // 总裁
           "staffName2":this.president[1].staffname,
+          // 审批类型
+          "auditflowType": "加班"
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
