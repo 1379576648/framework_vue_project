@@ -84,7 +84,7 @@
           <div title="补打卡" class="link-list-item">
             <el-button
                 type="text"
-                @click="selectCardExamine()"
+                @click="clickInquireCard(type='补打卡')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_19.svg"/>
@@ -928,17 +928,35 @@
               </div>
             </el-col>
           </el-form-item>
+          <!-- 判断审批人是否相同 为3代表不相同，则显示一个审批人 -->
+          <el-form-item label="审批人 :"
+                        v-if="this.judging === 3">
+            <el-col :span="12">
+              <div class="demo-basic--circle">
+                <div class="block">
+                  <el-avatar :size="50" :src="circleUrl"></el-avatar>
+                </div>
+                <div class="sub-title" style="line-height: 10px">
+                  {{ president[1].staffname }}
+                </div>
+              </div>
+            </el-col>
+          </el-form-item>
         </el-form>
         <!-- 审批人不同 调用方法不同  -->
         <template #footer>
           <span class="dialog-footer">
              <el-button @click="cancel_6">取消</el-button>
+            <!-- 判断为0，则代表审批人相同，则去调用添加两个审批人的方法-->
+            <el-button type="primary" @click="submitToCard2()" v-if="this.judging === 0">
+              确定
+            </el-button>
             <!-- 判断为1，则代表审批人不相同，则去调用添加三个审批人的方法-->
             <el-button type="primary" @click="submitToCard3()" v-if="this.judging === 1">
               确定
             </el-button>
-            <!-- 判断为0，则代表审批人相同，则去调用添加两个审批人的方法-->
-            <el-button type="primary" @click="submitToCard2()" v-if="this.judging === 0">
+            <!-- 判断为3，则代表审批人不相同，则去调用添加一个审批人的方法-->
+            <el-button type="primary" @click="submitToCard1" v-if="this.judging === 3">
               确定
             </el-button>
           </span>
@@ -1209,6 +1227,8 @@
       </el-dialog>
     </div>
   </div>
+  {{ this.Position.substring(3, 10) }}
+
 </template>
 
 <script lang="js">
@@ -1232,6 +1252,10 @@ export default defineComponent({
       NowStaffName: this.$store.state.staffMessage.staffName,
       // 当前登陆者ID
       staffid: this.$store.state.staffMessage.staffId,
+      // 员工状态（是否离职）
+      staffstate: "",
+      // 当前登录者职位
+      Position: "",
       // 人事部经理名称(审批人2)
       personnel_manager: "",
       // 总裁名称(审批人3)
@@ -1359,6 +1383,7 @@ export default defineComponent({
       },
       // 调岗后查部门
       variation_dept: [],
+
     };
   },
   setup() {
@@ -1381,6 +1406,8 @@ export default defineComponent({
       sizeList: ["large", "medium", "small"],
     });
     return {
+      op: 0,
+      op1:0,
       dialogVisible,
       Change,
       salary,
@@ -1396,6 +1423,35 @@ export default defineComponent({
     };
   },
   methods: {
+    // 查询员工状态
+    inquireStaffstate() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaffState',
+        data: {
+          staffName: this.NowStaffName
+        }
+      }).then((response) => {
+        console.log("查询员工状态")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          this.staffstate = response.data.data.info
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
     // 提交转正 （提交三个审批人）
     Submit_to_positive3() {
       if (this.become_1.remarks_1.length === 0) {
@@ -2250,6 +2306,73 @@ export default defineComponent({
         })
       }
     },
+    // 提交补打卡 (提交一个审批人)
+    submitToCard1() {
+      if (this.punch_1.type_1.length === 0) {
+        ElMessage("请选择您的补打卡类型");
+      } else if (this.punch_1.date1.length === 0) {
+        ElMessage("请选择实际打卡时间");
+      } else if (this.punch_1.remarks_1.length === 0) {
+        ElMessage("请输入补打卡备注");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'submitToCard1',
+          data: {
+            // 申请人
+            staffName: this.NowStaffName,
+            // 部门名称
+            deptName: this.NowDeptName,
+            // 补打卡类型
+            cardType: this.punch_1.type_1,
+            // 补打卡时间
+            cardDate: this.punch_1.date1,
+            // 补打卡备注
+            cardRemarks: this.punch_1.remarks_1,
+            // 审批人3
+            staffName2: this.president[1].staffname,
+            // 审批类型
+            auditflowType: "补打卡",
+            // 审批标题
+            auditflowTitle: this.NowStaffName + "的" + this.punch_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
+          }
+        }).then((response) => {
+          console.log("添加补打卡成功")
+          console.log(response);
+          if (response.data.code == 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data) {
+            //如果服务是正常的
+            if (response.data.code == 200 && response.data.data == 1111) {
+              ElMessage({
+                showClose: true,
+                message: '操作成功，请等待审批结果',
+                type: 'success',
+              })
+              this.punch = false;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "操作失败，请稍后再试",
+                offset: 100,
+              })
+              this.punch = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
     // 提交出差(提交三个审批人)
     submitToTravel3() {
       if (this.travel_1.remarks_1.length === 0) {
@@ -2959,6 +3082,38 @@ export default defineComponent({
     cancel_date7() {
       this.become_1.date1 = "";
     },
+    // 根据员工编号查询部门职位
+    inquirePosition() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'inquirePosition',
+        data: {
+          staffId: this.staffid
+        }
+      }).then((response) => {
+        console.log("查询部门职位");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.Position = response.data.data.info;
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
     // 点击调岗根据员工名称查询该员工是否有调岗审批记录
     selectTransferExamine() {
       var _this = this;
@@ -3527,101 +3682,155 @@ export default defineComponent({
     },
     // 根据名称去查询是否目前有加班审批记录
     selectOvertimeExamine() {
-      var _this = this;
-      this.axios({
-        method: 'post',
-        url: this.url + 'selectStaffState',
-        data: {
-          staffName: this.NowStaffName
-        }
-      }).then((response) => {
-        console.log("查询员工状态")
-        console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })//如果服务没有关闭
-        } else if (response.data) {
-          // 等于1或0则为正式员工或试用员工,则进行后面的操作 根据名称去查询是否目前有加班审批记录
-          if (response.data.data.info == 1 || response.data.data.info == 0) {
-            this.axios({
-              method: 'post',
-              url: this.url + 'selectOvertimeExamine',
-              data: {
-                staffName: this.NowStaffName
-              }
-            }).then((response) => {
-              //如果服务是正常的
-              console.log("查询是否有加班记录成功")
-              console.log(response);
-              //如果服务关闭
-              if (response.data.data.data) {
-                ElNotification.warning({
-                  title: '提示',
-                  message: "服务发生关闭",
-                  offset: 100,
-                })//如果服务没有关闭
-              } else if (response.data) {
-                // 循环出来 审批状态2代表驳回过，3代表撤销，则可以再次申请加班，则去查询该员工的部门经理，返回5则代表暂无记录 1为有成功的记录
-                for (let i = 0; i < response.data.data.length; i++) {
-                  if (response.data.data[i].auditflowState == 0) {
+      if (this.NowStaffName == this.president[1].staffname) {
+        ElNotification({
+          title: '提示',
+          message: '总裁无需审批',
+          type: 'success',
+        })
+      } else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'selectStaffState',
+          data: {
+            staffName: this.NowStaffName
+          }
+        }).then((response) => {
+          console.log("查询员工状态")
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })//如果服务没有关闭
+          } else if (response.data) {
+            // 等于1或0则为正式员工或试用员工,则进行后面的操作 根据名称去查询是否目前有加班审批记录
+            if (response.data.data.info == 1 || response.data.data.info == 0) {
+              this.axios({
+                method: 'post',
+                url: this.url + 'selectOvertimeExamine',
+                data: {
+                  staffName: this.NowStaffName
+                }
+              }).then((response) => {
+                //如果服务是正常的
+                console.log("查询是否有加班记录成功")
+                console.log(response);
+                //如果服务关闭
+                if (response.data.data.data) {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "服务发生关闭",
+                    offset: 100,
+                  })//如果服务没有关闭
+                } else if (response.data) {
+                  for (let i = 0; i <= response.data.data.length; i++) {
+                    // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
+                    if (response.data.data.length === 0 || response.data.data[i].auditflowState === 1 ||
+                        response.data.data[i].auditflowState === 2 ||
+                        response.data.data[i].auditflowState === 3 ||
+                        response.data.data[i].auditflowState !== 0) {
+                      // 符合条件再根据部门编号去查询其部门经理
+                      this.axios({
+                        method: 'post',
+                        url: this.url + 'selectDeptPostName',
+                        data: {
+                          deptId: _this.NowDeptId,
+                        }
+                      }).then((response1) => {
+                        console.log("根据部门编号去查其部门经理成功")
+                        console.log(response1)
+                        if (response1.data === 300) {
+                          ElNotification.warning({
+                            title: '提示',
+                            message: "服务发生关闭",
+                            offset: 100,
+                          })//如果服务没有关闭
+                        } else if (response1.data.data.state === 200) {
+                          this.op = 2
+                          this.NowManager = response1.data.data.info;
+                        }
+                      })
+                    } else if (response.data.data[i].auditflowState == 0) {
+                      this.op = 1;
+                    } else {
+                      ElNotification.warning({
+                        title: '提示',
+                        message: "数据有误！请联系管理员",
+                        offset: 100,
+                      })
+                    }
+                  }
+                  if (this.op == 0) {
+                    ElNotification.warning({
+                      title: '提示',
+                      message: "查询有无正在审批中的加班审批",
+                      offset: 100,
+                    })
+                    window.setTimeout(this.selectOvertimeExamine, 500);
+                  } else if (this.op == 2) {
+                    //如果服务是正常的
+                    // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+                    if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
+                      this.judging = 0;
+                    } else {
+                      this.judging = 1;
+                    }
+                    this.overtime = true
+                  } else if (this.op == 1) {
                     ElNotification.warning({
                       title: '提示',
                       message: "查询到您有正在审批中的加班审批，请耐心等候结果！",
                       offset: 100,
                     })
-                  } else if (response.data.data[i].auditflowState == 1 || response.data.data[i].auditflowState == 2 ||
-                      response.data.data[i].auditflowState == 3 || response.data.data[i].auditflowState == 5 |
-                      response.data.data[i].auditflowState != 0
-                  ) {
-                    // 符合条件再根据部门编号去查询其部门经理
-                    this.axios({
-                      method: 'post',
-                      url: this.url + 'selectDeptPostName',
-                      data: {
-                        deptId: _this.NowDeptId,
-                      }
-                    }).then((response) => {
-                      console.log("根据部门编号去查其部门经理成功")
-                      console.log(response)
-                      if (response.data === 300) {
-                        ElNotification.warning({
-                          title: '提示',
-                          message: "服务发生关闭",
-                          offset: 100,
-                        })//如果服务没有关闭
-                      } else if (response.data.data.state === 200) {
-                        //如果服务是正常的
-                        this.NowManager = response.data.data.info;
-                        // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
-                        if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
-                          this.judging = 0;
-                        } else {
-                          this.judging = 1;
-                        }
-                        this.overtime = true
-                      }
-                    })
-
-                  } else {
-                    ElNotification.warning({
-                      title: '提示',
-                      message: "数据有误！请联系管理员",
-                      offset: 100,
-                    })
                   }
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "服务发生雪崩",
+                    offset: 100,
+                  })
                 }
-              } else {
-                ElNotification.warning({
-                  title: '提示',
-                  message: "服务发生雪崩",
-                  offset: 100,
-                })
-              }
+              })
+            } else if (response.data.data.info == 2) {
+              ElNotification.warning({
+                title: '提示',
+                message: "系统查询到您已离职,没有权限进行改操作",
+                offset: 100,
+              })
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "数据有误，请及时联系管理员",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
             })
-          } else if (response.data.data.info == 2) {
+          }
+        })
+      }
+    },
+    // 点击补打卡按钮查询一系列是否符合条件
+    clickInquireCard(type) {
+      if (this.NowStaffName == this.president[1].staffname) {
+        ElNotification({
+          title: '提示',
+          message: '总裁无需审批',
+          type: 'success',
+        })
+      } else {
+        if (this.Position == "员工") {
+          // 等于1或0则为正式员工或试用员工,则进行后面的操作 根据名称去查询是否目前有补打卡审批记录
+          if (this.staffstate == 1 || this.staffstate == 0) {
+            window.setTimeout(this.selectCardExamine, 500);
+          } else if (this.staffstate == 2) {
             ElNotification.warning({
               title: '提示',
               message: "系统查询到您已离职,没有权限进行改操作",
@@ -3630,10 +3839,68 @@ export default defineComponent({
           } else {
             ElNotification.warning({
               title: '提示',
-              message: "数据有误，请及时联系管理员",
+              message: "查询员工状态数据有误，请及时联系管理员",
               offset: 100,
             })
           }
+          // 如果职位是经理
+        } else if (this.Position.substring(0, 10).match("经理")) {
+          if (this.staffstate == 2) {
+            ElNotification.warning({
+              title: '提示',
+              message: "系统查询到您已离职,没有权限进行改操作",
+              offset: 100,
+            })
+            // 等于1或0则为正式员工或试用员工,则进行后面的操作 根据名称去查询是否目前有补打卡审批记录
+          } else if (this.staffstate == 1 || this.staffstate == 0) {
+            this.op1 = 1;
+            window.setTimeout(this.selectCardExamine,500);
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "查询员工职位数据有误，请及时联系管理员",
+            offset: 100,
+          })
+        }
+      }
+    },
+    // 查询补打卡审批记录
+    selectCardExamine() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectCardExamine',
+        data: {
+          staffName1: this.NowStaffName
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询是否有补打卡记录成功")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          this.op = 0;
+          for (let i = 0; i < response.data.data.info.length; i++) {
+            // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
+            if (response.data.data.info.length === 0 || response.data.data.info[i].auditflowstate === 1 || response.data.data.info[i].auditflowstate === 2 ||
+                response.data.data.info[i].auditflowstate === 3 || response.data.data.info[i].auditflowstate !== 0) {
+            } else if (response.data.data.info[i].auditflowstate === 0) {
+              this.op = 1;
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "补打卡审批数据有误！请联系管理员",
+                offset: 100,
+              })
+            }
+          }
+          window.setTimeout(this.referManager, 500);
         } else {
           ElNotification.warning({
             title: '提示',
@@ -3643,107 +3910,67 @@ export default defineComponent({
         }
       })
     },
-    // 根据名称去查询是否目前有补打卡审批记录
-    selectCardExamine() {
-      var _this = this;
-      this.axios({
-        method: 'post',
-        url: this.url + 'selectStaffState',
-        data: {
-          staffName: this.NowStaffName
-        }
-      }).then((response) => {
-        console.log("查询员工状态")
-        console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })//如果服务没有关闭
-        } else if (response.data) {
-          // 等于1或0则为正式员工或试用员工,则进行后面的操作 根据名称去查询是否目前有补打卡审批记录
-          if (response.data.data.info == 1 || response.data.data.info == 0) {
-            this.axios({
-              method: 'post',
-              url: this.url + 'selectCardExamine',
-              data: {
-                staffName: this.NowStaffName
-              }
-            }).then((response) => {
-              //如果服务是正常的
-              console.log("查询是否有补打卡记录成功")
-              console.log(response);
-              //如果服务关闭
-              if (response.data.data.data) {
-                ElNotification.warning({
-                  title: '提示',
-                  message: "服务发生关闭",
-                  offset: 100,
-                })//如果服务没有关闭
-              } else if (response.data) {
-                // 审批状态2代表驳回过，3代表撤销，则可以再次申请加班，则去查询该员工的部门经理，返回5则代表暂无记录 1为有成功记录
-                if (response.data.code === 200 && response.data.data == 5 || response.data.data === 3
-                    || response.data.data === 2 || response.data.data === 1) {
-                  // 符合条件再根据部门编号去查询其部门经理
-                  this.axios({
-                    method: 'post',
-                    url: this.url + 'selectDeptPostName',
-                    data: {
-                      deptId: _this.NowDeptId,
-                    }
-                  }).then((response) => {
-                    console.log("根据部门编号去查其部门经理成功")
-                    console.log(response)
-                    if (response.data === 300) {
-                      ElNotification.warning({
-                        title: '提示',
-                        message: "服务发生关闭",
-                        offset: 100,
-                      })//如果服务没有关闭
-                    } else if (response.data.data.state === 200) {
-                      //如果服务是正常的
-                      this.NowManager = response.data.data.info;
-                      // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
-                      if (this.NowManager[0].staffname === this.personnel_manager[0].staffname) {
-                        this.judging = 0;
-                      } else {
-                        this.judging = 1;
-                      }
-                      this.punch = true
-                    }
-                  })
-                  // 查询成功，审批状态0代表正在审批中，则不能让登陆者再次申请调动
-                } else if (response.data.code === 200 && response.data.data === 0) {
-                  ElNotification.warning({
-                    title: '提示',
-                    message: "查询到您有正在审批中的补打卡审批，请耐心等候结果！",
-                    offset: 100,
-                  })
-                }
-              }
-            })
-          } else if (response.data.data.info == 2) {
-            ElNotification.warning({
-              title: '提示',
-              message: "系统查询到您已离职,没有权限进行改操作",
-              offset: 100,
-            })
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "数据有误，请及时联系管理员",
-              offset: 100,
-            })
+    // 根据部门编号查询部门经理
+    referManager() {
+      if (this.op == 0) {
+        // 符合条件再根据部门编号去查询其部门经理
+        this.axios({
+          method: 'post',
+          url: this.url + 'selectDeptPostName',
+          data: {
+            deptId: this.NowDeptId,
           }
-        } else {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生雪崩",
-            offset: 100,
-          })
+        }).then((response1) => {
+          console.log("根据部门编号去查其部门经理成功")
+          console.log(response1)
+          if (response1.data === 300) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })//如果服务没有关闭
+          } else if (response1.data.data.state === 200) {
+            this.op = 2
+            this.NowManager = response1.data.data.info;
+            window.setTimeout(this.judgeManager, 1000);
+          }
+        })
+      } else if (this.op == 2) {
+        //如果服务是正常的
+        // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+        if (this.NowManager[0].staffname === this.personnel_manager[0].staffname && this.op1 === 0) {
+          this.judging = 0;
+        } else if (this.NowManager[0].staffname !== this.personnel_manager[0].staffname && this.op1 === 0){
+          this.judging = 1;
+        }else if (this.op1 === 1){
+          alert(11)
+          this.judging = 3;
         }
-      })
+        if (this.type == "补打卡") {
+          this.punch = true
+        }
+      } else if (this.op == 1) {
+        ElNotification.warning({
+          title: '提示',
+          message: "查询到您有正在审批中的补打卡审批，请耐心等候结果！",
+          offset: 100,
+        })
+      }
+    },
+    // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+    judgeManager() {
+      //如果服务是正常的
+      // 判断其部门经理和人事经理是否相同 为0则是相同 为1则不相同
+      if (this.NowManager[0].staffname === this.personnel_manager[0].staffname && this.op1 === 0) {
+        this.judging = 0;
+      } else if (this.NowManager[0].staffname !== this.personnel_manager[0].staffname && this.op1 === 0){
+        this.judging = 1;
+      }else if (this.op1 === 1){
+        this.judging = 3;
+      }
+      if (this.type == "补打卡") {
+        this.punch = true
+      }
     },
     // 根据名称去查询是否目前有出差审批记录
     selectEvectionExamine() {
@@ -3957,6 +4184,10 @@ export default defineComponent({
     this.selectDeptName();
     // 查询人事经理及总裁
     this.selectpresident();
+    // 查询登录者部门职位
+    this.inquirePosition();
+    // 查询员工状态
+    this.inquireStaffstate();
   }
 })
 ;
