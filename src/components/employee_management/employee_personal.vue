@@ -513,36 +513,36 @@
       <div style="width: 100%;margin-top: 20px;">
 
         <!--离职表单-->
-        <div style="width:100%;position: relative;margin-top: 20px;" v-show="lzwhite">
+        <div v-for="(obj5,index) in tableDataNine" style="width:100%;position: relative;margin-top: 20px;" v-show="lzwhite">
           <div class="information_text">
             <ul style="list-style-type: none; ">
               <li>
                 <label>调动类型</label>
-                <p>{{tableDataNine.transferType}}</p>
+                <p>{{obj5.transferType}}</p>
               </li>
               <li>
                 <label>调动前部门</label>
-                <p>{{tableDataNine.createdDeptName}}</p>
+                <p>{{obj5.createdDeptName}}</p>
               </li>
               <li>
                 <label>调动后部门</label>
-                <p>{{tableDataNine.updatedDeptName}}</p>
+                <p>{{obj5.updatedDeptName}}</p>
               </li>
               <li>
                 <label>调动前职位</label>
-                <p>{{tableDataNine.transferRawpostName}}</p>
+                <p>{{obj5.transferRawpostName}}</p>
               </li>
               <li>
                 <label>调动后职位</label>
-                <p>{{tableDataNine.transferAfterpostName}}</p>
+                <p>{{obj5.transferAfterpostName}}</p>
               </li>
               <li>
                 <label>生效日期</label>
-                <p>{{tableDataNine.takeEffectDate}}</p>
+                <p>{{obj5.takeEffectDate}}</p>
               </li>
               <li style="margin-left: 400px">
                 <label>备注</label>
-                <p>{{tableDataNine.transferRemark}}</p>
+                <p>{{obj5.transferRemark}}</p>
               </li>
 
             </ul>
@@ -779,6 +779,13 @@ export default {
         this.jywhite=true;
         this.jytianjia=false;
         this.tianjiajy=true;
+      }
+    },
+
+    //判断调动记录是否有记录
+    transferBJ(){
+      if(this.tableDataNine.length>0){
+        this.lzwhite=true;
       }
     },
     //工作经历清空
@@ -1955,7 +1962,8 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            _this.tableDataNine = response.data.data.info[0]
+            _this.tableDataNine = response.data.data.info,
+            this.transferBJ();
           }
           //如果服务是雪崩的
           else {

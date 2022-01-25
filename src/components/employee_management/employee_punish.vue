@@ -3,7 +3,7 @@
   <div>
     <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectwork">
+      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectPunishGlory">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
@@ -15,12 +15,24 @@
   <div>
     <el-table :data="tableData" stripe style="width: 100%"
               :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-      <el-table-column prop="staffName" label="姓名" width="190" />
-      <el-table-column prop="workStareTime" label="开始时间" width="190" />
-      <el-table-column prop="workEndTime" label="结束时间" width="190" />
-      <el-table-column prop="companyName" label="任职公司" width="190" />
-      <el-table-column prop="positionName" label="职位" width="190" />
-      <el-table-column prop="positionDescribe" label="离职原因" width="190" />
+      <el-table-column label="荣誉与奖励" >
+        <el-table-column prop="gloryName" label="荣誉/奖项名称" width="130" />
+        <el-table-column prop="createdTime" label="奖励日期" width="130" />
+        <el-table-column prop="gloryUnitname" label="颁发单位名称" width="130" />
+        <el-table-column prop="gloryRemark" label="备注" width="130" />
+      </el-table-column>
+      <el-table-column label="惩罚" >
+        <el-table-column prop="punishType" label="惩罚类型" width="130" />
+        <el-table-column prop="punishCause" label="惩罚原因" width="130" />
+        <el-table-column prop="punishUnit" label="惩罚单位" width="130" />
+        <el-table-column label="是否撤销" width="130">
+          <template #default="scope">
+            <span class="button-await" v-if="scope.row.isRevocation===0">否</span>
+            <span class="button-pass" v-if="scope.row.isRevocation===1">是</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="punishRemark" label="备注" width="130" />
+      </el-table-column>
       <el-table-column fixed="right" label="操作">
         <template #default="scope">
           <el-button type="text" size="small" @click="
@@ -44,13 +56,12 @@
         :pager-count="5"
         prev-text="上一页"
         next-text="下一页"
-        @size-change="selectwork()"
-        @current-change="selectwork()"
+        @size-change="selectPunishGlory()"
+        @current-change="selectPunishGlory()"
         background
     >
     </el-pagination>
   </div>
-
 </template>
 
 <script>
@@ -72,19 +83,21 @@ export default {
     }
   },
   methods:{
-    //查询工作经历
-    selectwork() {
+    //查询奖励和惩罚
+    selectPunishGlory() {
       var _this = this
       this.axios({
         method: 'post',
-        url: this.url + 'selectwork',
+        url: this.url + 'selectPunishGlory',
         data: {
           //当前页
           'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
-          //名称
-          "staffName": this.seek,
+           //奖励名称
+          "gloryName": this.seek,
+          //惩罚类型
+          "punishType":this.seek,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -116,8 +129,8 @@ export default {
     },
   },
   mounted() {
-    //分页查询工作经历
-    this.selectwork();
+    //分页查询奖励和惩罚
+    this.selectPunishGlory();
   }
 }
 
