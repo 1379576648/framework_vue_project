@@ -1351,8 +1351,6 @@
       </el-dialog>
     </div>
   </div>
-  {{ this.Position.substring(3, 10) }}
-
 </template>
 
 <script lang="js">
@@ -1932,7 +1930,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'SubmitTransfer2',
+          url: this.url + 'SubmitTransfer1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -1954,7 +1952,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.Change_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加转正成功")
+          console.log("添加调动成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2163,7 +2161,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "调薪" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加转正成功")
+          console.log("添加调薪成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2234,7 +2232,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加离职成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2303,7 +2301,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加离职成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2350,7 +2348,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToLeave2',
+          url: this.url + 'submitToLeave1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -2370,7 +2368,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加离职成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2447,7 +2445,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加加班成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2522,7 +2520,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加加班成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2571,7 +2569,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToOvertime2',
+          url: this.url + 'submitToOvertime1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -2587,17 +2585,15 @@ export default defineComponent({
             overtimeaskTotalDate: this.overtime_1.date3,
             //加班事由
             overtimeaskMatter: this.overtime_1.remarks_1,
-            // 审批人1
-            staffName1: this.personnel_manager[0].staffname,
             // 审批人2
-            staffName2: this.president[1].staffname,
+            staffName1: this.president[1].staffname,
             // 审批类型
             auditflowType: "加班",
             // 审批标题
             auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加加班成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2668,7 +2664,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.punch_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加补打卡成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -3005,7 +3001,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToTravel2',
+          url: this.url + 'submitToTravel1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -3021,10 +3017,8 @@ export default defineComponent({
             travelEDate: this.travel_1.date2,
             // 请假时长
             travelTotalDate: this.travel_1.date3,
-            // 审批人1
-            staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName1: this.president[1].staffname,
             // 审批类型
             auditflowType: "出差",
             // 审批标题
@@ -3226,7 +3220,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToAskForLeave2',
+          url: this.url + 'submitToAskForLeave1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -3242,10 +3236,8 @@ export default defineComponent({
             leaveEDate: this.sick_1.date2,
             // 出差时长
             leaveTotalDate: this.sick_1.date3,
-            // 审批人1
-            staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName1: this.president[1].staffname,
             // 审批类型
             auditflowType: "请假",
             // 审批标题
