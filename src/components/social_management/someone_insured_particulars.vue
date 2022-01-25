@@ -2,11 +2,11 @@
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="参保明细">
+        <el-tabs :model-value="value" @tab-click="handleClick" :key="key">
+          <el-tab-pane label="参保明细" name="1" :key="key_1">
             <someone_insured_details/>
           </el-tab-pane>
-          <el-tab-pane label="参保记录">
+          <el-tab-pane label="参保记录" name="2" :key="key_2">
             <someone_insured_record/>
           </el-tab-pane>
         </el-tabs>
@@ -32,58 +32,26 @@ export default {
   },
   data() {
     return {
-      pageInfo: {
-        // 分页参数
-        currentPage: 1, //当前页
-        pagesize: 3, // 页大小
-        total: 0, // 总页数
-      },
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
-        },
-        {
-          date: "2016-05-02",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
-        },
-        {
-          date: "2016-05-04",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
-        },
-        {
-          date: "2016-05-01",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
-        },
-      ],
-    };
+      key:0,
+      key_1: 0,
+      key_2: 0,
+      value: '1'
+    }
+  }, methods: {
+    handleClick(tab, event) {
+      if (tab.props.label == '参保明细') {
+        this.key_1 = this.key_1 + 1;
+      } else if (tab.props.label == '参保记录') {
+        this.key_2 = this.key_2 + 1;
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
 .j-card-body {
-  padding: 1% 2%;
+  padding: 1%  1% 0 1%;
 }
 
 /* 分页的样式 */
@@ -137,9 +105,6 @@ export default {
   min-height: 100%;
 }
 
-.j-card-body {
-  padding: 2%;
-}
 
 a {
   text-decoration: none;

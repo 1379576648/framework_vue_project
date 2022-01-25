@@ -312,30 +312,31 @@ export default defineComponent({
     },
     //导出操作
     outExe() {
+      this.export2Excel();
       //如果有这个导出按钮的权限
-      if (this.permissionQuery("导出")) {
-        ElMessageBox.confirm(
-            '此操作将导出excel文件, 是否继续?',
-            '提示',
-            {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning',
-            }
-        ).then(() => {
-          this.export2Excel();
-        }).catch(() => {
-          ElMessage({
-            type: 'info',
-            message: '取消成功',
-          })
-        })
-      } else {
-        ElMessage({
-          message: '权限不足',
-          type: 'warning',
-        })
-      }
+      // if (this.permissionQuery("导出")) {
+      //   ElMessageBox.confirm(
+      //       '此操作将导出excel文件, 是否继续?',
+      //       '提示',
+      //       {
+      //         confirmButtonText: '确定',
+      //         cancelButtonText: '取消',
+      //         type: 'warning',
+      //       }
+      //   ).then(() => {
+      //     this.export2Excel();
+      //   }).catch(() => {
+      //     ElMessage({
+      //       type: 'info',
+      //       message: '取消成功',
+      //     })
+      //   })
+      // } else {
+      //   ElMessage({
+      //     message: '权限不足',
+      //     type: 'warning',
+      //   })
+      // }
     },
     // 导出方法
     export2Excel() {

@@ -31,7 +31,7 @@
               >
             </template>
             <span style="color: #938c8c"
-            >添加社保方案请前往<span @click="insured_scheme=true" style="color:#1d95e0">&nbsp;参保方案&nbsp;</span>页</span
+            >添加社保方案请前往<span @click="insured_scheme=true" style="color:#1d95e0;cursor: pointer">&nbsp;参保方案&nbsp;</span>页</span
             >
           </el-popover>
           <br/><br/>
@@ -67,7 +67,7 @@
                       size="small"
                       v-model="formValue.inMonth"
                       type="month"
-                      :disabled="socialSwitch!=true"
+                      disabled
                       placeholder="选择参保月份"
                   />
                 </el-form-item>
@@ -113,7 +113,7 @@
                       size="small"
                       type="month"
                       v-model="formValue.inMonth"
-                      :disabled="fundSwitch!=true"
+                      disabled
                       placeholder="选择参保月份"
                   />
                 </el-form-item>
@@ -207,7 +207,7 @@
 <script>
 import {ref, defineComponent} from "vue";
 import insured_scheme from '../social_management/insured_scheme.vue';
-import {ElMessage, ElNotification} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 
 export default {
   components: {
@@ -217,7 +217,7 @@ export default {
     let time = (rule, value, callback) => {
       if (value == '') {
         return callback(new Error('请选择参保月份'));
-      } else if(value>new Date()){
+      } else if (value > new Date()) {
         return callback(new Error('暂不支持提前参保'));
       } else {
         callback();
@@ -242,7 +242,7 @@ export default {
       fundNumber: '',
       //参保月份
       formValue: {
-        inMonth: '',
+        inMonth: new Date(),
       },
       //员工名称
       staffName: '',
@@ -265,14 +265,14 @@ export default {
       deptS: [],
       // 表单验证
       rules: {
-        //积金月份
-        inMonth: [
-          {
-            required: true,
-            validator: time,
-            trigger: 'change',
-          }
-        ]
+        // //积金月份
+        // inMonth: [
+        //   {
+        //     required: true,
+        //     validator: time,
+        //     trigger: 'change',
+        //   }
+        // ]
       },
       //选择的员工列表
       selectStaffList: [],
@@ -286,64 +286,97 @@ export default {
     save() {
       this.$refs['fromValue'].validate((valid) => {
         if (valid) {
-          this.axios({
-            method: 'post',
-            url: this.url + 'insuredSubmit',
-            data: {
-              //选择的员工列表
-              selectStaffList: this.selectStaffList,
-              //社保方案编号
-              scheme_id: this.scheme_name,
-              //缴纳的社保积金
-              payment: {
-                //社保基数
-                socialNumber: this.socialNumber,
-                //积金基数
-                fundNumber: this.fundNumber,
-                //参保月份
-                inMonth: this.formValue.inMonth,
-                //计薪月份
-                time: this.time,
-              }
-            },
-            responseType: 'json',
-            responseEncoding: 'utf-8',
-          }).then((response) => {
-            //如果服务关闭
-            if (response.data.data.data) {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生关闭",
-                offset: 100,
-              })
-              //如果服务没有关闭
-            } else if (response.data.data) {
-              //如果服务是正常的
-              if (response.data.data.state == 200) {
-                //如果是成功
-                if (response.data.data.info == "成功") {
-                  this.next();
-                  ElMessage({
-                    type: 'success',
-                    message: '提交成功',
-                  })
+          if (this.scheme_name != '') {
+            ElMessageBox.confirm(
+                '是否确认提交所选数据项?',
+                '系统提示',
+                {
+                  cancelButtonText: '取消',
+                  confirmButtonText: '确认',
+                  type: 'warning',
+                }
+            ).then(() => {
+              this.axios({
+                method: 'post',
+                url: this.url + 'insuredSubmit',
+                data: {
+                  //选择的员工列表
+                  selectStaffList: this.selectStaffList,
+                  //社保方案编号
+                  scheme_id: this.scheme_name,
+                  //操作人
+                  staffName: this.$store.state.staffMessage.staffName,
+                  //缴纳的社保积金
+                  payment: {
+                    //社保基数
+                    socialNumber: this.socialNumber,
+                    //积金基数
+                    fundNumber: this.fundNumber,
+                    //参保月份
+                    inMonth: this.formValue.inMonth,
+                    //计薪月份
+                    time: this.time,
+                  }
+                },
+                responseType: 'json',
+                responseEncoding: 'utf-8',
+              }).then((response) => {
+                if (response.data.code == 200) {
+                  //如果服务关闭
+                  if (response.data.data.data) {
+                    ElNotification.error({
+                      title: '提示',
+                      message: "服务发生关闭",
+                      offset: 100,
+                    })
+                    //如果服务没有关闭
+                  } else if (response.data.data) {
+                    //如果服务是正常的
+                    if (response.data.data.state == 200) {
+                      //如果是成功
+                      if (response.data.data.info == "成功") {
+                        this.next();
+                        ElMessage({
+                          type: 'success',
+                          message: '提交成功',
+                        })
+                        this.$store.commit("updateToken", response.data.data.token);
+                      } else {
+                        ElMessage({
+                          type: 'warning',
+                          message: response.data.data.info,
+                        })
+                      }
+                    }
+                    //如果服务是雪崩的
+                    else {
+                      ElNotification.error({
+                        title: '提示',
+                        message: "服务发生雪崩",
+                        offset: 100,
+                      })
+                    }
+                  }
                 } else {
-                  ElMessage({
-                    type: 'warning',
-                    message: response.data.data.info,
+                  ElNotification.error({
+                    title: '提示',
+                    message: response.data.message,
+                    offset: 100,
                   })
                 }
-              }
-              //如果服务是雪崩的
-              else {
-                ElNotification.error({
-                  title: '提示',
-                  message: "服务发生雪崩",
-                  offset: 100,
-                })
-              }
-            }
-          })
+              })
+            }).catch(() => {
+              ElMessage({
+                type: 'info',
+                message: '取消成功',
+              })
+            })
+          } else {
+            ElMessage({
+              type: 'warning',
+              message: "请选择参保方案",
+            })
+          }
         } else {
           return false
         }
@@ -358,16 +391,12 @@ export default {
       } else {
         this.fundSwitch = false;
         this.socialSwitch = false;
-        //当前时间
-        this.time = '';
         // 参保方案
         this.scheme_name = '';
         //社保基数
         this.socialNumber = '';
         //积金基数
         this.fundNumber = '';
-        //参保月份
-        this.formValue.inMonth = '';
       }
     },
     //部门列表
@@ -377,27 +406,37 @@ export default {
         url: this.url + 'deptList',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.deptS = response.data.data.info;
-          }
-          //如果服务是雪崩的
-          else {
+
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              this.deptS = response.data.data.info;
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -425,28 +464,38 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.staffList = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total
-          }
-          //如果服务是雪崩的
-          else {
+
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              this.staffList = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -457,31 +506,43 @@ export default {
         url: this.url + 'selectDefInsuredListName',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.insuredList_name = response.data.data.info;
-          }
-          //如果服务是雪崩的
-          else {
+
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              this.insuredList_name = response.data.data.info;
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
   }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //参保方案
     this.selectDefInsuredListName();
     //查询所有的员工

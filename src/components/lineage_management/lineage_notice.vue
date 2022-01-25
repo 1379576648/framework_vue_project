@@ -153,7 +153,7 @@
     </div>
   </div>
   <!-- 弹出操作窗口 -->
-  <el-dialog width="668px" v-model="outerVisible" destroy-on-close="false" @close="cancel">
+  <el-dialog width="668px" v-model="outerVisible" destroy-on-close="false" :before-close="revocatory">
     <span class="headline"> {{ judge }}公告</span>
     <!-- form表单 -->
     <el-form ref="fromValue" :rules="formVerify" :model="fromValue" :inline="true" style="margin-left: 30px"
@@ -206,7 +206,7 @@
 
       <el-form-item style="margin-left: 400px">
         <div>
-          <el-button size="mini" style="width: 65px;" @click="cancel()">
+          <el-button size="mini" style="width: 65px;" @click="cancel(),this.revocatory()">
             取消
           </el-button>
           <el-button size="mini" style="width: 65px;" type="primary" @click="judges('fromValue')">
@@ -443,6 +443,15 @@ export default {
     }
   },
   methods: {
+    revocatory() {
+      //清空数据
+      this.eliminate();
+      this.outerVisible = false
+      ElMessage({
+        message: '取消成功',
+        type: 'info',
+      })
+    },
     /*分页查询*/
     next() {
       var _this = this
@@ -468,28 +477,37 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-              _this.tableData = response.data.data.info.records
-              _this.pageInfo.total = response.data.data.info.total
-          }
-          //如果服务是雪崩的
-          else {
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -516,39 +534,48 @@ export default {
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.info == "成功") {
-                this.next();
-                ElMessage({
-                  type: 'success',
-                  message: '删除成功',
-                })
-              } else {
-                ElMessage({
-                  type: 'warning',
-                  message: response.data.data.info,
+          if (response.data.code == 200) {
+            //如果服务关闭
+            if (response.data.data.data) {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生关闭",
+                offset: 100,
+              })
+              //如果服务没有关闭
+            } else if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果是成功
+                if (response.data.data.info == "成功") {
+                  this.next();
+                  ElMessage({
+                    type: 'success',
+                    message: '删除成功',
+                  })
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              }
+              //如果服务是雪崩的
+              else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "服务发生雪崩",
+                  offset: 100,
                 })
               }
             }
-            //如果服务是雪崩的
-            else {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
         })
       }).catch(() => {
@@ -581,39 +608,48 @@ export default {
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.info == "成功") {
-                this.next();
-                ElMessage({
-                  type: 'success',
-                  message: '删除成功',
-                })
-              } else {
-                ElMessage({
-                  type: 'warning',
-                  message: response.data.data.info,
+          if (response.data.code == 200) {
+            //如果服务关闭
+            if (response.data.data.data) {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生关闭",
+                offset: 100,
+              })
+              //如果服务没有关闭
+            } else if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果是成功
+                if (response.data.data.info == "成功") {
+                  this.next();
+                  ElMessage({
+                    type: 'success',
+                    message: '删除成功',
+                  })
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              }
+              //如果服务是雪崩的
+              else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "服务发生雪崩",
+                  offset: 100,
                 })
               }
             }
-            //如果服务是雪崩的
-            else {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
         })
       }).catch(() => {
@@ -636,42 +672,51 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              this.next();
-              ElMessage({
-                type: 'success',
-                message: '新增成功',
-              })
-              //清空数据
-              this.eliminate();
-              this.outerVisible = false
-            } else {
-              ElMessage({
-                type: 'warning',
-                message: response.data.data.info,
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.next();
+                ElMessage({
+                  type: 'success',
+                  message: '新增成功',
+                })
+                //清空数据
+                this.eliminate();
+                this.outerVisible = false;
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -684,42 +729,51 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              this.next();
-              ElMessage({
-                type: 'success',
-                message: '修改成功',
-              })
-              //清空数据
-              this.eliminate();
-              this.outerVisible = false
-            } else {
-              ElMessage({
-                type: 'warning',
-                message: response.data.data.info,
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.next();
+                ElMessage({
+                  type: 'success',
+                  message: '修改成功',
+                })
+                //清空数据
+                this.eliminate();
+                this.outerVisible = false;
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
 
@@ -796,33 +850,45 @@ export default {
         method: 'get',
         url: this.url + 'selectDeptList',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.options = [];
-            //循环部门列表
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              //一个一个存起来
-              this.options.push({value: response.data.data.info[i].deptId, label: response.data.data.info[i].deptName})
-            }
-          }
-          //如果服务是雪崩的
-          else {
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //初始化
+              this.options = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                //一个一个存起来
+                this.options.push({
+                  value: response.data.data.info[i].deptId,
+                  label: response.data.data.info[i].deptName
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -832,32 +898,41 @@ export default {
         method: 'get',
         url: this.url + 'selectPossessDeptList?id=' + id
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.fromValue.deptNameList = [];
-            //循环部门列表
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              this.fromValue.deptNameList.push(response.data.data.info[i].deptName)
-            }
-          }
-          //如果服务是雪崩的
-          else {
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //初始化
+              this.fromValue.deptNameList = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                this.fromValue.deptNameList.push(response.data.data.info[i].deptName)
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -867,28 +942,37 @@ export default {
         method: 'get',
         url: this.url + 'peropleNoticeViewed?id=' + id,
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.fromValue.peropleNoticeViewed = response.data.data.info;
-          }
-          //如果服务是雪崩的
-          else {
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //初始化
+              this.fromValue.peropleNoticeViewed = response.data.data.info;
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -898,32 +982,43 @@ export default {
         method: 'get',
         url: this.url + 'unseenNoticePerson?id=' + id,
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.fromValue.unseenNoticePerson = response.data.data.info;
-          }
-          //如果服务是雪崩的
-          else {
+        if (response.data.code == 200) {
+          //如果服务关闭
+          if (response.data.data.data) {
             ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: "服务发生关闭",
               offset: 100,
             })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //初始化
+              this.fromValue.unseenNoticePerson = response.data.data.info;
+              this.$store.commit("updateToken", response.data.data.token);
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     }
   }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.next();
   }
 }
