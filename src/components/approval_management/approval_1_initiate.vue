@@ -360,7 +360,6 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.label"
-
               ></el-option>
             </el-select>
           </el-form-item>
@@ -1351,6 +1350,7 @@
       </el-dialog>
     </div>
   </div>
+
 </template>
 
 <script lang="js">
@@ -3433,11 +3433,50 @@ export default defineComponent({
     // 判断部门是否相同
     judgingDept() {
       if (this.NowDeptName == this.Change_1.dept_1) {
-        ElMessage({
+        ElNotification.warning({
+          title: '提示',
           message: "原部门与变动后部门相同，请重新选择!",
-          type: "warning",
-        });
+          offset: 100,
+        })
         this.emptyDept();
+      // 如果不相同
+      } else if (this.judging === 3) {
+        // 查询是否选择的部门的部门经理是否有人任职
+        this.axios({
+          method: 'post',
+          url: this.url + 'selectDeptPost',
+          data: {
+            deptName: this.Change_1.dept_1
+          }
+        }).then((response) => {
+          console.log("根据部门名称查询部门职位成功")
+          console.log(response)
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的 根据长度判断部门经理是否有人任职
+            if (response.data.data.state == 200) {
+                if (response.data.data.info.length !== 0){
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "该部门已有经理，暂不支持调动该部门",
+                    offset: 100,
+                  })
+                }
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+        })
       }
     },
     // 清空变动后部门
@@ -4105,7 +4144,7 @@ export default defineComponent({
       })
     },
     // 查询离职审批记录
-    selectDimissionRecord(){
+    selectDimissionRecord() {
       this.axios({
         method: 'post',
         url: this.url + 'selectDimissionRecord',
@@ -4214,7 +4253,7 @@ export default defineComponent({
             offset: 100,
           })//如果服务没有关闭
         } else if (response.data.data) {
-          if (response.data.data.state == 200){
+          if (response.data.data.state == 200) {
             this.op = 0;
             for (let i = 0; i < response.data.data.info.length; i++) {
               // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4231,14 +4270,14 @@ export default defineComponent({
               }
             }
             window.setTimeout(this.referManager, 500);
-          }else {
+          } else {
             ElNotification.warning({
               title: '提示',
               message: "补打卡审批数据有误，请联系管理员",
               offset: 100,
             })
           }
-        } else{
+        } else {
           ElNotification.warning({
             title: '提示',
             message: "服务发生雪崩",
