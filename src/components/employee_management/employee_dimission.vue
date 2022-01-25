@@ -13,7 +13,7 @@
             <div class="ant-spin-container">
               <div style="height:100%; width:50%; margin:auto;">
                 <el-form
-                    ref="ruleForm"
+                    ref="tableData"
                     :model="tableData"
                     :rules="rules"
                     label-width="120px"
@@ -83,7 +83,7 @@
                     <el-button style="width: 80px;"
                                @click="this.$parent.$data.employee_dimission=false">取消
                     </el-button>
-                    <el-button style="width: 80px" type="primary" @click="submitForm('ruleForm')"
+                    <el-button style="width: 80px" type="primary" @click="updateStaffStateTwo(staffId=this.$parent.$data.one),insertQuit(),this.$parent.$data.employee_dimission=false"
                     >提交
                     </el-button
                     >
@@ -174,16 +174,6 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     //根据id查询员工信息
     selectStaffAll(id) {
       var _this = this
@@ -229,7 +219,86 @@ export default {
         }
       })
     },
-  },mounted() {
+    //添加离职
+    insertQuit() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertQuit',
+        data: {
+          //员工名称
+          staffName:this.tableData.staffName,
+          //离职原因
+          quitType:this.tableData.cause,
+          //离职时间
+          formalQuitDate:this.tableData.dimisiondate,
+          //备注
+          quitExplain:this.tableData.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          console.log(response)
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //如果是成功
+            if (response.data.data.info == "成功") {
+              ElNotification({
+                title: '提示',
+                message: '离职成功',
+                type: 'success',
+              })
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改员工状态为离职
+    updateStaffStateTwo(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateStaffStateTwo',
+        data: {
+          staffId: this.$parent.$data.one,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+        } else if (response.data.data === 100) {
+        } else {
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+  },
+  mounted() {
     console.log(this)
     this.selectStaffAll(this.$parent.$data.one)
   }

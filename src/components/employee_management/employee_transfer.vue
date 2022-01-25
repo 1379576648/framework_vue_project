@@ -88,7 +88,7 @@
 
                 <div style="width:25%;height: 50px;margin: auto;margin-top: 20px;">
                   <el-button @click="RestForm(),changesadd=!changesadd" style="width: 60px;">取消</el-button>
-                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(deptId=this.tableDatas.deptId),insertTransfer(),changesadd=!changesadd">提交</el-button>
+                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(deptId=this.tableDatas.deptId),updateDeptPostName(deptPostId=this.tableDatas.deptPostId),insertTransfer(),changesadd=!changesadd">提交</el-button>
                 </div>
 
               </el-form>
@@ -528,7 +528,7 @@ export default{
         }
       })
     },
-    //修改部门
+    //修改部门名称
     updateDeptName(deptId) {
       var _this = this
       this.axios({
@@ -539,6 +539,32 @@ export default{
           deptId:this.tableDatas.deptId,
           //部门名称
           deptName:this.ruleForm.transferdept,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+        } else if (response.data.data === 100) {
+        } else {
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    //修改部门职位名称
+    updateDeptPostName(deptPostId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateDeptPostName',
+        data: {
+          //部门职位编号
+          deptPostId:this.tableDatas.deptPostId,
+          //职位名称
+          postName:this.ruleForm.transferpost,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

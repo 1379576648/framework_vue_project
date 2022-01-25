@@ -53,11 +53,13 @@
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="success" plain
-                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='通过')">
+                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,StaffName=scope.row.staffName1),
+                         queryDetail(auditflowId,handle='通过',auditflowType,StaffName)">
                 通过
               </el-button>
               <el-button type="danger" plain
-                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='驳回')">
+                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,StaffName=scope.row.staffName1),
+                         queryDetail(auditflowId,handle='驳回',auditflowType,StaffName)">
                 驳回
               </el-button>
               <el-button
@@ -414,6 +416,8 @@ export default {
       serialID: [],
       // 审批主表编号
       auditflowId: "",
+      // 审批流程
+      auditflowType: "",
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
       // 添加通过备注弹出框(适用查到两个审批人或三个审批人)
@@ -851,6 +855,8 @@ export default {
           auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowdetaiRemarks: this.remark,
           auditflowId: this.auditflowId,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -864,9 +870,9 @@ export default {
             type: 'success',
           })
           // 查询待处理的加班审批
-    this.selectAuditflow();
-    // 查询已处理的加班审批
-    this.selectEndAuditflow();
+          this.selectAuditflow();
+          // 查询已处理的加班审批
+          this.selectEndAuditflow();
           this.add_pass_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -898,9 +904,16 @@ export default {
         method: 'post',
         url: this.url + 'update_Approval_State',
         data: {
+          // 明细编号
           auditflowdetailId: this.serialID.auditflowdetailId,
+          // 备注
           auditflowdetaiRemarks: this.remark,
+          // 审批主表编号
           auditflowId: this.auditflowId,
+          // 审批类型（流程名称）
+          auditflowType:this.auditflowType,
+          // 审批申请人
+          staffName1:this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -914,9 +927,9 @@ export default {
             type: 'success',
           })
           // 查询待处理的加班审批
-    this.selectAuditflow();
-    // 查询已处理的加班审批
-    this.selectEndAuditflow();
+          this.selectAuditflow();
+          // 查询已处理的加班审批
+          this.selectEndAuditflow();
           this.add_pass_remark2 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -953,6 +966,10 @@ export default {
           auditflowdetailId3: this.serialID[2].auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -966,9 +983,9 @@ export default {
             type: 'success',
           })
           // 查询待处理的加班审批
-    this.selectAuditflow();
-    // 查询已处理的加班审批
-    this.selectEndAuditflow();
+          this.selectAuditflow();
+          // 查询已处理的加班审批
+          this.selectEndAuditflow();
           this.add_reject_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -1005,6 +1022,10 @@ export default {
           auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -1018,9 +1039,9 @@ export default {
             type: 'success',
           })
           // 查询待处理的加班审批
-    this.selectAuditflow();
-    // 查询已处理的加班审批
-    this.selectEndAuditflow();
+          this.selectAuditflow();
+          // 查询已处理的加班审批
+          this.selectEndAuditflow();
           this.add_reject_remark2 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -1052,9 +1073,13 @@ export default {
         method: 'post',
         url: this.url + 'reject_Approval_State',
         data: {
-          auditflowdetailId:  this.serialID.auditflowdetailId,
+          auditflowdetailId: this.serialID.auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -1068,9 +1093,9 @@ export default {
             type: 'success',
           })
           // 查询待处理的加班审批
-    this.selectAuditflow();
-    // 查询已处理的加班审批
-    this.selectEndAuditflow();
+          this.selectAuditflow();
+          // 查询已处理的加班审批
+          this.selectEndAuditflow();
           this.add_reject_remark3 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
