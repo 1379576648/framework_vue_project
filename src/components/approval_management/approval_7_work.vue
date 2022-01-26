@@ -117,9 +117,6 @@
           <el-form-item label="加班事由：">
             <el-input v-model="details[0].overtimeaskmatter" disabled></el-input>
           </el-form-item>
-          <el-form-item label="备注：">
-            <el-input v-model="details[0].overtimeaskremarks" disabled></el-input>
-          </el-form-item>
           <el-form-item label="加班开始时间：">
             <el-input v-model="details[0].overtimeaskSDate" disabled></el-input>
           </el-form-item>
@@ -230,9 +227,6 @@
             </el-form-item>
             <el-form-item label="加班事由：">
               <el-input v-model="details2[0].overtimeaskmatter" disabled></el-input>
-            </el-form-item>
-            <el-form-item label="备注：">
-              <el-input v-model="details2[0].overtimeaskremarks" disabled></el-input>
             </el-form-item>
             <el-form-item label="加班开始时间：">
               <el-input v-model="details2[0].overtimeaskSDate" disabled></el-input>

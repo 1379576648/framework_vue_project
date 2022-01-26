@@ -127,10 +127,10 @@
             <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
           </el-form-item>
           <el-form-item label="申请状态：">
-            <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===0" v-model="state.pending" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===1" v-model="state.through" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===2" v-model="state.rejected" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===3" v-model="state.undo" disabled></el-input>
           </el-form-item>
           <el-form-item label="审批人：">
             <el-input v-model="details[0].staffName2" disabled></el-input>
@@ -232,10 +232,10 @@
               <el-input v-if="details2[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
             </el-form-item>
             <el-form-item label="申请状态：">
-              <el-input v-if="details2[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===0" v-model="state.pending" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===1" v-model="state.through" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===2" v-model="state.rejected" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===3" v-model="state.undo" disabled></el-input>
             </el-form-item>
             <el-form-item label="审批人：">
               <el-input v-model="details2[0].staffName2" disabled></el-input>
