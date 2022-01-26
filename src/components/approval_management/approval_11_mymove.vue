@@ -203,7 +203,7 @@
           <el-input v-if="details[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
           <el-input v-if="details[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
           <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
-          <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.undo1" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
         </el-form-item>
         <el-form-item label="审批备注：" v-if="details[0].auditflowdetaiRemarks != null">
           <el-input v-model="details[0].auditflowdetaiRemarks" disabled></el-input>
@@ -219,7 +219,7 @@
           <el-input v-if="details[1].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
           <el-input v-if="details[1].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
           <el-input v-if="details[1].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
-          <el-input v-if="details[1].auditflowdetaiState===3" v-model="state.undo1" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
         </el-form-item>
         <el-form-item label="审批备注：" v-if="details[1].auditflowdetaiRemarks != null">
           <el-input v-model="details[1].auditflowdetaiRemarks" disabled ellipsis></el-input>
