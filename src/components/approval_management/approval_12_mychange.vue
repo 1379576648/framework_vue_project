@@ -180,31 +180,31 @@
         </div>
       </el-tab-pane>
     </el-tabs>
-
     <!-- 点击详情，弹出抽屉-->
     <el-drawer v-model="drawer" title="I am the title" :with-header="false">
-      <el-form ref="form" :model="details">
+      <!--  审批明细数量为3时    -->
+      <el-form ref="form" :model="details" v-if="this.detailsNumber == 3">
         <el-form-item label="标题：">
           <el-input v-model="details[0].auditflowTitle" disabled></el-input>
         </el-form-item>
         <el-form-item label="申请人：">
           <el-input v-model="details[0].staffName1" disabled></el-input>
         </el-form-item>
-        <el-form-item label="当前审核状态：">
-          <el-input v-if="details[0].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
-          <el-input v-if="details[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
-          <el-input v-if="details[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
-          <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
-          <el-input v-if="details[0].auditflowdetaiState===4" v-model="state.undo" disabled></el-input>
+        <el-form-item label="当前审核状态：" v-if="details[0].auditflowstate != null">
+          <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
         </el-form-item>
         <el-form-item label="审批人：" v-if="details[0].staffName2 != null">
           <el-input v-model="details[0].staffName2" disabled></el-input>
         </el-form-item>
-        <el-form-item label="申请状态：" v-if="details[0].auditflowstate!= null">
-          <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-          <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-          <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-          <el-input v-if="details[0].auditflowstate===3" v-model="state.undo1" disabled></el-input>
+        <el-form-item label="申请状态：" v-if="details[0].auditflowdetaiState!= null">
+          <el-input v-if="details[0].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
         </el-form-item>
         <el-form-item label="审批备注：" v-if="details[0].auditflowdetaiRemarks != null">
           <el-input v-model="details[0].auditflowdetaiRemarks" disabled></el-input>
@@ -215,14 +215,15 @@
         <el-form-item label="审批人：" v-if="details[1].staffName2 != null">
           <el-input v-model="details[1].staffName2" disabled></el-input>
         </el-form-item>
-        <el-form-item label="申请状态：" v-if="details[1].auditflowstate!= null">
-          <el-input v-if="details[1].auditflowstate===0" v-model="state.pending" disabled></el-input>
-          <el-input v-if="details[1].auditflowstate===1" v-model="state.through" disabled></el-input>
-          <el-input v-if="details[1].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-          <el-input v-if="details[1].auditflowstate===3" v-model="state.undo1" disabled></el-input>
+        <el-form-item label="申请状态：" v-if="details[1].auditflowdetaiState!= null">
+          <el-input v-if="details[1].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
         </el-form-item>
         <el-form-item label="审批备注：" v-if="details[1].auditflowdetaiRemarks != null">
-          <el-input v-model="details[1].auditflowdetaiRemarks" disabled></el-input>
+          <el-input v-model="details[1].auditflowdetaiRemarks" disabled ellipsis></el-input>
         </el-form-item>
         <el-form-item label="审核时间：" v-if="details[1].auditflowdetaiRemarks != null">
           <el-input v-model="details[1].auditflowdetaiDate" disabled></el-input>
@@ -230,11 +231,12 @@
         <el-form-item label="审批人：" v-if="details[2].staffName2 != null">
           <el-input v-model="details[2].staffName2" disabled></el-input>
         </el-form-item>
-        <el-form-item label="申请状态：" v-if="details[2].auditflowstate!= null">
-          <el-input v-if="details[2].auditflowstate===0" v-model="state.pending" disabled></el-input>
-          <el-input v-if="details[2].auditflowstate===1" v-model="state.through" disabled></el-input>
-          <el-input v-if="details[2].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-          <el-input v-if="details[2].auditflowstate===3" v-model="state.undo1" disabled></el-input>
+        <el-form-item label="申请状态：" v-if="details[2].auditflowdetaiState!= null">
+          <el-input v-if="details[2].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
+          <el-input v-if="details[2].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
+          <el-input v-if="details[2].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[2].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[2].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
         </el-form-item>
         <el-form-item label="审批备注：" v-if="details[2].auditflowdetaiRemarks != null">
           <el-input v-model="details[2].auditflowdetaiRemarks" disabled></el-input>
@@ -243,9 +245,86 @@
           <el-input v-model="details[2].auditflowdetaiDate" disabled></el-input>
         </el-form-item>
       </el-form>
+      <!--  审批明细数量为2时    -->
+      <el-form ref="form" :model="details" v-if="this.detailsNumber == 2">
+        <el-form-item label="标题：">
+          <el-input v-model="details[0].auditflowTitle" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="申请人：">
+          <el-input v-model="details[0].staffName1" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="当前审核状态：" v-if="details[0].auditflowstate != null">
+          <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审批人：" v-if="details[0].staffName2 != null">
+          <el-input v-model="details[0].staffName2" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="申请状态：" v-if="details[0].auditflowdetaiState!= null">
+          <el-input v-if="details[0].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审批备注：" v-if="details[0].auditflowdetaiRemarks != null">
+          <el-input v-model="details[0].auditflowdetaiRemarks" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审核时间：" v-if="details[0].auditflowdetaiRemarks != null">
+          <el-input v-model="details[0].auditflowdetaiDate" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审批人：" v-if="details[1].staffName2 != null">
+          <el-input v-model="details[1].staffName2" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="申请状态：" v-if="details[1].auditflowdetaiState!= null">
+          <el-input v-if="details[1].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[1].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审批备注：" v-if="details[1].auditflowdetaiRemarks != null">
+          <el-input v-model="details[1].auditflowdetaiRemarks" disabled ellipsis></el-input>
+        </el-form-item>
+        <el-form-item label="审核时间：" v-if="details[1].auditflowdetaiRemarks != null">
+          <el-input v-model="details[1].auditflowdetaiDate" disabled></el-input>
+        </el-form-item>
+      </el-form>
+      <!--  审批明细数量为1时    -->
+      <el-form ref="form" :model="details" v-if="this.detailsNumber == 1">
+        <el-form-item label="标题：">
+          <el-input v-model="details[0].auditflowTitle" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="申请人：">
+          <el-input v-model="details[0].staffName1" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="当前审核状态：" v-if="details[0].auditflowstate != null">
+          <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审批人：" v-if="details[0].staffName2 != null">
+          <el-input v-model="details[0].staffName2" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="申请状态：" v-if="details[0].auditflowdetaiState!= null">
+          <el-input v-if="details[0].auditflowdetaiState===0" v-model="state.ongoing" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+          <el-input v-if="details[0].auditflowdetaiState===4" v-model="state.undo1" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审批备注：" v-if="details[0].auditflowdetaiRemarks != null">
+          <el-input v-model="details[0].auditflowdetaiRemarks" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="审核时间：" v-if="details[0].auditflowdetaiRemarks != null">
+          <el-input v-model="details[0].auditflowdetaiDate" disabled></el-input>
+        </el-form-item>
+      </el-form>
     </el-drawer>
   </div>
-  {{ this.details }}
 </template>
 
 <script scoped>
@@ -255,7 +334,7 @@ import {ElNotification} from "element-plus";
 export default {
   setup() {
     return {
-      drawer: false,
+      drawer: ref(false),
       input: ref(""),
     };
   },
@@ -315,6 +394,8 @@ export default {
         ongoing: "审批中",
         approval: "待审批",
       },
+      // 审批明细数据数量
+      detailsNumber: "",
     };
   },
   methods: {
@@ -615,6 +696,13 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.details = response.data.data.info;
+            if (response.data.data.info.length == 3) {
+              this.detailsNumber = 3
+            } else if (response.data.data.info.length == 2) {
+              this.detailsNumber = 2
+            } else if (response.data.data.info.length == 1) {
+              this.detailsNumber = 1
+            }
           }
         } else {
           ElNotification.warning({
