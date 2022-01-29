@@ -165,7 +165,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '婚假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_11.svg"/>
@@ -181,7 +181,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '产假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_12.svg"/>
@@ -197,7 +197,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '工伤假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_16.svg"/>

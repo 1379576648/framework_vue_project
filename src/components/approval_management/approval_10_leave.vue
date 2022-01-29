@@ -117,9 +117,6 @@
           <el-form-item label="请假事由：">
             <el-input v-model="details[0].leavematter" disabled></el-input>
           </el-form-item>
-          <el-form-item label="备注：">
-            <el-input v-model="details[0].leaveremarks" disabled></el-input>
-          </el-form-item>
           <el-form-item label="请假开始时间：">
             <el-input v-model="details[0].leavesdate" disabled></el-input>
           </el-form-item>
@@ -230,9 +227,6 @@
             </el-form-item>
             <el-form-item label="请假事由：">
               <el-input v-model="details2[0].leavematter" disabled></el-input>
-            </el-form-item>
-            <el-form-item label="备注：">
-              <el-input v-model="details2[0].leaveremarks" disabled></el-input>
             </el-form-item>
             <el-form-item label="请假开始时间：">
               <el-input v-model="details2[0].leavesdate" disabled></el-input>
