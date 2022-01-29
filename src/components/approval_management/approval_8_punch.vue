@@ -53,11 +53,13 @@
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="success" plain
-                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='通过')">
+                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,StaffName=scope.row.staffName1),
+                         queryDetail(auditflowId,handle='通过',auditflowType,StaffName)">
                 通过
               </el-button>
               <el-button type="danger" plain
-                         @click="(auditflowId=scope.row.auditflowId),queryDetail(auditflowId,handle='驳回')">
+                         @click="(auditflowId=scope.row.auditflowId,auditflowType=scope.row.auditflowType,StaffName=scope.row.staffName1),
+                         queryDetail(auditflowId,handle='驳回',auditflowType,StaffName)">
                 驳回
               </el-button>
               <el-button
@@ -125,10 +127,10 @@
             <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
           </el-form-item>
           <el-form-item label="申请状态：">
-            <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===0" v-model="state.pending" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===1" v-model="state.through" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===2" v-model="state.rejected" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===3" v-model="state.undo" disabled></el-input>
           </el-form-item>
           <el-form-item label="审批人：">
             <el-input v-model="details[0].staffName2" disabled></el-input>
@@ -183,6 +185,7 @@
               <span class="button-await" v-if="scope.row.auditflowstate===0">待审</span>
               <span class="button-pass" v-if="scope.row.auditflowstate===1">通过</span>
               <span class="button-reject" v-if="scope.row.auditflowstate===2">驳回</span>
+              <span class="button-underway" v-if="scope.row.auditflowstate===3">撤销</span>
             </template>
           </el-table-column>
           <el-table-column prop="staffName2" label="历史审批人" width="150"/>
@@ -228,12 +231,13 @@
               <el-input v-if="details2[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
               <el-input v-if="details2[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
               <el-input v-if="details2[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+              <el-input v-if="details2[0].auditflowdetaiState===4" v-model="state.undo" disabled></el-input>
             </el-form-item>
             <el-form-item label="申请状态：">
-              <el-input v-if="details2[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===0" v-model="state.pending" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===1" v-model="state.through" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===2" v-model="state.rejected" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===3" v-model="state.undo1" disabled></el-input>
             </el-form-item>
             <el-form-item label="审批人：">
               <el-input v-model="details2[0].staffName2" disabled></el-input>
@@ -396,6 +400,8 @@ export default {
       serialID: [],
       // 审批主表编号
       auditflowId: "",
+      // 审批流程
+      auditflowType: "",
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
       // 添加通过备注弹出框(适用查到两个审批人或三个审批人)
@@ -601,8 +607,8 @@ export default {
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
           }
-          this.staffName="";
-          this.selectTime="";
+          this.staffName = "";
+          this.selectTime = "";
         } else {
           ElNotification.warning({
             title: '提示',
@@ -827,6 +833,8 @@ export default {
           auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowdetaiRemarks: this.remark,
           auditflowId: this.auditflowId,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -839,10 +847,10 @@ export default {
             message: '操作成功',
             type: 'success',
           })
-           // 查询待处理的补打卡审批
-    this.selectCardAll();
-    // 查询已处理的补打卡审批
-    this.selectEndCardAll();
+          // 查询待处理的补打卡审批
+          this.selectCardAll();
+          // 查询已处理的补打卡审批
+          this.selectEndCardAll();
           this.add_pass_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -874,9 +882,16 @@ export default {
         method: 'post',
         url: this.url + 'update_Approval_State',
         data: {
+          // 明细编号
           auditflowdetailId: this.serialID.auditflowdetailId,
+          // 备注
           auditflowdetaiRemarks: this.remark,
+          // 审批主表编号
           auditflowId: this.auditflowId,
+          // 审批类型（流程名称）
+          auditflowType:this.auditflowType,
+          // 审批申请人
+          staffName1:this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -889,10 +904,10 @@ export default {
             message: '操作成功',
             type: 'success',
           })
-           // 查询待处理的补打卡审批
-    this.selectCardAll();
-    // 查询已处理的补打卡审批
-    this.selectEndCardAll();
+          // 查询待处理的补打卡审批
+          this.selectCardAll();
+          // 查询已处理的补打卡审批
+          this.selectEndCardAll();
           this.add_pass_remark2 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -929,6 +944,10 @@ export default {
           auditflowdetailId3: this.serialID[2].auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -941,10 +960,10 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-           // 查询待处理的补打卡审批
-    this.selectCardAll();
-    // 查询已处理的补打卡审批
-    this.selectEndCardAll();
+          // 查询待处理的补打卡审批
+          this.selectCardAll();
+          // 查询已处理的补打卡审批
+          this.selectEndCardAll();
           this.add_reject_remark1 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -981,6 +1000,10 @@ export default {
           auditflowdetailId2: this.serialID[1].auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -993,10 +1016,10 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-           // 查询待处理的补打卡审批
-    this.selectCardAll();
-    // 查询已处理的补打卡审批
-    this.selectEndCardAll();
+          // 查询待处理的补打卡审批
+          this.selectCardAll();
+          // 查询已处理的补打卡审批
+          this.selectEndCardAll();
           this.add_reject_remark2 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
@@ -1028,9 +1051,13 @@ export default {
         method: 'post',
         url: this.url + 'reject_Approval_State',
         data: {
-          auditflowdetailId:  this.serialID.auditflowdetailId,
+          auditflowdetailId: this.serialID.auditflowdetailId,
           auditflowId: this.auditflowId,
           auditflowdetaiRemarks: this.remark,
+          // 审批类型（流程名称）
+          auditflowType: this.auditflowType,
+          // 审批申请人
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -1043,10 +1070,10 @@ export default {
             message: '驳回成功',
             type: 'success',
           })
-           // 查询待处理的补打卡审批
-    this.selectCardAll();
-    // 查询已处理的补打卡审批
-    this.selectEndCardAll();
+          // 查询待处理的补打卡审批
+          this.selectCardAll();
+          // 查询已处理的补打卡审批
+          this.selectEndCardAll();
           this.add_reject_remark3 = false;
           this.remark = "";
         } else if (response.data.data === 999) {
