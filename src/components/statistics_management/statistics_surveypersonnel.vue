@@ -105,8 +105,8 @@ export default {
 
   data() {
     return {
-      datay: [330, 220],
-      datasex: ['男', '女'],
+      datay: [],
+      datasex: [],
       //访问路径
       url: "http://localhost:80/",
     }
@@ -206,12 +206,15 @@ watch: {
         url: this.url+ 'selectStaffSex',
       }).then(function (response) {
         console.log("查询性别");
-        console.log(response);
-        if (response.data.code === 200){
-          _this.datay=response.data.data[0].RS;
-          _this.datasex=response.data.data.staffSex;
+        // console.log(response);
+        if (response.data.code == 200){
+          // _this.datay=response.data.data[0].RS;
+          // _this.datasex=response.data.data.staffSex;
           console.log(_this.datay)
           console.log(_this.datasex)
+          _this.datay=[response.data.data[0].RS];
+          _this.datasex=[response.data.data[0].STAFF_SEX]
+
         }else {
           ElMessage({
             showClose: true,
