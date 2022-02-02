@@ -97,14 +97,19 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {ref, defineComponent} from "vue";
+import {ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      //访问路径
+      url: "http://localhost:80/",
+      // 当前登录者
+      NowStaffName: this.$store.state.staffMessage.staffName,
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
@@ -211,7 +216,53 @@ export default {
     through1() {
       alert(1)
     },
-  }
+    // 根据员工名称查询打卡记录
+    selectOverTimeRecordAll(){
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectOverTimeRecordAll',
+        data: {
+          staffName: this.NowStaffName,
+          //当前页
+          "currentPage": this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+        }
+      }).then((response) => {
+        console.log("查询加班记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.Position = response.data.data.info;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询加班记录有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+  },
+  created(){
+    // 根据员工名称查询打卡记录
+    this.selectOverTimeRecordAll();
+  },
 };
 </script>
 
