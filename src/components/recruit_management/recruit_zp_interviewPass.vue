@@ -1,4 +1,4 @@
-<!--面试通过-->
+l<!--面试通过-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -190,6 +190,7 @@ export default {
           resumeId: this.resumeId,
           remarks: this.evaluate,
           employmentSalary: this.num,
+          employmentState:0,
         },
         responseType:'json',
         responseEncoding:'utf-8',
