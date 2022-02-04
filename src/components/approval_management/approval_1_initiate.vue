@@ -4051,6 +4051,8 @@ export default defineComponent({
         }
       })
     },
+    // 查询最近一个月的补打卡记录
+    selectMonthCardExamine(){},
     // 查询转正审批记录
     selectexaminerecord() {
       this.axios({
