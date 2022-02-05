@@ -14,69 +14,57 @@
         </el-icon>
         导入
       </el-button>
-      <!--选择开始时间和结束时间-->
+      <!--选择开始日期和结束日期-->
       <el-date-picker
-          v-model="value1"
+          v-model="selectTime"
           type="daterange"
           unlink-panels
-          range-separator="TO"
+          range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          wdaWD
-          aW
           :shortcuts="shortcuts"
           style="margin-left: 340px"
       >
       </el-date-picker>
-      <!--查询全部部门-->
-      <el-select size="small" v-model="value" clearable placeholder="全部部门" style="margin-left: 25px">
-        <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-        >
-        </el-option>
-      </el-select>
-      <!--搜索框-->
-      <el-input size="small" v-model="input" placeholder="搜索" style="width:150px;margin-left: 25px">
-        <template #suffix>
-          <el-icon style="margin-top:9px;margin-right:10px">
-            <i-search/>
-          </el-icon>
-        </template>
-      </el-input>
+      &nbsp;
+      <el-button type="success" plain @click="selectLeaveRecordAll()">搜索</el-button>
 
     </div>
-<!--表格-->
+    <!--表格-->
     <div class="y">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="applyfor" label="申请名称"/>
-        <el-table-column prop="department" label="发起人部门"/>
-        <el-table-column prop="type" label="请假类型"/>
-        <el-table-column prop="thing" label="请假事由"/>
-        <el-table-column prop="begin" label="请假开始时间"/>
-        <el-table-column prop="finish" label="请假结束时间"/>
-        <el-table-column prop="hour" label="请假总小时"/>
+        <el-table-column prop="staffName" label="申请名称"/>
+        <el-table-column prop="deptname" label="发起人部门"/>
+        <el-table-column prop="leaveType" label="请假类型"/>
+        <el-table-column prop="leaveMatter" label="请假事由"/>
+        <el-table-column prop="leaveSDate" label="计划开始时间"/>
+        <el-table-column prop="leaveEDate" label="计划结束时间"/>
+        <el-table-column prop="leaveTotalDate" label="计划总小时"/>
+        <el-table-column prop="leaveActualTime" label="实际开始时间"/>
+        <el-table-column prop="leaveActualOvertime" label="实际结束时间"/>
+        <el-table-column prop="leaveActualToKinAga" label="实际总小时"/>
         <el-table-column prop="operate" label="操作">
-          <template #default>
+          <template #default="scope">
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
                 :icon="InfoFilled"
                 icon-color="red"
                 title="确定删除吗?"
-                @confirm="through1()"
+                @confirm=deleteLeave(leaveId)
             >
               <template #reference>
-                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(leaveId=scope.row.leaveId)"
+                >删除
+                </el-button>
               </template>
             </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
     </div>
-<!--分页-->
+    <!--分页-->
     <div class="demo-pagination-block">
       <el-pagination
           v-model:currentPage="pageInfo.currenPage"
@@ -96,14 +84,19 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {ref, defineComponent} from "vue";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      //访问路径
+      url: "http://localhost:80/",
+      // 当前登录者
+      NowStaffName: this.$store.state.staffMessage.staffName,
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
@@ -137,6 +130,8 @@ export default {
           },
         },
       ],
+      // 选择开始日期/结束日期
+      selectTime: [],
       options: ref([
         {
           value: "Option1",
@@ -159,55 +154,113 @@ export default {
           label: "Option5",
         },
       ]),
-      tableData: [
-        {
-          applyfor: '优菈',
-          department: '考勤部',
-          type: '感冒',
-          thing: '发烧了',
-          begin: '12-8',
-          finish: '12-9',
-          hour: '1天',
-        },
-        {
-          applyfor: '优菈',
-          department: '考勤部',
-          type: '感冒',
-          thing: '发烧了',
-          begin: '12-8',
-          finish: '12-9',
-          hour: '1天',
-        },
-        {
-          applyfor: '优菈',
-          department: '考勤部',
-          type: '感冒',
-          thing: '发烧了',
-          begin: '12-8',
-          finish: '12-9',
-          hour: '1天',
-        },
-        {
-          applyfor: '优菈',
-          department: '考勤部',
-          type: '感冒',
-          thing: '发烧了',
-          begin: '12-8',
-          finish: '12-9',
-          hour: '1天',
-        },
-
-      ],
+      tableData: [],
       value1: "", //日期
       value: ref(""), //选择
     };
   },
-  methods:{
+  methods: {
     // 点击删除确认按钮触发
     through1() {
       alert(1)
     },
-  }
+    // 根据员工名称查询请假
+    selectLeaveRecordAll() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectLeaveRecordAll',
+        data: {
+          // 当前登陆者
+          "staffName": this.NowStaffName,
+          // 当前页
+          "currentPage": this.pageInfo.currentPage,
+          // 页大小
+          "pagesize": this.pageInfo.pagesize,
+          // 起始时间
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
+          // 结束时间
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
+        }
+      }).then((response) => {
+        console.log("查询请假记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询请假记录有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 删除请假记录
+    deleteLeave() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'deleteLeave',
+        data: {
+          "leaveId":this.leaveId,
+        }
+      }).then((response) => {
+        console.log("删除请假记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info=1){
+              ElMessage({
+                showClose: true,
+                message: '删除成功',
+                type: 'success',
+              })
+              this.selectLeaveRecordAll();
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "删除请假记录有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    }
+  },
+  created() {
+    // 根据员工名称查询请假
+    this.selectLeaveRecordAll();
+  },
 };
 </script>
 
