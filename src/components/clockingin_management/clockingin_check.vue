@@ -1,33 +1,45 @@
 <!--班次管理页面-->
 <template>
   <div class="w" v-if="clockingin_classes==false">
-      <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;" @click="clockingin_classes=true">
-        <el-icon>
-          <i-plus/>
-        </el-icon>
-        <span>新增</span>
-      </el-button>
-    <!-- 搜索框 -->
-    <el-input v-model="input" placeholder="搜索" style="width:200px;float:right;margin-top:20px;margin-right:20px;">
-      <template #suffix>
-        <el-icon style="margin-top:9px;margin-right:10px">
-          <i-search/>
-        </el-icon>
-      </template>
-    </el-input>
+    <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;" @click="clockingin_classes=true">
+      <el-icon>
+        <i-plus/>
+      </el-icon>
+      <span>新增</span>
+    </el-button>
+    <el-button @click="selectClassesAll1()">重置</el-button>
+    &nbsp;
+    <el-input
+        v-model="classesName"
+        placeholder="根据方案名称"
+        style="width: 150px"
+    />
+    &nbsp;
+    <el-date-picker
+        v-model="selectTime"
+        type="daterange"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        :default-value="[new Date, new Date]"
+    >
+    </el-date-picker>
+    &nbsp;
+    <el-button type="success" plain @click="selectClassesAll()">搜索</el-button>
     <!--  表格-->
     <div class="y">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="name" label="班次名称"/>
-        <el-table-column prop="time" label="上班时间"/>
-        <el-table-column prop="times" label="下班时间"/>
-        <el-table-column prop="state" label="状态">
-          <template #default>
-            <button style="color:#79b8e8;border: 1px solid #79b8e8;border-radius:5px;font-size:14px;">&nbsp;&nbsp;启用&nbsp;&nbsp;</button>
+        <el-table-column prop="classesName" label="班次名称"/>
+        <el-table-column prop="classesBeginDate" label="上班时间"/>
+        <el-table-column prop="classesEndDate" label="下班时间"/>
+        <el-table-column label="状态" width="100">
+          <template #default="scope">
+            <span class="button-await" v-if="scope.row.classesState===0">启用</span>
+            <span class="button-reject" v-if="scope.row.classesState===1">禁用</span>
           </template>
         </el-table-column>
+        <el-table-column prop="createdTime" label="创建时间"/>
         <el-table-column prop="operate" label="操作">
-          <template #default>
+          <template #default="scope">
             <el-button type="text" size="small" @click="redact()">编辑</el-button>
             <span style="color:#e8e8e8">|</span>
             <el-popconfirm
@@ -49,10 +61,13 @@
                 :icon="InfoFilled"
                 icon-color="red"
                 title="确定删除吗?"
-                @confirm="through2()"
+                @confirm=inquireState(classesId)
             >
               <template #reference>
-                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(classesId=scope.row.classesId)"
+                >删除
+                </el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -63,41 +78,55 @@
     <div class="demo-pagination-block">
       <el-pagination
           v-model:currentPage="pageInfo.currenPage"
-          :page-sizes="[3, 5, 10, 50]"
+          :page-sizes="[1,3,5,7]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageInfo.total"
           :pager-count="5"
           background
-          @size-change="sele"
-          @current-change="sele"
-      >
+          next-text="下一页"
+          prev-text="上一页"
+          @size-change="selectClassesAll()"
+          @current-change="selectClassesAll()"
+          @prev-click="selectClassesAll()"
+          @next-click="selectClassesAll()">
+        >
       </el-pagination>
     </div>
   </div>
-<!--  添加班次-->
+  <!--  添加班次-->
   <clockingin_classes v-if="clockingin_classes"/>
 </template>
 
-<script lang="ts">
+<script>
 //添加班次
 import clockingin_classes from '../clockingin_management/clockingin_classes.vue';
+import {ElMessage, ElNotification} from "element-plus";
+
 export default {
-  components:{
+  components: {
     //添加班次
     clockingin_classes
   },
   data() {
     return {
       //添加班次
-      clockingin_classes:false,
+      clockingin_classes: false,
+      //访问路径
+      url: "http://localhost:80/",
+      // 当前登录者
+      NowStaffName: this.$store.state.staffMessage.staffName,
+      // 班次方案名称
+      classesName: "",
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
       },
+      // 选择开始日期/结束日期
+      selectTime: [],
       tableData: [
         {
           name: 'Tom',
@@ -142,7 +171,192 @@ export default {
     through2() {
       alert(1)
     },
-  }
+    // 查询所有班次方案
+    selectClassesAll() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectClassesAll',
+        data: {
+          // 当前页
+          "currentPage": this.pageInfo.currentPage,
+          // 页大小
+          "pagesize": this.pageInfo.pagesize,
+          // 起始时间
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
+          // 结束时间
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
+          // 班次方案名称
+          classesName: this.classesName,
+        }
+      }).then((response) => {
+        console.log("查询打卡记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询部门职位有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询所有班次方案(不带参数)
+    selectClassesAll1() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectClassesAll',
+        data: {
+          // 当前页
+          "currentPage": this.pageInfo.currentPage,
+          // 页大小
+          "pagesize": this.pageInfo.pagesize,
+        }
+      }).then((response) => {
+        console.log("查询打卡记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询部门职位有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询班次方案状态
+    inquireState() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'inquireClasses',
+        data: {
+          "classesId": this.classesId,
+        }
+      }).then((response) => {
+        console.log("查询班次方案状态");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            // 等于1则为禁用，则可以删除
+            if (response.data.data.info[0].classesState == 1) {
+              window.setTimeout(this.deleteClasses, 500);
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: "当前方案正在启用，无法进行删除操作",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询方案状态有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 删除班次方案
+    deleteClasses() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'deleteClasses',
+        data: {
+          "classesId": this.classesId,
+        }
+      }).then((response) => {
+        console.log("删除班次方案");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info == 1) {
+              ElMessage({
+                showClose: true,
+                message: '删除成功',
+                type: 'success',
+              })
+              this.selectClassesAll();
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "删除班次方案有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    }
+  },
+
+  created() {
+    // 查询所有班次方案
+    this.selectClassesAll();
+  },
 }
 </script>
 
@@ -173,5 +387,36 @@ table * {
 /* 调整输入框的高度 */
 ::v-deep .el-input__inner {
   height: 32px;
+}
+
+.button-await {
+  background: #ecf5ff;
+  border: 1px #cfe6ff solid;
+  color: #5aaaff;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 10px 15px;
+  border-radius: var(--el-border-radius-base);
+}
+
+.button-reject {
+  /*背景*/
+  background: #fef0f0;
+  /*边框*/
+  border: 1px #f2c5c5 solid;
+  /*字的颜色*/
+  color: #f57a7a;
+  display: inline-block;
+  line-height: 1;
+  min-height: 20px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 10px 15px;
+  border-radius: var(--el-border-radius-base);
 }
 </style>

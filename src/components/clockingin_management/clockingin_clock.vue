@@ -304,7 +304,7 @@ export default {
         method: 'post',
         url: this.url + 'deleteClock',
         data: {
-          "clockRecordId":this.clockRecordId,
+          "clockRecordId": this.clockRecordId,
         }
       }).then((response) => {
         console.log("删除打卡记录");
@@ -318,14 +318,14 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-              if (response.data.data.info=1){
-                ElMessage({
-                  showClose: true,
-                  message: '删除成功',
-                  type: 'success',
-                })
-                this.selectCardRecordAll();
-              }
+            if (response.data.data.info == 1) {
+              ElMessage({
+                showClose: true,
+                message: '删除成功',
+                type: 'success',
+              })
+              this.selectCardRecordAll();
+            }
           } else {
             ElNotification.warning({
               title: '提示',
