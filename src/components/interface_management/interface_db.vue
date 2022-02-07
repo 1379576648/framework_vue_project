@@ -6,7 +6,7 @@
 		<div class="home_bot_tit">
 			<span>
 				<i class="iconfont">&#xe641;</i>
-				<span  style="font-size: 14px; font-weight: bold; color: rgba(0, 0, 0, 0.65);">今日打卡</span>
+				<span  style="font-size: 14px; font-weight: bold; color: rgba(0, 0, 0, 0.65);">打卡</span>
 			</span>
 		</div>
 		
@@ -26,12 +26,21 @@
           </el-date-picker>
         </div>
         <el-button round class="be_on_duty_text ">上班  </el-button>
-        <span class="reality1">实际上班时间：<span>00:00:00</span></span>
-        <!--  打卡开关1-->
-        <el-switch v-model="value1" active-color="#13ce66" inactive-color="#ff4949" class="switch"/>
+        <span class="reality1">实际时间：<span>00:00:00</span></span>
         <el-button round class="off_duty_text ">下班  </el-button>
-        <span class="reality2">实际下班时间：<span>00:00:00</span></span>
-        <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949" class="switch2"/>
+        <span class="reality2">实际时间：<span>00:00:00</span></span>
+        <el-button round class="off_duty_text ">加班上班 </el-button>
+        <span class="reality3">实际时间：<span>00:00:00</span></span>
+        <el-button round class="off_duty_text ">加班下班  </el-button>
+        <span class="reality4">实际时间：<span>00:00:00</span></span>
+        <el-button round class="off_duty_text ">出差开始  </el-button>
+        <span class="reality5">实际时间：<span>00:00:00</span></span>
+        <el-button round class="off_duty_text ">出差结束  </el-button>
+        <span class="reality6">实际时间：<span>00:00:00</span></span>
+        <el-button round class="off_duty_text ">请假开始  </el-button>
+        <span class="reality7">实际时间：<span>00:00:00</span></span>
+        <el-button round class="off_duty_text ">请假结束  </el-button>
+        <span class="reality8">实际时间：<span>00:00:00</span></span>
       </div>
 		</section>
 	</div>
@@ -72,12 +81,6 @@ export default {
     left: 30px;
     position: absolute;
   }
-  .switch{
-    width: 70px;
-    top: 45px;
-    left: 45px;
-    position: absolute;
-  }
   .reality1 {
     width: 160px;
     top: 5px;
@@ -92,12 +95,6 @@ export default {
     left: 525px;
     position: absolute;
   }
-  .switch2{
-     width: 70px;
-     top: 45px;
-     left: 540px;
-     position: absolute;
-   }
   .reality2 {
     width: 160px;
     top: 5px;
