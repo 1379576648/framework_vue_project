@@ -60,7 +60,7 @@ table * {
   white-space: nowrap;
   text-align: center;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: var(--el-border-radius-base);
 }
 /*通过审批样式 绿色*/
@@ -74,7 +74,7 @@ table * {
   white-space: nowrap;
   text-align: center;
   margin: 0;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: var(--el-border-radius-base);
 }
 
@@ -94,5 +94,5 @@ table * {
 }
 
 .el-form-item{
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }

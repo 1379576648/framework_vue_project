@@ -165,7 +165,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '婚假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_11.svg"/>
@@ -181,7 +181,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '产假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_12.svg"/>
@@ -197,7 +197,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '工伤假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_16.svg"/>
@@ -360,7 +360,6 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.label"
-
               ></el-option>
             </el-select>
           </el-form-item>
@@ -1351,7 +1350,6 @@
       </el-dialog>
     </div>
   </div>
-  {{ this.Position.substring(3, 10) }}
 
 </template>
 
@@ -1390,6 +1388,8 @@ export default defineComponent({
       NowDeptName: "",
       // 调薪前基本工资
       base_pay: "",
+      // 当天加班记录
+      NewDayOverTime:"",
       // 地址选择器
       options: regionData,
       // 地址选择器
@@ -1932,7 +1932,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'SubmitTransfer2',
+          url: this.url + 'SubmitTransfer1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -1954,7 +1954,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.Change_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加转正成功")
+          console.log("添加调动成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2163,7 +2163,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "调薪" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加转正成功")
+          console.log("添加调薪成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2234,7 +2234,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加离职成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2303,7 +2303,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加离职成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2350,7 +2350,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToLeave2',
+          url: this.url + 'submitToLeave1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -2370,7 +2370,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + "离职" + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加离职成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2447,7 +2447,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加加班成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2522,7 +2522,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加加班成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2571,7 +2571,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToOvertime2',
+          url: this.url + 'submitToOvertime1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -2587,17 +2587,15 @@ export default defineComponent({
             overtimeaskTotalDate: this.overtime_1.date3,
             //加班事由
             overtimeaskMatter: this.overtime_1.remarks_1,
-            // 审批人1
-            staffName1: this.personnel_manager[0].staffname,
             // 审批人2
-            staffName2: this.president[1].staffname,
+            staffName1: this.president[1].staffname,
             // 审批类型
             auditflowType: "加班",
             // 审批标题
             auditflowTitle: this.NowStaffName + "的" + this.overtime_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加加班成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -2668,7 +2666,7 @@ export default defineComponent({
             auditflowTitle: this.NowStaffName + "的" + this.punch_1.type_1 + "审批" + Math.round(Math.random() * 100000000)
           }
         }).then((response) => {
-          console.log("添加调动成功")
+          console.log("添加补打卡成功")
           console.log(response);
           if (response.data.code == 300) {
             ElNotification.warning({
@@ -3005,7 +3003,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToTravel2',
+          url: this.url + 'submitToTravel1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -3021,10 +3019,8 @@ export default defineComponent({
             travelEDate: this.travel_1.date2,
             // 请假时长
             travelTotalDate: this.travel_1.date3,
-            // 审批人1
-            staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName1: this.president[1].staffname,
             // 审批类型
             auditflowType: "出差",
             // 审批标题
@@ -3226,7 +3222,7 @@ export default defineComponent({
       } else {
         this.axios({
           method: 'post',
-          url: this.url + 'submitToAskForLeave2',
+          url: this.url + 'submitToAskForLeave1',
           data: {
             // 申请人
             staffName: this.NowStaffName,
@@ -3242,10 +3238,8 @@ export default defineComponent({
             leaveEDate: this.sick_1.date2,
             // 出差时长
             leaveTotalDate: this.sick_1.date3,
-            // 审批人1
-            staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName1: this.president[1].staffname,
             // 审批类型
             auditflowType: "请假",
             // 审批标题
@@ -3441,11 +3435,50 @@ export default defineComponent({
     // 判断部门是否相同
     judgingDept() {
       if (this.NowDeptName == this.Change_1.dept_1) {
-        ElMessage({
+        ElNotification.warning({
+          title: '提示',
           message: "原部门与变动后部门相同，请重新选择!",
-          type: "warning",
-        });
+          offset: 100,
+        })
         this.emptyDept();
+      // 如果不相同
+      } else if (this.judging === 3) {
+        // 查询是否选择的部门的部门经理是否有人任职
+        this.axios({
+          method: 'post',
+          url: this.url + 'selectDeptPost',
+          data: {
+            deptName: this.Change_1.dept_1
+          }
+        }).then((response) => {
+          console.log("根据部门名称查询部门职位成功")
+          console.log(response)
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的 根据长度判断部门经理是否有人任职
+            if (response.data.data.state == 200) {
+                if (response.data.data.info.length !== 0){
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "该部门已有经理，暂不支持调动该部门",
+                    offset: 100,
+                  })
+                }
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+        })
       }
     },
     // 清空变动后部门
@@ -3895,7 +3928,8 @@ export default defineComponent({
             if (this.type === "补打卡") {
               window.setTimeout(this.selectCardExamine, 500);
             } else if (this.type === "加班") {
-              window.setTimeout(this.selectOvertimeExamine, 500);
+              // 如果为加班，则去查询当天有无加班申请记录
+              window.setTimeout(this.selectTodayOverTimeExamine, 500);
             } else if (this.type === "出差") {
               window.setTimeout(this.selectEvectionExamine, 500);
             } else if (this.type === "请假") {
@@ -3944,7 +3978,7 @@ export default defineComponent({
             if (this.type === "补打卡") {
               window.setTimeout(this.selectCardExamine, 500);
             } else if (this.type === "加班") {
-              window.setTimeout(this.selectOvertimeExamine, 500);
+              window.setTimeout(this.selectTodayOverTimeExamine, 500);
             } else if (this.type === "出差") {
               window.setTimeout(this.selectEvectionExamine, 500);
             } else if (this.type === "请假") {
@@ -3977,6 +4011,48 @@ export default defineComponent({
         }
       }
     },
+    // 查询当天的加班审批记录
+    selectTodayOverTimeExamine(){
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectTodayOverTimeExamine',
+        data: {
+           staffName: this.NowStaffName,
+          auditFlowType: "加班"
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询当天的加班审批记录")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          // 如果为0，则视为当天没有加班审批记录，则可以再去查询是否有无正在审批的加班记录
+          if (response.data.data.info.length == 0){
+            window.setTimeout(this.selectOvertimeExamine, 500);
+          }else if (response.data.data.info.length >0){
+            ElNotification.warning({
+              title: '提示',
+              message: "查询到您当天有加班审批记录",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询最近一个月的补打卡记录
+    selectMonthCardExamine(){},
     // 查询转正审批记录
     selectexaminerecord() {
       this.axios({
@@ -4113,7 +4189,7 @@ export default defineComponent({
       })
     },
     // 查询离职审批记录
-    selectDimissionRecord(){
+    selectDimissionRecord() {
       this.axios({
         method: 'post',
         url: this.url + 'selectDimissionRecord',
@@ -4222,7 +4298,7 @@ export default defineComponent({
             offset: 100,
           })//如果服务没有关闭
         } else if (response.data.data) {
-          if (response.data.data.state == 200){
+          if (response.data.data.state == 200) {
             this.op = 0;
             for (let i = 0; i < response.data.data.info.length; i++) {
               // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4239,14 +4315,14 @@ export default defineComponent({
               }
             }
             window.setTimeout(this.referManager, 500);
-          }else {
+          } else {
             ElNotification.warning({
               title: '提示',
               message: "补打卡审批数据有误，请联系管理员",
               offset: 100,
             })
           }
-        } else{
+        } else {
           ElNotification.warning({
             title: '提示',
             message: "服务发生雪崩",

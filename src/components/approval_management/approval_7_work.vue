@@ -117,9 +117,6 @@
           <el-form-item label="加班事由：">
             <el-input v-model="details[0].overtimeaskmatter" disabled></el-input>
           </el-form-item>
-          <el-form-item label="备注：">
-            <el-input v-model="details[0].overtimeaskremarks" disabled></el-input>
-          </el-form-item>
           <el-form-item label="加班开始时间：">
             <el-input v-model="details[0].overtimeaskSDate" disabled></el-input>
           </el-form-item>
@@ -194,6 +191,7 @@
               <span class="button-await" v-if="scope.row.auditflowstate===0">待审</span>
               <span class="button-pass" v-if="scope.row.auditflowstate===1">通过</span>
               <span class="button-reject" v-if="scope.row.auditflowstate===2">驳回</span>
+              <span class="button-underway" v-if="scope.row.auditflowstate===3">撤销</span>
             </template>
           </el-table-column>
           <el-table-column prop="staffName2" label="历史审批人" width="150"/>
@@ -231,9 +229,6 @@
             <el-form-item label="加班事由：">
               <el-input v-model="details2[0].overtimeaskmatter" disabled></el-input>
             </el-form-item>
-            <el-form-item label="备注：">
-              <el-input v-model="details2[0].overtimeaskremarks" disabled></el-input>
-            </el-form-item>
             <el-form-item label="加班开始时间：">
               <el-input v-model="details2[0].overtimeaskSDate" disabled></el-input>
             </el-form-item>
@@ -248,12 +243,13 @@
               <el-input v-if="details2[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
               <el-input v-if="details2[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
               <el-input v-if="details2[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+              <el-input v-if="details2[0].auditflowdetaiState===4" v-model="state.undo" disabled></el-input>
             </el-form-item>
             <el-form-item label="申请状态：">
               <el-input v-if="details2[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
               <el-input v-if="details2[0].auditflowstate===1" v-model="state.through" disabled></el-input>
               <el-input v-if="details2[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+              <el-input v-if="details2[0].auditflowstate===3" v-model="state.undo1" disabled></el-input>
             </el-form-item>
             <el-form-item label="审批人：">
               <el-input v-model="details2[0].staffName2" disabled></el-input>

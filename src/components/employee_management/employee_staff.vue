@@ -7,19 +7,19 @@
     <el-col :span="5">
       <el-card shadow="always" style="background-color: rgb(35, 102, 167);color:white;font-size:14px;">
         <p>在职</p>
-        <p>24</p>
+        <p>{{this.tableDataTwo.tjFive+this.countStateThree.tjSix}}</p>
       </el-card>
     </el-col>
     <el-col :span="5">
       <el-card shadow="hover" style="background-color: rgb(73, 167, 130);color:white;font-size:14px;">
         <p>本月离职</p>
-        <p>0</p>
+        <p>{{ this.tableDatas.tjFour }}</p>
       </el-card>
     </el-col>
     <el-col :span="5">
 	  <el-card shadow="never" style="background-color: rgb(233, 143, 39);color:white;font-size:14px;">
       <p>正式</p>
-      <p>21</p>
+      <p>{{this.tableDataTwo.tjFive}}</p>
     </el-card>
     </el-col>
 <!--	<el-col :span="4">-->
@@ -30,14 +30,14 @@
 <!--    </el-col>-->
 	<el-col :span="5">
       <el-card shadow="never" style="background-color: rgb(73, 167, 130);color:white;font-size:14px;">
-        <p>实习</p>
-        <p>0</p>
+        <p>试用</p>
+        <p>{{ this.tableDataThree.tjSix }}</p>
       </el-card>
     </el-col>
 	<el-col :span="4">
       <el-card shadow="never" style="background-color: rgb(233, 143, 39);color:white;font-size:14px;">
         <p>本月新入职</p>
-        <p>2</p>
+        <p>{{ this.tableDataFour.tjSeven }}</p>
       </el-card>
     </el-col>
   </el-row>
@@ -119,6 +119,10 @@ export default {
   data() {
     const value2 = ref('')
     return {
+      tableDatas:[],
+      tableDataTwo:[],
+      tableDataThree:[],
+      tableDataFour:[],
       url: "http://localhost:80/",
       tableData: [],
       pageInfo: {
@@ -179,11 +183,162 @@ export default {
         }
       })
     },
+    //本月离职
+    countStateThree() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateThree',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDatas = response.data.data.info[0]
+
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //正式
+    countStateFour() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateFour',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataTwo = response.data.data.info[0]
+
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //试用
+    countStateFive() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateFive',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataThree = response.data.data.info[0]
+
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //本月新入职
+    countStateSix() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateSix',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataFour = response.data.data.info[0]
+
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
   },
   mounted() {
     //查询员工花名册
     this.selectStaff();
-    // this.selectStaffAll();
+    //本月离职
+    this.countStateThree();
+    //正式
+    this.countStateFour();
+    //试用
+    this.countStateFive();
+    //本月新入职
+    this.countStateSix();
   },
   // 挂载
   created() {

@@ -6,14 +6,15 @@
         <!-- 表格按钮部分 -->
         <div class="mt-20 ml-20 mr-20">
           <!-- 新增参保方案按钮 -->
-          <el-button size="small" type="primary" @click="new_insured_scheme=true,name='新增'"> +新增</el-button>
+          <el-button size="small" type="primary" @click="new_insured_scheme=true,name='新增',defInsuredId=0"> +新增</el-button>
 
           <!-- 下拉选择器 -->
           <div class="resume-operation">
             <el-select
-                v-model="state"
+                v-model="defInsuredState"
                 size="small"
                 clearable
+                @change="next"
                 placeholder="请选择"
             >
               <el-option
@@ -26,51 +27,51 @@
             </el-select>
           </div>
         </div>
-
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
           <el-table :data="scheme_table" stripe style="width: 100%">
-            <el-table-column prop="scheme_id" label="方案编号"/>
-            <el-table-column prop="scheme_name" label="方案名称"/>
-            <el-table-column prop="insured_number" label="参保人数"/>
-            <el-table-column prop="scheme_state" label="状态"/>
+            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
+            <el-table-column prop="defInsuredName" align="center" label="方案名称"/>
+            <el-table-column prop="defInsuredNumber" align="center" label="参保人数"/>
+            <el-table-column prop="defInsuredState" align="center" label="状态">
+              <template #default="scope">
+                  <span v-if="scope.row.defInsuredState==0">可用</span>
+                  <span v-if="scope.row.defInsuredState==1">禁用</span>
+              </template>
+            </el-table-column>
             <el-table-column label="操作">
-              <template #default="scope"
-              >
-                  <el-button size="small" type="text" @click="new_insured_scheme=true,name='修改'">
+              <template #default="scope">
+                  <el-button size="small" type="text" @click="new_insured_scheme=true,name='修改',defInsuredId=scope.row.defInsuredId">
                     编辑
                   </el-button>
-
-                <el-button type="text" size="small"> {{ scope.row.scheme_state === '启用' ? '禁用 ' : '启用 ' }}</el-button>
-
+                <el-button type="text" size="small" @click="updateDefInsuredState(scope.row.defInsuredId)"> {{ scope.row.defInsuredState == 0 ? '禁用 ' : '启用 ' }}</el-button>
                 <!-- 删除行确认框 -->
-                <el-popconfirm v-if="scope.row.scheme_state==='禁用'"
-                               @confirm="deleteRow(scope.$index, scheme_table)" title="删除此方案?">
+                <el-popconfirm v-if="scope.row.defInsuredState==1"
+                               @confirm="deleteDefInsured(scope.row.defInsuredId)" title="删除此方案?">
                   <template #reference>
                     <el-button style="color:red" type="text" size="small">删除</el-button>
                   </template>
                 </el-popconfirm>
-
-
               </template>
             </el-table-column>
           </el-table>
         </div>
-
         <!-- 分页插件 -->
         <div class="demo-pagination-block">
-          <el-pagination
-              v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
-              v-model:page-size="pageInfo.pagesize"
-              :default-page-size="pageInfo.pagesize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="pageInfo.total"
-              :pager-count="5"
-              background
-              @size-change="selectUsers"
-              @current-change="selectUsers"
-          >
+          <el-pagination v-model:current-page="pageInfo.currenPage"
+                         v-model:page-size="pageInfo.pageSize"
+                         :default-page-size="pageInfo.pageSize"
+                         :page-sizes="[5, 10,15,20]"
+                         :pager-count="5"
+                         :total="pageInfo.total"
+                         background
+                         layout="	total ,sizes, prev, pager, next, jumper"
+                         next-text="下一页"
+                         prev-text="上一页"
+                         @size-change="next()"
+                         @current-change="next()"
+                         @prev-click="next()"
+                         @next-click="next()">
           </el-pagination>
         </div>
       </div>
@@ -82,7 +83,7 @@
 
 <script>
 import {ref, defineComponent} from "vue";
-import {ElMessage} from 'element-plus'
+import {ElMessage, ElNotification} from 'element-plus'
 //新增
 import new_insured_scheme from '../social_management/new_insured_scheme.vue';
 
@@ -92,27 +93,22 @@ export default {
     //新增
     new_insured_scheme,
   },
-  methods: {
-    // 删除行
-    deleteRow(index, rows) {
-      rows.splice(index, 1);
-      ElMessage({
-        message: '删除成功',
-        type: 'success',
-      })
-    },
-  },
   data() {
     return {
       //判断是新增还是修改
       name:'',
+      //访问地址
+      url:'http://localhost:80/social/',
       //显示新增或者修改
       new_insured_scheme: false,
+      // 分页
       pageInfo: {
-        // 分页参数
-        currentPage: 1, //当前页
-        pagesize: 3, // 页大小
-        total: 0, // 总页数
+        /* 当前的页 */
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
+        total: 0,
       },
       //下拉选择器
       options: [
@@ -120,52 +116,157 @@ export default {
         {value: "1", label: "禁用"},
       ],
       // 下拉框的值
-      state: "",
+      defInsuredState: "",
+      //社保方案编号
+      defInsuredId:0,
       // 参保方案表数据
-      scheme_table: [
-        {
-          scheme_id: 1, // 方案id
-          scheme_name: "方案1", // 方案名称
-          insured_number: 10, // 参保人数
-          scheme_state: "启用", // 方案状态
-        },
-        {
-          scheme_id: 2, // 方案id
-          scheme_name: "方案2", // 方案名称
-          insured_number: 20, // 参保人数
-          scheme_state: "禁用", // 方案状态
-        },
-        {
-          scheme_id: 3, // 方案id
-          scheme_name: "方案3", // 方案名称
-          insured_number: 30, // 参保人数
-          scheme_state: "启用", // 方案状态
-        },
-        {
-          scheme_id: 4, // 方案id
-          scheme_name: "方案4", // 方案名称
-          insured_number: 40, // 参保人数
-          scheme_state: "禁用", // 方案状态
-        },
-        {
-          scheme_id: 5, // 方案id
-          scheme_name: "方案5", // 方案名称
-          insured_number: 50, // 参保人数
-          scheme_state: "启用", // 方案状态
-        },
-      ],
+      scheme_table: [],
     };
   },
+  methods: {
+    /*分页查询*/
+    next() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDefInsured',
+        data: {
+          //当前页
+          'currenPage': this.pageInfo.currenPage,
+          //页大小
+          "pageSize": this.pageInfo.pageSize,
+          //状态
+          "defInsuredState": this.defInsuredState,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.error({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.scheme_table = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改社保方案状态
+    updateDefInsuredState(id){
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateDefInsuredState/'+id,
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.error({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info=="成功"){
+              this.next();
+              ElMessage({
+                type: 'success',
+                message: '修改成功',
+              })
+            }else{
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //删除社保方案
+    deleteDefInsured(id){
+      this.axios({
+        method: 'delete',
+        url: this.url + 'deleteDefInsured/'+id,
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.error({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info=="成功"){
+              this.next();
+              ElMessage({
+                type: 'success',
+                message: '删除成功',
+              })
+            }else{
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    /*序号*/
+    indexMethod(index) {
+      let curpage = this.pageInfo.currenPage; //单前页码，具体看组件取值
+      let limitpage = this.pageInfo.pageSize; //每页条数，具体是组件取值
+      return index + 1 + (curpage - 1) * limitpage;
+    },
+  },mounted() {
+    this.next();
+  }
 };
 </script>
 
 <style scoped>
-/* 分页的样式 */
+/* 分页 */
 .demo-pagination-block {
-  float: right;
-  margin: 20px;
+  margin: 10px 0 10px 10px;
 }
-
 /**
 	 * 下拉选择器样式
 	 */
@@ -220,7 +321,7 @@ export default {
 }
 
 .j-card-body {
-  padding: 2%;
+  padding: 2% 2% 0 2%;
 }
 
 table * {
