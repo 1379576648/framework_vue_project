@@ -102,5 +102,47 @@ export default {
     position: absolute;
     font-size: 20px;
   }
+  .reality3 {
+    width: 160px;
+    top: 5px;
+    left: 370px;
+    position: absolute;
+    font-size: 20px;
+  }
+  .reality4 {
+    width: 160px;
+    top: 5px;
+    left: 370px;
+    position: absolute;
+    font-size: 20px;
+  }
+  .reality5 {
+     width: 160px;
+     top: 5px;
+     left: 370px;
+     position: absolute;
+     font-size: 20px;
+   }
+  .reality6 {
+    width: 160px;
+    top: 5px;
+    left: 370px;
+    position: absolute;
+    font-size: 20px;
+  }
+  .reality7 {
+    width: 160px;
+    top: 5px;
+    left: 370px;
+    position: absolute;
+    font-size: 20px;
+  }
+  .reality8 {
+    width: 160px;
+    top: 5px;
+    left: 370px;
+    position: absolute;
+    font-size: 20px;
+  }
 
 </style>
