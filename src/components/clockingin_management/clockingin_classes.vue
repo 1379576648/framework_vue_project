@@ -42,19 +42,26 @@
       </el-form-item>
       <el-form-item>
         <div class="u">
-          <el-button @click="this.$parent.$data.clockingin_classes=false">
+          <el-button @click="cancel()">
             <el-icon>
               <i-circle-close/>
             </el-icon>
             <span>取消</span>
           </el-button>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <el-button type="primary" @click="submitFormClasses()">
+          <el-button type="primary" @click="submitFormClasses()" v-if="this.$parent.$parent.$parent.$data.judge !==0">
             <!-- el-icon 图标-->
             <el-icon>
               <i-copy-document/>
             </el-icon>
             <span>提交</span>
+          </el-button>
+          <el-button type="primary" @click="updateClasses()" v-if="this.$parent.$parent.$parent.$data.judge ==0">
+            <!-- el-icon 图标-->
+            <el-icon>
+              <i-copy-document/>
+            </el-icon>
+            <span>修改</span>
           </el-button>
         </div>
       </el-form-item>
@@ -176,7 +183,7 @@ export default {
                 message: "已有相同班次名称,请重新输入",
                 offset: 100,
               })
-              this.classes.classesName=""
+              this.classes.classesName = ""
             }
           } else {
             ElNotification.warning({
@@ -187,7 +194,99 @@ export default {
           }
         }
       })
-    }
+    },
+    // 根据班次编号去查询
+    selectClasses() {
+      if (this.$parent.$parent.$parent.$data.classesId == undefined) {
+      } else if (this.$parent.$parent.$parent.$data.classesId !== 0) {
+        this.axios({
+          method: 'post',
+          url: this.url + 'selectClassesByID',
+          data: {
+            "classesId": this.$parent.$parent.$parent.$data.classesId
+          }
+        }).then((response) => {
+          console.log("根据班次编号去查询班次方案")
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.data) {
+            if (response.data.data.state == 200) {
+              if (response.data.data.info !== null) {
+                this.classes = response.data.data.info
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
+        })
+      }
+    },
+    // 修改班次方案
+    updateClasses() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateClasses',
+        data: {
+          "classesId": this.$parent.$parent.$parent.$data.classesId,
+          "classesName": this.classes.classesName,
+          "classesBeginDate": this.classes.classesBeginDate,
+          "classesEndDate": this.classes.classesEndDate
+        }
+      }).then((response) => {
+        console.log("修改班次方案")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          if (response.data.data.state == 200) {
+            if (response.data.data.info == 1) {
+              ElMessage({
+                showClose: true,
+                message: '修改班次方案成功',
+                type: 'success',
+              })
+              this.$parent.$data.clockingin_classes = false;
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: "修改班次方案失败",
+                offset: 100,
+              })
+              this.$parent.$data.clockingin_classes = false;
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    cancel() {
+      this.$parent.$data.clockingin_classes = false
+      this.classes.classesName = null
+      this.classes.classesBeginDate = null
+      this.classes.classesEndDate = null
+    },
+
+  },
+  created() {
+    this.selectClasses(this.$parent.$parent.$parent.$data.classesId)
   }
 }
 </script>

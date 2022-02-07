@@ -40,7 +40,10 @@
         <el-table-column prop="createdTime" label="创建时间"/>
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
-            <el-button type="text" size="small" @click="redact()">编辑</el-button>
+            <el-button type="text" size="small" @click="this.$parent.$parent.$data.classesId=scope.row.classesId,
+                                                        this.$parent.$parent.$data.judge=0,
+                                                        clockingin_classes=true"
+            >编辑</el-button>
             <span style="color:#e8e8e8">|</span>
             <el-popconfirm
                 confirm-button-text="确定"
@@ -48,10 +51,24 @@
                 :icon="InfoFilled"
                 icon-color="red"
                 title="确定禁用吗?"
-                @confirm="through1()"
+                @confirm="updateClassesStateTwo()"
+                v-if="scope.row.classesState===0"
             >
-              <template #reference>
-                <el-button type="text" size="small">禁用</el-button>
+              <template #reference v-if="scope.row.classesState===0">
+                <el-button type="text" size="small" @click="(classesId=scope.row.classesId)">禁用</el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="blue"
+                title="确定启用吗?"
+                @confirm="selectClassesAllTwo()"
+                v-if="scope.row.classesState===1"
+            >
+              <template #reference v-if="scope.row.classesState===1">
+                <el-button type="text" size="small" @click="(classesId=scope.row.classesId)">启用</el-button>
               </template>
             </el-popconfirm>
             <span style="color:#e8e8e8">|</span>
@@ -61,7 +78,7 @@
                 :icon="InfoFilled"
                 icon-color="red"
                 title="确定删除吗?"
-                @confirm=inquireState(classesId)
+                @confirm=inquireStateOne(classesId)
             >
               <template #reference>
                 <el-button type="text" size="small" style="color:darkorange"
@@ -104,10 +121,11 @@
 import clockingin_classes from '../clockingin_management/clockingin_classes.vue';
 import {ElMessage, ElNotification} from "element-plus";
 
+
 export default {
   components: {
     //添加班次
-    clockingin_classes
+    clockingin_classes,
   },
   data() {
     return {
@@ -119,6 +137,7 @@ export default {
       NowStaffName: this.$store.state.staffMessage.staffName,
       // 班次方案名称
       classesName: "",
+      // 分页参数
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
@@ -127,32 +146,10 @@ export default {
       },
       // 选择开始日期/结束日期
       selectTime: [],
-      tableData: [
-        {
-          name: 'Tom',
-          time: '8:00',
-          times: '18:00',
-
-        },
-        {
-          name: 'Tom',
-          time: '8:00',
-          times: '18:00',
-          state: '启用',
-        },
-        {
-          name: 'Tom',
-          time: '8:00',
-          times: '18:00',
-          state: '启用',
-        },
-        {
-          name: 'Tom',
-          time: '8:00',
-          times: '18:00',
-          state: '启用',
-        }
-      ],
+      // 表格数据
+      tableData: [],
+      // 判断状态
+      op: 0,
     }
   },
   methods: {
@@ -190,7 +187,7 @@ export default {
           classesName: this.classesName,
         }
       }).then((response) => {
-        console.log("查询打卡记录");
+        console.log("查询所有班次方案");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -231,7 +228,7 @@ export default {
           "pagesize": this.pageInfo.pagesize,
         }
       }).then((response) => {
-        console.log("查询打卡记录");
+        console.log("查询所有班次方案");
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -259,8 +256,8 @@ export default {
         }
       })
     },
-    // 查询班次方案状态
-    inquireState() {
+    // 查询班次方案状态（删除时）
+    inquireStateOne() {
       var _this = this;
       this.axios({
         method: 'post',
@@ -283,7 +280,7 @@ export default {
             // 等于1则为禁用，则可以删除
             if (response.data.data.info[0].classesState == 1) {
               window.setTimeout(this.deleteClasses, 500);
-            }else {
+            } else {
               ElNotification.warning({
                 title: '提示',
                 message: "当前方案正在启用，无法进行删除操作",
@@ -294,6 +291,154 @@ export default {
             ElNotification.warning({
               title: '提示',
               message: "查询方案状态有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询所有班次方案（点击启用查询）
+    selectClassesAllTwo() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectClasses',
+        data: {}
+      }).then((response) => {
+        console.log("查询所有班次方案");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.op = 0;
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              // 循环如果状态有为0的则为目前有启用的方案
+              if (response.data.data.info[i].classesState === 1 && response.data.data.info[i].classesState !== 0) {
+              } else if (response.data.data.info[i].classesState === 0) {
+                this.op = 1;
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "班次方案状态数据有误！请联系管理员",
+                  offset: 100,
+                })
+              }
+            }
+            window.setTimeout(this.updateClassesState, 500);
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询方案状态有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 修改班次方案状态(启用)
+    updateClassesState() {
+      if (this.op == 1) {
+        ElNotification.warning({
+          title: '提示',
+          message: "查询到班次方案中有正在启用的方案！",
+          offset: 100,
+        })
+      } else if (this.op == 0) {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateClassesState',
+          data: {
+            "classesId": this.classesId,
+          }
+        }).then((response) => {
+          console.log("修改班次方案状态(启用)");
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info == 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '启用成功',
+                  type: 'success',
+                })
+                this.selectClassesAll();
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "修改班次方案状态有误，请联系管理员",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 修改班次方案状态（禁用）
+    updateClassesStateTwo() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'updateClassesStateTwo',
+        data: {
+          "classesId": this.classesId,
+        }
+      }).then((response) => {
+        console.log("修改班次方案状态(禁用)");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info == 1) {
+              ElMessage({
+                showClose: true,
+                message: '禁用成功',
+                type: 'success',
+              })
+              this.selectClassesAll();
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "修改班次方案状态有误，请联系管理员",
               offset: 100,
             })
           }
@@ -352,11 +497,10 @@ export default {
       })
     }
   },
-
   created() {
     // 查询所有班次方案
     this.selectClassesAll();
-  },
+  }
 }
 </script>
 
