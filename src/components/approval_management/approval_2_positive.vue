@@ -95,10 +95,7 @@
               @current-change="selectWorkerlAll()"
               @prev-click="selectWorkerlAll()"
               @next-click="selectWorkerlAll()">
-            prev-text="上一页"
-            next-text="下一页"
             >
-            <!--  @size-change="selectUsers" @current-change="selectUsers" -->
           </el-pagination>
         </div>
       </el-tab-pane>
@@ -439,7 +436,6 @@ export default {
       tableData1: [],
       // 待处理分页
       pageInfo: {
-        // 分页参数
         currentPage: 1, //当前页
         pagesize: 3, // 页大小
         total: 0, // 总页数
@@ -548,8 +544,8 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
+
           }
         } else {
           ElNotification.warning({

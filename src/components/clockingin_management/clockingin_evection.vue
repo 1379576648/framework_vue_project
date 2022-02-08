@@ -171,6 +171,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -266,7 +267,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }

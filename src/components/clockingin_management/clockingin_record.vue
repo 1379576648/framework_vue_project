@@ -224,7 +224,6 @@ export default {
 }
 
 .demo-pagination-block {
-  margin-left: 800px;
   margin-top: 20px;
   margin-bottom: 10px;
 }

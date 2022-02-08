@@ -18,6 +18,8 @@
         ></el-input>
       </el-form-item>
       <el-form-item prop="Time" label="工作时间：" style="margin-left: 20px">
+        <el-tag class="mx-1" size="large">工作时间不包括中午休息一小时</el-tag>
+        <br>
         <el-time-select
             v-model="classes.classesBeginDate"
             :max-time="endTime"
@@ -26,6 +28,7 @@
             start="08:00"
             step="00:15"
             end="9:30"
+            @change="judgeTime(classes.classesBeginDate,classes.classesEndDate)"
         >
         </el-time-select>
         &nbsp;
@@ -49,14 +52,14 @@
             <span>取消</span>
           </el-button>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <el-button type="primary" @click="submitFormClasses()" v-if="this.$parent.$parent.$parent.$data.judge !==0">
+          <el-button type="primary" @click="submitFormClasses()" v-if="this.$parent.$data.judge ==0">
             <!-- el-icon 图标-->
             <el-icon>
               <i-copy-document/>
             </el-icon>
             <span>提交</span>
           </el-button>
-          <el-button type="primary" @click="updateClasses()" v-if="this.$parent.$parent.$parent.$data.judge ==0">
+          <el-button type="primary" @click="updateClasses()" v-if="this.$parent.$data.judge ==1">
             <!-- el-icon 图标-->
             <el-icon>
               <i-copy-document/>
@@ -147,16 +150,18 @@ export default {
     },
     // 判断上班时间和下班时间
     judgeTime: function (beginTime, endTime) {
-      var dateBegin = new Date(beginTime);
-      var dateEnd = new Date(endTime);
-      var dateDiff = endTime - beginTime; //时间差的毫秒数
-      var hours = Math.floor(dateDiff / (3600 * 1000)); //计算出小时数
-      console.log(dateBegin)
-      console.log(dateEnd.getTime())
-      console.log(beginTime)
-      console.log(endTime)
-      console.log(dateDiff)
+      var a =new Date("2022-2-8 "+endTime).getTime()-new Date("2022-2-8 "+beginTime).getTime()
+      console.log(a)
+      var hours = Math.abs(a / (3600 * 1000))-1; //计算出小时数
       console.log(hours)
+      if (hours>8){
+        ElNotification.warning({
+          title: '提示',
+          message: "工作时间不能超过8小时",
+          offset: 100,
+        })
+        this.classes.classesEndDate=""
+      }
     },
     // 查询方案名称
     inquireClasses() {
@@ -195,41 +200,7 @@ export default {
         }
       })
     },
-    // 根据班次编号去查询
-    selectClasses() {
-      if (this.$parent.$parent.$parent.$data.classesId == undefined) {
-      } else if (this.$parent.$parent.$parent.$data.classesId !== 0) {
-        this.axios({
-          method: 'post',
-          url: this.url + 'selectClassesByID',
-          data: {
-            "classesId": this.$parent.$parent.$parent.$data.classesId
-          }
-        }).then((response) => {
-          console.log("根据班次编号去查询班次方案")
-          console.log(response);
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.data) {
-            if (response.data.data.state == 200) {
-              if (response.data.data.info !== null) {
-                this.classes = response.data.data.info
-              }
-            } else {
-              ElNotification.warning({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
-          }
-        })
-      }
-    },
+
     // 修改班次方案
     updateClasses() {
       this.axios({
@@ -279,17 +250,22 @@ export default {
     },
     cancel() {
       this.$parent.$data.clockingin_classes = false
-      this.classes.classesName = null
-      this.classes.classesBeginDate = null
-      this.classes.classesEndDate = null
+      this.classes.classesName = ""
+      this.classes.classesBeginDate = ""
+      this.classes.classesEndDate = ""
     },
 
   },
   created() {
-    this.selectClasses(this.$parent.$parent.$parent.$data.classesId)
-  }
+    this.classes=this.$parent.$data.classes;
+
+  },
 }
+
+
 </script>
+
+
 
 <style scoped>
 .w {

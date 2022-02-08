@@ -1,7 +1,9 @@
 <!--班次管理页面-->
 <template>
   <div class="w" v-if="clockingin_classes==false">
-    <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;" @click="clockingin_classes=true">
+    <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;" @click="clockingin_classes=true,
+     this.classes.classesName= '',this.classes.classesBeginDate= '',this.classes.classesEndDate= '',this.judge=0
+">
       <el-icon>
         <i-plus/>
       </el-icon>
@@ -26,8 +28,8 @@
     &nbsp;
     <el-button type="success" plain @click="selectClassesAll()">搜索</el-button>
     <!--  表格-->
-    <div class="y">
-      <el-table :data="tableData" stripe style="width: 100%">
+    <div>
+      <el-table :data="tableData" stripe style="width: 100% " align=“center”>
         <el-table-column prop="classesName" label="班次名称"/>
         <el-table-column prop="classesBeginDate" label="上班时间"/>
         <el-table-column prop="classesEndDate" label="下班时间"/>
@@ -41,9 +43,13 @@
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
             <el-button type="text" size="small" @click="this.$parent.$parent.$data.classesId=scope.row.classesId,
-                                                        this.$parent.$parent.$data.judge=0,
+                                                        this.judge=1,
+                                                        this.classes.classesName= scope.row.classesName,
+                                                        this.classes.classesBeginDate= scope.row.classesBeginDate,
+                                                        this.classes.classesEndDate= scope.row.classesEndDate,
                                                         clockingin_classes=true"
-            >编辑</el-button>
+            >编辑
+            </el-button>
             <span style="color:#e8e8e8">|</span>
             <el-popconfirm
                 confirm-button-text="确定"
@@ -94,7 +100,7 @@
     <!--  分页-->
     <div class="demo-pagination-block">
       <el-pagination
-          v-model:currentPage="pageInfo.currenPage"
+          v-model:currentPage="pageInfo.currentPage"
           :page-sizes="[1,3,5,7]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
@@ -129,7 +135,11 @@ export default {
   },
   data() {
     return {
-      //添加班次
+      classes: {
+        classesName: "",
+        classesBeginDate: "",
+        classesEndDate: "",
+      },     //添加班次
       clockingin_classes: false,
       //访问路径
       url: "http://localhost:80/",
@@ -150,6 +160,7 @@ export default {
       tableData: [],
       // 判断状态
       op: 0,
+      judge:0
     }
   },
   methods: {
@@ -199,6 +210,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -523,7 +535,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }

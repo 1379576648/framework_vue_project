@@ -76,17 +76,21 @@
     <!--分页-->
     <div class="demo-pagination-block">
       <el-pagination
-          v-model:currentPage="pageInfo.currenPage"
-          :page-sizes="[3, 5, 10, 50]"
+          v-model:currentPage="pageInfo.currentPage"
+          :page-sizes="[1, 3, 5, 7]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageInfo.total"
           :pager-count="5"
           background
-          @size-change="sele"
-          @current-change="sele"
-      >
+          next-text="下一页"
+          prev-text="上一页"
+          @size-change="selectOverTimeRecordAll()"
+          @current-change="selectOverTimeRecordAll()"
+          @prev-click="selectOverTimeRecordAll()"
+          @next-click="selectOverTimeRecordAll()">
+        >
       </el-pagination>
     </div>
 
@@ -108,7 +112,6 @@ export default {
       NowStaffName: this.$store.state.staffMessage.staffName,
       pageInfo: {
         currentPage: 1,
-        /* 当前的页 */
         pagesize: 3,
         total: 0,
       },
@@ -284,6 +287,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -379,7 +383,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }

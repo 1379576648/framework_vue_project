@@ -157,12 +157,12 @@
         <!-- 分页插件 -->
         <div class="demo-pagination-block">
           <el-pagination
-              v-model:currentPage="pageInfo.currentPage"
+              v-model:currentPage="pageInfo1.currentPage"
               :page-sizes="[1, 3, 5, 7]"
-              v-model:page-size="pageInfo.pagesize"
-              :default-page-size="pageInfo.pagesize"
+              v-model:page-size="pageInfo1.pagesize"
+              :default-page-size="pageInfo1.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="pageInfo.total"
+              :total="pageInfo1.total"
               :pager-count="5"
               background
               next-text="下一页"
@@ -354,6 +354,12 @@ export default {
       // 总裁名称
       president: "",
       pageInfo: {
+        // 分页参数
+        currentPage: 1, //当前页
+        pagesize: 3, // 页大小
+        total: 0, // 总页数
+      },
+      pageInfo1: {
         // 分页参数
         currentPage: 1, //当前页
         pagesize: 3, // 页大小
@@ -655,8 +661,8 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData1 = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
-            this.pageInfo.total = response.data.data.info.total;
+            this.pageInfo1.pagesize = response.data.data.info.size;
+            this.pageInfo1.total = response.data.data.info.total;
           }
         } else {
           ElNotification.warning({

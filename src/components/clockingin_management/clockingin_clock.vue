@@ -70,7 +70,7 @@
     <!--分页-->
     <div class="demo-pagination-block">
       <el-pagination
-          v-model:currentPage="pageInfo.currenPage"
+          v-model:currentPage="pageInfo.currentPage"
           :page-sizes="[1, 3, 5, 7]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
@@ -235,6 +235,7 @@ export default {
             obj.afternoon = v.下午打卡时间
             obj.record = v.记录时间
             arr.push(obj)
+
             _this.tableData.push(obj)
           })
         }
@@ -277,6 +278,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -372,7 +374,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }
