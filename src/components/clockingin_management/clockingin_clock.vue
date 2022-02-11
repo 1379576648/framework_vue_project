@@ -46,7 +46,6 @@
         <el-table-column prop="deptName" label="部门名称"/>
         <el-table-column prop="mornClock" label="早上打卡时间"/>
         <el-table-column prop="afternoonClock" label="下午打卡时间"/>
-        <el-table-column prop="createdTime" label="记录时间"/>
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
             <el-popconfirm

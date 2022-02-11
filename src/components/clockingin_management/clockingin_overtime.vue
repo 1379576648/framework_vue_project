@@ -51,17 +51,47 @@
         <el-table-column prop="overtimeaskActualTime" label="实际开始时间"/>
         <el-table-column prop="overtimeaskActualOvertime" label="实际结束时间"/>
         <el-table-column prop="overtimeaskActualTokinaga" label="实际总小时"/>
-        <el-table-column prop="overtimeaskCondition" label="加班状态"/>
+        <el-table-column label="加班状态">
+        <template #default="scope">
+          <span v-if="scope.row.overtimeaskCondition===0">未开始</span>
+          <span v-if="scope.row.overtimeaskCondition===1">进行中</span>
+          <span v-if="scope.row.overtimeaskCondition===2">已完成</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="operate" label="操作">
+
           <template #default="scope">
-            <el-button type="text" size="small" style="color:darkorange"
-                       @click=beginOverTime
-            >开始加班
-            </el-button>
-            <el-button type="text" size="small" style="color:darkorange"
-                       @click="(overtimeaskId=scope.row.overtimeaskId)"
-            >结束加班
-            </el-button>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定开始加班吗?"
+                @confirm=beginOverTime(overtimeaskId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(overtimeaskId=scope.row.overtimeaskId,overtimeaskActualTime=scope.row.overtimeaskActualTime)"
+                >开始加班
+                </el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定结束加班吗?"
+                @confirm=EndOverTime(overtimeaskId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(overtimeaskId=scope.row.overtimeaskId,
+                           overtimeaskActualTime=scope.row.overtimeaskActualTime)"
+                >结束加班
+                </el-button>
+              </template>
+            </el-popconfirm>
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -315,7 +345,6 @@ export default {
         }
       })
     },
-
     // 删除打卡记录
     deleteOverTime() {
       var _this = this;
@@ -361,9 +390,125 @@ export default {
         }
       })
     },
+    // 开始加班
     beginOverTime() {
-
-    }
+      if (this.overtimeaskActualTime !== null){
+        ElNotification.warning({
+          title: '提示',
+          message: "已正在进行加班，不能进行重复操作",
+          offset: 100,
+        })
+      }else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateBeginOverTime',
+          data: {
+            "overtimeaskId": this.overtimeaskId,
+          }
+        }).then((response) => {
+          console.log("开始加班");
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info == "开始加班成功") {
+                ElMessage({
+                  showClose: true,
+                  message: '开始加班成功',
+                  type: 'success',
+                })
+                this.selectOverTimeRecordAll();
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "开始加班数据有误，请联系管理员",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 结束加班
+    EndOverTime() {
+      if (this.overtimeaskActualOvertime !== undefined) {
+        ElNotification.warning({
+          title: '提示',
+          message: "加班已完成，不能进行重复操作",
+          offset: 100,
+        })
+      }else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateEndOverTime',
+          data: {
+            "overtimeaskId": this.overtimeaskId,
+            "overtimeaskActualTime":this.overtimeaskActualTime,
+          }
+        }).then((response) => {
+          console.log("结束加班");
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info == "结束加班成功") {
+                ElMessage({
+                  showClose: true,
+                  message: '结束加班成功',
+                  type: 'success',
+                })
+                this.selectOverTimeRecordAll();
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "结束加班数据有误，请联系管理员",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
   },
   created() {
     // 根据员工名称查询打卡记录
