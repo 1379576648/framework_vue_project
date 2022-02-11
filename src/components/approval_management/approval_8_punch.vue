@@ -127,10 +127,10 @@
             <el-input v-if="details[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
           </el-form-item>
           <el-form-item label="申请状态：">
-            <el-input v-if="details[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-            <el-input v-if="details[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===0" v-model="state.pending" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===1" v-model="state.through" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===2" v-model="state.rejected" disabled></el-input>
+            <el-input v-if="details[0].auditflowState===3" v-model="state.undo" disabled></el-input>
           </el-form-item>
           <el-form-item label="审批人：">
             <el-input v-model="details[0].staffName2" disabled></el-input>
@@ -185,6 +185,7 @@
               <span class="button-await" v-if="scope.row.auditflowstate===0">待审</span>
               <span class="button-pass" v-if="scope.row.auditflowstate===1">通过</span>
               <span class="button-reject" v-if="scope.row.auditflowstate===2">驳回</span>
+              <span class="button-underway" v-if="scope.row.auditflowstate===3">撤销</span>
             </template>
           </el-table-column>
           <el-table-column prop="staffName2" label="历史审批人" width="150"/>
@@ -230,12 +231,13 @@
               <el-input v-if="details2[0].auditflowdetaiState===1" v-model="state.approval" disabled></el-input>
               <el-input v-if="details2[0].auditflowdetaiState===2" v-model="state.through" disabled></el-input>
               <el-input v-if="details2[0].auditflowdetaiState===3" v-model="state.rejected" disabled></el-input>
+              <el-input v-if="details2[0].auditflowdetaiState===4" v-model="state.undo" disabled></el-input>
             </el-form-item>
             <el-form-item label="申请状态：">
-              <el-input v-if="details2[0].auditflowstate===0" v-model="state.pending" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===1" v-model="state.through" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===2" v-model="state.rejected" disabled></el-input>
-              <el-input v-if="details2[0].auditflowstate===3" v-model="state.undo" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===0" v-model="state.pending" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===1" v-model="state.through" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===2" v-model="state.rejected" disabled></el-input>
+              <el-input v-if="details2[0].auditflowState===3" v-model="state.undo1" disabled></el-input>
             </el-form-item>
             <el-form-item label="审批人：">
               <el-input v-model="details2[0].staffName2" disabled></el-input>
@@ -887,9 +889,9 @@ export default {
           // 审批主表编号
           auditflowId: this.auditflowId,
           // 审批类型（流程名称）
-          auditflowType:this.auditflowType,
+          auditflowType: this.auditflowType,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -913,6 +915,14 @@ export default {
             showClose: true,
             message: '操作失败',
             type: 'error',
+          })
+          this.add_pass_remark2 = false;
+          this.remark = "";
+        } else if (response.data.code === 200 && response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '查询到打卡记录中没有匹配的数据，无法完成后续补打卡操作',
+            type: 'success',
           })
           this.add_pass_remark2 = false;
           this.remark = "";

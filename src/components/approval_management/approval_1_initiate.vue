@@ -165,7 +165,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '婚假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_11.svg"/>
@@ -181,7 +181,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '产假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_12.svg"/>
@@ -197,7 +197,7 @@
           >
             <el-button
                 type="text"
-                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '丧假',type= '请假')"
+                @click="clickInquireRequire(typeOne=this.sick_1.type_1 = '工伤假',type= '请假')"
                 style="color: #606c82; font-size: 12px"
             >
               <img class="icon" src="../../assets/process_16.svg"/>
@@ -1388,6 +1388,8 @@ export default defineComponent({
       NowDeptName: "",
       // 调薪前基本工资
       base_pay: "",
+      // 当天加班记录
+      NewDayOverTime:"",
       // 地址选择器
       options: regionData,
       // 地址选择器
@@ -3926,7 +3928,8 @@ export default defineComponent({
             if (this.type === "补打卡") {
               window.setTimeout(this.selectCardExamine, 500);
             } else if (this.type === "加班") {
-              window.setTimeout(this.selectOvertimeExamine, 500);
+              // 如果为加班，则去查询当天有无加班申请记录
+              window.setTimeout(this.selectTodayOverTimeExamine, 500);
             } else if (this.type === "出差") {
               window.setTimeout(this.selectEvectionExamine, 500);
             } else if (this.type === "请假") {
@@ -3975,7 +3978,7 @@ export default defineComponent({
             if (this.type === "补打卡") {
               window.setTimeout(this.selectCardExamine, 500);
             } else if (this.type === "加班") {
-              window.setTimeout(this.selectOvertimeExamine, 500);
+              window.setTimeout(this.selectTodayOverTimeExamine, 500);
             } else if (this.type === "出差") {
               window.setTimeout(this.selectEvectionExamine, 500);
             } else if (this.type === "请假") {
@@ -4008,6 +4011,48 @@ export default defineComponent({
         }
       }
     },
+    // 查询当天的加班审批记录
+    selectTodayOverTimeExamine(){
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectTodayOverTimeExamine',
+        data: {
+           staffName: this.NowStaffName,
+          auditFlowType: "加班"
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询当天的加班审批记录")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })//如果服务没有关闭
+        } else if (response.data) {
+          // 如果为0，则视为当天没有加班审批记录，则可以再去查询是否有无正在审批的加班记录
+          if (response.data.data.info.length == 0){
+            window.setTimeout(this.selectOvertimeExamine, 500);
+          }else if (response.data.data.info.length >0){
+            ElNotification.warning({
+              title: '提示',
+              message: "查询到您当天有加班审批记录",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询最近一个月的补打卡记录
+    selectMonthCardExamine(){},
     // 查询转正审批记录
     selectexaminerecord() {
       this.axios({

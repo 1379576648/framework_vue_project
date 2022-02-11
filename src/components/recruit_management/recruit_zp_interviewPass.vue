@@ -1,4 +1,4 @@
-<!--面试通过-->
+l<!--面试通过-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -85,16 +85,16 @@
 
 
     <el-dialog v-model="EmployAddRemark" title="录用">
-      <span >试用工资：</span>
-      <el-input-number v-model="num" :precision="2" :step="0.1" :max="10" style="margin-bottom: 30px"/>
+
       <el-form :model="Remark">
+        <span >试用工资：</span>
+        <el-input-number v-model="num" :precision="2" :step="1000" :max="5000" :min="1000" style="margin-bottom: 30px"/>
         <el-input
-            v-model="textarea"
+            v-model="evaluate"
             :rows="2"
             type="textarea"
             placeholder="填写评价"
         />
-
       </el-form>
       <template #footer>
       <span class="dialog-footer">
@@ -119,13 +119,17 @@ export default {
   setup() {
     const EmployAddRemark = ref(false);
     const textarea = ref('');
-    const num = ref(1);
+    const num = ref(1000);
     return {
       EmployAddRemark,
     };
   },
   data() {
     return {
+      // 弹出框备注
+      evaluate:"",
+      // 弹出框数字输入框
+      num:"",
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
@@ -173,13 +177,28 @@ export default {
       console.log(resumeId)
       this.EmployAddRemark=true;
     },
-    confirm(resumeId){
-      console.log(resumeId)
-      this.EmployAddRemark=false;
-      ElMessage({
-        message: '录用成功',
-        type: 'success',
+    // 点击弹出框确定按钮
+    confirm() {
+      console.log(this.resumeId)
+      console.log(this.num)
+      console.log(this.evaluate)
+      // this.EmployAddRemark=false;
+      this.axios({
+        method: 'post',
+        url: this.url + 'EmployStaff',
+        data: {
+          resumeId: this.resumeId,
+          remarks: this.evaluate,
+          employmentSalary: this.num,
+          employmentState:0,
+        },
+        responseType:'json',
+        responseEncoding:'utf-8',
+      }).then((response)=>{
+        console.log("添加录用成功")
+        console.log(response)
       })
+
     },
     cancel(){
       this.EmployAddRemark=false;

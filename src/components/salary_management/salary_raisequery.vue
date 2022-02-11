@@ -57,6 +57,7 @@
 export default {
   data(){
     return{
+      seek2:'',
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页

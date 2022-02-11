@@ -20,7 +20,7 @@
 
         <div style="margin-top:20px;margin-left:20px;" class="icon-p">
           <el-row :gutter="10">
-            <el-col :span="8" @click="this.employee_quick=false,this.one=true">
+            <el-col :span="8" @click="this.employee_quick=false,this.one=true,this.employee_yquick=false">
               <el-card
                   shadow="always"
                   style="
@@ -31,10 +31,10 @@
                 "
               >
                 <p>试用期人员</p>
-                <p>2</p>
+                <p>{{ this.tableDataThree.tjThree }}</p>
               </el-card>
             </el-col>
-            <el-col :span="8" style="margin-left:-20px;">
+            <el-col :span="8" style="margin-left:-20px;" @click="this.employee_yquick=true,this.one=false,this.employee_quick=false">
               <el-card
                   shadow="never"
                   style="
@@ -45,10 +45,10 @@
                 "
               >
                 <p>转正已生效</p>
-                <p>21</p>
+                <p>{{ this.tableDataTwo.tjTwo }}</p>
               </el-card>
             </el-col>
-            <el-col :span="8" style="margin-left:-20px;" @click="this.employee_quick=true,this.one=false">
+            <el-col :span="8" style="margin-left:-20px;" @click="this.employee_quick=true,this.one=false,this.employee_yquick=false">
               <el-card
                   shadow="never"
                   style="
@@ -83,7 +83,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作">
               <template #default="scope">
-                <el-button type="text" size="small" @click="work(scope.row),id=scope.row.staffId,abandon(id)">办理转正</el-button>
+                <el-button type="text" size="small" @click="work(scope.row),id=scope.row.staffId,abandon(id),rest()">办理转正</el-button>
               </template>
             </el-table-column>
 
@@ -111,6 +111,7 @@
         </div>
       </div>
         <employee_quick v-if="employee_quick"/>
+        <employee_yquick v-if="employee_yquick"/>
       </div>
     </div>
   </div>
@@ -187,9 +188,11 @@
 import {defineComponent, ref} from 'vue'
 import {ElMessage, ElNotification} from "element-plus";
 import employee_quick from "./employee_quick.vue";
+import employee_yquick from "./employee_yquick.vue";
 export default defineComponent({
   components: {
     employee_quick,
+    employee_yquick,
   },
   data() {
     const one = (rule, value, callback) => {
@@ -202,7 +205,10 @@ export default defineComponent({
     return {
       one:true,
       employee_quick:false,
+      employee_yquick:false,
       tableDatas:[],
+      tableDataTwo:[],
+      tableDataThree:[],
       url: "http://localhost:80/",
       tableData: [],
       seek: "",
@@ -250,6 +256,7 @@ export default defineComponent({
     }
   },
   methods: {
+    //清空
     RestForm() {
       this.become_1 = {
         name: '',
@@ -261,6 +268,12 @@ export default defineComponent({
         remarks: '',
         becomedate: ''
       }
+    },
+    //清空
+    rest(){
+      this.become_1.type="";
+      this.become_1.becomedate="";
+      this.become_1.remarks="";
     },
     //查询转正记录
     selectpost() {
@@ -449,6 +462,79 @@ export default defineComponent({
           //如果服务是正常的
           if (response.data.data.state == 200) {
             _this.tableDatas = response.data.data.info[0]
+
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //统计转正已生效
+    countStateOne() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateOne',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataTwo = response.data.data.info[0]
+
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //统计试用期人员
+    countStateTwo() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateTwo',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableDataThree = response.data.data.info[0]
+
           }
           //如果服务是雪崩的
           else {
@@ -467,7 +553,11 @@ export default defineComponent({
     this.selectpost();
     //统计快要转正名单
     this.countByStaffState();
-  }
+    //统计转正已生效
+    this.countStateOne();
+    //统计试用期人员
+    this.countStateTwo();
+  },
 })
 
 </script>

@@ -15,58 +15,43 @@
         </el-icon>
         导入
       </el-button>
-      <!--选择开始时间和结束时间-->
+      <!--选择开始日期和结束日期-->
       <el-date-picker
-          v-model="value1"
+          v-model="selectTime"
           type="daterange"
           unlink-panels
-          range-separator="TO"
+          range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          wdaWD
-          aW
           :shortcuts="shortcuts"
           style="margin-left: 340px"
       >
       </el-date-picker>
-      <!--全部部门-->
-      <el-select size="small" v-model="value" clearable placeholder="全部部门" style="margin-left: 25px">
-        <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-        >
-        </el-option>
-      </el-select>
-      <!--搜索框-->
-      <el-input size="small" v-model="input" placeholder="搜索" style="width:150px;margin-left: 25px">
-        <template #suffix>
-          <el-icon style="margin-top:9px;margin-right:10px">
-            <i-search/>
-          </el-icon>
-        </template>
-      </el-input>
+      &nbsp;
+      <el-button type="success" plain @click="selectReissueCardRecordAll()">搜索</el-button>
 
     </div>
     <div class="y">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="applyfor" label="申请名称"/>
-        <el-table-column prop="type" label="补打卡类型"/>
-        <el-table-column prop="hour" label="补打卡时间"/>
-        <el-table-column prop="remark" label="备注"/>
+        <el-table-column prop="staffName" label="申请名称"/>
+        <el-table-column prop="cardType" label="补打卡类型"/>
+        <el-table-column prop="cardDate" label="补打卡时间"/>
+        <el-table-column prop="cardRemarks" label="备注"/>
         <el-table-column prop="operate" label="操作">
-          <template #default>
+          <template #default="scope">
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
                 :icon="InfoFilled"
                 icon-color="red"
                 title="确定删除吗?"
-                @confirm="through1()"
+                @confirm=deleteCard(cardId)
             >
               <template #reference>
-                <el-button type="text" size="small" style="color:darkorange">删除</el-button>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(cardId=scope.row.cardId)"
+                >删除
+                </el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -93,14 +78,19 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {ref, defineComponent} from "vue";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      //访问路径
+      url: "http://localhost:80/",
+      // 当前登录者
+      NowStaffName: this.$store.state.staffMessage.staffName,
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
@@ -134,48 +124,111 @@ export default {
           },
         },
       ],
-      options: ref([
-        {
-          value: "Option1",
-          label: "Option1",
-        },
-        {
-          value: "Option2",
-          label: "Option2",
-        },
-        {
-          value: "Option3",
-          label: "Option3",
-        },
-        {
-          value: "Option4",
-          label: "Option4",
-        },
-        {
-          value: "Option5",
-          label: "Option5",
-        },
-      ]),
-      tableData: [
-        {
-          applyfor: '七七',
-          type: '车祸',
-          place: '厦门',
-          hour: '8:10',
-          remark: '啊啊啊',
-
-        },
-      ],
-      value1: "", //日期
+      // 选择开始日期/结束日期
+      selectTime: [],
+      tableData: [],
       value: ref(""), //选择
     };
   },
-  methods:{
-    // 点击删除确认按钮触发
-    through1() {
-      alert(1)
+  methods: {
+    // 根据员工名称查询补打卡
+    selectReissueCardRecordAll() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectReissueCardRecordAll',
+        data: {
+          // 当前登陆者
+          "staffName": this.NowStaffName,
+          // 当前页
+          "currentPage": this.pageInfo.currentPage,
+          // 页大小
+          "pagesize": this.pageInfo.pagesize,
+          // 起始时间
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
+          // 结束时间
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
+        }
+      }).then((response) => {
+        console.log("查询补打卡记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "查询补打卡记录有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
     },
-  }
+    // 删除补打卡记录
+    deleteCard() {
+      var _this = this;
+      this.axios({
+        method: 'post',
+        url: this.url + 'deleteCard',
+        data: {
+          "cardId": this.cardId,
+        }
+      }).then((response) => {
+        console.log("删除补打卡记录");
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if (response.data.data.info = 1) {
+              ElMessage({
+                showClose: true,
+                message: '删除成功',
+                type: 'success',
+              })
+              this.selectReissueCardRecordAll();
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "删除补打卡记录有误，请联系管理员",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+  },
+  created() {
+    // 根据员工名称查询补打卡
+    this.selectReissueCardRecordAll();
+  },
 };
 </script>
 
@@ -205,7 +258,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }
