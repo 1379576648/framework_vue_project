@@ -9,13 +9,12 @@
         </el-icon>
         导出
       </el-button>
+      &nbsp;
       <el-upload
-          class="upload-demo"
-          action
-          :on-change="channel"
-          accept=".xls, .xlsx"
-          :auto-upload="false"
+          action=""
+          style="display: inline-block"
           :show-file-list="false"
+          accept="xlsx"
       >
         <el-button size="medium">
           <el-icon style="font-size: 18px">
@@ -52,8 +51,17 @@
         <el-table-column prop="overtimeaskActualTime" label="实际开始时间"/>
         <el-table-column prop="overtimeaskActualOvertime" label="实际结束时间"/>
         <el-table-column prop="overtimeaskActualTokinaga" label="实际总小时"/>
+        <el-table-column prop="overtimeaskCondition" label="加班状态"/>
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
+            <el-button type="text" size="small" style="color:darkorange"
+                       @click=beginOverTime
+            >开始加班
+            </el-button>
+            <el-button type="text" size="small" style="color:darkorange"
+                       @click="(overtimeaskId=scope.row.overtimeaskId)"
+            >结束加班
+            </el-button>
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -69,6 +77,7 @@
                 </el-button>
               </template>
             </el-popconfirm>
+
           </template>
         </el-table-column>
       </el-table>
@@ -98,6 +107,8 @@
 </template>
 
 <script>
+
+
 import {ref, defineComponent} from "vue";
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import {export_json_to_excel} from "../../excal/Export2Excel";
@@ -175,8 +186,8 @@ export default {
     // 导出方法
     deriveExcel() {
       var _this = this;
-      let tHeader = ["申请人", "发起人部门", "加班类型", "加班事由", "计划开始时间","计划结束时间","计划总小时","实际开始时间","实际结束时间","实际总小时",]; // 导出的表头名
-      let filterVal = ["staffName", "deptName", "overtimeaskType", "overtimeaskMatter", "overtimeaskSDate","overtimeaskEDate","overtimeaskTotalDate","overtimeaskActualTime","overtimeaskActualOvertime","overtimeaskActualTokinaga"];//导出其prop属性
+      let tHeader = ["申请人", "发起人部门", "加班类型", "加班事由", "计划开始时间", "计划结束时间", "计划总小时", "实际开始时间", "实际结束时间", "实际总小时",]; // 导出的表头名
+      let filterVal = ["staffName", "deptName", "overtimeaskType", "overtimeaskMatter", "overtimeaskSDate", "overtimeaskEDate", "overtimeaskTotalDate", "overtimeaskActualTime", "overtimeaskActualOvertime", "overtimeaskActualTokinaga"];//导出其prop属性
       ElMessageBox.prompt('请输入文件名', '提示', {
         confirmButtonText: '生成',
         cancelButtonText: '取消',
@@ -304,6 +315,7 @@ export default {
         }
       })
     },
+
     // 删除打卡记录
     deleteOverTime() {
       var _this = this;
@@ -311,7 +323,7 @@ export default {
         method: 'post',
         url: this.url + 'deleteOverTime',
         data: {
-          "overtimeaskId":this.overtimeaskId,
+          "overtimeaskId": this.overtimeaskId,
         }
       }).then((response) => {
         console.log("删除加班记录");
@@ -325,7 +337,7 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            if (response.data.data.info == 1){
+            if (response.data.data.info == 1) {
               ElMessage({
                 showClose: true,
                 message: '删除成功',
@@ -348,11 +360,15 @@ export default {
           })
         }
       })
+    },
+    beginOverTime() {
+
     }
   },
   created() {
     // 根据员工名称查询打卡记录
     this.selectOverTimeRecordAll();
+
   },
 };
 </script>

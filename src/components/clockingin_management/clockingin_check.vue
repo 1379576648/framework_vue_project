@@ -42,8 +42,7 @@
         <el-table-column prop="createdTime" label="创建时间"/>
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
-            <el-button type="text" size="small" @click="this.$parent.$parent.$data.classesId=scope.row.classesId,
-                                                        this.judge=1,
+            <el-button type="text" size="small" @click="this.judge=1,
                                                         this.classes.classesName= scope.row.classesName,
                                                         this.classes.classesBeginDate= scope.row.classesBeginDate,
                                                         this.classes.classesEndDate= scope.row.classesEndDate,
@@ -160,7 +159,7 @@ export default {
       tableData: [],
       // 判断状态
       op: 0,
-      judge:0
+      judge: 0
     }
   },
   methods: {

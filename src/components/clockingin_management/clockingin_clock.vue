@@ -8,13 +8,14 @@
         </el-icon>
         导出
       </el-button>
+      &nbsp;
       <el-upload
-          class="upload-demo"
-          action
-          :on-change="channel"
-          accept=".xls, .xlsx"
-          :auto-upload="false"
+          :action="this.url1 +this.$store.state.staffMessage.staffName"
+          style="display: inline-block"
           :show-file-list="false"
+          accept=".xlsx"
+          :on-success="ExcelImport"
+          :before-upload="beforeUpload"
       >
         <el-button size="medium">
           <el-icon style="font-size: 18px">
@@ -101,8 +102,11 @@ export default {
     return {
       //访问路径
       url: "http://localhost:80/",
+      // 导入地址
+      url1: "http://localhost:80/import/",
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
+      StaffName: this.NowStaffName,
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
@@ -193,58 +197,18 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
-    // 导入方法
-    channel(obj) {
-      let _this = this;
-      // 通过DOM取文件数据
-      this.file = obj.raw;
-      var rABS = false; //是否将文件读取为二进制字符串
-      var f = this.file;
-      var reader = new FileReader();
-      FileReader.prototype.readAsBinaryString = function (f) {
-        var binary = "";
-        var rABS = false; //是否将文件读取为二进制字符串
-        var pt = this;
-        var wb; //读取完成的数据
-        var outdata;
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          var bytes = new Uint8Array(reader.result);
-          var length = bytes.byteLength;
-          for (var i = 0; i < length; i++) {
-            binary += String.fromCharCode(bytes[i]);
-          }
-          if (rABS) {
-            wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
-              type: 'base64'
-            });
-          } else {
-            wb = XLSX.read(binary, {
-              type: 'binary'
-            });
-          }
-          // outdata就是你想要的东西 excel导入的数据
-          outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-          // excel 数据再处理
-          let arr = []
-          outdata.map(v => {
-            let obj = {}
-            obj.staff = v.员工名称
-            obj.department = v.部门名称
-            obj.morning = v.早上打卡时间
-            obj.afternoon = v.下午打卡时间
-            obj.record = v.记录时间
-            arr.push(obj)
-
-            _this.tableData.push(obj)
-          })
-        }
-        reader.readAsArrayBuffer(f);
+    // 导入判断
+    beforeUpload(file) {
+      const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const whiteList = ["xls", "xlsx"];
+      if (whiteList.indexOf(fileSuffix) === -1) {
+        this.$message.error('上传文件只能是xls、xlsx格式');
+        return false;
       }
-      if (rABS) {
-        reader.readAsArrayBuffer(f);
-      } else {
-        reader.readAsBinaryString(f);
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('上传文件大小不能超过 2MB');
+        return false;
       }
     },
     // 根据员工名称查询打卡记录
@@ -339,6 +303,38 @@ export default {
           })
         }
       })
+    },
+    // 导入
+    ExcelImport(response) {
+      console.log("导入")
+      console.log(response)
+      if (response.data.data) {
+        ElNotification.warning({
+          title: '提示',
+          message: "服务发生关闭",
+          offset: 100,
+        })
+      } else if (response.data.state == 200) {
+        if (response.data.info == 99) {
+          ElMessage({
+            type: 'success',
+            message: `导入成功`,
+          })
+          this.selectCardRecordAll();
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: response.data.info,
+            offset: 100,
+          })
+        }
+      } else {
+        ElNotification.warning({
+          title: '提示',
+          message: "服务发生雪崩",
+          offset: 100,
+        })
+      }
     }
   },
   created() {

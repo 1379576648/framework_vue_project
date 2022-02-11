@@ -8,13 +8,19 @@
         </el-icon>
         导出
       </el-button>
+      &nbsp;
       <el-upload
           action=""
-          :on-change="onChange"
-          :auto-upload="false"
+          style="display: inline-block"
           :show-file-list="false"
-          accept=".xls, .xlsx" >
-        <el-button type="primary" icon="el-icon-folder-add">导入</el-button>
+          accept="xlsx"
+      >
+        <el-button size="medium" >
+          <el-icon style="font-size: 18px">
+            <i-folder-opened/>
+          </el-icon>
+          导入
+        </el-button>
       </el-upload>
       <!--选择开始日期和结束日期-->
       <el-date-picker
