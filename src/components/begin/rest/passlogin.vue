@@ -15,6 +15,7 @@
 <script>
 import {ElNotification} from 'element-plus'
 import {ElLoading} from 'element-plus';
+
 export default {
   data() {
     return {
@@ -84,80 +85,77 @@ export default {
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              this.$store.commit("updateToken", response.data.data.token);
-              //如果有数据
-              if (response.data.data.succeed) {
-                //如果数据里面有员工信息
-                if (response.data.data.succeed.staffName) {
-                  //获取后台传过来的数据
-                  let value = response.data.data.succeed;
-                  //读取需要的数据形成对象
-                  let obj = {
-                    //员工编号
-                    "staffId": value.staffId,
-                    //员工名称
-                    "staffName": value.staffName,
-                    //员工手机号
-                    "staffPhone": value.staffPhone,
-                    //员工性别
-                    "staffSex": value.staffSex,
-                    //员工照片地址
-                    "staffPicture": value.staffPicture,
-                    //员工学历
-                    "staffEducation": value.staffEducation,
-                    //员工政治面貌
-                    "staffOutlook": value.staffOutlook,
-                    //部门职位编号
-                    "deptPostId": value.deptPostId,
-                    //部门编号
-                    "deptId": value.deptId,
+          if (response.data.code == 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                this.$store.commit("updateToken", response.data.data.token);
+                //如果有数据
+                if (response.data.data.succeed) {
+                  //如果数据里面有员工信息
+                  if (response.data.data.succeed.staffName) {
+                    //获取后台传过来的数据
+                    let value = response.data.data.succeed;
+                    //读取需要的数据形成对象
+                    let obj = {
+                      //员工编号
+                      "staffId": value.staffId,
+                      //员工名称
+                      "staffName": value.staffName,
+                      //员工手机号
+                      "staffPhone": value.staffPhone,
+                      //员工性别
+                      "staffSex": value.staffSex,
+                      //员工照片地址
+                      "staffPicture": value.staffPicture,
+                      //员工学历
+                      "staffEducation": value.staffEducation,
+                      //员工政治面貌
+                      "staffOutlook": value.staffOutlook,
+                      //部门职位编号
+                      "deptPostId": value.deptPostId,
+                      //部门编号
+                      "deptId": value.deptId,
+                    }
+                    //将形成的对象存放起来
+                    this.$store.commit("staffInfo", obj);
+                    console.log(response.data.data.menuList)
+                    this.$store.commit("updateMenuList", response.data.data.menuList);
+                    sessionStorage.setItem("refresh", "true")
+                    //跳转可以
+                    this.$router.push({path: '/home', replace: true})
                   }
-                  //将形成的对象存放起来
-                  this.$store.commit("staffInfo", obj);
-                  console.log(response.data.data.menuList)
-                  this.$store.commit("updateMenuList", response.data.data.menuList);
-                  sessionStorage.setItem("refresh", "true")
-                  //跳转可以
-                  this.$router.push({path: '/home', replace: true})
+                  //如果数据里面没有员工信息
+                  else {
+                    ElNotification.warning({
+                      title: '提示',
+                      message: "请" + response.data.data.succeed.error + "分钟后再试",
+                      offset: 100,
+                    })
+                  }
                 }
-                //如果数据里面没有员工信息
+                //如果没有数据
                 else {
                   ElNotification.warning({
                     title: '提示',
-                    message: "请" + response.data.data.succeed.error + "分钟后再试",
+                    message: "账号或密码错误",
                     offset: 100,
                   })
                 }
-              }
-              //如果没有数据
-              else {
-                ElNotification.warning({
+              } else {
+                ElNotification.error({
                   title: '提示',
-                  message: "账号或密码错误",
+                  message: response.data.data.info,
                   offset: 100,
                 })
               }
             }
-            //如果服务是雪崩的
-            else {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
         })
       }

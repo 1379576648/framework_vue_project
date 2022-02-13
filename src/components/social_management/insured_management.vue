@@ -322,15 +322,7 @@ export default {
                 responseEncoding: 'utf-8',
               }).then((response) => {
                 if (response.data.code == 200) {
-                  //如果服务关闭
-                  if (response.data.data.data) {
-                    ElNotification.error({
-                      title: '提示',
-                      message: "服务发生关闭",
-                      offset: 100,
-                    })
-                    //如果服务没有关闭
-                  } else if (response.data.data) {
+                 if (response.data.data) {
                     //如果服务是正常的
                     if (response.data.data.state == 200) {
                       //如果是成功
@@ -347,12 +339,10 @@ export default {
                           message: response.data.data.info,
                         })
                       }
-                    }
-                    //如果服务是雪崩的
-                    else {
+                    } else {
                       ElNotification.error({
                         title: '提示',
-                        message: "服务发生雪崩",
+                        message: response.data.data.info,
                         offset: 100,
                       })
                     }
@@ -408,15 +398,7 @@ export default {
       }).then((response) => {
 
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               this.deptS = response.data.data.info;
@@ -426,7 +408,7 @@ export default {
             else {
               ElNotification.error({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -466,26 +448,16 @@ export default {
       }).then((response) => {
 
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+         if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               this.staffList = response.data.data.info.records;
               this.pageInfo.total = response.data.data.info.total
               this.$store.commit("updateToken", response.data.data.token);
-            }
-            //如果服务是雪崩的
-            else {
+            } else {
               ElNotification.error({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -508,25 +480,15 @@ export default {
       }).then((response) => {
 
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               this.insuredList_name = response.data.data.info;
               this.$store.commit("updateToken", response.data.data.token);
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.error({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
