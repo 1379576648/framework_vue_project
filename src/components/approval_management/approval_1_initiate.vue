@@ -262,7 +262,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{ president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -296,7 +296,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -310,7 +310,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -400,7 +400,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -434,7 +434,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -448,7 +448,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -534,7 +534,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -568,7 +568,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -582,7 +582,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -699,7 +699,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -733,7 +733,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -747,7 +747,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -847,7 +847,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -881,7 +881,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -895,7 +895,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -976,7 +976,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1010,7 +1010,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1024,7 +1024,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1105,7 +1105,7 @@
             ></el-date-picker>
           </el-form-item>
           <!-- 出差总时长 -->
-          <el-form-item label="请假总时长">
+          <el-form-item label="出差总时长">
             <el-input v-model="travel_1.date3" disabled></el-input>
           </el-form-item>
           <!-- 审批人 -->
@@ -1128,7 +1128,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1162,7 +1162,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1176,7 +1176,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1252,7 +1252,7 @@
             </el-col>
           </el-form-item>
           <!-- 总时长 -->
-          <el-form-item label="出差总时长">
+          <el-form-item label="请假总时长">
             <el-input v-model="sick_1.date3" disabled></el-input>
           </el-form-item>
           <!-- 审批人 -->
@@ -1275,7 +1275,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1309,7 +1309,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1323,7 +1323,7 @@
                   <el-avatar :size="50" :src="circleUrl"></el-avatar>
                 </div>
                 <div class="sub-title" style="line-height: 10px">
-                  {{ president[1].staffname }}
+                  {{  president[0].staffname }}
                 </div>
               </div>
             </el-col>
@@ -1389,7 +1389,7 @@ export default defineComponent({
       // 调薪前基本工资
       base_pay: "",
       // 当天加班记录
-      NewDayOverTime:"",
+      NewDayOverTime: "",
       // 地址选择器
       options: regionData,
       // 地址选择器
@@ -1602,7 +1602,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1611,16 +1611,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加转正成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.become = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -1630,7 +1629,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.become = false;
@@ -1641,6 +1640,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.become = false;
           }
         })
       }
@@ -1669,7 +1669,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1678,16 +1678,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加转正成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.become = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -1697,7 +1696,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.become = false;
@@ -1708,6 +1707,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.become = false;
           }
         })
       }
@@ -1734,7 +1734,7 @@ export default defineComponent({
             // 转正日期
             workerdate: this.become_1.date1,
             // 审批人3
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1743,16 +1743,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加转正成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.become = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -1762,7 +1761,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.become = false;
@@ -1773,6 +1772,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.become = false;
           }
         })
       }
@@ -1807,7 +1807,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "调动",
             // 审批标题
@@ -1816,16 +1816,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加调动成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.Change = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -1835,7 +1834,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.Change = false;
@@ -1846,6 +1845,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.Change = false;
           }
         })
       }
@@ -1878,7 +1878,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "调动",
             // 审批标题
@@ -1887,16 +1887,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加转正成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.Change = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -1906,7 +1905,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.Change = false;
@@ -1917,6 +1916,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.Change = false;
           }
         })
       }
@@ -1947,7 +1947,7 @@ export default defineComponent({
             // 调动日期
             takeeffectdate: this.Change_1.date1,
             // 审批人3
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "调动",
             // 审批标题
@@ -1956,16 +1956,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加调动成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.Change = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -1975,7 +1974,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.Change = false;
@@ -1986,6 +1985,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.Change = false;
           }
         })
       }
@@ -2020,7 +2020,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "调薪",
             // 审批标题
@@ -2029,16 +2029,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加调动成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.salary = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2048,7 +2047,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.salary = false;
@@ -2059,6 +2058,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.salary = false;
           }
         })
       }
@@ -2089,7 +2089,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.NowManager[0].staffname,
             // 审批人2
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "调薪",
             // 审批标题
@@ -2098,16 +2098,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加转正成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.quit = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2117,7 +2116,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.salary = false;
@@ -2128,6 +2127,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.salary = false;
           }
         })
       }
@@ -2156,7 +2156,7 @@ export default defineComponent({
             // 期望调薪日期
             takeEffectDate: this.salary_1.date1,
             // 审批人2
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "调薪",
             // 审批标题
@@ -2165,16 +2165,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加调薪成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.quit = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2184,7 +2183,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.salary = false;
@@ -2195,6 +2194,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.salary = false;
           }
         })
       }
@@ -2227,7 +2227,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "离职",
             // 审批标题
@@ -2236,16 +2236,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加离职成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.quit = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2255,7 +2254,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.quit = false;
@@ -2266,6 +2265,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.quit = false;
           }
         })
       }
@@ -2296,7 +2296,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.NowManager[0].staffname,
             // 审批人2
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "离职",
             // 审批标题
@@ -2305,16 +2305,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加离职成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.quit = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2324,7 +2323,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.quit = false;
@@ -2335,6 +2334,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.quit = false;
           }
         })
       }
@@ -2363,7 +2363,7 @@ export default defineComponent({
             // 申请离职日期
             applyQuitDate: this.quit_1.date1,
             // 审批人2
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "离职",
             // 审批标题
@@ -2372,16 +2372,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加离职成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.quit = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2391,7 +2390,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.quit = false;
@@ -2402,6 +2401,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.quit = false;
           }
         })
       }
@@ -2440,7 +2440,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "加班",
             // 审批标题
@@ -2449,16 +2449,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加加班成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.overtime = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2468,7 +2467,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.overtime = false;
@@ -2479,6 +2478,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.overtime = false;
           }
         })
       }
@@ -2515,7 +2515,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.personnel_manager[0].staffname,
             // 审批人2
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "加班",
             // 审批标题
@@ -2524,16 +2524,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加加班成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.overtime = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2543,7 +2542,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.overtime = false;
@@ -2554,6 +2553,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.overtime = false;
           }
         })
       }
@@ -2588,7 +2588,7 @@ export default defineComponent({
             //加班事由
             overtimeaskMatter: this.overtime_1.remarks_1,
             // 审批人2
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "加班",
             // 审批标题
@@ -2597,16 +2597,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加加班成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.overtime = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2616,7 +2615,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.overtime = false;
@@ -2627,6 +2626,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.overtime = false;
           }
         })
       }
@@ -2659,7 +2659,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "补打卡",
             // 审批标题
@@ -2668,16 +2668,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加补打卡成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.punch = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2687,7 +2686,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.punch = false;
@@ -2698,6 +2697,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.punch = false;
           }
         })
       }
@@ -2728,7 +2728,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "补打卡",
             // 审批标题
@@ -2737,16 +2737,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加补打卡成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.punch = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2756,7 +2755,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.punch = false;
@@ -2767,6 +2766,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.punch = false;
           }
         })
       }
@@ -2795,7 +2795,7 @@ export default defineComponent({
             // 补打卡备注
             cardRemarks: this.punch_1.remarks_1,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "补打卡",
             // 审批标题
@@ -2804,16 +2804,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加补打卡成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.punch = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2823,7 +2822,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.punch = false;
@@ -2834,6 +2833,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.punch = false;
           }
         })
       }
@@ -2872,7 +2872,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "出差",
             // 审批标题
@@ -2881,16 +2881,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加出差成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.travel = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2900,7 +2899,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.travel = false;
@@ -2911,6 +2910,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.travel = false;
           }
         })
       }
@@ -2947,7 +2947,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "出差",
             // 审批标题
@@ -2956,16 +2956,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加出差成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.travel = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -2975,7 +2974,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.travel = false;
@@ -2986,6 +2985,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.travel = false;
           }
         })
       }
@@ -3020,7 +3020,7 @@ export default defineComponent({
             // 请假时长
             travelTotalDate: this.travel_1.date3,
             // 审批人3
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "出差",
             // 审批标题
@@ -3029,16 +3029,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加出差成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.travel = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -3048,7 +3047,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.travel = false;
@@ -3059,6 +3058,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.travel = false;
           }
         })
       }
@@ -3095,7 +3095,7 @@ export default defineComponent({
             // 审批人2
             staffName2: this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[1].staffname,
+            staffName3: this.president[0].staffname,
             // 审批类型
             auditflowType: "请假",
             // 审批标题
@@ -3104,16 +3104,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加出差成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.sick = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -3123,7 +3122,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.sick = false;
@@ -3134,6 +3133,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.sick = false;
           }
         })
       }
@@ -3168,7 +3168,7 @@ export default defineComponent({
             // 审批人1
             staffName1: this.NowManager[0].staffname,
             // 审批人3
-            staffName2: this.president[1].staffname,
+            staffName2: this.president[0].staffname,
             // 审批类型
             auditflowType: "请假",
             // 审批标题
@@ -3177,16 +3177,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加出差成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data == 1111) {
+            this.sick = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -3196,7 +3195,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.sick = false;
@@ -3207,6 +3206,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.sick = false;
           }
         })
       }
@@ -3239,7 +3239,7 @@ export default defineComponent({
             // 出差时长
             leaveTotalDate: this.sick_1.date3,
             // 审批人3
-            staffName1: this.president[1].staffname,
+            staffName1: this.president[0].staffname,
             // 审批类型
             auditflowType: "请假",
             // 审批标题
@@ -3248,16 +3248,15 @@ export default defineComponent({
         }).then((response) => {
           console.log("添加出差成功")
           console.log(response);
-          if (response.data.code == 300) {
+          if (response.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data) {
-            //如果服务是正常的
-            if (response.data.code == 200 && response.data.data.info == 1111) {
+            this.sick = false;
+          } else if (response.data.data) {
+            if (response.data.data.state == 200 && response.data.data.info == 1111) {
               ElMessage({
                 showClose: true,
                 message: '操作成功，请等待审批结果',
@@ -3267,7 +3266,7 @@ export default defineComponent({
             } else {
               ElNotification.warning({
                 title: '提示',
-                message: "操作失败，请稍后再试",
+                message: "操作失败，请联系管理员",
                 offset: 100,
               })
               this.sick = false;
@@ -3278,6 +3277,7 @@ export default defineComponent({
               message: "服务发生雪崩",
               offset: 100,
             })
+            this.sick = false;
           }
         })
       }
@@ -3441,7 +3441,7 @@ export default defineComponent({
           offset: 100,
         })
         this.emptyDept();
-      // 如果不相同
+        // 如果不相同
       } else if (this.judging === 3) {
         // 查询是否选择的部门的部门经理是否有人任职
         this.axios({
@@ -3464,13 +3464,14 @@ export default defineComponent({
           } else if (response.data.data) {
             //如果服务是正常的 根据长度判断部门经理是否有人任职
             if (response.data.data.state == 200) {
-                if (response.data.data.info.length !== 0){
-                  ElNotification.warning({
-                    title: '提示',
-                    message: "该部门已有经理，暂不支持调动该部门",
-                    offset: 100,
-                  })
-                }
+              if (response.data.data.info.length !== 0) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "该部门已有经理，暂不支持调动该部门",
+                  offset: 100,
+                })
+                this.emptyDept();
+              }
             } else {
               ElMessage({
                 type: 'warning',
@@ -3808,14 +3809,14 @@ export default defineComponent({
         }
       })
     },
-    // 查询人事经理和总裁
+    // 查询总裁
     selectpresident() {
       var _this = this
       this.axios({
         method: 'post',
         url: this.url + 'selectpresident',
       }).then((response) => {
-        console.log("查询人事经理及总裁成功")
+        console.log("查询总裁成功")
         console.log(response);
         if (response.data.data.data) {
           ElNotification.warning({
@@ -3827,8 +3828,50 @@ export default defineComponent({
         } else if (response.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            _this.personnel_manager = response.data.data.info;
             _this.president = response.data.data.info;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "系统繁忙，请稍后再试",
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询人事部经理
+    selectStaffing(){
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectStaffing',
+      }).then((response) => {
+        console.log("查询人事经理成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            if(response.data.data.info[0].staffname == null){
+              ElNotification.warning({
+                title: '提示',
+                message: "人事经理空缺，普通员工无法发起一系列审批操作，请尽快填补人事经理职位",
+                offset: 100,
+              })
+            }
+            _this.personnel_manager = response.data.data.info;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -3896,12 +3939,28 @@ export default defineComponent({
         //如果服务是正常的
         console.log("查询其基本工资成功")
         console.log(response);
-        if (response.data.code == 200) {
-          this.base_pay = response.data.data;
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            this.base_pay = response.data.data.info;
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "系统繁忙，请稍后再试",
+              offset: 100,
+            })
+          }
         } else {
           ElNotification.warning({
             title: '提示',
-            message: "系统繁忙，请稍后再试",
+            message: "服务发生雪崩",
             offset: 100,
           })
         }
@@ -3909,7 +3968,7 @@ export default defineComponent({
     },
     // 点击审批类型按钮查询一系列是否符合条件
     clickInquireRequire() {
-      if (this.NowStaffName == this.president[1].staffname) {
+      if (this.NowStaffName == this.president[0].staffname) {
         ElNotification({
           title: '提示',
           message: '总裁无需审批',
@@ -4012,12 +4071,12 @@ export default defineComponent({
       }
     },
     // 查询当天的加班审批记录
-    selectTodayOverTimeExamine(){
+    selectTodayOverTimeExamine() {
       this.axios({
         method: 'post',
         url: this.url + 'selectTodayOverTimeExamine',
         data: {
-           staffName: this.NowStaffName,
+          staffName: this.NowStaffName,
           auditFlowType: "加班"
         }
       }).then((response) => {
@@ -4031,11 +4090,11 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           // 如果为0，则视为当天没有加班审批记录，则可以再去查询是否有无正在审批的加班记录
-          if (response.data.data.info.length == 0){
+          if (response.data.data.info.length == 0) {
             window.setTimeout(this.selectOvertimeExamine, 500);
-          }else if (response.data.data.info.length >0){
+          } else if (response.data.data.info.length > 0) {
             ElNotification.warning({
               title: '提示',
               message: "查询到您当天有加班审批记录",
@@ -4051,8 +4110,6 @@ export default defineComponent({
         }
       })
     },
-    // 查询最近一个月的补打卡记录
-    selectMonthCardExamine(){},
     // 查询转正审批记录
     selectexaminerecord() {
       this.axios({
@@ -4072,7 +4129,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4117,7 +4174,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4162,7 +4219,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4207,7 +4264,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4252,7 +4309,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4350,7 +4407,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4396,7 +4453,7 @@ export default defineComponent({
             message: "服务发生关闭",
             offset: 100,
           })//如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data.state == 200) {
           this.op = 0;
           for (let i = 0; i < response.data.data.info.length; i++) {
             // 长度为0,代表目前没有审批记录,为1代表成功过，为2代表驳回过，为3代表撤销过，
@@ -4435,7 +4492,7 @@ export default defineComponent({
         }).then((response1) => {
           console.log("根据部门编号去查其部门经理成功")
           console.log(response1)
-          if (response1.data === 300) {
+          if (response1.data.data.data) {
             ElNotification.warning({
               title: '提示',
               message: "服务发生关闭",
@@ -4445,6 +4502,12 @@ export default defineComponent({
             this.op = 2
             this.NowManager = response1.data.data.info;
             window.setTimeout(this.judgeManager, 1000);
+          }else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
           }
         })
       } else if (this.op == 2) {
@@ -4516,8 +4579,10 @@ export default defineComponent({
   created() {
     // 根据其部门编号查询部门名称
     this.selectDeptName();
-    // 查询人事经理及总裁
+    // 查询总裁
     this.selectpresident();
+    // 查询人事经理
+    this.selectStaffing();
     // 查询登录者部门职位
     this.inquirePosition();
     // 查询员工状态

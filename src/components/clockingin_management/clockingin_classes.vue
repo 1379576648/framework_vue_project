@@ -52,14 +52,14 @@
             <span>取消</span>
           </el-button>
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <el-button type="primary" @click="submitFormClasses()" v-if="this.$parent.$data.judge ==0">
+          <el-button type="primary" @click="submitFormClasses()" v-if="this.$parent.$data.judge ===0">
             <!-- el-icon 图标-->
             <el-icon>
               <i-copy-document/>
             </el-icon>
             <span>提交</span>
           </el-button>
-          <el-button type="primary" @click="updateClasses()" v-if="this.$parent.$data.judge ==1">
+          <el-button type="primary" @click="updateClasses()" v-if="this.$parent.$data.judge ===1">
             <!-- el-icon 图标-->
             <el-icon>
               <i-copy-document/>
@@ -128,13 +128,14 @@ export default {
               offset: 100,
             })
           } else if (response.data.data) {
-            if (response.data.data.state == 200) {
-              if (response.data.data.info == 1) {
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
                 ElMessage({
                   showClose: true,
                   message: '新增班次成功',
                   type: 'success',
                 })
+                this.$parent.selectClassesAll();
                 this.$parent.$data.clockingin_classes = false;
               }
             } else {
@@ -150,17 +151,17 @@ export default {
     },
     // 判断上班时间和下班时间
     judgeTime: function (beginTime, endTime) {
-      var a =new Date("2022-2-8 "+endTime).getTime()-new Date("2022-2-8 "+beginTime).getTime()
+      var a = new Date("2022-2-8 " + endTime).getTime() - new Date("2022-2-8 " + beginTime).getTime()
       console.log(a)
-      var hours = Math.abs(a / (3600 * 1000))-1; //计算出小时数
+      var hours = Math.abs(a / (3600 * 1000)) - 1; //计算出小时数
       console.log(hours)
-      if (hours>8){
+      if (hours > 8) {
         ElNotification.warning({
           title: '提示',
           message: "工作时间不能超过8小时",
           offset: 100,
         })
-        this.classes.classesEndDate=""
+        this.classes.classesEndDate = ""
       }
     },
     // 查询方案名称
@@ -181,7 +182,7 @@ export default {
             offset: 100,
           })
         } else if (response.data.data) {
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             if (response.data.data.info.length !== 0) {
               ElNotification.warning({
                 title: '提示',
@@ -207,7 +208,7 @@ export default {
         method: 'post',
         url: this.url + 'updateClasses',
         data: {
-          "classesId": this.$parent.$parent.$parent.$data.classesId,
+          "classesId": this.classes.classesId,
           "classesName": this.classes.classesName,
           "classesBeginDate": this.classes.classesBeginDate,
           "classesEndDate": this.classes.classesEndDate
@@ -222,15 +223,16 @@ export default {
             offset: 100,
           })
         } else if (response.data.data) {
-          if (response.data.data.state == 200) {
-            if (response.data.data.info == 1) {
+          if (response.data.data.state === 200) {
+            if (response.data.data.info === 1) {
               ElMessage({
                 showClose: true,
                 message: '修改班次方案成功',
                 type: 'success',
               })
+              this.$parent.selectClassesAll();
               this.$parent.$data.clockingin_classes = false;
-            }else {
+            } else {
               ElNotification.warning({
                 title: '提示',
                 message: "修改班次方案失败",
@@ -253,18 +255,18 @@ export default {
       this.classes.classesName = ""
       this.classes.classesBeginDate = ""
       this.classes.classesEndDate = ""
+      this.classes.classesId = ""
     },
 
   },
   created() {
-    this.classes=this.$parent.$data.classes;
+    this.classes = this.$parent.$data.classes;
 
   },
 }
 
 
 </script>
-
 
 
 <style scoped>

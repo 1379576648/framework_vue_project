@@ -182,7 +182,7 @@
     <!-- 点击详情，弹出抽屉-->
     <el-drawer v-model="drawer" title="I am the title" :with-header="false">
       <!--  审批明细数量为3时    -->
-      <el-form ref="form" :model="details" v-if="this.detailsNumber == 3">
+      <el-form ref="form" :model="details" v-if="this.detailsNumber === 3">
         <el-form-item label="标题：">
           <el-input v-model="details[0].auditflowTitle" disabled></el-input>
         </el-form-item>
@@ -245,7 +245,7 @@
         </el-form-item>
       </el-form>
       <!--  审批明细数量为2时    -->
-      <el-form ref="form" :model="details" v-if="this.detailsNumber == 2">
+      <el-form ref="form" :model="details" v-if="this.detailsNumber === 2">
         <el-form-item label="标题：">
           <el-input v-model="details[0].auditflowTitle" disabled></el-input>
         </el-form-item>
@@ -292,7 +292,7 @@
         </el-form-item>
       </el-form>
       <!--  审批明细数量为1时    -->
-      <el-form ref="form" :model="details" v-if="this.detailsNumber == 1">
+      <el-form ref="form" :model="details" v-if="this.detailsNumber === 1">
         <el-form-item label="标题：">
           <el-input v-model="details[0].auditflowTitle" disabled></el-input>
         </el-form-item>
@@ -425,11 +425,11 @@ export default {
           if (response.data.data.state === 200) {
             if (response.data.data.info != null) {
               this.details = response.data.data.info;
-              if (response.data.data.info.length == 3) {
+              if (response.data.data.info.length === 3) {
                 this.detailsNumber = 3
-              } else if (response.data.data.info.length == 2) {
+              } else if (response.data.data.info.length === 2) {
                 this.detailsNumber = 2
-              } else if (response.data.data.info.length == 1) {
+              } else if (response.data.data.info.length === 1) {
                 this.detailsNumber = 1
               }
             }
@@ -468,9 +468,9 @@ export default {
             offset: 100,
           })
           //如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             ElNotification.warning({
               title: '提示',
               message: "撤销成功",
@@ -512,9 +512,9 @@ export default {
             offset: 100,
           })
           //如果服务没有关闭
-        } else if (response.data) {
+        } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             _this.president = response.data.data.info;
             window.setTimeout(this.selectMyEndWorker, 500);
           } else {
@@ -566,7 +566,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
@@ -610,7 +610,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
@@ -638,7 +638,7 @@ export default {
           //当前登录者
           "staffName1": this.NowStaffName,
           // 总裁
-          "staffName2": this.president[1].staffname,
+          "staffName2": this.president[0].staffname,
           //起始时间
           "startTime": this.selectTime2 == null ? null : this.selectTime2[0],
           //结束时间
@@ -659,7 +659,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData1 = response.data.data.info.records;
             this.pageInfo1.pagesize = response.data.data.info.size;
             this.pageInfo1.total = response.data.data.info.total;
@@ -688,7 +688,7 @@ export default {
           //当前登录者
           "staffName1": this.NowStaffName,
           // 总裁
-          "staffName2": this.president[1].staffname,
+          "staffName2": this.president[0].staffname,
           // 审批类型
           "auditflowType": "转正"
         },
@@ -705,7 +705,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData1 = response.data.data.info.records;
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;

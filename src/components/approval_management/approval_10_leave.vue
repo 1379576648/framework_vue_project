@@ -534,17 +534,6 @@ export default {
     };
   },
   methods: {
-    // 通过点击气泡确认框弹出添加备注对话框
-    through_approval3(id) {
-      this.add_remark = true;
-    },
-    through_approval2(id) {
-      this.add_remark = true;
-    },
-    // 驳回时点击气泡确认框弹出添加备注对话框
-    rejected_apply(id) {
-      this.add_remark2 = true;
-    },
     // 查询待审批请假数据
     selectLeaveAll() {
       var _this = this
@@ -578,7 +567,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
@@ -591,10 +580,6 @@ export default {
           })
         }
       })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
     },
     // 查询待审批请假数据-不带数据
     selectLeaveAll2() {
@@ -625,7 +610,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
             this.pageInfo.pagesize = response.data.data.info.size;
             this.pageInfo.total = response.data.data.info.total;
@@ -640,10 +625,6 @@ export default {
           })
         }
       })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
     },
     // 查询已办审批请假数据
     selectEndLeaveAll() {
@@ -677,7 +658,7 @@ export default {
             offset: 100,
           })
         } else if (response.data.data) {
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             _this.tableData1 = response.data.data.info.records;
             this.pageInfo1.pagesize = response.data.data.info.size;
             this.pageInfo1.total = response.data.data.info.total;
@@ -690,10 +671,6 @@ export default {
           }
         }
       })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
     },
     // 查询已办审批请假数据-不带数据
     selectEndLeaveAll2() {
@@ -723,7 +700,7 @@ export default {
             offset: 100,
           })
         } else if (response.data.data) {
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             _this.tableData1 = response.data.data.info.records;
             this.pageInfo1.pagesize = response.data.data.info.size;
             this.pageInfo1.total = response.data.data.info.total;
@@ -736,10 +713,6 @@ export default {
           }
         }
       })
-          .catch(function (error) {
-            console.log("失败")
-            console.log(error);
-          });
     },
     // 待我审批的请假数据详情
     particulars(value) {
@@ -763,13 +736,25 @@ export default {
         this.drawer = true;
         console.log("查询已审批请假数据详情");
         console.log(response)
-        this.details = response.data.data.info;
-
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state === 200) {
+            this.details = response.data.data.info;
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
       })
-          .catch(function (error) {
-            console.log("查询待我审批请假数据详情失败")
-            console.log(error);
-          });
     },
     // 已审批的请假数据详情
     particulars2(value2) {
@@ -790,13 +775,25 @@ export default {
         this.drawer2 = true;
         console.log("查询已审批请假数据详情");
         console.log(response)
-        this.details2 = response.data.data.info;
-
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state === 200) {
+            this.details2 = response.data.data.info;
+          }
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生雪崩",
+            offset: 100,
+          })
+        }
       })
-          .catch(function (error) {
-            console.log("查询已审批的请假数据详情失败")
-            console.log(error);
-          });
     },
     // 根据审批编号查询审批明细表编号
     queryDetail(auditflowId, handle) {
@@ -812,38 +809,55 @@ export default {
       }).then((response) => {
         console.log("根据审批编号查询审批明细表编号成功")
         console.log(response)
-        // 当查询只有一个明细编号时，说明是最后一个审批人
-        if (response.data.data.info.length == 1) {
-          this.serialID = response.data.data.info[0]
-          this.auditflowId = auditflowId
-          if (handle == '通过') {
-            this.add_pass_remark2 = true;
-          } else if (handle == '驳回') {
-            this.add_reject_remark3 = true;
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+        } else if (response.data.data.state === 200) {
+          // 当查询只有一个明细编号时，说明是最后一个审批人
+          if (response.data.data.info.length === 1) {
+            this.serialID = response.data.data.info[0]
+            this.auditflowId = auditflowId
+            if (handle === '通过') {
+              this.add_pass_remark2 = true;
+            } else if (handle === '驳回') {
+              this.add_reject_remark3 = true;
+            }
+            // 当查询有两个明细编号时，说明还有下一个审批人
+          } else if (response.data.data.info.length === 2) {
+            this.serialID = response.data.data.info
+            this.auditflowId = auditflowId
+            if (handle === '通过') {
+              this.add_pass_remark1 = true;
+            } else if (handle === '驳回') {
+              this.add_reject_remark2 = true;
+            }
+            // 当查询有三个明细编号时，说明还有两个审批人
+          } else if (response.data.data.info.length === 3) {
+            this.serialID = response.data.data.info
+            this.auditflowId = auditflowId
+            if (handle === '通过') {
+              this.add_pass_remark1 = true;
+            } else if (handle === '驳回') {
+              this.add_reject_remark1 = true;
+            }
+          } else {
+            ElMessage({
+              showClose: true,
+              message: '数据有误，请联系管理员',
+              type: 'error',
+            })
           }
-          // 当查询有两个明细编号时，说明还有下一个审批人
-        } else if (response.data.data.info.length == 2) {
-          this.serialID = response.data.data.info
-          this.auditflowId = auditflowId
-          if (handle == '通过') {
-            this.add_pass_remark1 = true;
-          } else if (handle == '驳回') {
-            this.add_reject_remark2 = true;
-          }
-          // 当查询有三个明细编号时，说明还有两个审批人
-        } else if (response.data.data.info.length == 3) {
-          this.serialID = response.data.data.info
-          this.auditflowId = auditflowId
-          if (handle == '通过') {
-            this.add_pass_remark1 = true;
-          } else if (handle == '驳回') {
-            this.add_reject_remark1 = true;
-          }
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '服务发生雪崩',
+            type: 'error',
+          })
         }
-      }).catch(function (error) {
-        console.log(" 根据审批编号查询审批明细表失败")
-        console.log(error);
-      });
+      })
     },
     // 备注弹出框点击确定 通过当前审批 (两三个审批人)
     pass_overtime() {
@@ -857,46 +871,53 @@ export default {
           auditflowdetaiRemarks: this.remark,
           auditflowId: this.auditflowId,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
         console.log("修改状态")
         console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
-          // 查询待处理的请假审批
-          this.selectLeaveAll();
-          // 查询已处理的请假审批
-          this.selectEndLeaveAll();
-          this.add_pass_remark1 = false;
-          this.remark = "";
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败',
-            type: 'error',
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
           this.add_pass_remark1 = false;
           this.remark = "";
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败',
-            type: 'error',
-          })
-          this.add_pass_remark1 = false;
-          this.remark = "";
+        } else if (response.data.data) {
+          if (response.data.data.state === 200 && response.data.data.info === 666) {
+            ElMessage({
+              showClose: true,
+              message: '操作成功',
+              type: 'success',
+            })
+            // 查询待处理的请假审批
+            this.selectLeaveAll();
+            // 查询已处理的请假审批
+            this.selectEndLeaveAll();
+            this.add_pass_remark1 = false;
+            this.remark = "";
+          } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+            ElMessage({
+              showClose: true,
+              message: '操作失败',
+              type: 'success',
+            })
+            this.add_pass_remark1 = false;
+            this.remark = "";
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+            this.add_pass_remark1 = false;
+            this.remark = "";
+          }
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     // 备注弹出框点击确定 通过当前审批 (一个审批人)
     pass_overtime2() {
@@ -912,48 +933,55 @@ export default {
           // 审批主表编号
           auditflowId: this.auditflowId,
           // 审批类型（流程名称）
-          auditflowType:this.auditflowType,
+          auditflowType: this.auditflowType,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
         console.log("修改状态")
         console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
-          // 查询待处理的请假审批
-          this.selectLeaveAll();
-          // 查询已处理的请假审批
-          this.selectEndLeaveAll();
-          this.add_pass_remark2 = false;
-          this.remark = "";
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败',
-            type: 'error',
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
           this.add_pass_remark2 = false;
           this.remark = "";
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败',
-            type: 'error',
-          })
-          this.add_pass_remark2 = false;
-          this.remark = "";
+        } else if (response.data.data) {
+          if (response.data.data.state === 200 && response.data.data.info === 666) {
+            ElMessage({
+              showClose: true,
+              message: '操作成功',
+              type: 'success',
+            })
+            // 查询待处理的请假审批
+            this.selectLeaveAll();
+            // 查询已处理的请假审批
+            this.selectEndLeaveAll();
+            this.add_pass_remark2 = false;
+            this.remark = "";
+          } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+            ElMessage({
+              showClose: true,
+              message: '操作失败',
+              type: 'success',
+            })
+            this.add_pass_remark2 = false;
+            this.remark = "";
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+            this.add_pass_remark2 = false;
+            this.remark = "";
+          }
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     // 备注弹出框点击确定 驳回当前审批 (三个审批人)
     reject_overtime() {
@@ -977,40 +1005,46 @@ export default {
       }).then((response) => {
         console.log("驳回该审批")
         console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '驳回成功',
-            type: 'success',
-          })
-          // 查询待处理的请假审批
-          this.selectLeaveAll();
-          // 查询已处理的请假审批
-          this.selectEndLeaveAll();
-          this.add_reject_remark1 = false;
-          this.remark = "";
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
           this.add_reject_remark1 = false;
           this.remark = "";
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
-          })
-          this.add_reject_remark1 = false;
-          this.remark = "";
+        } else if (response.data.data) {
+          if (response.data.data.state === 200 && response.data.data.info === 666) {
+            ElMessage({
+              showClose: true,
+              message: '驳回成功',
+              type: 'success',
+            })
+            // 查询待处理的请假审批
+            this.selectLeaveAll();
+            // 查询已处理的请假审批
+            this.selectEndLeaveAll();
+            this.add_reject_remark1 = false;
+            this.remark = "";
+          } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+            ElMessage({
+              showClose: true,
+              message: '驳回失败,数据有误，请联系管理员',
+              type: 'success',
+            })
+            this.add_reject_remark1 = false;
+            this.remark = "";
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+            this.add_reject_remark1 = false;
+            this.remark = "";
+          }
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
-
+      })
     },
     // 备注弹出框点击确定 驳回当前审批 (两个审批人)
     reject_overtime2() {
@@ -1033,39 +1067,46 @@ export default {
       }).then((response) => {
         console.log("驳回该审批")
         console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '驳回成功',
-            type: 'success',
-          })
-          // 查询待处理的请假审批
-          this.selectLeaveAll();
-          // 查询已处理的请假审批
-          this.selectEndLeaveAll();
-          this.add_reject_remark2 = false;
-          this.remark = "";
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
           this.add_reject_remark2 = false;
           this.remark = "";
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
-          })
-          this.add_reject_remark2 = false;
-          this.remark = "";
+        } else if (response.data.data) {
+          if (response.data.data.state === 200 && response.data.data.info === 666) {
+            ElMessage({
+              showClose: true,
+              message: '驳回成功',
+              type: 'success',
+            })
+            // 查询待处理的请假审批
+            this.selectLeaveAll();
+            // 查询已处理的请假审批
+            this.selectEndLeaveAll();
+            this.add_reject_remark2 = false;
+            this.remark = "";
+          } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+            ElMessage({
+              showClose: true,
+              message: '驳回失败,数据有误，请联系管理员',
+              type: 'success',
+            })
+            this.add_reject_remark2 = false;
+            this.remark = "";
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+            this.add_reject_remark2 = false;
+            this.remark = "";
+          }
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     // 备注弹出框点击确定 驳回当前审批 (一个审批人)
     reject_overtime3() {
@@ -1087,39 +1128,46 @@ export default {
       }).then((response) => {
         console.log("驳回该审批")
         console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '驳回成功',
-            type: 'success',
-          })
-          // 查询待处理的请假审批
-          this.selectLeaveAll();
-          // 查询已处理的请假审批
-          this.selectEndLeaveAll();
-          this.add_reject_remark3 = false;
-          this.remark = "";
-        } else if (response.data.data === 999) {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
           })
           this.add_reject_remark3 = false;
           this.remark = "";
-        } else {
-          ElMessage({
-            showClose: true,
-            message: '驳回失败',
-            type: 'error',
-          })
-          this.add_reject_remark3 = false;
-          this.remark = "";
+        } else if (response.data.data) {
+          if (response.data.data.state === 200 && response.data.data.info === 666) {
+            ElMessage({
+              showClose: true,
+              message: '驳回成功',
+              type: 'success',
+            })
+            // 查询待处理的请假审批
+            this.selectLeaveAll();
+            // 查询已处理的请假审批
+            this.selectEndLeaveAll();
+            this.add_reject_remark3 = false;
+            this.remark = "";
+          } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+            ElMessage({
+              showClose: true,
+              message: '驳回失败,数据有误，请联系管理员',
+              type: 'success',
+            })
+            this.add_reject_remark3 = false;
+            this.remark = "";
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+            this.add_reject_remark3 = false;
+            this.remark = "";
+          }
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     //序号1
     indexMethod(index) {

@@ -9,12 +9,6 @@
         </el-icon>
         导出
       </el-button>
-      <el-button size="medium">
-        <el-icon style="font-size: 18px">
-          <i-folder-opened/>
-        </el-icon>
-        导入
-      </el-button>
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="selectTime"
@@ -24,7 +18,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :shortcuts="shortcuts"
-          style="margin-left: 340px"
+          style="margin-left: 10px"
       >
       </el-date-picker>
       &nbsp;
@@ -160,7 +154,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
             this.pageInfo.total = response.data.data.info.total;
           } else {
@@ -199,8 +193,8 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info = 1) {
+          if (response.data.data.state === 200) {
+            if (response.data.data.info === 1) {
               ElMessage({
                 showClose: true,
                 message: '删除成功',

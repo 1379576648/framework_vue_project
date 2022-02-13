@@ -1,6 +1,6 @@
 <!--班次管理页面-->
 <template>
-  <div class="w" v-if="clockingin_classes==false">
+  <div class="w" v-if="clockingin_classes===false">
     <el-button color="#409eff" style="color:black;margin-left:20px;margin-top:20px;" @click="clockingin_classes=true,
      this.classes.classesName= '',this.classes.classesBeginDate= '',this.classes.classesEndDate= '',this.judge=0
 ">
@@ -43,6 +43,7 @@
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
             <el-button type="text" size="small" @click="this.judge=1,
+                                                        this.classes.classesId=scope.row.classesId,
                                                         this.classes.classesName= scope.row.classesName,
                                                         this.classes.classesBeginDate= scope.row.classesBeginDate,
                                                         this.classes.classesEndDate= scope.row.classesEndDate,
@@ -135,6 +136,7 @@ export default {
   data() {
     return {
       classes: {
+        classesId: "",
         classesName: "",
         classesBeginDate: "",
         classesEndDate: "",
@@ -207,7 +209,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
             this.pageInfo.total = response.data.data.info.total;
           } else {
@@ -249,7 +251,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.tableData = response.data.data.info.records;
           } else {
             ElNotification.warning({
@@ -287,9 +289,9 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             // 等于1则为禁用，则可以删除
-            if (response.data.data.info[0].classesState == 1) {
+            if (response.data.data.info[0].classesState === 1) {
               window.setTimeout(this.deleteClasses, 500);
             } else {
               ElNotification.warning({
@@ -332,7 +334,7 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
+          if (response.data.data.state === 200) {
             this.op = 0;
             for (let i = 0; i < response.data.data.info.length; i++) {
               // 循环如果状态有为0的则为目前有启用的方案
@@ -366,13 +368,13 @@ export default {
     },
     // 修改班次方案状态(启用)
     updateClassesState() {
-      if (this.op == 1) {
+      if (this.op === 1) {
         ElNotification.warning({
           title: '提示',
           message: "查询到班次方案中有正在启用的方案！",
           offset: 100,
         })
-      } else if (this.op == 0) {
+      } else if (this.op === 0) {
         var _this = this;
         this.axios({
           method: 'post',
@@ -391,8 +393,8 @@ export default {
             })
           } else if (response.data.data) {
             //如果服务是正常的
-            if (response.data.data.state == 200) {
-              if (response.data.data.info == 1) {
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
                 ElMessage({
                   showClose: true,
                   message: '启用成功',
@@ -437,8 +439,8 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info == 1) {
+          if (response.data.data.state === 200) {
+            if (response.data.data.info === 1) {
               ElMessage({
                 showClose: true,
                 message: '禁用成功',
@@ -482,8 +484,8 @@ export default {
           })
         } else if (response.data.data) {
           //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info == 1) {
+          if (response.data.data.state === 200) {
+            if (response.data.data.info === 1) {
               ElMessage({
                 showClose: true,
                 message: '删除成功',
@@ -511,7 +513,7 @@ export default {
   created() {
     // 查询所有班次方案
     this.selectClassesAll();
-  }
+  },
 }
 </script>
 
