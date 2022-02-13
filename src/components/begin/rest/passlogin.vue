@@ -96,6 +96,7 @@ export default {
           } else if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
+              this.$store.commit("updateToken", response.data.data.token);
               //如果有数据
               if (response.data.data.succeed) {
                 //如果数据里面有员工信息

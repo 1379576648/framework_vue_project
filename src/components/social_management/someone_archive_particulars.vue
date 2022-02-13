@@ -4,31 +4,31 @@
       <div class="j-card-body">
         <el-tabs :model-value="value" @tab-click="handleClick" :key="key">
           <el-tab-pane label="参保明细" name="1" :key="key_1">
-            <someone_insured_details/>
+            <someone_archive_details/>
           </el-tab-pane>
           <el-tab-pane label="参保记录" name="2" :key="key_2">
-            <someone_insured_record/>
+            <someone_archive_record/>
           </el-tab-pane>
         </el-tabs>
       </div>
     </div>
   </div>
-  &nbsp;
+
 </template>
 
 <script>
 import {ref, defineComponent} from "vue";
 //参保明细
-import someone_insured_details from '../social_management/someone_insured_details.vue';
+import someone_archive_details from '../social_management/someone_archive_details.vue';
 //参保记录
-import someone_insured_record from '../social_management/someone_insured_record.vue';
+import someone_archive_record from '../social_management/someone_archive_record.vue';
 
 export default {
   components: {
     //参保明细
-    someone_insured_details,
+    someone_archive_details,
     //参保记录
-    someone_insured_record,
+    someone_archive_record,
   },
   data() {
     return {
@@ -45,13 +45,13 @@ export default {
         this.key_2 = this.key_2 + 1;
       }
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
 .j-card-body {
-  padding: 1%  1% 0 1%;
+  padding: 1% 1% 0 1%;
 }
 
 /* 分页的样式 */
