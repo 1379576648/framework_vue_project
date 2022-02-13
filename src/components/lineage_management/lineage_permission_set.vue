@@ -109,16 +109,16 @@
             </div>
           </div>
           <div class="j-set-bottom">
+<!--             :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"-->
             <el-table
                 v-if="refreshTable"
                 :data="tableData"
                 style="width: 100%; margin-bottom: 20px;"
-                :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
                 row-key="menuPowerId"
                 :default-expand-all="expands"
                 @expand-change="expands=true"
             >
-              <el-table-column prop="menuPowerName" label="菜单名称" min-width="200"/>
+              <el-table-column fixed prop="menuPowerName" label="菜单名称" min-width="200"/>
               <el-table-column prop="pictureAddress" label="图标" min-width="130"/>
               <el-table-column prop="menuPowerOrder" label="排序" min-width="100"/>
               <el-table-column prop="menuPowerRoute" label="路由路径" min-width="200"/>
@@ -129,7 +129,7 @@
                 </template>
               </el-table-column>
               <el-table-column prop="createdTime" label="创建时间" min-width="220"/>
-              <el-table-column label="操作" min-width="180">
+              <el-table-column fixed="right" label="操作" min-width="180">
                 <template #default="scope">
                   <el-button type="text"
                              @click="this.channel=1,
@@ -424,15 +424,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+         if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -454,12 +446,10 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.warning({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -482,15 +472,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+        if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -515,12 +497,10 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.warning({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -565,15 +545,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -595,12 +567,10 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.warning({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -622,15 +592,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+        if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               if (response.data.data.info == null) {
@@ -639,12 +601,10 @@ export default {
                 this.ruleForm.previousMenu = response.data.data.info.menuPowerName
               }
               this.$store.commit("updateToken", response.data.data.token);
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.warning({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -681,15 +641,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+        if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -711,12 +663,10 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.warning({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -749,26 +699,16 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
               this.tableData = response.data.data.info;
               this.$store.commit("updateToken", response.data.data.token);
-            }
-            //如果服务是雪崩的
-            else {
+            }else {
               ElNotification.warning({
                 title: '提示',
-                message: "服务发生雪崩",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
