@@ -51,7 +51,7 @@
             </div>
             <div class="j-set-top-bottom">
               <el-button type="primary"
-                         @click="this.insertMenu=true,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目',this.channel=0">
+                         @click="this.insertMenu=true,this.clear,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目',this.channel=0">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
@@ -109,16 +109,16 @@
             </div>
           </div>
           <div class="j-set-bottom">
+<!--             :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"-->
             <el-table
                 v-if="refreshTable"
                 :data="tableData"
                 style="width: 100%; margin-bottom: 20px;"
-                :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
                 row-key="menuPowerId"
                 :default-expand-all="expands"
                 @expand-change="expands=true"
             >
-              <el-table-column prop="menuPowerName" label="菜单名称" min-width="200"/>
+              <el-table-column fixed prop="menuPowerName" label="菜单名称" min-width="200"/>
               <el-table-column prop="pictureAddress" label="图标" min-width="130"/>
               <el-table-column prop="menuPowerOrder" label="排序" min-width="100"/>
               <el-table-column prop="menuPowerRoute" label="路由路径" min-width="200"/>
@@ -129,7 +129,7 @@
                 </template>
               </el-table-column>
               <el-table-column prop="createdTime" label="创建时间" min-width="220"/>
-              <el-table-column label="操作" min-width="180">
+              <el-table-column fixed="right" label="操作" min-width="180">
                 <template #default="scope">
                   <el-button type="text"
                              @click="this.channel=1,
@@ -157,6 +157,7 @@
                              @click="this.channel=2,
                              this.insertMenu=true,
                              this.boxName='新增菜单',
+                             this.clear,
                              this.ruleForm.previousMenu=scope.row.menuPowerName,
                              this.ruleForm.menuPowerPid=scope.row.menuPowerId">
                     <svg t="1639053259858" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -200,6 +201,7 @@
       width="48%"
       destroy-on-close
       left
+      :before-close="revocatory"
   >
     <el-form
         ref="ruleForm"
@@ -363,6 +365,40 @@ export default {
       channel: 0,
     }
   }, methods: {
+    clear() {
+      this.ruleForm = {
+        //上级菜单名称
+        previousMenu: '',
+        //菜单名称
+        menuName: '',
+        //菜单类型
+        menuType: '菜单',
+        //菜单状态
+        menuState: false,
+        //菜单图标
+        menuImage: '',
+        //菜单路由
+        menuRouter: '',
+        //菜单组件
+        menuModule: '',
+        //是否有叶子
+        menuPowerLeaf: '',
+        //菜单序号
+        menuPowerOrder: '',
+        //父级菜单
+        menuPowerPid: '',
+        //菜单编号
+        menuPowerId: '',
+      }
+    },
+    revocatory() {
+      //关闭弹出框
+      this.insertMenu = false;
+      ElMessage({
+        type: 'info',
+        message: '取消成功',
+      })
+    },
     //通过实体类添加菜单
     menuPowerAdd(formName) {
       this.axios({
@@ -387,44 +423,43 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              //刷新数据
-              this.menuPowerInCondition();
-              //关闭弹出框
-              this.insertMenu = false;
-              ElMessage({
-                type: 'success',
-                message: '新增成功',
-              })
-              //清空表单
-              this.$refs[formName].resetFields();
-            } else {
-              ElMessage({
-                type: 'warning',
+        if (response.data.code == 200) {
+         if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //刷新数据
+                this.menuPowerInCondition();
+                //关闭弹出框
+                this.insertMenu = false;
+                ElMessage({
+                  type: 'success',
+                  message: '新增成功',
+                })
+                //清空表单
+                this.$refs[formName].resetFields();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
                 message: response.data.data.info,
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -436,43 +471,46 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              //刷新数据
-              this.menuPowerInCondition();
-              //关闭弹出框
-              this.insertMenu = false;
-              ElMessage({
-                type: 'success',
-                message: '删除成功',
-              })
-
-            } else {
-              ElMessage({
-                type: 'warning',
+        if (response.data.code == 200) {
+        if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //刷新数据
+                this.menuPowerInCondition();
+                //关闭弹出框
+                this.insertMenu = false;
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+                this.refreshTable = false;
+                this.expands = false;
+                this.$nextTick(() => {
+                  this.refreshTable = true;
+                });
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
                 message: response.data.data.info,
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -506,44 +544,43 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              //刷新数据
-              this.menuPowerInCondition();
-              //关闭弹出框
-              this.insertMenu = false;
-              ElMessage({
-                type: 'success',
-                message: '修改成功',
-              })
-              //清空表单
-              this.$refs[formName].resetFields();
-            } else {
-              ElMessage({
-                type: 'warning',
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //刷新数据
+                this.menuPowerInCondition();
+                //关闭弹出框
+                this.insertMenu = false;
+                ElMessage({
+                  type: 'success',
+                  message: '修改成功',
+                })
+                //清空表单
+                this.$refs[formName].resetFields();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
                 message: response.data.data.info,
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -554,31 +591,30 @@ export default {
         url: this.url + 'menuPowerInPid/' + id,
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info == null) {
-              this.ruleForm.previousMenu = "主类目";
-            } else {
-              this.ruleForm.previousMenu = response.data.data.info.menuPowerName
+        if (response.data.code == 200) {
+        if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info == null) {
+                this.ruleForm.previousMenu = "主类目";
+              } else {
+                this.ruleForm.previousMenu = response.data.data.info.menuPowerName
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -604,44 +640,43 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              //刷新数据
-              this.menuPowerInCondition();
-              //关闭弹出框
-              this.insertMenu = false;
-              ElMessage({
-                type: 'success',
-                message: '新增成功',
-              })
-              //清空表单
-              this.$refs[formName].resetFields();
-            } else {
-              ElMessage({
-                type: 'warning',
+        if (response.data.code == 200) {
+        if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //刷新数据
+                this.menuPowerInCondition();
+                //关闭弹出框
+                this.insertMenu = false;
+                ElMessage({
+                  type: 'success',
+                  message: '新增成功',
+                })
+                //清空表单
+                this.$refs[formName].resetFields();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
                 message: response.data.data.info,
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -663,28 +698,27 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              this.tableData = response.data.data.info;
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            this.tableData = response.data.data.info;
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
@@ -725,30 +759,7 @@ export default {
     },
     //清空表单数据
     resetForm(formName) {
-      this.ruleForm = {
-        //上级菜单名称
-        previousMenu: '',
-        //菜单名称
-        menuName: '',
-        //菜单类型
-        menuType: '菜单',
-        //菜单状态
-        menuState: false,
-        //菜单图标
-        menuImage: '',
-        //菜单路由
-        menuRouter: '',
-        //菜单组件
-        menuModule: '',
-        //是否有叶子
-        menuPowerLeaf: '',
-        //菜单序号
-        menuPowerOrder: '',
-        //父级菜单
-        menuPowerPid: '',
-        //菜单编号
-        menuPowerId: '',
-      }
+      this.clear();
       //清空表单数据
       this.$refs[formName].resetFields();
       //关闭弹出框
@@ -771,6 +782,8 @@ export default {
       });
     }
   }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.menuPowerInCondition();
   }
 }

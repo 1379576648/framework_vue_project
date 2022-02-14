@@ -1,36 +1,36 @@
-<!-- 登录日志页面 -->
+<!-- 操作日志页面 -->
 
 <template>
-  <div class="saas-main-content">
+  <div class="saas-main-content" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="mt-20 ml-20 mr-20">
-          <el-form :inline="true" v-model="search" style="margin-left: 20px">
-            <!-- 系统模块搜索 -->
-            <el-form-item label="系统模块">
-              <el-input style="border: 1px;width: 150px;" size="small" v-model="search.system_module"
-                        placeholder="请输入系统模块关键字"></el-input>
+          <!-- 搜索登录数据部分 -->
+          <el-form :inline="true">
+            <!-- 登录地址搜索 -->
+            <el-form-item class="form-dizhi" label="操作模块">
+              <el-input size="small" v-model="operatLogModule" clearable placeholder="请输入操作模块"></el-input>
             </el-form-item>
 
-            <!-- 操作人员搜索 -->
-            <el-form-item class="form-staff" label="操作人员">
-              <el-input size="small" v-model="search.username" placeholder="请输入操作人员" style="width: 150px"></el-input>
+            <!-- 用户名称搜索 -->
+            <el-form-item class="form-name" label="操作人员">
+              <el-input size="small" v-model="operatLogPeople" clearable placeholder="请输入操作人员"></el-input>
             </el-form-item>
 
-            <!-- 操作类型搜索 -->
-            <el-form-item class="form-type" label="操作类型">
-              <el-select class="form-types" size="small" v-model="search.type" placeholder="操作类型" style="width: 200px">
+            <!-- 登录状态搜索 -->
+            <el-form-item class="form-state" label="操作类型">
+              <el-select style="width: 160px" size="small" v-model="operatLogType" clearable placeholder="请选择操作类型">
                 <el-option
-                    v-for="item in type"
+                    v-for="item in options"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value"
-                >
+                    :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
-            <!-- 操作时间搜索 -->
-            <el-form-item class="form-time" label="登录时间">
+
+            <!-- 登录时间搜索 -->
+            <el-form-item class="form-time" label="操作时间">
               <el-date-picker
                   v-model="selectTime"
                   type="datetimerange"
@@ -38,15 +38,21 @@
                   range-separator="-"
                   start-placeholder="开始时间"
                   end-placeholder="结束时间"
-              ></el-date-picker>
+              >
+              </el-date-picker>
             </el-form-item>
           </el-form>
 
           <!-- 对数据的增删改按钮 -->
-          <div class="button">
-            <el-button class="button-delete" size="mini" v-bind:disabled="disableds" @click="remove" style="margin-left: 20px">删除</el-button>
-            <el-button class="button-empty" size="mini" @click="empty" style="margin-right: 864px">清空</el-button>
-            <el-button size="mini" class="search-ss" type="primary">
+          <div class="button" style="margin-top: -30px">
+            <el-button size="mini" style="width: 90px;height: 33px" type="danger" plain v-bind:disabled="disabled"
+                       @click="remove">删除
+            </el-button>
+            <el-button class="button-empty" size="mini" @click="clearTime=[],dialogVisible=true"
+                       style="margin-right: 878px"
+                       v-bind:disabled="tableData==''">清除
+            </el-button>
+            <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
                 &#xe61b
               </i>
@@ -59,120 +65,199 @@
               重置
             </el-button>
           </div>
-
-          <!-- 表格内容部分 -->
-          <div class="sub-Content__primary">
-            <el-table :data="tableData" style="width: 100%"
-                      @selection-change="deletepl"
-                      :header-cell-style="{textAlign: 'center',background:'#F0F0F0',color:'#6C6C6C'}"
-                      :cell-style="{ textAlign: 'center' }"
-                      :default-sort="{ prop: 'date', order: 'descending' }"
-            >
-              <!-- 全选操作按钮 -->
-              <el-table-column type="selection" width="50"/>
-              <el-table-column prop="id" label="日志编号" width="105"/>
-              <el-table-column prop="module" label="系统模块" width="105"/>
-              <el-table-column prop="type" label="操作类型" width="105"/>
-              <el-table-column prop="name" label="员工名称" width="105"/>
-              <el-table-column prop="post" label="员工职位" width="105"/>
-              <el-table-column prop="beg_way" label="请求方式" width="110"/>
-              <el-table-column prop="state" label="操作状态" width="100"/>
-              <el-table-column prop="location" label="请求地址" width="125"/>
-              <el-table-column prop="ip" label="IP地址" width="125"/>
-              <el-table-column prop="date" sortable label="操作日期" width="150"/>
-              <el-table-column align="center" label="操作" width="105">
-                <template #default="scope">
-                    <span style="color: deepskyblue; font-size: 14px" @click="aaaaaa(scope.row)">
-                      <i class="iconfont" style="margin-left: 19px;margin-top: 2px;display: block;float:left">
-                        &#xe681
-                      </i>
-                      详细
-                    </span>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-
-          <el-dialog width="750px" style="background-color: red" v-model="particular" title="操作日志详细">
-            <el-form class="el-form" v-model="affiche">
-              <!-- 操作日志详情 -->
-              <el-form-item style="font-weight: bold;size: 14px;margin-left: 10px" label="系统模块：">
-                <el-input size="small" :disabled="true" style=" width: 245px;" v-model="affiche.module"></el-input>
-              </el-form-item>
-              <!-- 请求地址详情 -->
-              <el-form-item style="margin-left: 351px;margin-top: -60px;font-weight: bold;size: 14px" label="请求地址：">
-                <el-input size="small" :disabled="true" style="width: 245px;font-weight: bold;size: 14px"
-                          v-model="affiche.location"></el-input>
-              </el-form-item>
-              <!-- 请求方式详情 -->
-              <el-form-item class="zhiti" label="请求方式：">
-                <el-input size="small" :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
-                          v-model="affiche.beg_way"></el-input>
-              </el-form-item>
-              <!-- 操作方法详情 -->
-              <el-form-item class="zhiti" label="操作方法：">
-                <el-input size="small" :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
-                          v-model="affiche.way"></el-input>
-              </el-form-item>
-              <!-- 请求参数详情 -->
-              <el-form-item class="zhiti" label="请求参数：">
-                <el-input :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
-                          v-model="affiche.required_parameter" type="textarea"></el-input>
-              </el-form-item>
-              <!-- 返回参数详情-->
-              <el-form-item class="zhiti" label="返回参数：">
-                <el-input :disabled="true" style="width: 583px;font-weight: bold;size: 14px"
-                          v-model="affiche.return_parameters" type="textarea"></el-input>
-              </el-form-item>
-              <!-- 操作状态详情 -->
-              <el-form-item class="zhiti" label="操作状态：">
-                <el-input :disabled="true" size="small" style="width: 245px;font-weight: bold;size: 14px"
-                          v-model="affiche.state"></el-input>
-              </el-form-item>
-              <!-- 操作时间详情 -->
-              <el-form-item style="font-weight: bold;size: 14px;margin-left: 351px;margin-top: -62px;" label="操作时间：">
-                <el-input :disabled="true" size="small" style="width: 245px;font-weight: bold;size: 14px"
-                          v-model="affiche.date"></el-input>
-              </el-form-item>
-              <el-button style="width: 70px;margin-left: 600px;background-color: rgb(255, 227, 232);"
-                         @click="particular=false" size="mini">关闭
-              </el-button>
-            </el-form>
-          </el-dialog>
-
-          <!-- 分页 -->
-          <div class="demo-pagination-block">
-            <el-pagination v-model:current-page="pageInfo.currenPage"
-                           v-model:page-size="pageInfo.pageSize"
-                           :default-page-size="pageInfo.pageSize"
-                           :page-sizes="[5, 10,15,20]"
-                           :pager-count="5"
-                           :total="pageInfo.total"
-                           background
-                           layout="	total ,sizes, prev, pager, next, jumper"
-                           next-text="下一页"
-                           prev-text="上一页"
-                           @size-change="next()"
-                           @current-change="next()"
-                           @prev-click="next()"
-                           @next-click="next()">
-            </el-pagination>
-          </div>
-
+        </div>
+        <!-- 表格内容部分 -->
+        <div class="sub-Content__primary">
+          <el-table :data="tableData" style="width: 100% ;"
+                    stripe
+                    @selection-change="checkDelete"
+          >
+            <!-- 全选操作按钮 -->
+            <el-table-column fixed align="center" type="selection" min-width="50"/>
+            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" min-width="100"/>
+            <el-table-column  prop="operatLogModule" align="center" sortable label="操作模块" min-width="140"/>
+            <el-table-column prop="operatLogPeople" align="center" sortable label="操作人员" min-width="140"/>
+            <el-table-column prop="operatLogPost" align="center" sortable label="操作职位" min-width="140"/>
+            <el-table-column prop="operatLogType" align="center" sortable label="操作类型" min-width="115"/>
+            <el-table-column prop="operatLogRequest" align="center" sortable label="请求方式" min-width="120"/>
+            <el-table-column prop="operatLogUrl" align="center" sortable label="请求地址" min-width="190"/>
+            <el-table-column prop="createdTime" align="center" sortable label="操作时间" min-width="190"/>
+            <el-table-column fixed="right" align="center" label="操作" min-width="100">
+              <template #default="scope">
+                <el-button size="mini" type="success" @click="announcement = true,fromValue=scope.row">
+                  <i class="iconfont">&#xe61b</i>
+                  查看
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <!--查看公告  -->
+        <el-dialog
+            v-model="announcement"
+            title="公告详情"
+            width="700px"
+        >
+          <el-form :model="fromValue" :inline="true" style="margin-left: 30px;margin-right: 30px">
+            <!-- 公告标题 -->
+            <el-form-item label="操作人员：" >
+              <div style="width: 200px;" >
+                {{ fromValue.operatLogPeople }}
+              </div>
+            </el-form-item>
+            <!-- 发布人 -->
+            <el-form-item label="操作职位：" >
+              <div  style="width: 200px;" >{{ fromValue.operatLogPost }}</div>
+            </el-form-item>
+            <!-- 职位 -->
+            <el-form-item  label="操作内容：" >
+              <div style="width: 500px;">{{ fromValue.operatLogContent }}</div>
+            </el-form-item>
+            <!-- 发布人 -->
+            <el-form-item  label="操作模块：" >
+              <div  style="width: 200px;" >{{ fromValue.operatLogModule }}</div>
+            </el-form-item>
+            <!-- 职位 -->
+            <el-form-item  label="操作类型：" style="margin-left: 10px">
+              <div style="width: 200px;">{{ fromValue.operatLogType }}</div>
+            </el-form-item>
+            <!-- 发布人 -->
+            <el-form-item  label="请求方式：" >
+              <div  style="width: 200px;" >{{ fromValue.operatLogRequest }}</div>
+            </el-form-item>
+            <!-- 职位 -->
+            <el-form-item  label="请求地址：" style="margin-left: 10px" >
+              <div style="width: 200px;">{{ fromValue.operatLogUrl }}</div>
+            </el-form-item>
+            <!-- 职位 -->
+            <el-form-item  label="请求方法：" >
+              <div style="width: 500px;">{{ fromValue.operatLogMethod }}</div>
+            </el-form-item>
+            <!-- 职位 -->
+            <el-form-item  label="请求参数：" >
+              <div style="width: 500px;">{{ fromValue.operatLogRequestParameter }}</div>
+            </el-form-item>
+            <!-- 职位 -->
+            <el-form-item  label="返回参数：" >
+              <div style="width: 500px;">{{ fromValue.operatLogReturnParameters }}</div>
+            </el-form-item>
+            <el-form-item  label="操作时间：" >
+              <div style="width: 500px;">{{ fromValue.createdTime }}</div>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="announcement = false">关闭</el-button>
+      </span>
+          </template>
+        </el-dialog>
+        <!-- 分页 -->
+        <div class="demo-pagination-block">
+          <el-pagination v-model:current-page="pageInfo.currenPage"
+                         v-model:page-size="pageInfo.pageSize"
+                         :default-page-size="pageInfo.pageSize"
+                         :page-sizes="[5, 10,15,20]"
+                         :pager-count="5"
+                         :total="pageInfo.total"
+                         background
+                         layout="	total ,sizes, prev, pager, next, jumper"
+                         next-text="下一页"
+                         prev-text="上一页"
+                         @size-change="next()"
+                         @current-change="next()"
+                         @prev-click="next()"
+                         @next-click="next()">
+          </el-pagination>
         </div>
       </div>
     </div>
   </div>
+  <el-dialog
+      v-model="dialogVisible"
+      title="请选择需要清除的时间段"
+      width="29%"
+      :before-close="call"
+  >
+    <el-date-picker
+        v-model="clearTime"
+        type="datetimerange"
+        :shortcuts="shortcuts"
+        range-separator="-"
+        start-placeholder="开始时间"
+        end-placeholder="结束时间"
+    >
+    </el-date-picker>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button size="mini" @click="call" style="height: 33px">取消</el-button>
+        <el-button size="mini" type="primary" @click="empty"
+        >确认</el-button
+        >
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
-import {ref} from 'vue'
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+
 export default {
   data() {
     return {
+      //清空弹出框
+      dialogVisible: false,
+      //清除时间段
+      clearTime: [],
+      //访问路径
+      url: "http://localhost:80/operatLog/",
+      //操作模块
+      operatLogModule: '',
+      //操作名称
+      operatLogPeople: '',
+      //操作类型
+      operatLogType: '',
+      //查看
+      announcement:false,
+      //表单数据
+      fromValue:{},
+      // 分页
+      pageInfo: {
+        /* 当前的页 */
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
+        total: 0,
+      },
+      //选择操作类型
+      options: [
+        {
+          value: "添加",
+          label: '添加',
+        },
+        {
+          value: "删除",
+          label: '删除',
+        },
+        {
+          value: "修改",
+          label: '修改',
+        },
+        {
+          value: "查询",
+          label: '查询',
+        },
+      ],
       //选择时间
       selectTime: [],
+      //表格数据
+      tableData: [],
+      //复选框选择的结果
+      checkDeleteList: [],
+      //删除按钮是否可用
+      disabled: true,
+      //存放复选的id列表
+      listId: [],
       //日期选择组件
       shortcuts: [
         {
@@ -203,303 +288,324 @@ export default {
           },
         },
       ],
-      // 分页
-      pageInfo: {
-        /* 当前的页 */
-        currenPage: 1,
-        //页大小
-        pageSize: 5,
-        //总条数
-        total: 0,
-      },
-
-
-      //搜索重置form
-      search: {
-        //系统模块
-        system_module: '',
-        //操作人员
-        username: '',
-        //操作类型
-        type: '',
-        //登录状态
-        state: '',
-        //登录时间
-        vlues2: '',
-      },
-
-      //操作日志详细对话框
-      particular: false,
-
-
-      // 搜索操作类型下拉框
-      type: ([
-        {
-          value: '新增',
-          label: '新增',
-        },
-        {
-          value: '删除',
-          label: '删除',
-        },
-        {
-          value: '授权',
-          label: '授权',
-        },
-        {
-          value: '导出',
-          label: '导出',
-        },
-        {
-          value: '导入',
-          label: '导入',
-        },
-        {
-          value: '强退',
-          label: '强退',
-        },
-        {
-          value: '生成代码',
-          label: '生成代码',
-        },
-        {
-          value: '清空数据',
-          label: '清空数据',
-        },
-      ]),
-
-      // 搜索登录状态下拉框
-      state: ([
-        {
-          value1: '成功',
-          label: '成功',
-        },
-        {
-          value1: '失败',
-          label: '失败',
-        }
-      ]),
-
-      //表格
-      tableData: [{
-        id: "1",
-        module: "2",
-        type: "3",
-        name: "4",
-        post: "5",
-        beg_way: "6",
-        state: "7",
-        location: "8",
-        ip: "i9",
-        date: "2002-2-02 11:12:11",
-        way: 'fasdfasdfadfaasdfasdfa',
-        required_parameter: '44555www44rw',
-        return_parameters: 'rwe1wwwwwwwww565rw',
-      },
-        {
-          id: "2",
-          module: "2",
-          type: "3",
-          name: "4",
-          post: "5",
-          beg_way: "6",
-          state: "7",
-          location: "8",
-          ip: "i9",
-          date: "2002-03-03 12:13:12",
-          way: 'fasdfasdfadfaasdfasdfa',
-          required_parameter: '44555144rw',
-          return_parameters: 'rwe16541565rw',
-        },
-        {
-          id: "3",
-          module: "2",
-          type: "3",
-          name: "4",
-          post: "5",
-          beg_way: "6",
-          state: "7",
-          location: "8",
-          ip: "i9",
-          date: "2002-2-02 11:12:11",
-          way: 'fasdfasdfadfaasdfasdfa',
-          required_parameter: 'ewrw',
-          return_parameters: 'rwerw',
-        },
-      ],
-
-
-      //删除按钮是否禁用
-      disableds: true,
-      //接收表格里的数据
-      table: [],
-      //查看详情赋值
-      affiche: {
-        module: '',
-        type: '',
-        name: '',
-        post: '',
-        beg_way: '',
-        state: '',
-        location: '',
-        ip: '',
-        date: '',
-        way: "",
-        required_parameter: '',
-        return_parameters: '',
-      },
     }
   },
   methods: {
-    //批量删除提示框
-    remove() {
-      ElMessageBox.confirm(
-          '是否确定删除！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '删除成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
+    //重置操作
+    reset() {
+      //操作模块
+      this.operatLogModule = '';
+      //操作人员
+      this.operatLogPeople = '';
+      //操作类型
+      this.operatLogType = '';
+      //选择时间
+      this.selectTime = [];
+      //刷新表格
+      this.next();
+    },
+    //复选框选择事件
+    checkDelete(val) {
+      this.checkDeleteList = val;
+      //如果有被选择的值则删除按钮可用
+      if (this.checkDeleteList != '') {
+        this.disabled = false;
+      }
+      //如果没有被选择的值删除按钮不可用
+      if (this.checkDeleteList == '') {
+        this.disabled = true;
+      }
+    },
+    //清除取消按钮
+    call() {
+      this.dialogVisible = false
+      ElMessage({
+        type: 'info',
+        message: '取消成功',
+      })
     },
     //清空提示框
     empty() {
-      ElMessageBox.confirm(
-          '是否确定清空所有数据！！！',
-          '友情提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: '友情提示',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '清空成功！！',
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              message: '感谢你的参与',
-              type: 'warning',
-            })
-          })
-    },
-    //点击详情获取表单里的值
-    aaaaaa(row) {
-      this.affiche = row;
-      console.log(this.affiche)
-      this.particular = true
-    },
-
-    //判断删除按钮是否可用
-    deletepl(val) {
-      this.table = val
-      if (this.table != '') {
-        this.disableds = false
+      if (this.clearTime == null || this.clearTime == '') {
+        ElMessage({
+          type: 'warning',
+          message: '请选择具体时间段',
+        })
       } else {
-        this.disableds = true
+        this.axios({
+          method: 'delete',
+          url: this.url + 'emptyOperatLogList',
+          data: {
+            //起始时间
+            "startTime": this.clearTime == null ? null : this.clearTime[0],
+            //结束时间
+            "endTime": this.clearTime == null ? null : this.clearTime[1]
+          },
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          if (response.data.code == 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果返回成功
+                if (response.data.data.info == "成功") {
+                  this.next();
+                  this.dialogVisible = false;
+                  ElMessage({
+                    type: 'success',
+                    message: '清除成功',
+                  })
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
+          }
+        })
       }
+
     },
-    //重置方法
-    reset() {
-      this.search = {
-        //系统模块
-        system_module: '',
-        //操作人员
-        username: '',
-        //操作类型
-        type: '',
-        //登录状态
-        state: '',
-        //登录时间
-        vlues2: '',
-      }
-    }
+    //批量删除提示框
+    remove() {
+      ElMessageBox.confirm(
+          '是否确认删除所选数据项?',
+          '系统提示',
+          {
+            cancelButtonText: '取消',
+            confirmButtonText: '确认',
+            type: 'warning',
+          }
+      ).then(() => {
+        /*清空*/
+        this.listId = [];
+        for (let i = 0; i < this.checkDeleteList.length; i++) {
+          this.listId.push(this.checkDeleteList[i].operatLogId)
+        }
+        this.axios({
+          method: 'delete',
+          url: this.url + 'checkOperatLogDelete',
+          data: this.listId,
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          if (response.data.code == 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果返回成功
+                if (response.data.data.info == "成功") {
+                  this.next();
+                  ElMessage({
+                    type: 'success',
+                    message: '删除成功',
+                  })
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
+          }
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    /*分页查询*/
+    next() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectOperatLogAll',
+        data: {
+          //当前页
+          'currenPage': this.pageInfo.currenPage,
+          //页大小
+          "pageSize": this.pageInfo.pageSize,
+          //操作人员
+          "operatLogPeople": this.operatLogPeople,
+          //操作模块
+          "operatLogModule": this.operatLogModule,
+          //起始时间
+          "startTime": this.selectTime == null ? null : this.selectTime[0],
+          //结束时间
+          "endTime": this.selectTime == null ? null : this.selectTime[1],
+          //操作类型
+          "operatLogType": this.operatLogType,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    /*序号*/
+    indexMethod(index) {
+      let curpage = this.pageInfo.currenPage; //单前页码，具体看组件取值
+      let limitpage = this.pageInfo.pageSize; //每页条数，具体是组件取值
+      return index + 1 + (curpage - 1) * limitpage;
+    },
+  }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    this.next();
   }
+
+
 }
 </script>
 
 <style type="text/css" scoped>
-
 @import url("../../css/zpdaohang.css");
-
-/deep/ .el-dialog__body {
-  background-color: #f5f7fa;
+/* 图标 */
+@font-face {
+  font-family: 'iconfont';
+  /* Project id 2994452 */
+  src: url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.woff2?t=1638864192788') format('woff2'),
+  url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.woff?t=1638864192788') format('woff'),
+  url('//at.alicdn.com/t/font_2994452_60uvtx3m6is.ttf?t=1638864192788') format('truetype');
 }
+
+.saas-main-content .j-card {
+  margin: 10px 0 20px 0;
+}
+
 /deep/ .el-range-editor.el-input__inner {
   height: 32px;
 }
+
 /deep/ .el-range-editor.el-input__inner .el-range-separator {
   position: relative;
   top: -4px;
 }
-.zhiti {
-  font-weight: bold;
-  size: 14px;
+
+.button-enable {
+  background: #ecf5ff;
+  border: 1px #cfe6ff solid;
+  color: #5aaaff;
+  display: inline-block;
+  line-height: 1;
+  min-height: 15px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+
+.button-forbidden {
+  background: #fef0f0;
+  border: 1px #f2c5c5 solid;
+  color: #f57a7a;
+  display: inline-block;
+  line-height: 1;
+  min-height: 15px;
+  white-space: nowrap;
+  text-align: center;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--el-border-radius-base);
+}
+
+/*表格样式*/
+.sub-Content__primary {
+  margin-bottom: 10px;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-right: 10px;
 }
-
-/deep/ .el-dialog__body .el-input--small .el-input__inner {
-  height: 32px;
-  line-height: 32px;
-  border: none;
-}
-
-/deep/ .el-textarea__inner {
-  min-height: 32.6px;
-  border: none;
-  resize: none;
-}
-
-
-@font-face {
-  font-family: 'iconfont';  /* Project id 2994452 */
-  src: url('//at.alicdn.com/t/font_2994452_unxan6g2m8r.woff2?t=1639051095780') format('woff2'),
-  url('//at.alicdn.com/t/font_2994452_unxan6g2m8r.woff?t=1639051095780') format('woff'),
-  url('//at.alicdn.com/t/font_2994452_unxan6g2m8r.ttf?t=1639051095780') format('truetype');
-}
-
 
 /* 分页 */
 .demo-pagination-block {
   margin: 10px 0 10px 10px;
 }
 
-/*表格样式*/
-.sub-Content__primary {
-  margin-bottom: 10px;
-}
-
 .button {
-  margin-top: -6px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  margin-top: -55px;
 
 }
 
 /* 删除表格数据按钮 */
 .button-delete {
+  color: #ff4949;
+  background: #ffeded;
+  border-color: #ffb6b6;
+  border: none;
+  width: 90px;
+}
+
+.el-button--default {
+  height: 33.6px;
+}
+
+.button-delete:hover {
+  background: #ff4949;
+  border-color: #ff4949;
+  color: #fff;
+  border: none;
   width: 90px;
 }
 
 /* 清空表格数据按钮 */
 .button-empty {
   width: 90px;
+  height: 33.6px;
   color: #13ce66;
   background: #e7faf0;
   border-color: #a1ebc2;
@@ -516,10 +622,6 @@ export default {
 
 
 /* 搜索按钮 */
-.search {
-  margin-top: -27px;
-  margin-left: 10px;
-}
 
 .search-ss {
   background-color: #085FC3;
@@ -546,6 +648,7 @@ export default {
   color: black;
   margin: 29px 0px 0px 10px;
   width: 90px;
+  height: 34px;
   background: #fff;
   border: 1px solid #dcdfe6;
   border-top-color: rgb(220, 223, 230);
@@ -567,43 +670,28 @@ export default {
   border-color: #a3d3ff;
 }
 
-/* 操作日期 */
+/* 登录时间搜索按钮 */
 .form-time {
-  margin-bottom: 20px;
+  width: 270px;
+  margin-left: -20px;
 }
 
-/* 登录状态 */
 .form-state {
-  margin-left: 10px;
-}
-
-.form-states {
-  width: 230px;
-}
-
-/* 登录类型 */
-.form-type {
-  margin-left: 10px;
-
-}
-
-.form-types {
-  width: 225px;
-}
-
-/* 操作人员搜索样式 */
-.form-staff {
-  margin-left: 15px;
-}
-
-/* 系统模块搜索样式 */
-.form-module {
-  margin-left: 10px;
-  width: 300px;
-}
-.el-form .form-time{
+  width: 270px;
   margin-left: 20px;
 }
+
+/* 登录地址搜索样式 */
+.form-name {
+  width: 270px;
+  margin-left: 20px;
+}
+
+/* 登录地址搜索样式 */
+.form-dizhi {
+  width: 270px;
+}
+
 
 .saas-main-content {
   padding-top: 12px;
@@ -717,6 +805,10 @@ button, html [type="button"], [type="reset"], [type="submit"] {
   border-color: #366cb3;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.el-form--inline .el-form-item {
+  margin-right: -10px;
 }
 
 .ant-btn, .ant-btn:active, .ant-btn:focus {

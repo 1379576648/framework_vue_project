@@ -3,18 +3,26 @@
   <!--  加班查询页面-->
   <div class="w">
     <div class="head">
-      <el-button size="medium">
+      <el-button size="medium" @click="derive()">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
         导出
       </el-button>
-      <el-button size="medium">
-        <el-icon style="font-size: 18px">
-          <i-folder-opened/>
-        </el-icon>
-        导入
-      </el-button>
+      &nbsp;
+      <el-upload
+          action=""
+          style="display: inline-block"
+          :show-file-list="false"
+          accept="xlsx"
+      >
+        <el-button size="medium">
+          <el-icon style="font-size: 18px">
+            <i-folder-opened/>
+          </el-icon>
+          导入
+        </el-button>
+      </el-upload>
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="selectTime"
@@ -43,8 +51,47 @@
         <el-table-column prop="overtimeaskActualTime" label="实际开始时间"/>
         <el-table-column prop="overtimeaskActualOvertime" label="实际结束时间"/>
         <el-table-column prop="overtimeaskActualTokinaga" label="实际总小时"/>
+        <el-table-column label="加班状态">
+        <template #default="scope">
+          <span v-if="scope.row.overtimeaskCondition===0">未开始</span>
+          <span v-if="scope.row.overtimeaskCondition===1">进行中</span>
+          <span v-if="scope.row.overtimeaskCondition===2">已完成</span>
+        </template>
+        </el-table-column>
         <el-table-column prop="operate" label="操作">
+
           <template #default="scope">
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定开始加班吗?"
+                @confirm=beginOverTime(overtimeaskId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(overtimeaskId=scope.row.overtimeaskId,overtimeaskActualTime=scope.row.overtimeaskActualTime)"
+                >开始加班
+                </el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定结束加班吗?"
+                @confirm=EndOverTime(overtimeaskId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(overtimeaskId=scope.row.overtimeaskId,
+                           overtimeaskActualTime=scope.row.overtimeaskActualTime)"
+                >结束加班
+                </el-button>
+              </template>
+            </el-popconfirm>
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -60,6 +107,7 @@
                 </el-button>
               </template>
             </el-popconfirm>
+
           </template>
         </el-table-column>
       </el-table>
@@ -67,17 +115,21 @@
     <!--分页-->
     <div class="demo-pagination-block">
       <el-pagination
-          v-model:currentPage="pageInfo.currenPage"
-          :page-sizes="[3, 5, 10, 50]"
+          v-model:currentPage="pageInfo.currentPage"
+          :page-sizes="[1, 3, 5, 7]"
           v-model:page-size="pageInfo.pagesize"
           :default-page-size="pageInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageInfo.total"
           :pager-count="5"
           background
-          @size-change="sele"
-          @current-change="sele"
-      >
+          next-text="下一页"
+          prev-text="上一页"
+          @size-change="selectOverTimeRecordAll()"
+          @current-change="selectOverTimeRecordAll()"
+          @prev-click="selectOverTimeRecordAll()"
+          @next-click="selectOverTimeRecordAll()">
+        >
       </el-pagination>
     </div>
 
@@ -85,8 +137,12 @@
 </template>
 
 <script>
+
+
 import {ref, defineComponent} from "vue";
-import {ElMessage, ElNotification} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+import {export_json_to_excel} from "../../excal/Export2Excel";
+import XLSX from "xlsx";
 
 export default {
   data() {
@@ -97,7 +153,6 @@ export default {
       NowStaffName: this.$store.state.staffMessage.staffName,
       pageInfo: {
         currentPage: 1,
-        /* 当前的页 */
         pagesize: 3,
         total: 0,
       },
@@ -139,9 +194,108 @@ export default {
     };
   },
   methods: {
-    // 点击删除确认按钮触发
-    through1() {
-      alert(1)
+    // 点击导出操作
+    derive() {
+      ElMessageBox.confirm(
+          '此操作将导出excel文件, 是否继续?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.deriveExcel();
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    // 导出方法
+    deriveExcel() {
+      var _this = this;
+      let tHeader = ["申请人", "发起人部门", "加班类型", "加班事由", "计划开始时间", "计划结束时间", "计划总小时", "实际开始时间", "实际结束时间", "实际总小时",]; // 导出的表头名
+      let filterVal = ["staffName", "deptName", "overtimeaskType", "overtimeaskMatter", "overtimeaskSDate", "overtimeaskEDate", "overtimeaskTotalDate", "overtimeaskActualTime", "overtimeaskActualOvertime", "overtimeaskActualTokinaga"];//导出其prop属性
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      }).then(({value}) => {
+        let data = _this.formatJson(filterVal, _this.tableData);
+        export_json_to_excel(tHeader, data, value);
+        ElMessage({
+          type: 'success',
+          message: `生成成功`,
+        })
+      })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '取消成功',
+            })
+          })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
+    // 导入方法
+    channel(obj) {
+      let _this = this;
+      // 通过DOM取文件数据
+      this.file = obj.raw;
+      var rABS = false; //是否将文件读取为二进制字符串
+      var f = this.file;
+      var reader = new FileReader();
+      FileReader.prototype.readAsBinaryString = function (f) {
+        var binary = "";
+        var rABS = false; //是否将文件读取为二进制字符串
+        var pt = this;
+        var wb; //读取完成的数据
+        var outdata;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var bytes = new Uint8Array(reader.result);
+          var length = bytes.byteLength;
+          for (var i = 0; i < length; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          if (rABS) {
+            wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
+              type: 'base64'
+            });
+          } else {
+            wb = XLSX.read(binary, {
+              type: 'binary'
+            });
+          }
+          // outdata就是你想要的东西 excel导入的数据
+          outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+          // excel 数据再处理
+          let arr = []
+          outdata.map(v => {
+            let obj = {}
+            obj.staffName = v.申请人
+            obj.deptName = v.发起人部门
+            obj.overtimeaskType = v.加班类型
+            obj.overtimeaskMatter = v.加班事由
+            obj.overtimeaskSDate = v.计划开始时间
+            obj.overtimeaskEDate = v.计划结束时间
+            obj.overtimeaskTotalDate = v.计划总小时
+            obj.overtimeaskActualTime = v.实际开始时间
+            obj.overtimeaskActualOvertime = v.实际结束时间
+            obj.overtimeaskActualTokinaga = v.实际总小时
+            arr.push(obj)
+            _this.tableData.push(obj)
+          })
+        }
+        reader.readAsArrayBuffer(f);
+      }
+      if (rABS) {
+        reader.readAsArrayBuffer(f);
+      } else {
+        reader.readAsBinaryString(f);
+      }
     },
     // 根据员工名称查询打卡记录
     selectOverTimeRecordAll() {
@@ -174,6 +328,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -197,7 +352,7 @@ export default {
         method: 'post',
         url: this.url + 'deleteOverTime',
         data: {
-          "overtimeaskId":this.overtimeaskId,
+          "overtimeaskId": this.overtimeaskId,
         }
       }).then((response) => {
         console.log("删除加班记录");
@@ -211,7 +366,7 @@ export default {
         } else if (response.data.data) {
           //如果服务是正常的
           if (response.data.data.state == 200) {
-            if (response.data.data.info == 1){
+            if (response.data.data.info == 1) {
               ElMessage({
                 showClose: true,
                 message: '删除成功',
@@ -234,11 +389,131 @@ export default {
           })
         }
       })
-    }
+    },
+    // 开始加班
+    beginOverTime() {
+      if (this.overtimeaskActualTime !== null){
+        ElNotification.warning({
+          title: '提示',
+          message: "已正在进行加班，不能进行重复操作",
+          offset: 100,
+        })
+      }else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateBeginOverTime',
+          data: {
+            "overtimeaskId": this.overtimeaskId,
+          }
+        }).then((response) => {
+          console.log("开始加班");
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info == "开始加班成功") {
+                ElMessage({
+                  showClose: true,
+                  message: '开始加班成功',
+                  type: 'success',
+                })
+                this.selectOverTimeRecordAll();
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "开始加班数据有误，请联系管理员",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 结束加班
+    EndOverTime() {
+      if (this.overtimeaskActualOvertime !== undefined) {
+        ElNotification.warning({
+          title: '提示',
+          message: "加班已完成，不能进行重复操作",
+          offset: 100,
+        })
+      }else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateEndOverTime',
+          data: {
+            "overtimeaskId": this.overtimeaskId,
+            "overtimeaskActualTime":this.overtimeaskActualTime,
+          }
+        }).then((response) => {
+          console.log("结束加班");
+          console.log(response);
+          if (response.data.data.data) {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info == "结束加班成功") {
+                ElMessage({
+                  showClose: true,
+                  message: '结束加班成功',
+                  type: 'success',
+                })
+                this.selectOverTimeRecordAll();
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: "结束加班数据有误，请联系管理员",
+                offset: 100,
+              })
+            }
+          } else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
   },
   created() {
     // 根据员工名称查询打卡记录
     this.selectOverTimeRecordAll();
+
   },
 };
 </script>
@@ -269,7 +544,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }

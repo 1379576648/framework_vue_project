@@ -23,6 +23,7 @@
 import {
   useStore
 } from "vuex";
+
 export default {
   mounted: function () {
     window.addEventListener('beforeunload', () => {
@@ -48,7 +49,6 @@ export default {
               JSON.parse(sessionStorage.getItem("state"))
           )
       )
-
     }
 
   }, setup() {

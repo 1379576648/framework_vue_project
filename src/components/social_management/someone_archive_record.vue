@@ -28,11 +28,9 @@
         <el-table-column prop="insArchiveFundNumber" label="公积金基数" align="center"/>
         <el-table-column label="操作" align="center">
           <template #default="scope">
-            <el-button type="text" size="small" @click="
-              this.$parent.$parent.$parent.$parent.$data.insArchive=scope.row,
-              this.$parent.$parent.$parent.$data.value='1',
-              this.$parent.$parent.$parent.$data.key=this.$parent.$parent.$parent.$data.key+1,
-              this.$parent.$parent.$parent.$parent.$data.judge=2">查看
+            <el-button type="text" size="small"
+                       @click="this.$parent.$parent.$parent.$parent.$data.insArchive=scope.row,this.$parent.$parent.$parent.$data.value='1',this.$parent.$parent.$parent.$data.key=this.$parent.$parent.$parent.$data.key+1">
+              查看
             </el-button>
           </template>
         </el-table-column>
@@ -102,44 +100,7 @@ export default {
         //总条数
         total: 0,
       },
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
-        },
-        {
-          date: "2016-05-02",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
-        },
-        {
-          date: "2016-05-04",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Home",
-        },
-        {
-          date: "2016-05-01",
-          name: "Tom",
-          state: "California",
-          city: "Los Angeles",
-          address: "No. 189, Grove St, Los Angeles",
-          zip: "CA 90036",
-          tag: "Office",
-        },
-      ],
+      tableData: [],
     };
   }, methods: {
     //查询当月所有已参保的员工
@@ -153,7 +114,7 @@ export default {
           //页大小
           pageSize: this.pageInfo.pageSize,
           //员工名称
-          insArchiveStaffName: this.$parent.$parent.$parent.$parent.$data.detail.insDetailStaffName,
+          insArchiveStaffName: this.$parent.$parent.$parent.$parent.$data.insArchive.insArchiveStaffName,
           //起始时间
           startTime: this.clearTime == null ? null : this.clearTime[0],
           //结束时间
@@ -163,13 +124,13 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-          if (response.data.data) {
+         if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               this.tableData = response.data.data.info.records;
               this.pageInfo.total = response.data.data.info.total;
               this.$store.commit("updateToken", response.data.data.token);
-            } else {
+            }else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,

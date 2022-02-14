@@ -7,7 +7,9 @@ const store = createStore({
         //动态菜单
         memuList: [],
         //菜单路由
-        menuRouter:[]
+        menuRouter:[],
+        //jwt
+        token:'',
     },
     /* 同步修改值 */
     mutations: {
@@ -25,6 +27,11 @@ const store = createStore({
         updateMenuRouter(state, obj) {
             // 通过传过来的值进行修改
             state.menuRouter = obj;
+        },
+        //修改token值
+        updateToken(state,obj){
+            // 通过传过来的值进行修改
+            state.token = obj;
         }
     },
     getters: {

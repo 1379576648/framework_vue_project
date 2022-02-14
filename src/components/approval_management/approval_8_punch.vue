@@ -889,9 +889,9 @@ export default {
           // 审批主表编号
           auditflowId: this.auditflowId,
           // 审批类型（流程名称）
-          auditflowType:this.auditflowType,
+          auditflowType: this.auditflowType,
           // 审批申请人
-          staffName1:this.StaffName,
+          staffName1: this.StaffName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -915,6 +915,14 @@ export default {
             showClose: true,
             message: '操作失败',
             type: 'error',
+          })
+          this.add_pass_remark2 = false;
+          this.remark = "";
+        } else if (response.data.code === 200 && response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '查询到打卡记录中没有匹配的数据，无法完成后续补打卡操作',
+            type: 'success',
           })
           this.add_pass_remark2 = false;
           this.remark = "";

@@ -1,5 +1,4 @@
 <!-- 登录日志页面 -->
-
 <template>
   <div class="saas-main-content" style="margin-bottom: 20px">
     <div class="j-card j-card-bordered mainContent">
@@ -50,7 +49,7 @@
             </el-button>
             <el-button class="button-empty" size="mini" @click="clearTime=[],dialogVisible=true"
                        style="margin-right: 878px"
-                       v-bind:disabled="tableData===''">清除
+                       v-bind:disabled="tableData==''">清除
             </el-button>
             <el-button size="mini" class="search-ss" type="primary" @click="next">
               <i class="iconfont">
@@ -68,34 +67,33 @@
         </div>
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
+<!--            :header-cell-style="{textAlign: 'center',background:'rgba(213,213,218,0.63)',color:'#6C6C6C'}"-->
           <el-table :data="tableData" style="width: 100% ;"
-                    border
                     stripe
-                    :header-cell-style="{textAlign: 'center',background:'rgba(213,213,218,0.63)',color:'#6C6C6C'}"
                     @selection-change="checkDelete"
           >
             <!-- 全选操作按钮 -->
-            <el-table-column fixed align="center" type="selection" min-width="50"/>
-            <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
-            <el-table-column fixed prop="registerLogPeople" align="center" sortable label="用户名称" min-width="132"/>
+            <el-table-column fixed  align="center" type="selection" min-width="50"/>
+            <el-table-column  fixed :index="indexMethod" align="center" label="序号" type="index" min-width="60"/>
+            <el-table-column  prop="registerLogPeople" align="center" sortable label="用户名称" min-width="132"/>
             <el-table-column prop="registerLogPhone" align="center" sortable label="手机号码" min-width="135"/>
             <el-table-column prop="registerLogIp" align="center" sortable label="IP地址" min-width="135"/>
             <el-table-column prop="registerLogIpname" align="center" sortable label="IP所在地" min-width="150"/>
-            <el-table-column prop="registerLogType" align="center" sortable label="设备类型" min-width="140"/>
-            <el-table-column align="center" sortable label="登录状态" min-width="135">
+            <el-table-column prop="registerLogType" align="center" sortable label="设备类型" min-width="100"/>
+            <el-table-column align="center" sortable label="登录状态" min-width="120">
               <template #default="scope">
                 <span class="button-enable" v-if="scope.row.registerLogState==0">成功</span>
                 <span class="button-forbidden" v-if="scope.row.registerLogState==1">失败</span>
               </template>
             </el-table-column>
-            <el-table-column prop="registerLogBrowser" align="center" sortable label="浏览器" min-width="132"/>
-            <el-table-column prop="registerLogGenre" align="center" sortable label="登录类型" min-width="135">
+            <el-table-column prop="registerLogBrowser" align="center" sortable label="浏览器" min-width="110"/>
+            <el-table-column prop="registerLogGenre" align="center" sortable label="登录类型" min-width="110">
               <template #default="scope">
                 <span v-if="scope.row.registerLogGenre==0">人脸</span>
                 <span v-if="scope.row.registerLogGenre==1">密码</span>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" prop="createdTime" align="center" sortable label="创建时间" min-width="170"/>
+            <el-table-column fixed="right"  prop="createdTime" align="center" sortable label="创建时间" min-width="170"/>
           </el-table>
         </div>
         <!-- 分页 -->
@@ -123,6 +121,7 @@
       v-model="dialogVisible"
       title="请选择需要清除的时间段"
       width="29%"
+      :before-close="call"
   >
     <el-date-picker
         v-model="clearTime"
@@ -260,7 +259,7 @@ export default {
     },
     //清空提示框
     empty() {
-      if (this.clearTime == null||this.clearTime=='') {
+      if (this.clearTime == null || this.clearTime == '') {
         ElMessage({
           type: 'warning',
           message: '请选择具体时间段',
@@ -278,40 +277,39 @@ export default {
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果返回成功
-              if (response.data.data.info == "成功") {
-                this.next();
-                this.dialogVisible = false;
-                ElMessage({
-                  type: 'success',
-                  message: '清除成功',
-                })
-              } else {
-                ElMessage({
-                  type: 'warning',
+          if (response.data.code == 200) {
+           if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果返回成功
+                if (response.data.data.info == "成功") {
+                  this.next();
+                  this.dialogVisible = false;
+                  ElMessage({
+                    type: 'success',
+                    message: '清除成功',
+                  })
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              }else {
+                ElNotification.error({
+                  title: '提示',
                   message: response.data.data.info,
+                  offset: 100,
                 })
               }
             }
-            //如果服务是雪崩的
-            else {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
         })
       }
@@ -340,39 +338,38 @@ export default {
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果返回成功
-              if (response.data.data.info == "成功") {
-                this.next();
-                ElMessage({
-                  type: 'success',
-                  message: '删除成功',
-                })
-              } else {
-                ElMessage({
-                  type: 'warning',
-                  message: response.data.data.info,
+          if (response.data.code == 200) {
+           if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果返回成功
+                if (response.data.data.info == "成功") {
+                  this.next();
+                  ElMessage({
+                    type: 'success',
+                    message: '删除成功',
+                  })
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              }else {
+                ElNotification.error({
+                  title: '提示',
+                  message:response.data.data.info,
+                  offset: 100,
                 })
               }
             }
-            //如果服务是雪崩的
-            else {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
         })
       }).catch(() => {
@@ -407,28 +404,27 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
+        if (response.data.code == 200) {
+         if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
           ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
@@ -437,17 +433,12 @@ export default {
       let curpage = this.pageInfo.currenPage; //单前页码，具体看组件取值
       let limitpage = this.pageInfo.pageSize; //每页条数，具体是组件取值
       return index + 1 + (curpage - 1) * limitpage;
-    },
+    }
   }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token;
     this.next();
-  }, computed() {
-    //清空按钮
-    emptyButton(function () {
-      return this.tableData == null ? true : false;
-    })
   }
-
-
 }
 </script>
 
@@ -463,7 +454,7 @@ export default {
 }
 
 .saas-main-content .j-card {
-  margin: 20px 0 20px 0;
+  margin: 10px 0 20px 0;
 }
 
 /deep/ .el-range-editor.el-input__inner {

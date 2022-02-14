@@ -8,12 +8,20 @@
         </el-icon>
         导出
       </el-button>
-      <el-button size="medium">
-        <el-icon style="font-size: 18px">
-          <i-folder-opened/>
-        </el-icon>
-        导入
-      </el-button>
+      &nbsp;
+      <el-upload
+          action=""
+          style="display: inline-block"
+          :show-file-list="false"
+          accept="xlsx"
+      >
+        <el-button size="medium" >
+          <el-icon style="font-size: 18px">
+            <i-folder-opened/>
+          </el-icon>
+          导入
+        </el-button>
+      </el-upload>
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="selectTime"
@@ -87,6 +95,7 @@
 <script>
 import {ref, defineComponent} from "vue";
 import {ElMessage, ElNotification} from "element-plus";
+import XLSX, {readFile} from "xlsx";
 
 export default {
   data() {
@@ -160,10 +169,6 @@ export default {
     };
   },
   methods: {
-    // 点击删除确认按钮触发
-    through1() {
-      alert(1)
-    },
     // 根据员工名称查询请假
     selectLeaveRecordAll() {
       var _this = this;
@@ -195,6 +200,7 @@ export default {
           //如果服务是正常的
           if (response.data.data.state == 200) {
             this.tableData = response.data.data.info.records;
+            this.pageInfo.total = response.data.data.info.total;
           } else {
             ElNotification.warning({
               title: '提示',
@@ -255,7 +261,27 @@ export default {
           })
         }
       })
-    }
+    },
+    async onChange (file) {
+      let dataBinary = await readFile(file.raw)
+      let workBook = XLSX.read(dataBinary, {type: 'binary', cellDates: true})
+      let workSheet = workBook.Sheets[workBook.SheetNames[0]]
+      const data = XLSX.utils.sheet_to_json(workSheet)
+      this.teacher1 = data
+      this.axios({
+        method: 'post',
+        url: this.url + 'xlsx_two',
+        data: {
+          "leave":this.teacher1,
+        }
+      }).then((response) => {
+        //提示
+        this.$message({
+          type: 'success',
+          message: '上传成功!'
+        })
+      })
+    },
   },
   created() {
     // 根据员工名称查询请假
@@ -290,7 +316,6 @@ table * {
 }
 
 .demo-pagination-block {
-  margin-left: 850px;
   margin-top: 20px;
   margin-bottom: 30px;
 }

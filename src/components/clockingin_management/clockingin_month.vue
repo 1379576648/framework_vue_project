@@ -120,7 +120,7 @@ export default {
 }
 
 .demo-pagination-block {
-  margin-left: 800px;
+  margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 5px;
 }

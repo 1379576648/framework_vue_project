@@ -361,7 +361,7 @@
 
         </div>
         <div style="text-align: center">
-          <el-button size="small" @click="this.$parent.$data.new_insured_scheme=false">取消</el-button>
+          <el-button size="small" @click="this.revocatory">取消</el-button>
           &nbsp;&nbsp;
           <el-button size="small" type="primary" @click="save">保存</el-button>
         </div>
@@ -382,9 +382,9 @@ export default {
       // 方案名称
       schemeName: "",
       //方案名称判断
-      nameJudge:true,
+      nameJudge: true,
       //方案编号
-      defInsuredId:0,
+      defInsuredId: 0,
       //访问地址
       url: 'http://localhost:80/social/',
       //社保
@@ -394,7 +394,7 @@ export default {
         // 社保基数上限
         defSchemeMax: 0,
         //渲染
-        key:0
+        key: 0
       },
       //金额
       money: {
@@ -408,16 +408,16 @@ export default {
         // 社保基数上限
         defSchemeMax: 0,
         //渲染
-        key:0
+        key: 0
       },
       // 社保基数
       security_cardinal: 0,
       // 公积金基数
       accumulation_cardinal: 0,
       //社保渲染
-      security_cardinal_key:0,
+      security_cardinal_key: 0,
       //积金渲染
-      accumulation_cardinal_key:0,
+      accumulation_cardinal_key: 0,
       // 缴纳明细表 (显示/隐藏)
       payment_detail: false,
       // 社保缴纳项目
@@ -452,72 +452,78 @@ export default {
     };
   },
   methods: {
+    revocatory() {
+      this.$parent.$data.new_insured_scheme = false;
+      ElMessage({
+        message: '取消成功',
+        type: 'info',
+      })
+    },
     //查询社保方案名称
-    selectDefInsuredName(){
+    selectDefInsuredName() {
       this.axios({
         method: 'get',
-        url: this.url + 'selectDefInsuredName/'+this.schemeName,
+        url: this.url + 'selectDefInsuredName/' + this.schemeName,
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
+        if (response.data.code == 200) {
+         if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info != null) {
+                console.log(response.data.data.info.defInsuredId + '=' + this.$parent.$data.defInsuredId)
+                if (response.data.data.info.defInsuredId != this.$parent.$data.defInsuredId && this.name == '修改') {
+                  this.nameJudge = false;
+                  ElMessage({
+                    type: 'warning',
+                    message: '该' + '【' + this.schemeName + '】方案名称已存在',
+                  })
+                } else if (this.name == '新增') {
+                  this.nameJudge = false;
+                  ElMessage({
+                    type: 'warning',
+                    message: '该' + '【' + this.schemeName + '】方案名称已存在',
+                  })
+                }
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
           ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info!=null){
-              console.log(response.data.data.info.defInsuredId+'='+this.$parent.$data.defInsuredId)
-              if (response.data.data.info.defInsuredId!=this.$parent.$data.defInsuredId && this.name=='修改'){
-                this.nameJudge=false;
-                ElMessage({
-                  type: 'warning',
-                  message: '该'+'【'+this.schemeName+'】方案名称已存在',
-                })
-              }else if( this.name=='新增'){
-                this.nameJudge=false;
-                ElMessage({
-                  type: 'warning',
-                  message: '该'+'【'+this.schemeName+'】方案名称已存在',
-                })
-              }
-            }
-            }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
     //积金基数范围
-    fundScopeInput(){
+    fundScopeInput() {
       //判断基数下限是否大于基数上限
-      if (this.fund.defSchemeMin>this.fund.defSchemeMax){
-        this.fund.defSchemeMin=this.fund.defSchemeMax;
+      if (this.fund.defSchemeMin > this.fund.defSchemeMax) {
+        this.fund.defSchemeMin = this.fund.defSchemeMax;
       }
       //渲染键值加1
-      this.fund.key=this.fund.key+1;
+      this.fund.key = this.fund.key + 1;
     },
     //社保基数范围
-    socialScopeInput(){
+    socialScopeInput() {
       //判断基数下限是否大于基数上限
-      if (this.social.defSchemeMin>this.social.defSchemeMax){
-        this.social.defSchemeMin=this.social.defSchemeMax;
+      if (this.social.defSchemeMin > this.social.defSchemeMax) {
+        this.social.defSchemeMin = this.social.defSchemeMax;
       }
       //渲染键值加1
-      this.social.key=this.social.key+1;
+      this.social.key = this.social.key + 1;
     },
     //社保输入
-    socialInput(){
+    socialInput() {
       //判断基数是否小于基数下限
       if (this.security_cardinal < this.social.defSchemeMin) {
         this.security_cardinal = this.social.defSchemeMin;
@@ -526,7 +532,7 @@ export default {
         this.security_cardinal = this.social.defSchemeMax;
       }
       //渲染键值加1
-      this.security_cardinal_key=this.security_cardinal_key+1;
+      this.security_cardinal_key = this.security_cardinal_key + 1;
     },
     //积金输入
     fundInput() {
@@ -538,7 +544,7 @@ export default {
         this.accumulation_cardinal = this.fund.defSchemeMax
       }
       //渲染键值加1
-      this.accumulation_cardinal_key= this.accumulation_cardinal_key+1;
+      this.accumulation_cardinal_key = this.accumulation_cardinal_key + 1;
     },
     //计算操作
     calculate() {
@@ -678,126 +684,124 @@ export default {
       }
     },
     //修改社保方案
-    updateDefInsured(){
+    updateDefInsured() {
       this.axios({
         method: 'put',
         url: this.url + 'updateDefInsured',
         data: {
           //社保方案
-          defInsured:{
+          defInsured: {
             //方案编号
-            defInsuredId:this.defInsuredId,
+            defInsuredId: this.defInsuredId,
             //方案名称
-            defInsuredName:this.schemeName,
+            defInsuredName: this.schemeName,
           },
           //社保方案项目
-          defSchemeList:this.social_tableData.concat(this.accumulation_tableData),
+          defSchemeList: this.social_tableData.concat(this.accumulation_tableData),
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              this.$parent.$data.new_insured_scheme=false;
-              this.$parent.next();
-              ElMessage({
-                type: 'success',
-                message: '修改成功',
-              })
-            } else {
-              ElMessage({
-                type: 'warning',
+        if (response.data.code == 200) {
+         if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.$parent.$data.new_insured_scheme = false;
+                this.$parent.next();
+                ElMessage({
+                  type: 'success',
+                  message: this.name + '成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
                 message: response.data.data.info,
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
     //添加社保方案
-    addDefInsured(){
+    addDefInsured() {
       this.axios({
         method: 'post',
         url: this.url + 'addDefInsured',
         data: {
           //社保方案
-          defInsured:{
+          defInsured: {
             //方案编号
-            defInsuredId:this.defInsuredId,
+            defInsuredId: this.defInsuredId,
             //方案名称
-            defInsuredName:this.schemeName,
+            defInsuredName: this.schemeName,
           },
           //社保方案项目
-          defSchemeList:this.social_tableData.concat(this.accumulation_tableData),
+          defSchemeList: this.social_tableData.concat(this.accumulation_tableData),
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //如果是成功
-            if (response.data.data.info == "成功") {
-              this.$parent.$data.new_insured_scheme=false;
-              this.$parent.next();
-              ElMessage({
-                type: 'success',
-                message: '添加成功',
-              })
-            } else {
-              ElMessage({
-                type: 'warning',
+        if (response.data.code == 200) {
+         if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                this.$parent.$data.new_insured_scheme = false;
+                this.$parent.next();
+                ElMessage({
+                  type: 'success',
+                  message: '添加成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
                 message: response.data.data.info,
+                offset: 100,
               })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
     //保存操作
     save() {
-      if (this.nameJudge==false){
+      if (this.nameJudge == false) {
         ElMessage({
           showClose: true,
-          message:  '该'+'【'+this.schemeName+'】方案名称已存在',
+          message: '该' + '【' + this.schemeName + '】方案名称已存在',
           type: 'warning',
         })
-        return  false;
+        return false;
       }
       //判断名称是否为空
       if (this.schemeName == '') {
@@ -862,9 +866,9 @@ export default {
       //判断各社保方案项目名称的基数范围
       for (let i = 0; i < this.social_tableData.length; i++) {
         //设置最少基数
-        this.social_tableData[i].defSchemeMin=this.social.defSchemeMin;
+        this.social_tableData[i].defSchemeMin = this.social.defSchemeMin;
         //设置最多基数
-        this.social_tableData[i].defSchemeMax=this.social.defSchemeMax;
+        this.social_tableData[i].defSchemeMax = this.social.defSchemeMax;
         //遍历数据
         if (this.social_tableData[i].defSchemeFloor > this.social_tableData[i].defSchemeUpper) {
           ElMessage({
@@ -878,9 +882,9 @@ export default {
       //判断各积金方案项目名称的基数范围
       for (let i = 0; i < this.accumulation_tableData.length; i++) {
         //设置最少基数
-        this.accumulation_tableData[i].defSchemeMin=this.fund.defSchemeMin;
+        this.accumulation_tableData[i].defSchemeMin = this.fund.defSchemeMin;
         //设置最多基数
-        this.accumulation_tableData[i].defSchemeMax=this.fund.defSchemeMax;
+        this.accumulation_tableData[i].defSchemeMax = this.fund.defSchemeMax;
         //遍历数据
         if (this.accumulation_tableData[i].defSchemeFloor > this.accumulation_tableData[i].defSchemeUpper) {
           ElMessage({
@@ -891,11 +895,11 @@ export default {
           return false;
         }
       }
-     if (this.name=='修改'){
-       this.updateDefInsured();
-     }else{
-       this.addDefInsured();
-     }
+      if (this.name == '修改') {
+        this.updateDefInsured();
+      } else {
+        this.addDefInsured();
+      }
 
     },
     // 删除行
@@ -954,30 +958,29 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
+        if (response.data.code == 200) {
+         if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //方案名称
+              this.schemeName = response.data.data.info.defInsuredName;
+              //方案编号
+              this.defInsuredId = response.data.data.info.defInsuredId;
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
           ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //方案名称
-            this.schemeName = response.data.data.info.defInsuredName;
-            //方案编号
-            this.defInsuredId= response.data.data.info.defInsuredId;
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
@@ -989,43 +992,44 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.error({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              if (response.data.data.info[i].defSchemeType == '公积金') {
-                //公积金缴纳表数据
-                this.accumulation_tableData.push(response.data.data.info[i]);
-                this.fund.defSchemeMin = response.data.data.info[i].defSchemeMin;
-                this.fund.defSchemeMax = response.data.data.info[i].defSchemeMax;
-              } else {
-                //社保缴纳表数据
-                this.social_tableData.push(response.data.data.info[i]);
-                this.social.defSchemeMin = response.data.data.info[i].defSchemeMin;
-                this.social.defSchemeMax = response.data.data.info[i].defSchemeMax;
+        if (response.data.code == 200) {
+        if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                if (response.data.data.info[i].defSchemeType == '公积金') {
+                  //公积金缴纳表数据
+                  this.accumulation_tableData.push(response.data.data.info[i]);
+                  this.fund.defSchemeMin = response.data.data.info[i].defSchemeMin;
+                  this.fund.defSchemeMax = response.data.data.info[i].defSchemeMax;
+                } else {
+                  //社保缴纳表数据
+                  this.social_tableData.push(response.data.data.info[i]);
+                  this.social.defSchemeMin = response.data.data.info[i].defSchemeMin;
+                  this.social.defSchemeMax = response.data.data.info[i].defSchemeMax;
+                }
               }
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
             }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     }
   }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     if (this.$parent.$data.defInsuredId != 0) {
       this.selectDefInsuredId();
       this.listSelectDefScheme();
