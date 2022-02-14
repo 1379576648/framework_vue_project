@@ -24,7 +24,7 @@
       <el-table-column prop="postName" label="职位" width="180"/>
       <el-table-column prop="resumePhone" label="手机" width="180"/>
       <el-table-column prop="resumeMailbox" label="邮箱" width="180"/>
-      <el-table-column prop="hiredate" label="入职日期" width="180"/>
+      <el-table-column prop="employmentHiredate" label="入职日期" width="180"/>
       <!--      <el-table-column prop="resumeBirthday" label="出生日期" width="130" />-->
       <!--      <el-table-column prop="resumeResidence" label="户口所在地" width="130" />-->
       <!--      <el-table-column prop="resumePoliticalOutlook" label="政治面貌" width="130" />-->
@@ -43,7 +43,7 @@
                                                ,fromValue.resumeBirthday=scope.row.resumeBirthday
                                                ,fromValue.resumeResidence=scope.row.resumeResidence
                                                ,fromValue.resumePoliticalOutlook=scope.row.resumePoliticalOutlook
-                                               ,fromValue.hiredate=scope.row.hiredate
+                                               ,fromValue.employmentHiredate=scope.row.employmentHiredate
                                                ,fromValue.deptName=scope.row.deptName
                                                ,fromValue.postName=scope.row.postName
                                                ,fromValue.workStareTime=scope.row.workStareTime
@@ -58,7 +58,10 @@
                                                ,fromValue.educationStudentname=scope.row.educationStudentname
                                                ,fromValue.educationMajor=scope.row.educationMajor
                                                ,fromValue.educationFullTime=scope.row.educationFullTime
-                                               ,updateEmploymentState(scope.row.employmentId),insertStaff()">入职</el-button>
+                                               ,fromValue.employmentSalary=scope.row.employmentSalary
+                                               ,fromValue.employmentSalaryz=scope.row.employmentSalaryz
+                                               ,fromValue.resumeAge=scope.row.resumeAge
+                                               ,insertStaff(),updateEmploymentState(scope.row.employmentId)">入职</el-button>
 
           <el-button @click="id=scope.row.employmentId,abandon(id)"  type="text" size="small">放弃</el-button>
 
@@ -101,7 +104,6 @@
 
   </div>
 </template>
-
 <script>
 import {defineComponent, ref} from 'vue'
 import {ElMessage, ElNotification} from "element-plus";
@@ -144,7 +146,7 @@ export default defineComponent({
         //学历
         resumeEducation:'',
         //入职日期
-        hiredate:'',
+        employmentHiredate:'',
         //户口所在地
         resumeResidence:'',
         //部门名称
@@ -175,6 +177,12 @@ export default defineComponent({
         educationMajor:'',
         //是否全日制
         educationFullTime:'',
+        //试用期基本工资
+        employmentSalary:'',
+        //正式基本工资
+        employmentSalaryz:'',
+        //年龄
+        resumeAge:'',
       },
     }
   }, setup() {

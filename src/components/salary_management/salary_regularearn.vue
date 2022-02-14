@@ -121,18 +121,13 @@
   <br />
   <br />
   <el-table :data="tableData" style="width: 100%">
-    <el-table-column fixed prop="date" label="姓名" width="150" />
-    <el-table-column prop="name" label="工号" width="120" />
-    <el-table-column prop="state" label="公司/中心" width="120" />
-    <el-table-column prop="city" label="部门" width="120" />
-    <el-table-column prop="address" label="职位" width="150" />
-    <el-table-column prop="zip" label="入职日期" width="120" />
-    <el-table-column prop="zip" label="状态" width="120" />
-    <el-table-column prop="zip" label="基本工资" width="120" />
-    <el-table-column prop="zip" label="岗位" width="120" />
-    <el-table-column prop="zip" label="基本工资" width="120" />
-    <el-table-column prop="zip" label="岗位" width="120" />
-    <el-table-column fixed="right" label="操作" width="120">
+    <el-table-column fixed prop="date" label="姓名" width="190" />
+    <el-table-column prop="city" label="部门" width="190" />
+    <el-table-column prop="address" label="职位" width="190" />
+    <el-table-column prop="zip" label="入职日期" width="190" />
+    <el-table-column prop="zip2" label="状态" width="190" />
+    <el-table-column prop="zip3" label="基本工资" width="190" />
+    <el-table-column fixed="right" label="操作" width="190">
       <template #default>
         <el-button type="text" size="small" @click="disly=true,disly_1=false">定薪 </el-button>
         <el-button type="text" size="small" @click="disly_1=true,disly=false">调薪 </el-button>
@@ -193,41 +188,13 @@ export default {
         total: 0, // 总页数
       },
       tableData: [{
-        date: '2016-05-03',
-        name: 'Tom',
-        state: 'California',
-        city: 'Los Angeles',
-        address: '11111111',
-        zip: 'CA 90036',
-        tag: 'Home',
+        date: '段翔',
+        city: '销售部',
+        address: '员工',
+        zip: '2022-1-22',
+        zip2: '在职',
+        zip3:'3000'
       },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: '11111111',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: '11111111',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: '11111111',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
       ]
     }
   },
