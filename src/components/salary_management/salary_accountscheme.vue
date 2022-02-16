@@ -5,9 +5,9 @@
     <el-form>
       <el-form-item label="1、选择一个部门：" prop="dept" style="margin-left: 40px">
         <el-select v-model="ruleForm.dept" placeholder="请选择部门" style="width:240px;">
-          <el-option label="11" value="dept1" style="margin-left: 20px;"></el-option>
-          <el-option label="02465" value="dept2" style="margin-left: 20px;"></el-option>
-          <el-option label="333" value="dept3" style="margin-left: 20px;"></el-option>
+          <el-option label="销售部" value="销售部" style="margin-left: 20px;"></el-option>
+          <el-option label="研发部" value="研发部" style="margin-left: 20px;"></el-option>
+          <el-option label="总裁办" value="总裁办" style="margin-left: 20px;"></el-option>
         </el-select>
       </el-form-item>
     </el-form>

@@ -7,7 +7,7 @@
     <el-col :span="5">
       <el-card shadow="always" style="background-color: rgb(35, 102, 167);color:white;font-size:14px;">
         <p>在职</p>
-        <p>{{this.tableDataTwo.tjFive+this.countStateThree.tjSix}}</p>
+        <p>{{this.tableDataTwo.tjFive+this.tableDataThree.tjSix}}</p>
       </el-card>
     </el-col>
     <el-col :span="5">
