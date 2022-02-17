@@ -251,28 +251,25 @@ export default {
       }).then((response) => {
         console.log("查询加班记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询加班记录有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询加班记录失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -290,34 +287,31 @@ export default {
       }).then((response) => {
         console.log("删除加班记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            if (response.data.data.info === 1) {
-              ElMessage({
-                showClose: true,
-                message: '删除成功',
-                type: 'success',
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+                this.selectOverTimeRecordAll();
+              }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "删除加班记录失败",
+                offset: 100,
               })
-              this.selectOverTimeRecordAll();
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "删除加班记录有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -348,40 +342,37 @@ export default {
         }).then((response) => {
           console.log("开始加班");
           console.log(response);
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state === 200) {
-              if (response.data.data.info === "开始加班成功") {
-                ElMessage({
-                  showClose: true,
-                  message: '开始加班成功',
-                  type: 'success',
-                })
-                this.selectOverTimeRecordAll();
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "开始加班成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '开始加班成功',
+                    type: 'success',
+                  })
+                  this.selectOverTimeRecordAll();
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
               } else {
-                ElNotification.warning({
+                ElNotification.error({
                   title: '提示',
-                  message: response.data.data.info,
+                  message: "开始加班失败",
                   offset: 100,
                 })
               }
-            } else {
-              ElNotification.warning({
-                title: '提示',
-                message: "开始加班数据有误，请联系管理员",
-                offset: 100,
-              })
             }
           } else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.message,
               offset: 100,
             })
           }
@@ -408,40 +399,37 @@ export default {
         }).then((response) => {
           console.log("结束加班");
           console.log(response);
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state === 200) {
-              if (response.data.data.info === "结束加班成功") {
-                ElMessage({
-                  showClose: true,
-                  message: '结束加班成功',
-                  type: 'success',
-                })
-                this.selectOverTimeRecordAll();
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "结束加班成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '结束加班成功',
+                    type: 'success',
+                  })
+                  this.selectOverTimeRecordAll();
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
               } else {
-                ElNotification.warning({
+                ElNotification.error({
                   title: '提示',
-                  message: response.data.data.info,
+                  message: "结束加班失败",
                   offset: 100,
                 })
               }
-            } else {
-              ElNotification.warning({
-                title: '提示',
-                message: "结束加班数据有误，请联系管理员",
-                offset: 100,
-              })
             }
           } else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.message,
               offset: 100,
             })
           }
@@ -450,6 +438,8 @@ export default {
     },
   },
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 根据员工名称查询打卡记录
     this.selectOverTimeRecordAll();
 

@@ -407,28 +407,31 @@ export default {
         this.drawer = true;
         console.log("查询审批数据详情");
         console.log(response)
-        if (response.data.data.state === 300) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭,请及时联系相关人员进行修复！",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.details = response.data.data.info;
-            if (response.data.data.info.length === 3) {
-              this.detailsNumber = 3
-            } else if (response.data.data.info.length === 2) {
-              this.detailsNumber = 2
-            } else if (response.data.data.info.length === 1) {
-              this.detailsNumber = 1
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.details = response.data.data.info;
+              if (response.data.data.info.length === 3) {
+                this.detailsNumber = 3
+              } else if (response.data.data.info.length === 2) {
+                this.detailsNumber = 2
+              } else if (response.data.data.info.length === 1) {
+                this.detailsNumber = 1
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询审批数据详情失败",
+                offset: 100,
+              })
             }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -446,36 +449,32 @@ export default {
       }).then((response) => {
         console.log("撤销审批成功")
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            ElNotification.warning({
-              title: '提示',
-              message: "撤销成功",
-              type: 'success',
-            })
-            // 查询我的调薪审批申请 待处理
-            this.selectMyWorker();
-            // 查询总裁
-            this.selectpresident();
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "系统繁忙，请稍后再试",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              ElNotification.warning({
+                title: '提示',
+                message: "撤销成功",
+                type: 'success',
+              })
+              // 查询我的调薪审批申请 待处理
+              this.selectMyWorker();
+              // 查询总裁
+              this.selectpresident();
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "撤销审批失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -490,29 +489,25 @@ export default {
       }).then((response) => {
         console.log("查询总裁成功")
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            _this.president = response.data.data.info;
-            window.setTimeout(this.selectMyEndWorker, 500);
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "系统繁忙，请稍后再试",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.president = response.data.data.info;
+              window.setTimeout(this.selectMyEndWorker, 500);
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询总裁失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -543,23 +538,26 @@ export default {
       }).then((response) => {
         console.log("查询我的离职申请-待处理");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
-            this.pageInfo.total = response.data.data.info.total;
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.pagesize = response.data.data.info.size;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询我的离职申请-待处理 失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -587,23 +585,26 @@ export default {
       }).then((response) => {
         console.log("查询我的离职申请-待处理");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
-            this.pageInfo.total = response.data.data.info.total;
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.pagesize = response.data.data.info.size;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询我的离职申请-待处理 失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -636,23 +637,26 @@ export default {
       }).then((response) => {
         console.log("查询我的离职申请-已处理");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData1 = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
-            this.pageInfo.total = response.data.data.info.total;
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData1 = response.data.data.info.records;
+              this.pageInfo.pagesize = response.data.data.info.size;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询我的离职申请-已处理 失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -682,23 +686,26 @@ export default {
       }).then((response) => {
         console.log("查询我的离职申请-已处理");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData1 = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
-            this.pageInfo.total = response.data.data.info.total;
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData1 = response.data.data.info.records;
+              this.pageInfo.pagesize = response.data.data.info.size;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询我的离职申请-已处理 失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -707,6 +714,8 @@ export default {
   },
 // 挂载
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 查询总裁
     this.selectpresident();
     // 查询我的离职审批申请 待处理

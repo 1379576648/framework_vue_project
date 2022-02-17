@@ -1177,6 +1177,8 @@ export default {
   },
   // 挂载
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 查询待处理的出差审批
     this.selectTravelAll();
     // 查询已处理的出差审批

@@ -231,28 +231,25 @@ export default {
       }).then((response) => {
         console.log("查询打卡记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询部门职位有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+                this.tableData = response.data.data.info.records;
+                this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询打卡记录失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -270,34 +267,31 @@ export default {
       }).then((response) => {
         console.log("删除打卡记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            if (response.data.data.info === 1) {
-              ElMessage({
-                showClose: true,
-                message: '删除成功',
-                type: 'success',
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.selectCardRecordAll();
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "删除打卡记录失败",
+                offset: 100,
               })
-              this.selectCardRecordAll();
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "删除打卡记录有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -337,6 +331,8 @@ export default {
     }
   },
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 根据员工名称查询打卡记录
     this.selectCardRecordAll();
   },

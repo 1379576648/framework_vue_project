@@ -165,21 +165,6 @@ export default {
     }
   },
   methods: {
-    // 点击编辑跳转
-    redact() {
-      this.$router.push({
-        path: this.one,
-        query: {path: this.$route.query.path}
-      })
-    },
-    // 点击禁用确认按钮触发
-    through1() {
-      alert(1)
-    },
-    // 点击删除确认按钮触发
-    through2() {
-      alert(1)
-    },
     // 查询所有班次方案
     selectClassesAll() {
       var _this = this;
@@ -201,28 +186,25 @@ export default {
       }).then((response) => {
         console.log("查询所有班次方案");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询部门职位有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询所有班次方案失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -243,27 +225,25 @@ export default {
       }).then((response) => {
         console.log("查询所有班次方案");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.tableData = response.data.data.info.records;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询部门职位有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询所有班次方案失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -281,36 +261,33 @@ export default {
       }).then((response) => {
         console.log("查询班次方案状态");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            // 等于1则为禁用，则可以删除
-            if (response.data.data.info[0].classesState === 1) {
-              window.setTimeout(this.deleteClasses, 500);
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              // 等于1则为禁用，则可以删除
+              if (response.data.data.info[0].classesState === 1) {
+                window.setTimeout(this.deleteClasses, 500);
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "当前方案正在启用，无法进行删除操作",
+                  offset: 100,
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
             } else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
-                message: "当前方案正在启用，无法进行删除操作",
+                message: "查询班次方案状态失败",
                 offset: 100,
               })
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询方案状态有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -326,41 +303,38 @@ export default {
       }).then((response) => {
         console.log("查询所有班次方案");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            this.op = 0;
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              // 循环如果状态有为0的则为目前有启用的方案
-              if (response.data.data.info[i].classesState === 1 && response.data.data.info[i].classesState !== 0) {
-              } else if (response.data.data.info[i].classesState === 0) {
-                this.op = 1;
-              } else {
-                ElNotification.warning({
-                  title: '提示',
-                  message: "班次方案状态数据有误！请联系管理员",
-                  offset: 100,
-                })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.op = 0;
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                // 循环如果状态有为0的则为目前有启用的方案
+                if (response.data.data.info[i].classesState === 1 && response.data.data.info[i].classesState !== 0) {
+                } else if (response.data.data.info[i].classesState === 0) {
+                  this.op = 1;
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "班次方案状态数据有误",
+                    offset: 100,
+                  })
+                }
               }
+              window.setTimeout(this.updateClassesState, 500);
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询所有班次方案有误",
+                offset: 100,
+              })
             }
-            window.setTimeout(this.updateClassesState, 500);
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询方案状态有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -385,34 +359,31 @@ export default {
         }).then((response) => {
           console.log("修改班次方案状态(启用)");
           console.log(response);
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state === 200) {
-              if (response.data.data.info === 1) {
-                ElMessage({
-                  showClose: true,
-                  message: '启用成功',
-                  type: 'success',
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === 1) {
+                  ElMessage({
+                    showClose: true,
+                    message: '启用成功',
+                    type: 'success',
+                  })
+                  this.selectClassesAll();
+                }
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "修改班次方案状态（启用）失败",
+                  offset: 100,
                 })
-                this.selectClassesAll();
               }
-            } else {
-              ElNotification.warning({
-                title: '提示',
-                message: "修改班次方案状态有误，请联系管理员",
-                offset: 100,
-              })
             }
           } else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.message,
               offset: 100,
             })
           }
@@ -431,34 +402,31 @@ export default {
       }).then((response) => {
         console.log("修改班次方案状态(禁用)");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            if (response.data.data.info === 1) {
-              ElMessage({
-                showClose: true,
-                message: '禁用成功',
-                type: 'success',
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '禁用成功',
+                  type: 'success',
+                })
+                this.selectClassesAll();
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "修改班次方案状态（禁用）失败",
+                offset: 100,
               })
-              this.selectClassesAll();
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "修改班次方案状态有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -476,34 +444,31 @@ export default {
       }).then((response) => {
         console.log("删除班次方案");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state === 200) {
-            if (response.data.data.info === 1) {
-              ElMessage({
-                showClose: true,
-                message: '删除成功',
-                type: 'success',
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.selectClassesAll();
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "删除班次方案失败",
+                offset: 100,
               })
-              this.selectClassesAll();
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "删除班次方案有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -511,6 +476,8 @@ export default {
     }
   },
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 查询所有班次方案
     this.selectClassesAll();
   },
