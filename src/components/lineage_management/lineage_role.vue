@@ -8,13 +8,13 @@
           <el-form style="margin-top: 20px;" :inline="true">
             <!-- 角色名册搜索 -->
             <el-form-item class="form-name" label="角色名称">
-              <el-input size="small" v-model="roleName" placeholder="请输入角色名称关键字" clearable
+              <el-input size="small" v-model="roleName" placeholder="请输入角色名称" clearable
                         style="width: 150px"></el-input>
             </el-form-item>
 
             <!-- 权限字符搜索 -->
             <el-form-item class="form-jurisdiction" label="角色描述">
-              <el-input size="small" v-model="roleDescribe" placeholder="请输入角色描述关键字" clearable
+              <el-input size="small" v-model="roleDescribe" placeholder="请输入角色描述" clearable
                         style="width: 150px"></el-input>
             </el-form-item>
 
