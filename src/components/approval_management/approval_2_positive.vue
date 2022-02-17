@@ -545,7 +545,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询待审批转正数据有误",
+                message: "查询待审批转正数据失败",
                 offset: 100,
               })
             }
@@ -591,7 +591,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询待审批转正数据有误",
+                message: "查询待审批转正数据失败",
                 offset: 100,
               })
             }
@@ -641,7 +641,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "",
+                message: "查询已办审批转正数据失败",
                 offset: 100,
               })
             }
@@ -687,7 +687,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "",
+                message: "查询已办审批转正数据失败",
                 offset: 100,
               })
             }
@@ -729,7 +729,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询已审批转正数据详情有误",
+                message: "查询已审批转正数据详情失败",
                 offset: 100,
               })
             }
@@ -889,7 +889,7 @@ export default {
                 this.add_pass_remark1 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '操作失败',
@@ -965,7 +965,7 @@ export default {
                 this.add_pass_remark2 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+              } else if (response.data.data.state === 200 && response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '操作失败',
@@ -1040,7 +1040,7 @@ export default {
                 this.add_reject_remark1 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '驳回失败，数据有误，请联系管理员',
@@ -1114,7 +1114,7 @@ export default {
                 this.add_reject_remark2 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '驳回失败，数据有误，请联系管理员',
@@ -1172,7 +1172,7 @@ export default {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
-              if (response.data.data.state === 200 && response.data.data.info === 666) {
+              if (response.data.data.info === 666) {
                 ElMessage({
                   showClose: true,
                   message: '驳回成功',
@@ -1183,7 +1183,7 @@ export default {
                 this.add_reject_remark1 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '驳回失败，数据有误，请联系管理员',
