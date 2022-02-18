@@ -447,7 +447,7 @@ export default {
         method: 'post',
         url: this.url + 'revocation',
         data: {
-          auditflowId: this.auditflowId,
+          auditFlowId: this.auditflowId,
         }
       }).then((response) => {
         console.log("撤销审批成功")
@@ -462,6 +462,10 @@ export default {
                   message: "撤销成功",
                   type: 'success',
                 })
+              // 查询我的调动审批申请 待处理
+              this.selectMyWorker();
+              // 查询总裁
+              this.selectpresident();
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({

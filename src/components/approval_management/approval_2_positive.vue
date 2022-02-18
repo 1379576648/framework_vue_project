@@ -1137,6 +1137,8 @@ export default {
                 message: "",
                 offset: 100,
               })
+              this.add_reject_remark2 = false;
+              this.remark = "";
             }
           }
         } else {
@@ -1145,6 +1147,8 @@ export default {
             message: response.data.message,
             offset: 100,
           })
+          this.add_reject_remark2 = false;
+          this.remark = "";
         }
       })
     },
@@ -1180,7 +1184,7 @@ export default {
                 })
                 this.selectWorkerlAll();
                 this.selectEndWorkerlAll();
-                this.add_reject_remark1 = false;
+                this.add_reject_remark3 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
               } else if (response.data.data.info === "999") {
