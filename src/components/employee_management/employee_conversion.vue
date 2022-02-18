@@ -90,9 +90,9 @@
           </el-table>
         </div>
 
-
+          <br/>
         <!-- 分页插件 -->
-        <div class="demo-pagination-block">
+        <div class="demo-pagination-block" style="margin-left: 25px;margin-bottom: 20px">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
               :page-sizes="[4, 5, 10, 50]"
@@ -592,12 +592,6 @@ export default defineComponent({
 
 /deep/ .icon-p p {
   text-align: center;
-}
-
-/* 分页的样式 */
-/deep/ .demo-pagination-block {
-  float: right;
-  margin: 20px;
 }
 
 </style>

@@ -3,17 +3,11 @@
   <!--  出差查询页面-->
   <div class="w">
     <div class="head">
-      <el-button size="medium">
+      <el-button size="medium" @click="derive()">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
         导出
-      </el-button>
-      <el-button size="medium">
-        <el-icon style="font-size: 18px">
-          <i-folder-opened/>
-        </el-icon>
-        导入
       </el-button>
       <!--选择开始日期和结束日期-->
       <el-date-picker
@@ -24,7 +18,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :shortcuts="shortcuts"
-          style="margin-left: 340px"
+          style="margin-left: 10px"
       >
       </el-date-picker>
       &nbsp;
@@ -44,8 +38,49 @@
         <el-table-column prop="travelActualTime" label="实际开始时间"/>
         <el-table-column prop="travelActualOvertime" label="实际结束时间"/>
         <el-table-column prop="travelActualTokinaga" label="实际时长"/>
+        <el-table-column label="出差状态">
+          <template #default="scope">
+            <span v-if="scope.row.travelCondition===0">未开始</span>
+            <span v-if="scope.row.travelCondition===1">进行中</span>
+            <span v-if="scope.row.travelCondition===2">已完成</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定开始出差吗?"
+                @confirm=beginTravel(travelId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(travelId=scope.row.travelId,
+                           travelActualTime=scope.row.travelActualTime,
+                           travelCondition=scope.row.travelCondition)"
+                >开始加班
+                </el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定结束出差吗?"
+                @confirm=EndTravel(travelId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(travelId=scope.row.travelId,
+                           travelActualTime=scope.row.travelActualTime,
+                           travelActualOvertime=scope.row.travelActualOvertime)"
+                >结束加班
+                </el-button>
+              </template>
+            </el-popconfirm>
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -87,7 +122,8 @@
 
 <script>
 import {ref, defineComponent} from "vue";
-import {ElMessage, ElNotification} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+import {export_json_to_excel} from "../../excal/Export2Excel";
 
 export default {
   data() {
@@ -140,6 +176,51 @@ export default {
     };
   },
   methods: {
+    // 点击导出操作
+    derive() {
+      ElMessageBox.confirm(
+          '此操作将导出excel文件, 是否继续?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.deriveExcel();
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    // 导出方法
+    deriveExcel() {
+      var _this = this;
+      let tHeader = ["申请人", "发起人部门", "出差地点", "出差事由", "计划开始时间", "计划结束时间", "计划时长", "实际开始时间", "实际结束时间", "实际时长",]; // 导出的表头名
+      let filterVal = ["staffName", "deptName", "travelPlace", "travelMatter", "travelSDate", "travelEDate", "travelTotalDate", "travelActualTime", "travelActualOvertime", "travelActualTokinaga"];//导出其prop属性
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      }).then(({value}) => {
+        let data = _this.formatJson(filterVal, _this.tableData);
+        export_json_to_excel(tHeader, data, value);
+        ElMessage({
+          type: 'success',
+          message: `生成成功`,
+        })
+      })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '取消成功',
+            })
+          })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
     // 根据员工名称查询出差
     selectEvectionRecordAll() {
       var _this = this;
@@ -161,28 +242,25 @@ export default {
       }).then((response) => {
         console.log("查询出差记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询出差记录有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询出差记录失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -200,41 +278,159 @@ export default {
       }).then((response) => {
         console.log("删除出差记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info = 1) {
-              ElMessage({
-                showClose: true,
-                message: '删除成功',
-                type: 'success',
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.selectEvectionRecordAll();
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "删除出差记录失败",
+                offset: 100,
               })
-              this.selectEvectionRecordAll();
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "删除出差记录有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
       })
     },
+    // 开始出差
+    beginTravel() {
+      if (this.travelCondition === 2) {
+        ElNotification.warning({
+          title: '提示',
+          message: "该出差已完成，不能进行重复操作",
+          offset: 100,
+        })
+      } else if (this.travelActualTime !== null) {
+        ElNotification.warning({
+          title: '提示',
+          message: "已正在进行出差，不能进行重复操作",
+          offset: 100,
+        })
+      } else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateBeginTravel',
+          data: {
+            "travelId": this.travelId,
+          }
+        }).then((response) => {
+          console.log("开始出差");
+          console.log(response);
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "开始出差成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '开始出差成功',
+                    type: 'success',
+                  })
+                  this.selectEvectionRecordAll();
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "开始出差失败",
+                  offset: 100,
+                })
+              }
+            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
+    // 结束加班
+    EndTravel() {
+      if (this.travelActualOvertime !== null) {
+        ElNotification.warning({
+          title: '提示',
+          message: "该出差已完成，不能进行重复操作",
+          offset: 100,
+        })
+      } else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateEndTravel',
+          data: {
+            "travelId": this.travelId,
+            "travelActualTime": this.travelActualTime,
+          }
+        }).then((response) => {
+          console.log("结束出差");
+          console.log(response);
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "结束出差成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '结束出差成功',
+                    type: 'success',
+                  })
+                  this.selectEvectionRecordAll();
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "结束出差失败",
+                  offset: 100,
+                })
+              }
+            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
+          }
+        })
+      }
+    },
   },
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 根据员工名称查询出差
     this.selectEvectionRecordAll();
   },

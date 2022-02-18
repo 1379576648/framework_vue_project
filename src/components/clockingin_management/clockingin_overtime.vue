@@ -10,19 +10,6 @@
         导出
       </el-button>
       &nbsp;
-      <el-upload
-          action=""
-          style="display: inline-block"
-          :show-file-list="false"
-          accept="xlsx"
-      >
-        <el-button size="medium">
-          <el-icon style="font-size: 18px">
-            <i-folder-opened/>
-          </el-icon>
-          导入
-        </el-button>
-      </el-upload>
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="selectTime"
@@ -32,7 +19,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :shortcuts="shortcuts"
-          style="margin-left: 340px"
+          style="margin-left: 0px"
       >
       </el-date-picker>
       &nbsp;
@@ -52,14 +39,13 @@
         <el-table-column prop="overtimeaskActualOvertime" label="实际结束时间"/>
         <el-table-column prop="overtimeaskActualTokinaga" label="实际总小时"/>
         <el-table-column label="加班状态">
-        <template #default="scope">
-          <span v-if="scope.row.overtimeaskCondition===0">未开始</span>
-          <span v-if="scope.row.overtimeaskCondition===1">进行中</span>
-          <span v-if="scope.row.overtimeaskCondition===2">已完成</span>
-        </template>
+          <template #default="scope">
+            <span v-if="scope.row.overtimeaskCondition===0">未开始</span>
+            <span v-if="scope.row.overtimeaskCondition===1">进行中</span>
+            <span v-if="scope.row.overtimeaskCondition===2">已完成</span>
+          </template>
         </el-table-column>
         <el-table-column prop="operate" label="操作">
-
           <template #default="scope">
             <el-popconfirm
                 confirm-button-text="确定"
@@ -71,7 +57,9 @@
             >
               <template #reference>
                 <el-button type="text" size="small" style="color:darkorange"
-                           @click="(overtimeaskId=scope.row.overtimeaskId,overtimeaskActualTime=scope.row.overtimeaskActualTime)"
+                           @click="(overtimeaskId=scope.row.overtimeaskId,
+                           overtimeaskActualTime=scope.row.overtimeaskActualTime,
+                           overtimeaskActualOvertime=scope.row.overtimeaskActualOvertime)"
                 >开始加班
                 </el-button>
               </template>
@@ -87,7 +75,8 @@
               <template #reference>
                 <el-button type="text" size="small" style="color:darkorange"
                            @click="(overtimeaskId=scope.row.overtimeaskId,
-                           overtimeaskActualTime=scope.row.overtimeaskActualTime)"
+                           overtimeaskActualTime=scope.row.overtimeaskActualTime,
+                           overtimeaskActualOvertime=scope.row.overtimeaskActualOvertime)"
                 >结束加班
                 </el-button>
               </template>
@@ -149,6 +138,8 @@ export default {
     return {
       //访问路径
       url: "http://localhost:80/",
+      // 导入地址
+      url1: "http://localhost:80/importOverTimeRecord/",
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
       pageInfo: {
@@ -239,64 +230,6 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
-    // 导入方法
-    channel(obj) {
-      let _this = this;
-      // 通过DOM取文件数据
-      this.file = obj.raw;
-      var rABS = false; //是否将文件读取为二进制字符串
-      var f = this.file;
-      var reader = new FileReader();
-      FileReader.prototype.readAsBinaryString = function (f) {
-        var binary = "";
-        var rABS = false; //是否将文件读取为二进制字符串
-        var pt = this;
-        var wb; //读取完成的数据
-        var outdata;
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          var bytes = new Uint8Array(reader.result);
-          var length = bytes.byteLength;
-          for (var i = 0; i < length; i++) {
-            binary += String.fromCharCode(bytes[i]);
-          }
-          if (rABS) {
-            wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
-              type: 'base64'
-            });
-          } else {
-            wb = XLSX.read(binary, {
-              type: 'binary'
-            });
-          }
-          // outdata就是你想要的东西 excel导入的数据
-          outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-          // excel 数据再处理
-          let arr = []
-          outdata.map(v => {
-            let obj = {}
-            obj.staffName = v.申请人
-            obj.deptName = v.发起人部门
-            obj.overtimeaskType = v.加班类型
-            obj.overtimeaskMatter = v.加班事由
-            obj.overtimeaskSDate = v.计划开始时间
-            obj.overtimeaskEDate = v.计划结束时间
-            obj.overtimeaskTotalDate = v.计划总小时
-            obj.overtimeaskActualTime = v.实际开始时间
-            obj.overtimeaskActualOvertime = v.实际结束时间
-            obj.overtimeaskActualTokinaga = v.实际总小时
-            arr.push(obj)
-            _this.tableData.push(obj)
-          })
-        }
-        reader.readAsArrayBuffer(f);
-      }
-      if (rABS) {
-        reader.readAsArrayBuffer(f);
-      } else {
-        reader.readAsBinaryString(f);
-      }
-    },
     // 根据员工名称查询打卡记录
     selectOverTimeRecordAll() {
       var _this = this;
@@ -318,28 +251,25 @@ export default {
       }).then((response) => {
         console.log("查询加班记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询加班记录有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询加班记录失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -357,34 +287,31 @@ export default {
       }).then((response) => {
         console.log("删除加班记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info == 1) {
-              ElMessage({
-                showClose: true,
-                message: '删除成功',
-                type: 'success',
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info === 1) {
+                ElMessage({
+                  showClose: true,
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+                this.selectOverTimeRecordAll();
+              }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "删除加班记录失败",
+                offset: 100,
               })
-              this.selectOverTimeRecordAll();
             }
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "删除加班记录有误，请联系管理员",
-              offset: 100,
-            })
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -392,13 +319,19 @@ export default {
     },
     // 开始加班
     beginOverTime() {
-      if (this.overtimeaskActualTime !== null){
+      if (this.overtimeaskCondition === 2) {
+        ElNotification.warning({
+          title: '提示',
+          message: "该加班已完成，不能进行重复操作",
+          offset: 100,
+        })
+      } else if (this.overtimeaskActualTime !== null) {
         ElNotification.warning({
           title: '提示',
           message: "已正在进行加班，不能进行重复操作",
           offset: 100,
         })
-      }else {
+      } else {
         var _this = this;
         this.axios({
           method: 'post',
@@ -409,40 +342,37 @@ export default {
         }).then((response) => {
           console.log("开始加班");
           console.log(response);
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              if (response.data.data.info == "开始加班成功") {
-                ElMessage({
-                  showClose: true,
-                  message: '开始加班成功',
-                  type: 'success',
-                })
-                this.selectOverTimeRecordAll();
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "开始加班成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '开始加班成功',
+                    type: 'success',
+                  })
+                  this.selectOverTimeRecordAll();
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
               } else {
-                ElNotification.warning({
+                ElNotification.error({
                   title: '提示',
-                  message: response.data.data.info,
+                  message: "开始加班失败",
                   offset: 100,
                 })
               }
-            } else {
-              ElNotification.warning({
-                title: '提示',
-                message: "开始加班数据有误，请联系管理员",
-                offset: 100,
-              })
             }
           } else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.message,
               offset: 100,
             })
           }
@@ -451,58 +381,55 @@ export default {
     },
     // 结束加班
     EndOverTime() {
-      if (this.overtimeaskActualOvertime !== undefined) {
+      if (this.overtimeaskActualOvertime !== null) {
         ElNotification.warning({
           title: '提示',
-          message: "加班已完成，不能进行重复操作",
+          message: "该加班已完成，不能进行重复操作",
           offset: 100,
         })
-      }else {
+      } else {
         var _this = this;
         this.axios({
           method: 'post',
           url: this.url + 'updateEndOverTime',
           data: {
             "overtimeaskId": this.overtimeaskId,
-            "overtimeaskActualTime":this.overtimeaskActualTime,
+            "overtimeaskActualTime": this.overtimeaskActualTime,
           }
         }).then((response) => {
           console.log("结束加班");
           console.log(response);
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              if (response.data.data.info == "结束加班成功") {
-                ElMessage({
-                  showClose: true,
-                  message: '结束加班成功',
-                  type: 'success',
-                })
-                this.selectOverTimeRecordAll();
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "结束加班成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '结束加班成功',
+                    type: 'success',
+                  })
+                  this.selectOverTimeRecordAll();
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
               } else {
-                ElNotification.warning({
+                ElNotification.error({
                   title: '提示',
-                  message: response.data.data.info,
+                  message: "结束加班失败",
                   offset: 100,
                 })
               }
-            } else {
-              ElNotification.warning({
-                title: '提示',
-                message: "结束加班数据有误，请联系管理员",
-                offset: 100,
-              })
             }
           } else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.message,
               offset: 100,
             })
           }
@@ -511,6 +438,8 @@ export default {
     },
   },
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 根据员工名称查询打卡记录
     this.selectOverTimeRecordAll();
 

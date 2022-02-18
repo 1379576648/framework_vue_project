@@ -56,10 +56,9 @@
   <!--表格-->
   <div class="bottom">
     <el-table :data="tableData" stripe border style="width: 100%;" height="297">
-      <el-table-column prop="A" fixed label="序号" width="60"/>
-      <el-table-column prop="B" fixed label="名称" width="100"/>
-      <el-table-column prop="C" fixed label="部门" width="100"/>
-      <el-table-column prop="q" label="6/1"/>
+      <el-table-column prop="staffName" fixed label="员工名称" width="100"/>
+      <el-table-column prop="deptName" fixed label="员工部门" width="100"/>
+      <el-table-column prop="q" label="2/1"/>
       <el-table-column prop="w" label="6/2"/>
       <el-table-column prop="w" label="6/3"/>
       <el-table-column prop="w" label="6/4"/>
@@ -119,54 +118,11 @@ export default {
       select: "",
       tableData: [
         {
-          A: "1",
-          B: "王鑫",
-          C: "人事部",
+          staffName: "王鑫",
+          deptName: "人事部",
           q: "迟到",
           w: "√",
         },
-        {
-          A: "2",
-          B: "王鑫",
-          C: "人事部",
-          q: "迟到",
-          w: "√",
-        },
-        {
-          A: "2",
-          B: "王鑫",
-          C: "人事部",
-          q: "迟到",
-          w: "√",
-        },
-        {
-          A: "2",
-          B: "王鑫",
-          C: "人事部",
-          q: "迟到",
-          w: "√",
-        },
-        {
-          A: "2",
-          B: "王鑫",
-          C: "人事部",
-          q: "迟到",
-          w: "√",
-        }, {
-          A: "2",
-          B: "王鑫",
-          C: "人事部",
-          q: "迟到",
-          w: "√",
-        }, {
-          A: "2",
-          B: "王鑫",
-          C: "人事部",
-          q: "迟到",
-          w: "√",
-        },
-
-
       ],
       pageInfo: {
         currenPage: 1,
