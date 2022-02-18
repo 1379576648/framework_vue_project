@@ -1225,7 +1225,7 @@ export default {
                 this.selectAuditflow();
                 // 查询已处理的加班审批
                 this.selectEndAuditflow();
-                this.add_reject_remark1 = false;
+                this.add_reject_remark3 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
               } else if (response.data.data.info === "999") {
@@ -1234,7 +1234,7 @@ export default {
                   message: '驳回失败,数据有误，请联系管理员',
                   type: 'success',
                 })
-                this.add_reject_remark1 = false;
+                this.add_reject_remark3 = false;
                 this.remark = "";
 
               } else {
@@ -1243,7 +1243,7 @@ export default {
                   message: "数据有误",
                   offset: 100,
                 })
-                this.add_reject_remark1 = false;
+                this.add_reject_remark3 = false;
                 this.remark = "";
               }
             }else {
@@ -1252,7 +1252,7 @@ export default {
                 message: "驳回该审批失败",
                 offset: 100,
               })
-              this.add_reject_remark1 = false;
+              this.add_reject_remark3 = false;
               this.remark = "";
             }
           }
@@ -1262,7 +1262,7 @@ export default {
             message: response.data.message,
             offset: 100,
           })
-          this.add_reject_remark1 = false;
+          this.add_reject_remark3 = false;
           this.remark = "";
         }
       })
