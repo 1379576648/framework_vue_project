@@ -74,10 +74,10 @@
               <!-- 全选操作按钮 -->
               <el-table-column type="selection" min-width="70"/>
               <el-table-column fixed :index="indexMethod_one" align="center" label="序号" type="index" min-width="100"/>
-              <el-table-column prop="staff.staffName" label="用户名称" align="center" min-width="150"/>
-              <el-table-column prop="staff.staffEmail" label="邮箱" align="center" width="200"/>
-              <el-table-column prop="staff.staffPhone" label="手机号码" align="center" min-width="150"/>
-              <el-table-column prop="staff.staffState" label="状态" align="center" min-width="100">
+              <el-table-column prop="staff.staffName" label="用户名称" sortable align="center" min-width="150"/>
+              <el-table-column prop="staff.staffEmail" label="邮箱" sortable align="center" width="200"/>
+              <el-table-column prop="staff.staffPhone" label="手机号码" sortable align="center" min-width="150"/>
+              <el-table-column prop="staff.staffState" label="状态" sortable align="center" min-width="100">
                 <template #default="scope">
                   <span v-if="scope.row.staff.staffState==0">试用</span>
                   <span v-else-if="scope.row.staff.staffState==1">正式</span>
@@ -85,7 +85,7 @@
                   <span v-else>未知</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="createdTime" label="创建时间" align="center" min-width="150"/>
+              <el-table-column prop="createdTime" label="入职时间" sortable align="center" min-width="150"/>
               <el-table-column align="center" label="操作" width="200">
                 <template #default="scope">
                   <span class="cancel" @click="cancelImpower(scope.row.roleStaffId)" style="cursor: pointer">
@@ -161,10 +161,10 @@
                     <!-- 全选操作按钮 -->
                     <el-table-column type="selection" width="50"/>
                     <el-table-column fixed :index="indexMethod_two" align="center" label="序号" type="index" width="50"/>
-                    <el-table-column prop="staffName" align="center" label="用户名称" width="150"/>
-                    <el-table-column prop="staffEmail" align="center" label="邮箱" width="180"/>
-                    <el-table-column prop="staffPhone" align="center" label="手机号码" width="140"/>
-                    <el-table-column prop="staffState" align="center" label="状态" width="100">
+                    <el-table-column prop="staffName" align="center" sortable label="用户名称" width="150"/>
+                    <el-table-column prop="staffEmail" align="center" sortable label="邮箱" width="180"/>
+                    <el-table-column prop="staffPhone" align="center" sortable label="手机号码" width="140"/>
+                    <el-table-column prop="staffState" align="center" sortable label="状态" width="100">
                       <template #default="scope">
                         <span v-if="scope.row.staffState==0">试用</span>
                         <span v-else-if="scope.row.staffState==1">正式</span>
@@ -172,7 +172,7 @@
                         <span v-else>未知</span>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="createdTime" align="center" label="入职时间" width="185"/>
+                    <el-table-column prop="createdTime" align="center" sortable label="入职时间" width="185"/>
                   </el-table>
                 </div>
               </el-form-item>

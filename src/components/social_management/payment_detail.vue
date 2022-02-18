@@ -112,15 +112,15 @@
             <!-- 多选框 -->
             <el-table-column type="selection" align="center" width="55"/>
             <el-table-column :index="indexMethod" align="center" label="序号" type="index" width="100"/>
-            <el-table-column prop="insDetailStaffName" align="center" label="姓名" width="100"/>
-            <el-table-column prop="insDetailInsuredName" align="center" label="参保方案" min-width="150"/>
-            <el-table-column prop="insDetailInsuredMonth" align="center" label="社保缴纳月份" width="100"/>
-            <el-table-column prop="insDetailSocialPersonPay" align="center" label="社保个人缴费" width="100"/>
-            <el-table-column prop="insDetailSocialFirmPay" align="center" label="社保企业缴费" width="100"/>
-            <el-table-column prop="insDetailInsuredMonth" align="center" label="积金缴纳月份" width="110"/>
-            <el-table-column prop="insDetailFundPersonPay" align="center" label="积金个人缴费" width="110"
+            <el-table-column prop="insDetailStaffName" sortable align="center" label="姓名" width="100"/>
+            <el-table-column prop="insDetailInsuredName" sortable align="center" label="参保方案" min-width="150"/>
+            <el-table-column prop="insDetailInsuredMonth" sortable align="center" label="社保缴纳月份" width="116"/>
+            <el-table-column prop="insDetailSocialPersonPay" sortable align="center" label="社保个人缴费" width="116"/>
+            <el-table-column prop="insDetailSocialFirmPay" sortable align="center" label="社保企业缴费" width="116"/>
+            <el-table-column prop="insDetailInsuredMonth" sortable align="center" label="积金缴纳月份" width="116"/>
+            <el-table-column prop="insDetailFundPersonPay" sortable align="center" label="积金个人缴费" width="116"
             />
-            <el-table-column prop="insDetailFundFirmPay" align="center" label="积金企业缴费" width="110"/>
+            <el-table-column prop="insDetailFundFirmPay" sortable align="center" label="积金企业缴费" width="116"/>
             <el-table-column align="center" label="操作">
               <template #default="scope">
                 <el-button type="text" size="small" @click="
