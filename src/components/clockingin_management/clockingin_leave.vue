@@ -9,19 +9,6 @@
         导出
       </el-button>
       &nbsp;
-      <el-upload
-          action=""
-          style="display: inline-block"
-          :show-file-list="false"
-          accept="xlsx"
-      >
-        <el-button size="medium" >
-          <el-icon style="font-size: 18px">
-            <i-folder-opened/>
-          </el-icon>
-          导入
-        </el-button>
-      </el-upload>
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="selectTime"
@@ -31,7 +18,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           :shortcuts="shortcuts"
-          style="margin-left: 340px"
+          style="margin-left: 0"
       >
       </el-date-picker>
       &nbsp;
@@ -51,8 +38,48 @@
         <el-table-column prop="leaveActualTime" label="实际开始时间"/>
         <el-table-column prop="leaveActualOvertime" label="实际结束时间"/>
         <el-table-column prop="leaveActualToKinAga" label="实际总小时"/>
+        <el-table-column label="请假状态">
+          <template #default="scope">
+            <span v-if="scope.row.leaveCondition===0">未开始</span>
+            <span v-if="scope.row.leaveCondition===1">进行中</span>
+            <span v-if="scope.row.leaveCondition===2">已完成</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="operate" label="操作">
           <template #default="scope">
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定开始加班吗?"
+                @confirm=beginLeave(leaveId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(leaveId=scope.row.leaveId,
+                           leaveActualTime=scope.row.leaveActualTime)"
+                >开始加班
+                </el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定结束加班吗?"
+                @confirm=EndLeave(leaveId)
+            >
+              <template #reference>
+                <el-button type="text" size="small" style="color:darkorange"
+                           @click="(leaveId=scope.row.leaveId,
+                           leaveActualTime=scope.row.leaveActualTime,
+                           leaveActualOvertime=scope.row.leaveActualOvertime)"
+                >结束加班
+                </el-button>
+              </template>
+            </el-popconfirm>
             <el-popconfirm
                 confirm-button-text="确定"
                 cancel-button-text="取消"
@@ -190,28 +217,25 @@ export default {
       }).then((response) => {
         console.log("查询请假记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.total = response.data.data.info.total;
-          } else {
-            ElNotification.warning({
-              title: '提示',
-              message: "查询请假记录有误，请联系管理员",
-              offset: 100,
-            })
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询请假记录失败",
+                offset: 100,
+              })
+            }
           }
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
-            message: "服务发生雪崩",
+            message: response.data.message,
             offset: 100,
           })
         }
@@ -229,61 +253,159 @@ export default {
       }).then((response) => {
         console.log("删除请假记录");
         console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info=1){
+                ElMessage({
+                  showClose: true,
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.selectLeaveRecordAll();
+                this.$store.commit("updateToken", response.data.data.token);
+              }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "",
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            if (response.data.data.info=1){
-              ElMessage({
-                showClose: true,
-                message: '删除成功',
-                type: 'success',
-              })
-              this.selectLeaveRecordAll();
+        }
+      })
+    },
+    // 开始加班
+    beginLeave() {
+      if (this.leaveCondition === 2) {
+        ElNotification.warning({
+          title: '提示',
+          message: "该请假已完成，不能进行重复操作",
+          offset: 100,
+        })
+      } else if (this.leaveActualTime !== null) {
+        ElNotification.warning({
+          title: '提示',
+          message: "已正在进行请假，不能进行重复操作",
+          offset: 100,
+        })
+      } else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateBeginLeave',
+          data: {
+            "leaveId": this.leaveId,
+          }
+        }).then((response) => {
+          console.log("开始请假");
+          console.log(response);
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "开始加班成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '开始请假成功',
+                    type: 'success',
+                  })
+                  this.selectLeaveRecordAll();
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "开始请假失败",
+                  offset: 100,
+                })
+              }
             }
           } else {
-            ElNotification.warning({
+            ElNotification.error({
               title: '提示',
-              message: "删除请假记录有误，请联系管理员",
+              message: response.data.message,
               offset: 100,
             })
           }
-        } else {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生雪崩",
-            offset: 100,
-          })
-        }
-      })
-    },
-    async onChange (file) {
-      let dataBinary = await readFile(file.raw)
-      let workBook = XLSX.read(dataBinary, {type: 'binary', cellDates: true})
-      let workSheet = workBook.Sheets[workBook.SheetNames[0]]
-      const data = XLSX.utils.sheet_to_json(workSheet)
-      this.teacher1 = data
-      this.axios({
-        method: 'post',
-        url: this.url + 'xlsx_two',
-        data: {
-          "leave":this.teacher1,
-        }
-      }).then((response) => {
-        //提示
-        this.$message({
-          type: 'success',
-          message: '上传成功!'
         })
-      })
+      }
+    },
+    // 结束请假
+    EndLeave() {
+      if (this.leaveActualOvertime !== null) {
+        ElNotification.warning({
+          title: '提示',
+          message: "该请假已完成，不能进行重复操作",
+          offset: 100,
+        })
+      } else {
+        var _this = this;
+        this.axios({
+          method: 'post',
+          url: this.url + 'updateEndLeave',
+          data: {
+            "leaveId": this.leaveId,
+            "leaveActualTime": this.leaveActualTime,
+          }
+        }).then((response) => {
+          console.log("结束请假");
+          console.log(response);
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info === "结束请假成功") {
+                  ElMessage({
+                    showClose: true,
+                    message: '结束请假成功',
+                    type: 'success',
+                  })
+                  this.selectLeaveRecordAll();
+                } else {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: response.data.data.info,
+                    offset: 100,
+                  })
+                }
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: "结束请假失败",
+                  offset: 100,
+                })
+              }
+            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
+          }
+        })
+      }
     },
   },
   created() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     // 根据员工名称查询请假
     this.selectLeaveRecordAll();
   },

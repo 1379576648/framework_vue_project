@@ -8,12 +8,12 @@
           <el-form :inline="true">
             <!-- 登录地址搜索 -->
             <el-form-item class="form-dizhi" label="登录地址">
-              <el-input size="small" v-model="registerLogIpname" clearable placeholder="请输入登录地址关键字"></el-input>
+              <el-input size="small" v-model="registerLogIpname" clearable placeholder="请输入登录地址"></el-input>
             </el-form-item>
 
             <!-- 用户名称搜索 -->
             <el-form-item class="form-name" label="用户名称">
-              <el-input size="small" v-model="registerLogPeople" clearable placeholder="请输入用户名称关键字"></el-input>
+              <el-input size="small" v-model="registerLogPeople" clearable placeholder="请输入用户名称"></el-input>
             </el-form-item>
 
             <!-- 登录状态搜索 -->

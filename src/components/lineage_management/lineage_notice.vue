@@ -10,11 +10,11 @@
           <el-form style="margin-bottom: -18px;" :inline="true">
             <!-- 公告标题搜索 -->
             <el-form-item class="form-gg" label="公告标题">
-              <el-input size="small" placeholder="请输入公告标题关键字" clearable v-model="noticeTitle"></el-input>
+              <el-input size="small" placeholder="请输入公告标题" clearable v-model="noticeTitle"></el-input>
             </el-form-item>
             <!-- 操作人员搜索 -->
             <el-form-item class="form-ry" label="发布人">
-              <el-input size="small" placeholder="请输入发布人关键字" clearable v-model="noticePeople"></el-input>
+              <el-input size="small" placeholder="请输入发布人" clearable v-model="noticePeople"></el-input>
             </el-form-item>
             <!-- 公告类型搜索 -->
             <el-form-item class="form-lx" label="类型">
