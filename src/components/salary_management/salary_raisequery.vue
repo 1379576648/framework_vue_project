@@ -46,20 +46,23 @@
       </el-table-column>
     </el-table>
     <!-- 分页插件 -->
-    <div class="demo-pagination-block">
-      <el-pagination
-          v-model:currentPage="pageInfo.currentPage"
-          :page-sizes="[3, 5, 10, 50]"
-          v-model:page-size="pageInfo.pagesize"
-          :default-page-size="pageInfo.pagesize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pageInfo.total"
-          :pager-count="5"
-          background
-      >
-        <!--  @size-change="selectUsers" @current-change="selectUsers" -->
-      </el-pagination>
-    </div>
+  <div class="demo-pagination-block">
+    <el-pagination
+        v-model:currentPage="pageInfo.currentPage"
+        :page-sizes="[4, 5, 10, 50]"
+        v-model:page-size="pageInfo.pagesize"
+        :default-page-size="pageInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pageInfo.total"
+        :pager-count="5"
+        prev-text="上一页"
+        next-text="下一页"
+        @size-change="selectSalary()"
+        @current-change="selectSalary()"
+        background
+    >
+    </el-pagination>
+  </div>
 </template>
 
 <script>
