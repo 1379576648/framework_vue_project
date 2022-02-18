@@ -3,7 +3,7 @@
     <div class="j-card j-card-bordered mainContent">
 
       <div class="j-card-body">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-left: 20px;">
           <el-tab-pane  name="book" label="固定工资">
             <salary_regularearn />
           </el-tab-pane>
