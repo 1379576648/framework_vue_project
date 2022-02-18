@@ -1355,13 +1355,11 @@
 
 <script lang="js">
 
-import VDistpicker from 'v-distpicker'
 import {defineComponent, reactive, ref, toRefs} from "vue";
 import {ElMessage, ElNotification} from "element-plus";
 import {CodeToText, regionData} from "element-china-area-data"; //地址选择器导入
 
 export default defineComponent({
-  components: {VDistpicker},
   data() {
     return {
       // 地址选择器 值
