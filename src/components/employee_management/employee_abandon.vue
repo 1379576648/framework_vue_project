@@ -24,6 +24,7 @@
 	  <el-table-column prop="waiveReason" label="放弃原因" width="" />
 
     </el-table>
+    <br/>
     <!-- 分页插件 -->
     <div class="demo-pagination-block">
       <el-pagination
@@ -130,11 +131,6 @@ export default {
   text-align: center;
   color: black;
   font-size: 12px
-}
-/* 分页的样式 */
-/deep/.demo-pagination-block {
-  float: right;
-  margin: 20px;
 }
 
 </style>

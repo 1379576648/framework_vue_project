@@ -89,6 +89,7 @@
     </el-table-column>
   </el-table>
 </div>
+  <br/>
   <!-- 分页插件 -->
   <div class="demo-pagination-block">
     <el-pagination
@@ -360,10 +361,5 @@ export default {
 }
 /deep/.icon-p p{
   text-align: center;
-}
-/* 分页的样式 */
-/deep/.demo-pagination-block {
-  float: right;
-  margin: 20px;
 }
 </style>
