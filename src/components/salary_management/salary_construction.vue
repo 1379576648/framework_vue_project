@@ -7,10 +7,14 @@
         <!--选择部门的下拉框-->
         <el-form>
           <el-form-item label="1、选择一个部门：" prop="dept">
-            <el-select v-model="ruleForm.dept" placeholder="请选择部门" style="width:240px;">
-              <el-option label="销售部" value="销售部" style="margin-left: 20px;"></el-option>
-              <el-option label="研发部" value="研发部" style="margin-left: 20px;"></el-option>
-              <el-option label="总裁办" value="总裁办" style="margin-left: 20px;"></el-option>
+            <el-select v-model="ruleForm.dept" placeholder="请选择" style="width: 239px;">
+              <el-option  style="margin-left: 20px;"
+                          v-for="item in dept_name"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -48,6 +52,7 @@
                 <h3 style="margin-left: 20px;">固定工资</h3>
                 <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
                 <span @click="
+                this.$parent.$data.one=this.ruleForm.dept,
               this.$parent.$data.salary_checkwage=false,
               this.$parent.$data.regular=true,
               this.$parent.$data.callbackpay=false,
@@ -63,7 +68,7 @@
             <el-collapse-item name="3" disabled>
               <template #title>
                 <h3 style="margin-left: 20px;">加班工资</h3>
-                <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
+                <span class="span_1_zhe">【加项】针对员工工作日、休息日、节假日加班工资，可设置加班工资方案
                   <span
                       @click="
                       this.$parent.$data.salary_checkwage=false,
@@ -82,7 +87,7 @@
             <el-collapse-item title="Efficiency" name="4" disabled>
               <template #title>
                 <h3 style="margin-left: 20px;">考勤扣款</h3>
-                <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
+                <span class="span_1_zhe">【加项】该部分工资，系统根据考勤扣款方案自动核算数据，可针对每项设置扣款方案
                   <span
                       @click="
                        this.$parent.$data.salary_checkwage=false,
@@ -101,7 +106,7 @@
             <el-collapse-item title="Efficiency" name="5" disabled>
               <template #title>
                 <h3 style="margin-left: 20px;">出差工资</h3>
-                <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
+                <span class="span_1_zhe">【加项】针对员工出差，计算工资
                   <span
                       @click="
                         this.$parent.$data.salary_checkwage=false,
@@ -120,7 +125,7 @@
             <el-collapse-item title="Efficiency" name="5" disabled>
               <template #title>
                 <h3 style="margin-left: 20px;">社保管理</h3>
-                <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
+                <span class="span_1_zhe">【加项】针对员工社保缴纳，在自主社保模块设置数据
                   <span
                       @click="
                         this.$parent.$data.salary_checkwage=false,
@@ -138,7 +143,7 @@
             <el-collapse-item title="Efficiency" name="5" disabled>
               <template #title>
                 <h3 style="margin-left: 20px;">公积金</h3>
-                <span class="span_1_zhe">【加项】针对员工定薪、调薪等，可设置固定工资方案
+                <span class="span_1_zhe">【加项】针对员工公积金缴纳，在自主社保模块设置数据
                   <span
                       @click="
                         this.$parent.$data.salary_checkwage=false,
@@ -166,18 +171,65 @@ import {
   defineComponent,
   ref
 } from 'vue'
+import {ElNotification} from "element-plus";
 
 export default defineComponent({
 
   data() {
     return {
+      //请求的路径
+      url: "http://localhost:80/",
+      one:'',
       checkList: '',
       activeNames: '',
       ruleForm: {
         dept: '',
-      }
-
+      },
+      dept_name:[],
     }
+  },
+  methods:{
+    //查询部门名称
+    selectSect() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectSect',
+        data: {
+          //staffId:this.tableData.staffId,
+        }
+      }).then((response) => {
+        console.log("查询部门名称成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.dept_name = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.dept_name.push({
+                value: response.data.data.info[i].deptName,
+                label: response.data.data.info[i].deptName
+              })
+            }
+
+          }
+        }
+      })
+    },
+  },
+  //挂载
+  created() {
+    //查询所有部门名称
+    this.selectSect();
   },
   setup() {
     const checkList = ref(['selected and disabled', 'Option A'])
