@@ -81,8 +81,6 @@ l<!--面试通过-->
         </el-pagination>
       </div>
     </div>
-{{this.tableData}}
-
 
     <el-dialog v-model="EmployAddRemark" title="录用">
 

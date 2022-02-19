@@ -42,17 +42,17 @@
         <div class="sub-Content__primary" style="margin-top: 50px">
 
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="workSchemeName" label="方案名称" width="210"/>
+            <el-table-column prop="workSchemeName" label="方案名称" width="220"/>
 <!--            <el-table-column prop="工作日加班工资：小时X" label="核算规则" width="220"/>-->
-            <el-table-column label="核算方案" width="210">
+            <el-table-column label="核算方案" width="220">
               <template #default="scope">
                 <span>工作日加班工资：小时工资x{{this.tableData[0].workSchemeWorkratio}}%</span><br/>
                 <span>休息日加班工资：小时工资x{{this.tableData[0].workSchemeDayoffratio}}%</span><br/>
                 <span>节假日加班工资：小时工资x{{this.tableData[0].workSchemeHolidayratio}}%</span>
               </template>
             </el-table-column>
-            <el-table-column prop="deptName" label="适用对象" width="210"/>
-            <el-table-column prop="workSchemeRemark" label="备注" width="210"/>
+            <el-table-column prop="deptName" label="适用对象" width="230"/>
+            <el-table-column prop="workSchemeRemark" label="备注" width="220"/>
 <!--            <el-table-column prop="workSchemeState" label="状态" width="210"/>-->
             <el-table-column label="状态" width="210">
               <template #default="scope">
@@ -60,7 +60,7 @@
                 <span class="button-pass" v-if="scope.row.workSchemeState===1"><span style="color: #5aaaff">禁用</span></span>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="210">
+            <el-table-column fixed="right" label="操作" width="230">
               <template #default="scope">
                 <el-button type="text" size="small" @click="
                   this.$parent.$data.salary_insertplan=true,
@@ -76,9 +76,35 @@
                 >编辑
                 </el-button
                 >
-                <el-button type="text" size="small" @click="updateWorkSchemeState(workSchemeId=scope.row.workSchemeId)">禁用</el-button>
+<!--                <el-button type="text" size="small" @click="updateWorkSchemeState(workSchemeId=scope.row.workSchemeId)">禁用</el-button>-->
+                <el-popconfirm
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    :icon="InfoFilled"
+                    icon-color="red"
+                    title="确定禁用吗?"
+                    @confirm="updateWorkSchemeState(workSchemeId=scope.row.workSchemeId)"
+                    v-if="scope.row.workSchemeState===0"
+                >
+                  <template #reference v-if="scope.row.workSchemeState===0">
+                    <el-button type="text" size="small" @click="(workSchemeId=scope.row.workSchemeId)">禁用</el-button>
+                  </template>
+                </el-popconfirm>
+                <el-popconfirm
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    :icon="InfoFilled"
+                    icon-color="blue"
+                    title="确定启用吗?"
+                    @confirm="updateWorkSchemeStateTwo(workSchemeId=scope.row.workSchemeId)"
+                    v-if="scope.row.workSchemeState===1"
+                >
+                  <template #reference v-if="scope.row.workSchemeState===1">
+                    <el-button type="text" size="small" @click="(workSchemeId=scope.row.workSchemeId)">启用</el-button>
+                  </template>
+                </el-popconfirm>
                 <!--              <el-button type="text" size="small">删除 </el-button>-->
-                <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"
+                <el-popconfirm @confirm="deleteWorkScheme(workSchemeId=scope.row.workSchemeId)"
                                title="确认要删除此方案吗?">
                   <template #reference>
                     <el-button type="text" size="small" style="color: orange">删除</el-button>
@@ -116,16 +142,54 @@
 </template>
 
 <script>
-import {ElMessage, ElNotification} from "element-plus";
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 
 export default {
   methods: {
-    // 删除行
-    deleteRow(index, rows) {
-      rows.splice(index, 1);
-      ElMessage({
-        message: '删除成功',
-        type: 'success',
+    // 删除加班方案
+    deleteWorkScheme(id) {
+        var _this = this
+        this.axios({
+          method: 'delete',
+          url: this.url + 'deleteWorkScheme',
+          data:[id],
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          //如果服务关闭
+          if (response.data.data.data) {
+            ElNotification.error({
+              title: '提示',
+              message: "服务发生关闭",
+              offset: 100,
+            })
+            //如果服务没有关闭
+          } else if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+                this.selectWorkScheme();
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }
+            //如果服务是雪崩的
+            else {
+              ElNotification.error({
+                title: '提示',
+                message: "服务发生雪崩",
+                offset: 100,
+              })
+            }
+          }
       })
     },
     //分页查询加班方案
@@ -139,6 +203,8 @@ export default {
           'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
+          //部门名称
+          "deptName":this.$parent.$data.two,
           //方案名称
           "workSchemeName":this.seek,
         },
@@ -209,10 +275,49 @@ export default {
         console.log(error);
       });
     },
+    //修改状态为启用
+    updateWorkSchemeStateTwo(workSchemeId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateWorkSchemeStateTwo',
+        data: {
+          workSchemeId: this.workSchemeId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectWorkScheme();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
   },
   created() {
     //分页查询加班方案
-    this.selectWorkScheme();
+    this.selectWorkScheme(this.$parent.$data.two);
   },
   data() {
     return {

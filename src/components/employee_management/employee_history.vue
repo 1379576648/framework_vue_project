@@ -8,7 +8,7 @@
 				<!--搜索输入框-->
         <div style="margin-left: 1161px;">
 				<el-row style="width:150px;">
-				<el-input v-model="seek" placeholder="搜索" size="small" @input="selectQuit">
+				<el-input v-model="seek" placeholder="姓名" size="small" @input="selectQuit">
 					<template #suffix>
 					<el-icon class="el-input__icon"><i-search/></el-icon>
 					</template>
