@@ -100,8 +100,7 @@ l<!--面试通过-->
       <span class="dialog-footer">
         <el-button @click="cancel">取消</el-button>
         <el-button type="primary" @click="confirm" :plain="true"
-        >确定</el-button
-        >
+        >确定</el-button>
       </span>
       </template>
     </el-dialog>
@@ -182,7 +181,7 @@ export default {
       console.log(this.resumeId)
       console.log(this.num)
       console.log(this.evaluate)
-      // this.EmployAddRemark=false;
+      this.EmployAddRemark=false;
       this.axios({
         method: 'post',
         url: this.url + 'EmployStaff',
@@ -197,6 +196,9 @@ export default {
       }).then((response)=>{
         console.log("添加录用成功")
         console.log(response)
+      }),ElMessage({
+        message: '录用成功',
+        type: 'success',
       })
 
     },
