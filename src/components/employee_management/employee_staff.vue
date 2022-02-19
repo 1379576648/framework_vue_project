@@ -47,7 +47,7 @@
 <div style="margin-top:10px;">
 		<!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input size="small" v-model="seek" placeholder="搜索" style="margin-top: 20px;margin-right: 2px;" @input="selectStaff">
+      <el-input size="small" v-model="seek" placeholder="姓名" style="margin-top: 20px;margin-right: 2px;" @input="selectStaff">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>

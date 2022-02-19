@@ -3,7 +3,7 @@
   <div>
     <!--搜索输入框-->
     <el-row style="width:150px;float:right;">
-      <el-input v-model="seek" placeholder="搜索" size="small" @input="selectPunishGlory">
+      <el-input v-model="seek" placeholder="奖罚名称" size="small" @input="selectPunishGlory">
         <template #suffix>
           <el-icon class="el-input__icon"><i-search/></el-icon>
         </template>
