@@ -61,14 +61,14 @@
             <!-- 多选框 -->
             <el-table-column type="selection" align="center" width="55"/>
             <el-table-column :index="indexMethod" align="center" label="序号" type="index" width="100"/>
-            <el-table-column prop="insArchiveStaffName" align="center" label="姓名" width="100"/>
-            <el-table-column prop="insArchiveInsuredName" align="center" label="参保方案" min-width="150"/>
-            <el-table-column prop="insArchiveInsuredMonth" align="center" label="社保缴纳月份" width="100"/>
-            <el-table-column prop="insArchiveSocialPersonPay" align="center" label="社保个人缴费" width="100"/>
-            <el-table-column prop="insArchiveSocialFirmPay" align="center" label="社保企业缴费" width="100"/>
-            <el-table-column prop="insArchiveInsuredMonth" align="center" label="积金缴纳月份" width="110"/>
-            <el-table-column prop="insArchiveFundPersonPay" align="center" label="积金个人缴费" width="110"/>
-            <el-table-column prop="insArchiveFundFirmPay" align="center" label="积金企业缴费" width="110"/>
+            <el-table-column prop="insArchiveStaffName" sortable align="center" label="姓名" width="100"/>
+            <el-table-column prop="insArchiveInsuredName" sortable align="center" label="参保方案" min-width="150"/>
+            <el-table-column prop="insArchiveInsuredMonth" sortable align="center" label="社保缴纳月份" width="100"/>
+            <el-table-column prop="insArchiveSocialPersonPay" sortable align="center" label="社保个人缴费" width="100"/>
+            <el-table-column prop="insArchiveSocialFirmPay" sortable align="center" label="社保企业缴费" width="100"/>
+            <el-table-column prop="insArchiveInsuredMonth" sortable align="center" label="积金缴纳月份" width="110"/>
+            <el-table-column prop="insArchiveFundPersonPay" sortable align="center" label="积金个人缴费" width="110"/>
+            <el-table-column prop="insArchiveFundFirmPay" sortable align="center" label="积金企业缴费" width="110"/>
             <el-table-column align="center" label="操作">
               <template #default="scope">
                 <el-button type="text" size="small" @click="

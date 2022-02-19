@@ -32,9 +32,9 @@
         <div class="sub-Content__primary">
           <el-table :data="scheme_table" stripe style="width: 100%">
             <el-table-column fixed :index="indexMethod" align="center" label="序号" type="index" width="100"/>
-            <el-table-column prop="defInsuredName" align="center" label="方案名称"/>
-            <el-table-column prop="defInsuredNumber" align="center" label="参保人数"/>
-            <el-table-column prop="defInsuredState" align="center" label="状态">
+            <el-table-column prop="defInsuredName" sortable align="center" label="方案名称"/>
+            <el-table-column prop="defInsuredNumber" sortable align="center" label="参保人数"/>
+            <el-table-column prop="defInsuredState" sortable align="center" label="状态">
               <template #default="scope">
                 <span v-if="scope.row.defInsuredState==0">可用</span>
                 <span v-if="scope.row.defInsuredState==1">禁用</span>
