@@ -3,13 +3,13 @@
     <div class="j-card j-card-bordered mainContent">
 
       <div class="j-card-body">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="handleClick" style="margin-left: 20px;">
           <el-tab-pane  name="book" label="固定工资">
-            <salary_regularearn />
+            <salary_regularearn :key="one"/>
           </el-tab-pane>
 
           <el-tab-pane  name="second" label="调薪查询">
-            <salary_raisequery />
+            <salary_raisequery :key="one"/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -32,9 +32,15 @@ export default {
   },
   data(){
     return{
+      one:1,
       activeName:'book'
     }
   }
+,methods:{
+  handleClick(){
+    this.one=this.one+1;
+  }
+}
 }
 </script>
 

@@ -737,7 +737,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "",
+                message: "查询已审批离职数据详情失败",
                 offset: 100,
               })
             }
@@ -779,7 +779,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "",
+                message: "查询已审批离职数据详情失败",
                 offset: 100,
               })
             }
@@ -901,7 +901,7 @@ export default {
                     this.add_pass_remark1 = false;
                     this.remark = "";
                     this.$store.commit("updateToken", response.data.data.token);
-                  } else if (response.data.data.info === 999) {
+                  } else if (response.data.data.info === "999") {
                     ElMessage({
                       showClose: true,
                       message: '操作失败',
@@ -912,22 +912,30 @@ export default {
                   } else {
                     ElNotification.error({
                       title: '提示',
-                      message: "通过当前审批失败",
+                      message: "数据有误",
                       offset: 100,
                     })
                     this.add_pass_remark1 = false;
                     this.remark = "";
                   }
+                } else {
+                  ElNotification.error({
+                    title: '提示',
+                    message: "通过当前审批失败",
+                    offset: 100,
+                  })
+                  this.add_pass_remark1 = false;
+                  this.remark = "";
                 }
-              } else {
-                ElNotification.error({
-                  title: '提示',
-                  message: response.data.message,
-                  offset: 100,
-                })
-                this.add_pass_remark1 = false;
-                this.remark = "";
               }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.message,
+                offset: 100,
+              })
+              this.add_pass_remark1 = false;
+              this.remark = "";
             }
           }
       )
@@ -972,7 +980,7 @@ export default {
                 this.add_pass_remark2 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '操作失败',
@@ -983,22 +991,30 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "通过当前审批失败",
+                  message: "数据有误",
                   offset: 100,
                 })
                 this.add_pass_remark2 = false;
                 this.remark = "";
               }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "通过当前审批失败",
+                offset: 100,
+              })
+              this.add_pass_remark2 = false;
+              this.remark = "";
             }
-          } else {
-            ElNotification.error({
-              title: '提示',
-              message: response.data.message,
-              offset: 100,
-            })
-            this.add_pass_remark2 = false;
-            this.remark = "";
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+          this.add_pass_remark2 = false;
+          this.remark = "";
         }
       })
     },
@@ -1028,7 +1044,7 @@ export default {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
-              if (response.data.data.state === 200 && response.data.data.info === 666) {
+              if (response.data.data.info === 666) {
                 ElMessage({
                   showClose: true,
                   message: '驳回成功',
@@ -1041,7 +1057,7 @@ export default {
                 this.add_reject_remark1 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '驳回失败,数据有误，请联系管理员',
@@ -1052,22 +1068,30 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "驳回该审批失败",
+                  message: "数据有误",
                   offset: 100,
                 })
                 this.add_reject_remark1 = false;
                 this.remark = "";
               }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "驳回该审批失败",
+                offset: 100,
+              })
+              this.add_reject_remark1 = false;
+              this.remark = "";
             }
-          } else {
-            ElNotification.error({
-              title: '提示',
-              message: response.data.message,
-              offset: 100,
-            })
-            this.add_reject_remark1 = false;
-            this.remark = "";
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+          this.add_reject_remark1 = false;
+          this.remark = "";
         }
       })
     },
@@ -1096,7 +1120,7 @@ export default {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
-              if (response.data.data.state === 200 && response.data.data.info === 666) {
+              if (response.data.data.info === 666) {
                 ElMessage({
                   showClose: true,
                   message: '驳回成功',
@@ -1109,7 +1133,7 @@ export default {
                 this.add_reject_remark2 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '驳回失败,数据有误，请联系管理员',
@@ -1120,22 +1144,30 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "驳回该审批失败",
+                  message: "数据有误",
                   offset: 100,
                 })
                 this.add_reject_remark2 = false;
                 this.remark = "";
               }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "驳回该审批失败",
+                offset: 100,
+              })
+              this.add_reject_remark2 = false;
+              this.remark = "";
             }
-          } else {
-            ElNotification.error({
-              title: '提示',
-              message: response.data.message,
-              offset: 100,
-            })
-            this.add_reject_remark2 = false;
-            this.remark = "";
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+          this.add_reject_remark2 = false;
+          this.remark = "";
         }
       })
     },
@@ -1163,7 +1195,7 @@ export default {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
-              if (response.data.data.state === 200 && response.data.data.info === 666) {
+              if (response.data.data.info === 666) {
                 ElMessage({
                   showClose: true,
                   message: '驳回成功',
@@ -1176,7 +1208,7 @@ export default {
                 this.add_reject_remark3 = false;
                 this.remark = "";
                 this.$store.commit("updateToken", response.data.data.token);
-              } else if (response.data.data.state === 200 && response.data.data.info === 999) {
+              } else if (response.data.data.info === "999") {
                 ElMessage({
                   showClose: true,
                   message: '驳回失败,数据有误，请联系管理员',
@@ -1187,22 +1219,30 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "驳回该审批失败",
+                  message: "数据有误",
                   offset: 100,
                 })
                 this.add_reject_remark3 = false;
                 this.remark = "";
               }
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "驳回该审批失败",
+                offset: 100,
+              })
+              this.add_reject_remark3 = false;
+              this.remark = "";
             }
-          } else {
-            ElNotification.error({
-              title: '提示',
-              message: response.data.message,
-              offset: 100,
-            })
-            this.add_reject_remark3 = false;
-            this.remark = "";
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+          this.add_reject_remark3 = false;
+          this.remark = "";
         }
       })
     }

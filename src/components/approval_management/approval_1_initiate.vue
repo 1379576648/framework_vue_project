@@ -1355,13 +1355,11 @@
 
 <script lang="js">
 
-import VDistpicker from 'v-distpicker'
 import {defineComponent, reactive, ref, toRefs} from "vue";
 import {ElMessage, ElNotification} from "element-plus";
 import {CodeToText, regionData} from "element-china-area-data"; //地址选择器导入
 
 export default defineComponent({
-  components: {VDistpicker},
   data() {
     return {
       // 地址选择器 值
@@ -1604,11 +1602,11 @@ export default defineComponent({
             // 转正日期
             workerdate: this.become_1.date1,
             // 审批人1
-            staffName1: this.NowManager[0].staffname,
+            staffName1: this.NowManager == null ? null : this.NowManager[0].staffname,
             // 审批人2
-            staffName2: this.personnel_manager[0].staffname,
+            staffName2: this.personnel_manager == null ? null : this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[0].staffname,
+            staffName3: this.president == null ? null : this.president[0].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1679,9 +1677,9 @@ export default defineComponent({
             // 转正日期
             workerdate: this.become_1.date1,
             // 审批人1
-            staffName1: this.personnel_manager[0].staffname,
+            staffName1: this.personnel_manager == null ? null : this.personnel_manager[0].staffname,
             // 审批人3
-            staffName2: this.president[0].staffname,
+            staffName2: this.president == null ? null : this.president[0].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1752,7 +1750,7 @@ export default defineComponent({
             // 转正日期
             workerdate: this.become_1.date1,
             // 审批人3
-            staffName1: this.president[0].staffname,
+            staffName1: this.president == null ? null : this.president[0].staffname,
             // 审批类型
             auditflowType: "转正",
             // 审批标题
@@ -1827,11 +1825,11 @@ export default defineComponent({
             // 调动日期
             takeeffectdate: this.Change_1.date1,
             // 审批人1
-            staffName1: this.NowManager[0].staffname,
+            staffName1: this.NowManager == null ? null : this.NowManager[0].staffname,
             // 审批人2
-            staffName2: this.personnel_manager[0].staffname,
+            staffName2: this.personnel_manager == null ? null : this.personnel_manager[0].staffname,
             // 审批人3
-            staffName3: this.president[0].staffname,
+            staffName3: this.president == null ? null : this.president[0].staffname,
             // 审批类型
             auditflowType: "调动",
             // 审批标题
@@ -1906,9 +1904,9 @@ export default defineComponent({
             // 调动日期
             takeeffectdate: this.Change_1.date1,
             // 审批人1
-            staffName1: this.NowManager[0].staffname,
+            staffName1: this.personnel_manager == null ? null : this.personnel_manager[0].staffname,
             // 审批人3
-            staffName2: this.president[0].staffname,
+            staffName2: this.president == null ? null : this.president[0].staffname,
             // 审批类型
             auditflowType: "调动",
             // 审批标题
@@ -1983,7 +1981,7 @@ export default defineComponent({
             // 调动日期
             takeeffectdate: this.Change_1.date1,
             // 审批人3
-            staffName1: this.president[0].staffname,
+            staffName1: this.president == null ? null : this.president[0].staffname,
             // 审批类型
             auditflowType: "调动",
             // 审批标题

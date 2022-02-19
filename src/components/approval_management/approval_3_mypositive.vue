@@ -453,7 +453,7 @@ export default {
         method: 'post',
         url: this.url + 'revocation',
         data: {
-          auditflowId: this.auditflowId,
+          auditFlowId: this.auditflowId,
         }
       }).then((response) => {
         console.log("撤销审批成功")

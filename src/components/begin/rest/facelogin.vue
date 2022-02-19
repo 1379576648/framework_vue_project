@@ -120,6 +120,7 @@ export default {
                   this.$store.commit("staffInfo", obj);
                   this.$store.commit("updateMenuList", response.data.data.menuList);
                   sessionStorage.setItem("refresh", "true")
+                  this.$store.commit("updateToken", response.data.data.token);
                   //跳转到主页面 并且不能回退
                   this.$router.push({path: '/home', replace: true})
                 }

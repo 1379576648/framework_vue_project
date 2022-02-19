@@ -100,7 +100,7 @@
     </div>
 
     <!-- 分页插件 -->
-    <div class="demo-pagination-block">
+    <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;">
       <el-pagination
           v-model:currentPage="pageInfo.currentPage"
           :page-sizes="[3, 5, 10, 50]"
@@ -199,12 +199,6 @@ export default {
 
 /deep/.icon-p p{
   text-align: center;
-}
-
-/* 分页的样式 */
-/deep/.demo-pagination-block {
-  float: right;
-  margin: 20px;
 }
 /deep/.cell {
   padding-left: 10px;

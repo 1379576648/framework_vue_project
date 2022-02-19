@@ -137,7 +137,7 @@
           <!-- 提交按钮 -->
           <el-button size="small" type="primary" @click="save" :disabled="selectStaffList==''">提交</el-button>
           <!-- 搜索框 -->
-          <el-input v-model="staffName" size="small" class="resume-operation" @input="next" placeholder="输入姓名关键字">
+          <el-input v-model="staffName" size="small" class="resume-operation" @input="next" placeholder="输入姓名">
             <template #suffix>
               <el-icon class="el-input__icon">
                 <i-search/>
