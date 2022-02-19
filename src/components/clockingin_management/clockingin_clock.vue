@@ -2,7 +2,7 @@
 <template>
   <div class="w">
     <div class="head">
-      <el-button size="medium" @click="derive()">
+      <el-button size="medium" @click="exportCardRecordHint()">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
@@ -149,54 +149,11 @@ export default {
       tableData: [],
       value1: "", //日期
       value: ref(""), //选择
+      // 当前用户所有打卡记录数据
+      CardRecordAll: [],
     };
   },
   methods: {
-    // 点击导出操作
-    derive() {
-      ElMessageBox.confirm(
-          '此操作将导出excel文件, 是否继续?',
-          '提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      ).then(() => {
-        this.deriveExcel();
-      }).catch(() => {
-        ElMessage({
-          type: 'info',
-          message: '取消成功',
-        })
-      })
-    },
-    // 导出方法
-    deriveExcel() {
-      var _this = this;
-      let tHeader = ["员工名称", "部门名称", "早上打卡时间", "下午打卡时间", "记录时间"]; // 导出的表头名
-      let filterVal = ["staffName", "deptName", "mornClock", "afternoonClock", "createdTime"];//导出其prop属性
-      ElMessageBox.prompt('请输入文件名', '提示', {
-        confirmButtonText: '生成',
-        cancelButtonText: '取消',
-      }).then(({value}) => {
-        let data = _this.formatJson(filterVal, _this.tableData);
-        export_json_to_excel(tHeader, data, value);
-        ElMessage({
-          type: 'success',
-          message: `生成成功`,
-        })
-      })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '取消成功',
-            })
-          })
-    },
-    formatJson(filterVal, jsonData) {
-      return jsonData.map((v) => filterVal.map((j) => v[j]));
-    },
     // 导入判断
     beforeUpload(file) {
       const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
@@ -210,6 +167,33 @@ export default {
         this.$message.error('上传文件大小不能超过 2MB');
         return false;
       }
+    },
+    // 导出方法
+    export2Excel() {
+      var that = this;
+      let tHeader = ["打卡记录编号", "员工名称", "部门名称", "早上打卡时间", "下午打卡时间", "考勤状态"]; // 导出的表头名
+      let filterVal = ["clockRecordId", "staffName", "deptName", "mornClock", "afternoonClock", "checkState"];
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      })
+          .then(({value}) => {
+            let data = that.formatJson(filterVal, that.CardRecordAll);
+            export_json_to_excel(tHeader, data, value);
+            ElMessage({
+              type: 'success',
+              message: `生成成功`,
+            })
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '取消成功',
+            })
+          })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
     // 根据员工名称查询打卡记录
     selectCardRecordAll() {
@@ -236,8 +220,8 @@ export default {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
-                this.tableData = response.data.data.info.records;
-                this.pageInfo.total = response.data.data.info.total;
+              this.tableData = response.data.data.info.records;
+              this.pageInfo.total = response.data.data.info.total;
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({
@@ -279,8 +263,14 @@ export default {
                   type: 'success',
                 })
                 this.selectCardRecordAll();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else if (response.data.data.info === "删除失败") {
+                ElNotification.error({
+                  title: '提示',
+                  message: "删除失败",
+                  offset: 100,
+                })
               }
-              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({
                 title: '提示',
@@ -300,8 +290,6 @@ export default {
     },
     // 导入
     ExcelImport(response) {
-      console.log("导入打卡记录")
-      console.log(response)
       if (response.data.data) {
         ElNotification.warning({
           title: '提示',
@@ -329,7 +317,62 @@ export default {
           offset: 100,
         })
       }
-    }
+    },
+    // 导出提示
+    exportCardRecordHint() {
+      ElMessageBox.confirm(
+          '此操作将导出excel文件, 是否继续?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.exportCardRecord();
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    // 查询当前登录者的所有打卡记录
+    exportCardRecord() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectCardRecordAllByName',
+        data: {
+          // 当前登陆者
+          "staffName": this.NowStaffName,
+        }
+      }).then((response) => {
+        console.log("查询当前登录者的所有打卡记录")
+        console.log(response)
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.CardRecordAll = response.data.data.info;
+              this.export2Excel();
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "查询当前用户所有打卡记录失败,无法进行导出操作",
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },
   created() {
     //jWT传梯

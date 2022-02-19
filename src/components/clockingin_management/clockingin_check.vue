@@ -370,8 +370,14 @@ export default {
                     type: 'success',
                   })
                   this.selectClassesAll();
+                  this.$store.commit("updateToken", response.data.data.token);
+                }else if (response.data.data.info === "启用失败"){
+                  ElNotification.error({
+                    title: '提示',
+                    message: "启用失败",
+                    offset: 100,
+                  })
                 }
-                this.$store.commit("updateToken", response.data.data.token);
               } else {
                 ElNotification.error({
                   title: '提示',
@@ -413,8 +419,14 @@ export default {
                   type: 'success',
                 })
                 this.selectClassesAll();
+                this.$store.commit("updateToken", response.data.data.token);
+              }else if (response.data.data.info === "禁用失败"){
+                ElNotification.error({
+                  title: '提示',
+                  message: "禁用失败",
+                  offset: 100,
+                })
               }
-              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({
                 title: '提示',
@@ -455,8 +467,14 @@ export default {
                   type: 'success',
                 })
                 this.selectClassesAll();
+                this.$store.commit("updateToken", response.data.data.token);
+              }else if (response.data.data.info === "删除失败"){
+                ElNotification.error({
+                  title: '提示',
+                  message: "删除失败",
+                  offset: 100,
+                })
               }
-              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({
                 title: '提示',
