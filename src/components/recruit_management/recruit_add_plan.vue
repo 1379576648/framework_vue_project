@@ -1,5 +1,4 @@
 <!-- 新增招聘计划 -->
-
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -126,38 +125,38 @@ export default {
       rules: {
         zpname: [{
           required: true,
-          message: '招聘计划名称不能为空!!!',
+          message: '招聘计划名称不能为空!',
           trigger: 'blur',
         },
         ],
         zpdept: [{
           required: true,
-          message: '请选择需求部门!!!',
+          message: '请选择需求部门!',
           trigger: 'change',
         }, ],
         zpzw: [{
           required: true,
-          message: '请设置招聘职位!!!',
+          message: '请设置招聘职位!',
           trigger: 'change',
         }, ],
         zpnum: [{
           required: true,
-          message: '计划招聘人数不能为空!!!',
+          message: '计划招聘人数不能为空!',
           trigger: 'blur',
         }, ],
         zpxl: [{
           required: true,
-          message: '最低学历不能为空!!!',
+          message: '最低学历不能为空!',
           trigger: 'change',
         }, ],
         timef: [{
           required: true,
-          message: '请选择招聘时间范围!!!',
+          message: '请选择招聘时间范围!',
           trigger: 'change',
         }, ],
         zpxqf: [{
           required: true,
-          message: '请选择薪酬范围!!!',
+          message: '请选择薪酬范围!',
           trigger: 'change',
         }, ],
       },

@@ -133,8 +133,14 @@ export default {
                   })
                   this.$parent.selectClassesAll();
                   this.$parent.$data.clockingin_classes = false;
+                  this.$store.commit("updateToken", response.data.data.token);
+                }else if (response.data.data.info === "添加失败"){
+                  ElNotification.error({
+                    title: '提示',
+                    message: "新增班次失败",
+                    offset: 100,
+                  })
                 }
-                this.$store.commit("updateToken", response.data.data.token);
               } else {
                 ElNotification.error({
                   title: '提示',
@@ -236,10 +242,10 @@ export default {
                 this.$parent.selectClassesAll();
                 this.$parent.$data.clockingin_classes = false;
                 this.$store.commit("updateToken", response.data.data.token);
-              } else {
+              } else if (response.data.data.info === "修改失败"){
                 ElNotification.warning({
                   title: '提示',
-                  message: "修改班次方案失败",
+                  message: "修改班次失败",
                   offset: 100,
                 })
                 this.$parent.$data.clockingin_classes = false;
