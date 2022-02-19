@@ -76,7 +76,7 @@
                 >编辑
                 </el-button
                 >
-                <el-button type="text" size="small" @click="handleClick">禁用</el-button>
+                <el-button type="text" size="small" @click="updateWorkSchemeState(workSchemeId=scope.row.workSchemeId)">禁用</el-button>
                 <!--              <el-button type="text" size="small">删除 </el-button>-->
                 <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"
                                title="确认要删除此方案吗?">
@@ -169,6 +169,45 @@ export default {
           }
         }
       })
+    },
+    //修改状态为禁用
+    updateWorkSchemeState(workSchemeId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateWorkSchemeState',
+        data: {
+          workSchemeId: this.workSchemeId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectWorkScheme();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
     },
   },
   created() {
