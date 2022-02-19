@@ -1,4 +1,4 @@
-<!--复试通过-->
+<!--复试中-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
@@ -145,53 +145,7 @@ export default {
       //搜索框
       input: "",
       //表格数据
-      tableData: [
-        {
-          name: 'tom',
-          departm: 'tom',
-          gender: 'tom',
-          schoolli: 'tom',
-          phone: 'tom',
-          age: 'tom',
-          email: 'tom',
-          professional: 'tom',
-          birth: 'tom',
-          face: 'tom',
-          gradschool: 'tom   ',
-          invitation: 'tom',
-          state: 'tom'
-        },
-        {
-          name: 'tom',
-          departm: 'tom',
-          gender: 'tom',
-          schoolli: 'tom',
-          phone: 'tom',
-          age: 'tom',
-          email: 'tom',
-          professional: 'tom',
-          birth: 'tom',
-          face: 'tom',
-          gradschool: 'tom   ',
-          invitation: 'tom',
-          state: 'tom'
-        },
-        {
-          name: 'tom',
-          departm: 'tom',
-          gender: 'tom',
-          schoolli: 'tom',
-          phone: 'tom',
-          age: 'tom',
-          email: 'tom',
-          professional: 'tom',
-          birth: 'tom',
-          face: 'tom',
-          gradschool: 'tom   ',
-          invitation: 'tom',
-          state: 'tom'
-        }
-      ],
+      tableData: [],
       formInline:[],
 
     }

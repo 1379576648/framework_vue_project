@@ -44,7 +44,7 @@
             <el-input style="width: 200px;" v-model="input" placeholder="招聘计划名称" clearable/>
             <!--搜索按钮-->
             &nbsp;&nbsp;&nbsp;
-            <el-button style="background-color: #085fc3; color: white;" size="small">Custom</el-button>
+            <el-button style="background-color: #085fc3; color: white;" size="small">搜索</el-button>
           </div>
 
 
@@ -76,6 +76,9 @@
             <el-table-column prop="zpzt" label="负责人" width="200"/>
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
+                <div style="width: 140px">
+                  <el-button type="text" size="small" @click="">删除</el-button>
+                </div>
                 <div v-if="tableData[scope.$index].zpzt=='招聘中'">
                     <el-button type="text" size="small" @click="recruit_add_plan=true,recruit_add_plan_name='编辑'">编辑</el-button>
                   &nbsp;
@@ -121,8 +124,7 @@
         </el-pagination>
       </div>
     </div>
-    {{this.tableData}}
-    {{ this.$store.state.staffMessage.staffName}}
+<!--    {{ this.$store.state.staffMessage.staffName}}-->
   </div>
 <!--  新增招聘计划-->
   <recruit_add_plan v-if="recruit_add_plan" :name="recruit_add_plan_name"/>
