@@ -18,7 +18,7 @@
           </div>
           <div class="j-card-body ">
             <div style="width: 100%; height: 300px; text-align: center; color: rgb(153, 153, 153);">
-              <div id="name" style="width: 300px;height: 300px;"></div>
+              <div id="name" style="width: 300px;height: 300px;left: 80px;"></div>
             </div>
           </div>
 				</div>
@@ -32,13 +32,13 @@
 					<div class="j-card-head">
 
             <i class="iconfont">&#xe7f8;</i>
-            <span style="margin-left: 10px;font-weight: bold">员工性别统计</span>
+            <span style="margin-left: 10px;font-weight: bold">员工招募统计</span>
             <i class="iconfont" style="float: right">&#xe64c;</i>
 
           </div>
 					<div class="j-card-body ">
 						<div style="width: 100%; height: 300px; text-align: center; color: rgb(153, 153, 153);">
-              <div id="name1" style="width: 300px;height: 300px;"></div>
+              <div id="name1" style="width: 300px;height: 300px;left: 80px;"></div>
 
               <br>
 						</div>
@@ -56,8 +56,8 @@ export default {
   name1:'',
   data() {
     return {
-      one: [{value:1,name:"男"},{value:2,name:"女"}],
-      two:[{value:16,name:"a"},{value:16,name:"w"}]
+      one: [{value:17,name:"男"},{value:18,name:"女"}],
+      two:[{value:16,name:"男"},{value:16,name:"女"}]
     };
   },
   methods: {
