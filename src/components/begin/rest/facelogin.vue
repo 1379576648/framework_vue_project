@@ -122,7 +122,11 @@ export default {
                   sessionStorage.setItem("refresh", "true")
                   this.$store.commit("updateToken", response.data.data.token);
                   //跳转到主页面 并且不能回退
-                  this.$router.push({path: '/home', replace: true})
+                  if (response.data.data.menuList==''){
+                    this.$router.push({path: '/error', replace: true})
+                  }else{
+                    this.$router.push({path: '/home', replace: true})
+                  }
                 }
               } else {
                 ElNotification.error({
