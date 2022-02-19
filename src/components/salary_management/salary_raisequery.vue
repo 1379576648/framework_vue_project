@@ -46,7 +46,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页插件 -->
-  <div class="demo-pagination-block">
+  <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;">
     <el-pagination
         v-model:currentPage="pageInfo.currentPage"
         :page-sizes="[4, 5, 10, 50]"
