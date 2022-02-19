@@ -68,7 +68,7 @@
   &nbsp;<archive_detail v-if="archive"/>
 </template>
 
-<script lang="ts">
+<script>
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import {export_json_to_excel} from "../../excal/Export2Excel";
 import archive_detail from './archive_detail.vue';
@@ -116,7 +116,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-        if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               this.tableData = response.data.data.info.records;
@@ -149,7 +149,6 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-
         if (response.data.code == 200) {
           if (response.data.data) {
             //如果服务是正常的
@@ -187,7 +186,7 @@ export default {
       }).then((response) => {
 
         if (response.data.code == 200) {
-         if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -204,7 +203,7 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }else {
+            } else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
@@ -228,21 +227,19 @@ export default {
       ElMessageBox.prompt('请输入文件名', '提示', {
         confirmButtonText: '生成',
         cancelButtonText: '取消',
+      }).then(({value}) => {
+        let data = that.formatJson(filterVal, that.monthData);
+        export_json_to_excel(tHeader, data, value);
+        ElMessage({
+          type: 'success',
+          message: `生成成功`,
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
       })
-          .then(({value}) => {
-            let data = that.formatJson(filterVal, that.monthData);
-            export_json_to_excel(tHeader, data, value);
-            ElMessage({
-              type: 'success',
-              message: `生成成功`,
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '取消成功',
-            })
-          })
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
