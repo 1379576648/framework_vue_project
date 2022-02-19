@@ -18,7 +18,7 @@
           </div>
           <div class="j-card-body ">
             <div style="width: 100%; height: 300px; text-align: center; color: rgb(153, 153, 153);">
-              <div id="name" style="width: 600px;height: 400px;"></div>
+              <div id="name" style="width: 300px;height: 200px;"></div>
             </div>
           </div>
 				</div>
@@ -38,7 +38,7 @@
           </div>
 					<div class="j-card-body ">
 						<div style="width: 100%; height: 300px; text-align: center; color: rgb(153, 153, 153);">
-              <div id="name" style="width: 600px;height: 400px;"></div>
+              <div id="name1" style="width: 300px;height: 200px;"></div>
 
               <br>
 						</div>
@@ -53,6 +53,7 @@
 import * as echarts from "echarts";
 export default {
   name: '',
+  name1:'',
   data() {
     return {
       one: [{value:1,name:"name"},{value:2,name:"age"}],
@@ -161,6 +162,7 @@ export default {
     this.$nextTick(function() {
       this.drawPie("name");
     });
+
   },
 };
 </script>
