@@ -23,7 +23,7 @@
             <el-menu-item v-for="memu in memuList1" :index=memu.menuPowerRoute>
               {{ memu.menuPowerName }}
             </el-menu-item>
-            <el-sub-menu index="5" v-if="memuList2">
+            <el-sub-menu index="5" v-if="memuList2!=''">
               <template #title>更多</template>
               <li style="text-align: center;margin: 10px 32px; float: left;width: 58px;height: 81px"
                   v-for="memu in memuList2">

@@ -29,7 +29,7 @@
         <div style="margin-top:-32px;">
           <!--搜索输入框-->
           <el-row style="width:140px;float:right;">
-            <el-input v-model="seek" placeholder="方案名称">
+            <el-input v-model="seek" placeholder="方案名称" @input="selectWorkScheme">
               <template #suffix>
                 <el-icon class="el-input__icon">
                   <i-search/>
@@ -42,13 +42,25 @@
         <div class="sub-Content__primary" style="margin-top: 50px">
 
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="name" label="方案名称" width="180"/>
-            <el-table-column prop="name" label="核算规则" width="180"/>
-            <el-table-column prop="name" label="适用对象" width="180"/>
-            <el-table-column prop="name" label="职位" width="180"/>
-            <el-table-column prop="name" label="备注" width="180"/>
-            <el-table-column prop="name" label="状态" width="180"/>
-            <el-table-column fixed="right" label="操作" width="180">
+            <el-table-column prop="workSchemeName" label="方案名称" width="210"/>
+<!--            <el-table-column prop="工作日加班工资：小时X" label="核算规则" width="220"/>-->
+            <el-table-column label="核算方案" width="210">
+              <template #default="scope">
+                <span>工作日加班工资：小时工资x{{this.tableData[0].workSchemeWorkratio}}%</span><br/>
+                <span>休息日加班工资：小时工资x{{this.tableData[0].workSchemeDayoffratio}}%</span><br/>
+                <span>节假日加班工资：小时工资x{{this.tableData[0].workSchemeHolidayratio}}%</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="deptName" label="适用对象" width="210"/>
+            <el-table-column prop="workSchemeRemark" label="备注" width="210"/>
+<!--            <el-table-column prop="workSchemeState" label="状态" width="210"/>-->
+            <el-table-column label="状态" width="210">
+              <template #default="scope">
+                <span class="button-await" v-if="scope.row.workSchemeState===0"><span style="color: #5aaaff">启用</span></span>
+                <span class="button-pass" v-if="scope.row.workSchemeState===1"><span style="color: #5aaaff">禁用</span></span>
+              </template>
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="210">
               <template #default="scope">
                 <el-button type="text" size="small" @click="
                   this.$parent.$data.salary_insertplan=true,
@@ -79,18 +91,20 @@
         </div>
 
         <!-- 分页插件 -->
-        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;">
+        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
+              :page-sizes="[4, 5, 10, 50]"
               v-model:page-size="pageInfo.pagesize"
               :default-page-size="pageInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageInfo.total"
               :pager-count="5"
+              prev-text="上一页"
+              next-text="下一页"
+              @size-change="selectWorkScheme()"
+              @current-change="selectWorkScheme()"
               background
-              @size-change="selectUsers"
-              @current-change="selectUsers"
           >
           </el-pagination>
         </div>
@@ -102,7 +116,7 @@
 </template>
 
 <script>
-import {ElMessage} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   methods: {
@@ -114,32 +128,61 @@ export default {
         type: 'success',
       })
     },
+    //分页查询加班方案
+    selectWorkScheme() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectWorkScheme',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //方案名称
+          "workSchemeName":this.seek,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+  },
+  created() {
+    //分页查询加班方案
+    this.selectWorkScheme();
   },
   data() {
     return {
+      //请求的路径
+      url: "http://localhost:80/",
       //新增编辑加班方案
       insertcallbackpay: '/salary/insertcallbackpay',
       seek: "",
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页

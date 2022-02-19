@@ -25,13 +25,13 @@
 
                   <el-form-item label="工作日加班工资" prop="workday">
                     <el-select v-model="ruleForm.workday" placeholder="请选择">
-                      <el-option label="按小时工资百分比计薪" style="margin-left: 20px;" value="workbyhour"></el-option>
-                      <el-option label="按固定金额" value="workbyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按小时工资百分比计薪" style="margin-left: 20px;" value="按小时工资百分比计薪" selected="selected"></el-option>
+                      <el-option label="按固定金额" value="按固定金额" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="发放：" style="width:500px"
-                                v-if="ruleForm.workday=='workbyfixed'">
+                                v-if="ruleForm.workday=='按固定金额'">
                     <el-input-number
                         v-model="num"
                         :min="1"
@@ -59,13 +59,13 @@
 
                   <el-form-item label="休息日加班工资" prop="offday">
                     <el-select v-model="ruleForm.offday" placeholder="请选择">
-                      <el-option label="按小时工资百分比计薪" value="offbyhour" style="margin-left: 20px;"></el-option>
-                      <el-option label="按固定金额" value="offbyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按小时工资百分比计薪" value="按小时工资百分比计薪" style="margin-left: 20px;"></el-option>
+                      <el-option label="按固定金额" value="按固定金额" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="发放：" style="width:500px"
-                                v-if="ruleForm.offday=='offbyfixed'">
+                                v-if="ruleForm.offday=='按固定金额'">
                     <el-input-number
                         v-model="num2"
                         :min="1"
@@ -93,13 +93,13 @@
 
                   <el-form-item label="节假日加班工资" prop="holiday">
                     <el-select v-model="ruleForm.holiday" placeholder="请选择">
-                      <el-option label="按小时工资百分比计薪" value="holibyhour" style="margin-left: 20px;"></el-option>
-                      <el-option label="按固定金额" value="holibyfixed" style="margin-left: 20px;"></el-option>
+                      <el-option label="按小时工资百分比计薪" value="按小时工资百分比计薪" style="margin-left: 20px;"></el-option>
+                      <el-option label="按固定金额" value="按固定金额" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
 
                   <el-form-item label="发放：" style="width:500px"
-                                v-if="ruleForm.holiday=='holibyfixed'">
+                                v-if="ruleForm.holiday=='按固定金额'">
                     <el-input-number
                         v-model="num3"
                         :min="1"
@@ -127,18 +127,23 @@
 
                   <el-form-item label="适用对象" prop="suitableusers">
                     <el-select v-model="ruleForm.suitableusers" placeholder="请选择">
-                      <el-option label="1" value="suitableusers1" style="margin-left: 20px;"></el-option>
-                      <el-option label="111" value="suitableusers2" style="margin-left: 20px;"></el-option>
+                      <el-option  style="margin-left: 20px;"
+                                  v-for="item in dept_name"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value"
+                      >
+                      </el-option>
                     </el-select>
                   </el-form-item>
 
 
-                  <el-form-item label="职位" prop="post">
-                    <el-select v-model="ruleForm.post" placeholder="请选择">
-                      <el-option label="212" value="post1" style="margin-left: 20px;"></el-option>
-                      <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>
-                    </el-select>
-                  </el-form-item>
+<!--                  <el-form-item label="职位" prop="post">-->
+<!--                    <el-select v-model="ruleForm.post" placeholder="请选择">-->
+<!--                      <el-option label="212" value="post1" style="margin-left: 20px;"></el-option>-->
+<!--                      <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>-->
+<!--                    </el-select>-->
+<!--                  </el-form-item>-->
 
 
                   <el-form-item label="备注" prop="remark" style="width:500px">
@@ -146,7 +151,7 @@
                   </el-form-item>
                   <el-form-item>
                     <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplan=false,this.$parent.$data.callbackpay=true">取消</el-button>
-                    <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
+                    <el-button type="primary" style="width: 60px;" @click="insertWorkScheme(),this.$parent.$data.salary_insertplan=false,this.$parent.$data.callbackpay=true"
                     >提交
                     </el-button
                     >
@@ -159,17 +164,19 @@
       </div>
     </div>
   </div>
-  &nbsp;
 </template>
 
 
 <script>
-import {ElMessage} from 'element-plus'
+import {ElMessage, ElNotification} from 'element-plus'
 
 export default {
   props: ['name'],
   data() {
     return {
+      //请求的路径
+      url: "http://localhost:80/",
+      dept_name:[],
       ruleForm: {
         schemename: '',
         workday: '',
@@ -217,16 +224,106 @@ export default {
 
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+    //添加加班方案
+    insertWorkScheme() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertWorkScheme',
+        data: {
+          //方案名称
+          workschemeName:this.ruleForm.schemename,
+          //工作日加班工资
+          workschemeWorkratio:this.num,
+          //休息日加班工资
+          workschemeDayoffratio:this.num2,
+          //节假日加班工资
+          workschemeHolidayratio:this.num3,
+          //适用对象
+          deptName:this.ruleForm.suitableusers,
+          //备注
+          workschemeRemark:this.ruleForm.remark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("添加成功")
+        console.log(response)
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.code == 200) {
+            //如果是成功
+            if (response.data.data == 1) {
+              ElNotification({
+                title: '提示',
+                message: '添加成功',
+                type: 'success',
+              })
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: '添加失败',
+              })
+            }
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
         }
       })
     },
+    //查询部门名称
+    selectSect() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectSect',
+        data: {
+          //staffId:this.tableData.staffId,
+        }
+      }).then((response) => {
+        console.log("查询部门名称成功")
+        console.log(response);
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            //初始化
+            this.dept_name = [];
+            //循环部门列表
+            for (let i = 0; i < response.data.data.info.length; i++) {
+              //一个一个存起来
+              this.dept_name.push({
+                value: response.data.data.info[i].deptName,
+                label: response.data.data.info[i].deptName
+              })
+            }
+
+          }
+        }
+      })
+    },
+  },
+  mounted() {
+    //查询部门名称
+    this.selectSect();
   }
 
 }

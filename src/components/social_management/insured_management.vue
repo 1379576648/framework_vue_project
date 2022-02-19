@@ -446,7 +446,6 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-
         if (response.data.code == 200) {
          if (response.data.data) {
             //如果服务是正常的
