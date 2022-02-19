@@ -18,7 +18,7 @@
           </div>
           <div class="j-card-body ">
             <div style="width: 100%; height: 300px; text-align: center; color: rgb(153, 153, 153);">
-              <div id="name" style="width: 300px;height: 200px;"></div>
+              <div id="name" style="width: 300px;height: 300px;"></div>
             </div>
           </div>
 				</div>
@@ -38,7 +38,7 @@
           </div>
 					<div class="j-card-body ">
 						<div style="width: 100%; height: 300px; text-align: center; color: rgb(153, 153, 153);">
-              <div id="name1" style="width: 300px;height: 200px;"></div>
+              <div id="name1" style="width: 300px;height: 300px;"></div>
 
               <br>
 						</div>
@@ -56,8 +56,8 @@ export default {
   name1:'',
   data() {
     return {
-      one: [{value:1,name:"name"},{value:2,name:"age"}],
-      two: [1, 2, -1]
+      one: [{value:1,name:"男"},{value:2,name:"女"}],
+      two:[{value:16,name:"a"},{value:16,name:"w"}]
     };
   },
   methods: {
@@ -72,7 +72,7 @@ export default {
           left: 'center'
         },
         series: [{
-          name: 'Access From',
+          name: '数量',
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -116,51 +116,68 @@ export default {
           }
         }
       });
-
-      //{
-      // 	xAxis: {
-      // 		type: "category",
-      // 		data: this.one
-      // 	},
-      // 	yAxis: {
-      // 		type: "value"
-      // 	},
-      // 	series: [{
-      // 		data: this.two,
-      // 		type: "bar"
-      // 	}, ],
-      // 	toolbox: {
-      // 		show: true, //显示工具栏组件
-      // 		feature: {
-      // 			dataView: {
-      // 				show: true, //显示该工具
-      // 				title: "数据视图",
-      // 				readOnly: true //是否显示不可编辑(只读)
-      // 			},
-      // 			magicType: { //动态类型切换
-      // 				show: true, //是否显示该工具
-      // 				type: ['line', 'bar'], //启用的动态类型
-      // 				title: {
-      // 					line: '切换为折线图',
-      // 					bar: '切换为柱状图'
-      // 				}
-      // 			},
-      // 			restore: { //配置项还原
-      // 				show: true, //是否显示该工具
-      // 				title: "还原"
-      // 			},
-      // 			saveAsImage: { //保存为图片
-      // 				show: true, //是否显示该工具
-      // 				title: "保存"
-      // 			}
-      // 		}
-      // 	}
-      // });
+    },
+    drawPia(id){
+      this.charts = echarts.init(document.getElementById(id));
+      this.charts.setOption({
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [{
+          name: '数量',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: this.two,
+        }],
+        toolbox: {
+          show: true, //显示工具栏组件
+          feature: {
+            dataView: {
+              show: true, //显示该工具
+              title: "数据视图",
+              readOnly: true //是否显示不可编辑(只读)
+            },
+            restore: { //配置项还原
+              show: true, //是否显示该工具
+              title: "还原"
+            },
+            saveAsImage: { //保存为图片
+              show: true, //是否显示该工具
+              title: "保存"
+            }
+          }
+        }
+      });
     },
   },
   mounted() {
     this.$nextTick(function() {
       this.drawPie("name");
+      this.drawPia("name1");
     });
 
   },
