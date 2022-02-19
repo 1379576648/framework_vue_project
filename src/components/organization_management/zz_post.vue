@@ -136,7 +136,7 @@ table *{
 }
 
 .demo-pagination-block{
-  margin-left:630px ;
+  margin-left:150px ;
   margin-top: 20px;
   margin-bottom: 30px;
 }
