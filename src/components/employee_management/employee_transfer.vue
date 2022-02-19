@@ -108,7 +108,7 @@
           <!--搜索输入框-->
           <div style="margin-left: 1155px;margin-top: -57px;">
           <el-row style="width: 150px;">
-            <el-input v-model="seek" placeholder="搜索" size="small" @input="selectTransfer">
+            <el-input v-model="seek" placeholder="姓名" size="small" @input="selectTransfer">
               <template #suffix @click="become = true">
                 <el-icon class="el-input__icon"><i-search /></el-icon>
               </template>
