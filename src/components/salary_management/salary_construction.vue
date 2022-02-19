@@ -227,7 +227,7 @@ export default defineComponent({
     },
   },
   //挂载
-  created() {
+  mounted() {
     //查询所有部门名称
     this.selectSect();
   },
