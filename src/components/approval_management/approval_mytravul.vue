@@ -424,7 +424,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询审批数据详情失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -467,7 +467,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "撤销审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -500,7 +500,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询总裁失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -550,7 +550,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的出差申请-待处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -597,7 +597,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的出差申请-待处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -649,7 +649,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的出差申请-已处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -698,7 +698,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的出差申请-已处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

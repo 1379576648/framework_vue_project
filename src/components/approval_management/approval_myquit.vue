@@ -345,7 +345,7 @@ export default {
       NowStaffName: this.$store.state.staffMessage.staffName,
       // 我的审批列表 待审批
       tableData: [],
-      tableData1:[],
+      tableData1: [],
       // 选择开始日期/结束日期
       selectTime: [],
       // 选择开始日期/结束日期
@@ -423,7 +423,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询审批数据详情失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -466,7 +466,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "撤销审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -499,7 +499,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询总裁失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -549,7 +549,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的离职申请-待处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -596,7 +596,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的离职申请-待处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -624,7 +624,7 @@ export default {
           //当前登录者
           "staffName1": this.NowStaffName,
           // 总裁
-          "staffName2":this.president[0].staffname,
+          "staffName2": this.president[0].staffname,
           //起始时间
           "startTime": this.selectTime2 == null ? null : this.selectTime2[0],
           //结束时间
@@ -648,7 +648,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的离职申请-已处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -677,7 +677,7 @@ export default {
           //当前登录者
           "staffName1": this.NowStaffName,
           // 总裁
-          "staffName2":this.president[0].staffname,
+          "staffName2": this.president[0].staffname,
           // 审批类型
           "auditflowType": "离职"
         },
@@ -697,7 +697,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的离职申请-已处理 失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

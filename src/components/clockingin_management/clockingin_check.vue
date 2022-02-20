@@ -196,7 +196,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询所有班次方案失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -235,7 +235,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询所有班次方案失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -279,7 +279,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询班次方案状态失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -326,7 +326,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询所有班次方案有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -430,7 +430,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "修改班次方案状态（禁用）失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -478,7 +478,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "删除班次方案失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

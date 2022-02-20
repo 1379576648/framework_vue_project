@@ -144,7 +144,7 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "添加班次方案失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
               }
@@ -201,7 +201,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询方案名称失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -253,7 +253,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "修改班次方案失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

@@ -76,6 +76,7 @@ router.beforeEach(function (to, from, next) {
                         children: [],
                         props: true,
                     }
+                    console.log(memuList1[i].menuPowerModule)
                     //向跟节点添加数据
                     memuList2[0].children.push(op);
                 }
@@ -108,6 +109,7 @@ router.beforeEach(function (to, from, next) {
                                 component: modules[`${'../components' + oop[i].menuPowerModule + '.vue'}`],
                                 props: true,
                             }
+                            console.log(oop[i].menuPowerModule)
                             //向跟节点添加数据
                             memuList2[0].children[j].children.push(op);
                         }
