@@ -344,7 +344,7 @@ table * {
 
 .demo-pagination-block {
 
-  margin-left: 150px;
+  margin-left: 50px;
 
   margin-top: 20px;
 

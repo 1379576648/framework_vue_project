@@ -10,6 +10,8 @@ const store = createStore({
         menuRouter:[],
         //jwt
         token:'',
+        //是否没有权限
+        error:1
     },
     /* 同步修改值 */
     mutations: {
@@ -17,6 +19,11 @@ const store = createStore({
         staffInfo(state, obj) {
             // 通过传过来的值进行修改
             state.staffMessage = obj;
+        },
+        //修改权限
+        updateError(state, obj) {
+            // 通过传过来的值进行修改
+            state.error = obj;
         },
         //修改菜单列表
         updateMenuList(state, obj) {

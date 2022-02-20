@@ -8,13 +8,13 @@ import workbench from "../components/navigation.vue"
  * 全局导航栏
  */
 //所有的菜单列表
-var memuList1 = []
+var memuList1 = [];
 //根节点菜单列表
-var memuList2 = []
+var memuList2 = [];
 //获取所有的子节点菜单列表
-var oo = []
+var oo = [];
 //所有的子节点菜单列表无子节点
-var oop = []
+var oop = [];
 
 const modules = import.meta.glob('../components/**/*.vue');
 
@@ -30,6 +30,9 @@ const routes = [
         }, {//密码登录
             path: '/beginIndex/passLogin', component: modules[`${'../components/begin/rest/passlogin.vue'}`]
         }]
+    },{
+        path: '/error',
+        component: modules[`${'../components/error.vue'}`],
     }
 ]
 

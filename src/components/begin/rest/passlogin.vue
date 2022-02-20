@@ -123,7 +123,11 @@ export default {
                     sessionStorage.setItem("refresh", "true")
                     this.$store.commit("updateToken", response.data.data.token);
                     //跳转可以
-                    this.$router.push({path: '/home', replace: true})
+                    if (response.data.data.menuList==''){
+                      this.$router.push({path: '/error', replace: true})
+                    }else{
+                      this.$router.push({path: '/home', replace: true})
+                    }
                   }
                   //如果数据里面没有员工信息
                   else {
