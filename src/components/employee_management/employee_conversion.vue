@@ -548,7 +548,7 @@ export default defineComponent({
       })
     },
   },
-  mounted() {
+  created() {
     //分页查询转正
     this.selectpost();
     //统计快要转正名单

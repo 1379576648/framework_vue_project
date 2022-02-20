@@ -76,7 +76,7 @@
         </div>
 
         <!-- 分页插件 -->
-        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;">
+        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
               :page-sizes="[3, 5, 10, 50]"

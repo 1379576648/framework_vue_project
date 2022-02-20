@@ -52,7 +52,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="deptName" label="适用对象" width="230"/>
-            <el-table-column prop="workSchemeRemark" label="备注" width="220"/>
+            <el-table-column prop="workschemeRemark" label="备注" width="220"/>
 <!--            <el-table-column prop="workSchemeState" label="状态" width="210"/>-->
             <el-table-column label="状态" width="210">
               <template #default="scope">
@@ -63,6 +63,7 @@
             <el-table-column fixed="right" label="操作" width="230">
               <template #default="scope">
                 <el-button type="text" size="small" @click="
+                  this.$parent.$data.workplan=scope.row.workSchemeId,
                   this.$parent.$data.salary_insertplan=true,
                   this.$parent.$data.salary_checkwage=false,
                   this.$parent.$data.regular=false,
@@ -204,7 +205,7 @@ export default {
           //页大小
           "pagesize": this.pageInfo.pagesize,
           //部门名称
-          "deptName":this.$parent.$data.two,
+          //"deptName":this.$parent.$data.two,
           //方案名称
           "workSchemeName":this.seek,
         },
@@ -317,7 +318,7 @@ export default {
   },
   created() {
     //分页查询加班方案
-    this.selectWorkScheme(this.$parent.$data.two);
+    this.selectWorkScheme();
   },
   data() {
     return {
@@ -325,6 +326,7 @@ export default {
       url: "http://localhost:80/",
       //新增编辑加班方案
       insertcallbackpay: '/salary/insertcallbackpay',
+      workplan:'',
       seek: "",
       tableData: [],
       pageInfo: {
