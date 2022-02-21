@@ -9,21 +9,7 @@
         导出
       </el-button>
       &nbsp;
-      <el-upload
-          :action="this.url1 +this.$store.state.staffMessage.staffName"
-          style="display: inline-block"
-          :show-file-list="false"
-          accept=".xlsx"
-          :on-success="ExcelImport"
-          :before-upload="beforeUpload"
-      >
-        <el-button size="medium">
-          <el-icon style="font-size: 18px">
-            <i-folder-opened/>
-          </el-icon>
-          导入
-        </el-button>
-      </el-upload>
+
       <!--选择开始日期和结束日期-->
       <el-date-picker
           v-model="selectTime"
@@ -102,8 +88,7 @@ export default {
     return {
       //访问路径
       url: "http://localhost:80/",
-      // 导入地址
-      url1: "http://localhost:80/importCardRecord/",
+
       // 当前登录者
       NowStaffName: this.$store.state.staffMessage.staffName,
       StaffName: this.NowStaffName,
@@ -154,20 +139,7 @@ export default {
     };
   },
   methods: {
-    // 导入判断
-    beforeUpload(file) {
-      const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
-      const whiteList = ["xls", "xlsx"];
-      if (whiteList.indexOf(fileSuffix) === -1) {
-        this.$message.error('上传文件只能是xls、xlsx格式');
-        return false;
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        this.$message.error('上传文件大小不能超过 2MB');
-        return false;
-      }
-    },
+
     // 导出方法
     export2Excel() {
       var that = this;
@@ -226,7 +198,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询打卡记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -274,7 +246,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "删除打卡记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -288,36 +260,7 @@ export default {
         }
       })
     },
-    // 导入
-    ExcelImport(response) {
-      if (response.data.data) {
-        ElNotification.warning({
-          title: '提示',
-          message: "服务发生关闭",
-          offset: 100,
-        })
-      } else if (response.data.state === 200) {
-        if (response.data.info === 99) {
-          ElMessage({
-            type: 'success',
-            message: `导入成功`,
-          })
-          this.selectCardRecordAll();
-        } else {
-          ElNotification.warning({
-            title: '提示',
-            message: response.data.info,
-            offset: 100,
-          })
-        }
-      } else {
-        ElNotification.warning({
-          title: '提示',
-          message: "服务发生雪崩",
-          offset: 100,
-        })
-      }
-    },
+
     // 导出提示
     exportCardRecordHint() {
       ElMessageBox.confirm(
@@ -359,7 +302,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询当前用户所有打卡记录失败,无法进行导出操作",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

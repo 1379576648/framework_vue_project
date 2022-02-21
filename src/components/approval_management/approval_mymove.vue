@@ -426,7 +426,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询审批数据详情失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -470,7 +470,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "撤销审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -503,7 +503,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询总裁失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -553,7 +553,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的调动申请审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -600,7 +600,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的调动申请审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -652,7 +652,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的调动申请审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -701,7 +701,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询我的调动申请审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

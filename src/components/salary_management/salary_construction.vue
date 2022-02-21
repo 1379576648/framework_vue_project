@@ -71,7 +71,6 @@
                 <span class="span_1_zhe">【加项】针对员工工作日、休息日、节假日加班工资，可设置加班工资方案
                   <span
                       @click="
-                      this.$parent.$data.two=this.ruleForm.dept,
                       this.$parent.$data.salary_checkwage=false,
               this.$parent.$data.regular=false,
               this.$parent.$data.callbackpay=true,

@@ -1,91 +1,80 @@
 <!--历史归档-->
 <template>
   <!--  员工考勤历史归档页面-->
-  <div class="head">
-    <div class="head-to">
-      <el-tabs v-model="activeName">
-        <el-tab-pane name="first">
-          <template #label>
-            <span style="font-size: 24px"> 员工考勤历史归档 </span>
-          </template>
-        </el-tab-pane>
-      </el-tabs>
-      <!--  选择月份-->
-      <el-date-picker v-model="value2" type="month" placeholder="请选择月份！">
-      </el-date-picker>
-    </div>
-    <div class="centre">
-      <el-icon style="font-size: 16px; color: #409eff"
-      >
-        <i-arrow-right-bold
-        />
-      </el-icon>
-      <span style="margin-left: 40px">2021-6月份员工报表</span>
-      <span style="margin-left: 750px; color: rgb(148, 140, 140)"
-      >总人数：</span
-      >
-      <span>14</span>
-      <span style="margin-left: 100px; color: rgb(148, 140, 140)"
-      >全勤人数:</span
-      >
-      <span>1</span>
-    </div>
-    <div class="amei"></div>
-    <div class="tis">
-      <el-alert
-          title="迟到、早退和补打卡的统计单位为 “次”; 所有假期类型、出差、旷工的统计单位均为 “天” 。 "
-          type="warning"
-          show-icon
-      >
-      </el-alert>
-    </div>
-    <!-- 表格-->
-    <div class="bottom">
-      <el-table
-          :data="tableData"
-          stripe
-          border
-          style="width: 100%"
-          height="320"
-      >
-        <el-table-column prop="A" fixed label="名称"/>
-        <el-table-column prop="B" fixed label="部门"/>
-        <el-table-column prop="C" label="正常次数"/>
-        <el-table-column prop="D" label="迟到次数"/>
-        <el-table-column prop="D" label="早退次数"/>
-        <el-table-column prop="D" label="旷工次数"/>
-        <el-table-column prop="C" label="是否全勤"/>
-      </el-table>
+  <div class="saas-main-content">
+    <div class="j-card j-card-bordered mainContent">
+      <div class="j-card-body">
+        <!-- 单个 -->
+        <div class="main_div">
+          <div class="interior_left_div">
+            <!-- 归档名称 -->
+            <span class="social_accumulation"></span>
+            <span style="font-size: 12px"> &nbsp;已归档</span>
+            <br/>
+            <el-button type="text">导出参保明细</el-button>
+          </div>
+
+          <div class="interior_right_div">
+
+            <div style="display: inline-block; margin-left: 20px">
+              <el-button type="text">详情></el-button>
+            </div>
+          </div>
+          <br/>
+          <!-- 分割线 -->
+          <div class="cut_off"></div>
+        </div>
+        <div v-if="tableData===''" style="text-align: center;line-height: 30px">
+          暂无归档数据
+          <br/>
+          <!-- 分割线 -->
+          <div class="cut_off"></div>
+        </div>
+
+        <!-- 分页 -->
+        <div class="demo-pagination-block">
+          <el-pagination v-model:current-page="pageInfo.currenPage"
+                         v-model:page-size="pageInfo.pageSize"
+                         :default-page-size="pageInfo.pageSize"
+                         :page-sizes="[5, 10,15,20]"
+                         :pager-count="5"
+                         :total="pageInfo.total"
+                         background
+                         layout="	total ,sizes, prev, pager, next, jumper"
+                         next-text="下一页"
+                         prev-text="上一页"
+                         @size-change="next()"
+                         @current-change="next()"
+                         @prev-click="next()"
+                         @next-click="next()">
+          </el-pagination>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {
+      // 分页
+      pageInfo: {
+        /* 当前的页 */
+        currenPage: 1,
+        //页大小
+        pageSize: 5,
+        //总条数
+        total: 0,
+      },
       activeName: "first",
       value2: "",
+      //详情页显示隐藏
+      archive: false,
       // 历史归档数据
-      tableData: [
-        {
-          A: '王鑫',
-          B: '人事部',
-          C: '1',
-          D: '2',
-        }, {
-          A: '王鑫',
-          B: '人事部',
-          C: '1',
-          D: '2',
-        }, {
-          A: '王鑫',
-          B: '人事部',
-          C: '1',
-          D: '2',
-        },
-
-      ]
+      tableData: []
 
     };
   },
@@ -93,41 +82,93 @@ export default {
 </script>
 
 <style scoped>
-.head {
-  margin-top: 7px;
-  border: 1px solid #e9e9e9;
-  margin-left: 20px;
-  margin-right: 5px;
+/* 分割线 */
+.cut_off {
+  width: 100%;
+  border-bottom: 1px solid #ededed;
+}
+
+/* 右div */
+.interior_right_div {
+  display: inline-block;
+  float: right;
+  margin-top: 10px;
+}
+
+/* 社保公积金 */
+.social_accumulation {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* 左div */
+.interior_left_div {
+  display: inline-block;
+}
+
+/* 大div */
+.main_div {
   margin-bottom: 10px;
 }
 
-.head:hover {
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+/* 分页的样式 */
+.demo-pagination-block {
+  margin: 10px 0 10px 10px;
+}
+
+
+/* 外层div 内边距 */
+.j-card-body {
+  padding: 20px 25px 20px 25px;
+}
+
+/* 外层阴影 */
+.saas-main-content {
+  padding-top: 12px;
+  min-height: 500px;
+}
+
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+}
+
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
+}
+
+.j-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   border-color: transparent;
 }
 
-.head-to {
-  margin-left: 20px;
-  margin-top: 15px;
+.j-card-bordered {
+  border: 1px solid #e9e9e9;
+  border-top-color: rgb(233, 233, 233);
+  border-right-color: rgb(233, 233, 233);
+  border-bottom-color: rgb(233, 233, 233);
+  border-left-color: rgb(233, 233, 233);
 }
 
-.centre {
-  margin-left: 20px;
-  margin-top: 20px;
+.j-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  margin-top: 8px;
+  min-height: 100%;
 }
 
-.amei {
-  height: 2px;
-  background-color: rgb(9, 152, 248);
-  margin-top: 20px;
-  margin-left: 20px;
-}
-.tis{
-  margin-left: 20px;
+.j-card-body {
+  padding: 2% 2% 0 2%;
 }
 
-.bottom {
-  margin-top: 30px;
-  margin-left: 20px;
-}
 </style>

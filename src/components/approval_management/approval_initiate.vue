@@ -1566,7 +1566,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询员工状态有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -1638,7 +1638,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交转正失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.become = false;
@@ -1711,7 +1711,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交转正失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.become = false;
@@ -1782,7 +1782,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交转正失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.become = false;
@@ -1861,7 +1861,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交调动失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.Change = false;
@@ -1938,7 +1938,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交调动失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.Change = false;
@@ -2013,7 +2013,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交调动失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.Change = false;
@@ -2092,7 +2092,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交调薪失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.salary = false;
@@ -2167,7 +2167,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交调薪失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.salary = false;
@@ -2249,7 +2249,7 @@ export default defineComponent({
           } else {
             ElNotification.error({
               title: '提示',
-              message: response.data.message,
+              message: response.data.data.info,
               offset: 100,
             })
             this.salary = false;
@@ -2317,7 +2317,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交离职失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.quit = false;
@@ -2392,7 +2392,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交离职失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.quit = false;
@@ -2465,7 +2465,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交离职失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.quit = false;
@@ -2548,7 +2548,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交加班失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.overtime = false;
@@ -2629,7 +2629,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交加班失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.overtime = false;
@@ -2708,7 +2708,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交加班失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.overtime = false;
@@ -2785,7 +2785,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交补打卡失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.punch = false;
@@ -2860,7 +2860,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交补打卡失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.punch = false;
@@ -2933,7 +2933,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交补打卡失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.punch = false;
@@ -3016,7 +3016,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交出差失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.travel = false;
@@ -3097,7 +3097,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交出差失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.travel = false;
@@ -3176,7 +3176,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交出差失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.travel = false;
@@ -3257,7 +3257,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交请假失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.sick = false;
@@ -3336,7 +3336,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交请假失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.sick = false;
@@ -3413,7 +3413,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "提交请假失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.sick = false;
@@ -3602,30 +3602,33 @@ export default defineComponent({
           console.log("根据部门名称查询部门职位成功")
           console.log(response)
           //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的 根据长度判断部门经理是否有人任职
-            if (response.data.data.state == 200) {
-              if (response.data.data.info.length !== 0) {
-                ElNotification.warning({
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                if (response.data.data.info.length !== 0) {
+                  ElNotification.warning({
+                    title: '提示',
+                    message: "该部门已有经理，暂不支持调动该部门",
+                    offset: 100,
+                  })
+                  this.emptyDept();
+                }
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElNotification.error({
                   title: '提示',
-                  message: "该部门已有经理，暂不支持调动该部门",
+                  message: response.data.data.info,
                   offset: 100,
                 })
-                this.emptyDept();
               }
-            } else {
-              ElMessage({
-                type: 'warning',
-                message: response.data.data.info,
-              })
             }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
         })
       }
@@ -3900,7 +3903,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询部门职位有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -3941,7 +3944,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询全部部门有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -3973,7 +3976,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询总裁有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4012,7 +4015,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询人事部经理有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4046,7 +4049,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询部门名称有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4082,7 +4085,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询员工状态有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4231,7 +4234,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询当天的加班审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4282,7 +4285,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询转正审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4333,7 +4336,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "调岗审批数据有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4384,7 +4387,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询调薪审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4435,7 +4438,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询离职审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4486,7 +4489,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询加班审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4537,7 +4540,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询补打卡审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4588,7 +4591,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询出差审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4640,7 +4643,7 @@ export default defineComponent({
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询请假审批记录有误",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -4678,7 +4681,7 @@ export default defineComponent({
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "查询部门经理有误",
+                  message: response.data.data.info,
                   offset: 100,
                 })
               }
