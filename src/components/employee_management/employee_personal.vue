@@ -1979,6 +1979,8 @@ export default {
 
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //根据id查询工作经历
     this.selectWorkAll(this.$parent.$parent.$parent.$parent.$data.one)
     //根据id查询奖励

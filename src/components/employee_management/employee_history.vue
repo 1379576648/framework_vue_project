@@ -122,6 +122,8 @@
       }
     },
     mounted(){
+      //jWT传梯
+      this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
       this.selectQuit();
     }
   }

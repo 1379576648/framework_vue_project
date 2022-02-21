@@ -112,6 +112,9 @@ export default {
       this.src = '';
       this.isShow = false;
     },
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
   }
 };
 </script>

@@ -549,6 +549,8 @@ export default defineComponent({
     },
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //分页查询转正
     this.selectpost();
     //统计快要转正名单

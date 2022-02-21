@@ -157,6 +157,8 @@ export default defineComponent({
     },
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //转正已生效
     this.selectStateOne();
   }
