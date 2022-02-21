@@ -37,7 +37,7 @@
 
         <!--加班工资方案·-->
         <div class="j-card j-card-bordered mainContent"
-             style=" width: 155px;height: 195px; border: 1px solid #e8edf2; border-radius: 10px; text-align: center;display: block; float: left;margin-right: 78px;" @click="this.$parent.$data.two=this.ruleForm.dept,this.$parent.$data.salary_checkwage==false,this.$parent.$data.callbackpay=true,this.$parent.$data.attendanceplan==false,this.$parent.$data.evectionplan==false,this.$parent.$data.regular=false">
+             style=" width: 155px;height: 195px; border: 1px solid #e8edf2; border-radius: 10px; text-align: center;display: block; float: left;margin-right: 78px;" @click="this.$parent.$data.salary_checkwage==false,this.$parent.$data.callbackpay=true,this.$parent.$data.attendanceplan==false,this.$parent.$data.evectionplan==false,this.$parent.$data.regular=false">
           <span style="margin-top: 50px;display: block; font-size: 18px;">加班工资方案</span>
           <el-skeleton :rows="5"/>
         </div>
@@ -115,6 +115,8 @@ export default {
   },
   //挂载
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询所有部门名称
     this.selectSect();
   }

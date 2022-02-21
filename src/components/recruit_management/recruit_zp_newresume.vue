@@ -184,6 +184,8 @@ export default {
 
     }
   },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.selectResume();
   },  //序号1
   indexMethod(index) {

@@ -227,7 +227,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询请假记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -269,7 +269,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -330,7 +330,7 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "开始请假失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
               }
@@ -387,7 +387,7 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "结束请假失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
               }

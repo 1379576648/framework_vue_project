@@ -44,7 +44,7 @@
           <el-table :data="tableData" stripe style="width: 100%">
             <el-table-column prop="workSchemeName" label="方案名称" width="220"/>
 <!--            <el-table-column prop="工作日加班工资：小时X" label="核算规则" width="220"/>-->
-            <el-table-column label="核算方案" width="220">
+            <el-table-column label="核算规则" width="220">
               <template #default="scope">
                 <span>工作日加班工资：小时工资x{{this.tableData[0].workSchemeWorkratio}}%</span><br/>
                 <span>休息日加班工资：小时工资x{{this.tableData[0].workSchemeDayoffratio}}%</span><br/>
@@ -52,7 +52,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="deptName" label="适用对象" width="230"/>
-            <el-table-column prop="workSchemeRemark" label="备注" width="220"/>
+            <el-table-column prop="workschemeRemark" label="备注" width="220"/>
 <!--            <el-table-column prop="workSchemeState" label="状态" width="210"/>-->
             <el-table-column label="状态" width="210">
               <template #default="scope">
@@ -63,6 +63,7 @@
             <el-table-column fixed="right" label="操作" width="230">
               <template #default="scope">
                 <el-button type="text" size="small" @click="
+                  this.$parent.$data.workplan=scope.row.workschemeId,
                   this.$parent.$data.salary_insertplan=true,
                   this.$parent.$data.salary_checkwage=false,
                   this.$parent.$data.regular=false,
@@ -83,11 +84,11 @@
                     :icon="InfoFilled"
                     icon-color="red"
                     title="确定禁用吗?"
-                    @confirm="updateWorkSchemeState(workSchemeId=scope.row.workSchemeId)"
+                    @confirm="updateWorkSchemeState(workSchemeId=scope.row.workschemeId)"
                     v-if="scope.row.workSchemeState===0"
                 >
                   <template #reference v-if="scope.row.workSchemeState===0">
-                    <el-button type="text" size="small" @click="(workSchemeId=scope.row.workSchemeId)">禁用</el-button>
+                    <el-button type="text" size="small" @click="(workSchemeId=scope.row.workschemeId)">禁用</el-button>
                   </template>
                 </el-popconfirm>
                 <el-popconfirm
@@ -96,15 +97,15 @@
                     :icon="InfoFilled"
                     icon-color="blue"
                     title="确定启用吗?"
-                    @confirm="updateWorkSchemeStateTwo(workSchemeId=scope.row.workSchemeId)"
+                    @confirm="updateWorkSchemeStateTwo(workSchemeId=scope.row.workschemeId)"
                     v-if="scope.row.workSchemeState===1"
                 >
                   <template #reference v-if="scope.row.workSchemeState===1">
-                    <el-button type="text" size="small" @click="(workSchemeId=scope.row.workSchemeId)">启用</el-button>
+                    <el-button type="text" size="small" @click="(workSchemeId=scope.row.workschemeId)">启用</el-button>
                   </template>
                 </el-popconfirm>
                 <!--              <el-button type="text" size="small">删除 </el-button>-->
-                <el-popconfirm @confirm="deleteWorkScheme(workSchemeId=scope.row.workSchemeId)"
+                <el-popconfirm @confirm="deleteWorkScheme(workSchemeId=scope.row.workschemeId)"
                                title="确认要删除此方案吗?">
                   <template #reference>
                     <el-button type="text" size="small" style="color: orange">删除</el-button>
@@ -204,7 +205,7 @@ export default {
           //页大小
           "pagesize": this.pageInfo.pagesize,
           //部门名称
-          "deptName":this.$parent.$data.two,
+          //"deptName":this.$parent.$data.two,
           //方案名称
           "workSchemeName":this.seek,
         },
@@ -317,7 +318,7 @@ export default {
   },
   created() {
     //分页查询加班方案
-    this.selectWorkScheme(this.$parent.$data.two);
+    this.selectWorkScheme();
   },
   data() {
     return {
@@ -325,6 +326,7 @@ export default {
       url: "http://localhost:80/",
       //新增编辑加班方案
       insertcallbackpay: '/salary/insertcallbackpay',
+      workplan:'',
       seek: "",
       tableData: [],
       pageInfo: {
@@ -335,6 +337,9 @@ export default {
       },
 
     }
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
   }
 }
 </script>

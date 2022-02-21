@@ -261,7 +261,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询加班记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -303,7 +303,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "删除加班记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

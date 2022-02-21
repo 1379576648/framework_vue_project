@@ -40,7 +40,10 @@ export default {
   handleClick(){
     this.one=this.one+1;
   }
-}
+},mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+  }
 }
 </script>
 

@@ -90,11 +90,11 @@ export default {
               //如果服务是正常的
               if (response.data.data.state == 200) {
                 //如果有数据
-                if (response.data.data.succeed) {
+                if (response.data.data.succeed=="成功") {
                   //如果数据里面有员工信息
-                  if (response.data.data.succeed.staffName) {
+                  if (response.data.data.info.staffName) {
                     //获取后台传过来的数据
-                    let value = response.data.data.succeed;
+                    let value = response.data.data.info;
                     //读取需要的数据形成对象
                     let obj = {
                       //员工编号
@@ -123,22 +123,25 @@ export default {
                     sessionStorage.setItem("refresh", "true")
                     this.$store.commit("updateToken", response.data.data.token);
                     //跳转可以
-                    this.$router.push({path: '/home', replace: true})
+                    if (response.data.data.menuList == '') {
+                      this.$router.push({path: '/error', replace: true})
+                    } else {
+                      this.$router.push({path: '/home', replace: true})
+                    }
                   }
                   //如果数据里面没有员工信息
                   else {
                     ElNotification.warning({
                       title: '提示',
-                      message: "请" + response.data.data.succeed.error + "分钟后再试",
+                      message: "请" + response.data.data.info.error + "分钟后再试",
                       offset: 100,
                     })
                   }
                 }
-                //如果没有数据
                 else {
                   ElNotification.warning({
                     title: '提示',
-                    message: "账号或密码错误",
+                    message: response.data.data.succeed,
                     offset: 100,
                   })
                 }

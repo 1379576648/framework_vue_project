@@ -156,7 +156,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询补打卡记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -198,7 +198,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "删除补打卡记录失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }

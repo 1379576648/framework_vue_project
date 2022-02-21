@@ -84,9 +84,9 @@
             <el-table-column prop="noticePost" align="center" sortable label="职位" min-width="110"/>
             <el-table-column prop="noticeType" align="center" sortable label="公告类型" min-width="130">
               <template #default="scope">
-                <span v-if="scope.row.noticeType==0">要事性</span>
-                <span v-if="scope.row.noticeType==1">政策性</span>
-                <span v-if="scope.row.noticeType==2">任免性</span>
+                <span v-if="scope.row.noticeType==0">增发</span>
+                <span v-if="scope.row.noticeType==1">一般公告</span>
+                <span v-if="scope.row.noticeType==2">重要事项</span>
               </template>
             </el-table-column>
             <el-table-column prop="noticeState" align="center" sortable label="公告状态" min-width="110">
@@ -238,9 +238,9 @@
       </el-form-item>
       <!-- 公告类型-->
       <el-form-item prop="noticeType" label="公告类型：">
-        <div style="width: 300px" v-show="fromValue.noticeType==0">要事性</div>
-        <div style="width: 300px" v-show="fromValue.noticeType==1">政策性</div>
-        <div style="width: 300px" v-show="fromValue.noticeType==2">任免性</div>
+        <div style="width: 300px" v-show="fromValue.noticeType==0">增发</div>
+        <div style="width: 300px" v-show="fromValue.noticeType==1">一般公告</div>
+        <div style="width: 300px" v-show="fromValue.noticeType==2">重要事项</div>
       </el-form-item>
       <!-- 公告状态 -->
       <el-form-item prop="noticeState" label="状态：" style="margin-left: 27px">
@@ -425,15 +425,15 @@ export default {
       type: ([
         {
           value1: 0,
-          label: '要事性',
+          label: '增发',
         },
         {
           value1: 1,
-          label: '政策性',
+          label: '一般公告',
         },
         {
           value1: 2,
-          label: '任免性',
+          label: '重大事项',
         }
       ]),
       //显示添加还是有修改的状态

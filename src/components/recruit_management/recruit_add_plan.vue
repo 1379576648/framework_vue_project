@@ -15,8 +15,6 @@
           <div style="width: 50%; margin: auto;">
             <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
                      class="demo-ruleForm">
-
-
               <el-form-item label="招聘计划名称" prop="zpname" style="width:500px;">
                 <el-input v-model="ruleForm.zpname"></el-input>
               </el-form-item>
@@ -174,7 +172,10 @@ export default {
         }
       })
     }
-  },
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+  }
 }
 </script>
 

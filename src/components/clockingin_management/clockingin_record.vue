@@ -27,12 +27,21 @@
         导出
       </el-button>
 
-      <el-button type="primary">
-        <el-icon style="font-size: 16px">
-          <i-folder-opened/>
-        </el-icon>
-        导入
-      </el-button>
+      <el-upload
+          :action="this.url1"
+          style="display: inline-block"
+          :show-file-list="false"
+          accept=".xlsx"
+          :on-success="ExcelImport"
+          :before-upload="beforeUpload"
+      >
+        <el-button size="medium">
+          <el-icon style="font-size: 18px">
+            <i-folder-opened/>
+          </el-icon>
+          导入
+        </el-button>
+      </el-upload>
       <el-button type="primary"> 历史归档</el-button>
     </div>
     <div class="select">
@@ -111,6 +120,8 @@
 
 
 <script>
+import {ElMessage, ElNotification} from "element-plus";
+
 export default {
   data() {
     return {
@@ -130,10 +141,58 @@ export default {
         pagesize: 3,
         total: 0,
       },
+      // 导入地址
+      url1: "http://localhost:80/importCardRecord/",
     };
 
   },
+  methods: {
+    // 导入判断
+    beforeUpload(file) {
+      const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
+      const whiteList = ["xls", "xlsx"];
+      if (whiteList.indexOf(fileSuffix) === -1) {
+        this.$message.error('上传文件只能是xls、xlsx格式');
+        return false;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('上传文件大小不能超过 2MB');
+        return false;
+      }
+    },
+    // 导入
+    ExcelImport(response) {
+      if (response.data.data) {
+        ElNotification.warning({
+          title: '提示',
+          message: "服务发生关闭",
+          offset: 100,
+        })
+      } else if (response.data.state === 200) {
+        if (response.data.info === 99) {
+          ElMessage({
+            type: 'success',
+            message: `导入成功`,
+          })
+        } else {
+          ElNotification.warning({
+            title: '提示',
+            message: response.data.info,
+            offset: 100,
+          })
+        }
+      } else {
+        ElNotification.warning({
+          title: '提示',
+          message: "服务发生雪崩",
+          offset: 100,
+        })
+      }
+    },
+  }
 };
+
 </script>
 
 <style scoped>

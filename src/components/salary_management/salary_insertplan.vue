@@ -13,14 +13,14 @@
             <div class="ant-spin-container">
               <div style="margin-left: 150px">
                 <el-form
-                    ref="ruleForm"
-                    :model="ruleForm"
+                    ref="tableData"
+                    :model="tableData"
                     :rules="rules"
                     label-width="150px"
                     class="demo-ruleForm"
                 >
                   <el-form-item label="方案名称" prop="schemename" style="width:370px">
-                    <el-input v-model="ruleForm.schemename"></el-input>
+                    <el-input v-model="this.tableData.workschemeName"></el-input>
                   </el-form-item>
 
                   <el-form-item label="工作日加班工资" prop="workday">
@@ -126,7 +126,7 @@
 
 
                   <el-form-item label="适用对象" prop="suitableusers">
-                    <el-select v-model="ruleForm.suitableusers" placeholder="请选择">
+                    <el-select v-model="this.tableData.deptName" placeholder="请选择">
                       <el-option  style="margin-left: 20px;"
                                   v-for="item in dept_name"
                                   :key="item.value"
@@ -147,11 +147,11 @@
 
 
                   <el-form-item label="备注" prop="remark" style="width:500px">
-                    <el-input v-model="ruleForm.remark" type="textarea"></el-input>
+                    <el-input v-model="this.tableData.workschemeRemark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplan=false,this.$parent.$data.callbackpay=true">取消</el-button>
-                    <el-button type="primary" style="width: 60px;" @click="insertWorkScheme(),this.$parent.$data.salary_insertplan=false,this.$parent.$data.callbackpay=true"
+                    <el-button type="primary" style="width: 60px;" @click="works(),this.$parent.$data.salary_insertplan=false,this.$parent.$data.callbackpay=true"
                     >提交
                     </el-button
                     >
@@ -165,8 +165,6 @@
     </div>
   </div>
 </template>
-
-
 <script>
 import {ElMessage, ElNotification} from 'element-plus'
 
@@ -174,9 +172,12 @@ export default {
   props: ['name'],
   data() {
     return {
+      //判断添加还是修改加班方案
+      workplaninsert:'',
       //请求的路径
       url: "http://localhost:80/",
       dept_name:[],
+      tableData:[],
       ruleForm: {
         schemename: '',
         workday: '',
@@ -189,37 +190,37 @@ export default {
       num: '150',
       num2: '200',
       num3: '300',
-      rules: {
-        schemename: [
-          {
-            required: true,
-            message: '请输入方案名称',
-            trigger: 'blur',
-          }
-        ],
-        workday: [
-          {
-            required: true,
-            message: '请选择工作日加班规则',
-            trigger: 'change',
-          },
-        ],
-        offday: [
-          {
-            required: true,
-            message: '请选择休息日加班规则',
-            trigger: 'change',
-          },
-        ],
-        holiday: [
-          {
-            required: true,
-            message: '请选择节假日加班规则',
-            trigger: 'change',
-          },
-        ],
-
-      }
+      // rules: {
+      //   schemename: [
+      //     {
+      //       required: true,
+      //       message: '请输入方案名称',
+      //       trigger: 'blur',
+      //     }
+      //   ],
+      //   workday: [
+      //     {
+      //       required: true,
+      //       message: '请选择工作日加班规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   offday: [
+      //     {
+      //       required: true,
+      //       message: '请选择休息日加班规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   holiday: [
+      //     {
+      //       required: true,
+      //       message: '请选择节假日加班规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //
+      // }
     }
 
   },
@@ -231,7 +232,7 @@ export default {
         url: this.url + 'insertWorkScheme',
         data: {
           //方案名称
-          workschemeName:this.ruleForm.schemename,
+          workschemeName:this.tableData.workschemeName,
           //工作日加班工资
           workschemeWorkratio:this.num,
           //休息日加班工资
@@ -239,9 +240,9 @@ export default {
           //节假日加班工资
           workschemeHolidayratio:this.num3,
           //适用对象
-          deptName:this.ruleForm.suitableusers,
+          deptName:this.tableData.deptName,
           //备注
-          workschemeRemark:this.ruleForm.remark,
+          workschemeRemark:this.tableData.workschemeRemark,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -266,6 +267,7 @@ export default {
                 message: '添加成功',
                 type: 'success',
               })
+              this.$parent.$parent.$parent.$parent.selectWorkScheme();
             } else {
               ElMessage({
                 type: 'warning',
@@ -320,10 +322,114 @@ export default {
         }
       })
     },
+    //根据id查询加班方案
+    selectWorkSchemeAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectWorkSchemeAll',
+        data:{
+          workSchemeId:this.$parent.$data.workplan,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info[0];
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+    //修改加班方案
+    updateWorkScheme(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateWorkScheme',
+        data: {
+          //编号
+          workSchemeId: this.tableData.workSchemeId,
+          //方案名称
+          workschemeName:this.tableData.workschemeName,
+          //工作日加班工资
+          workschemeWorkratio: this.num,
+          //休息日加班工资
+          workschemeDayoffratio:this.num2,
+          //节假日加班工作
+          workschemeHolidayratio:this.num3,
+          //适用对象
+          deptName:this.tableData.deptName,
+          //备注
+          workschemeRemark:this.tableData.workschemeRemark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("修改状态")
+        console.log(response)
+        if (response.data.code === 200 && response.data.data === 666) {
+          ElMessage({
+            showClose: true,
+            message: '操作成功',
+            type: 'success',
+          })
+          this.selectWorkSchemeAll();
+        } else if (response.data.data === 100) {
+          ElMessage({
+            showClose: true,
+            message: '操作失败1',
+            type: 'error',
+          })
+        } else {
+          ElMessage({
+            showClose: true,
+            message: '操作失败2',
+            type: 'error',
+          })
+        }
+      }).catch(function (error) {
+        console.log("失败")
+        console.log(error);
+      });
+    },
+    works(){
+      if(this.name=='新增'){
+        this.insertWorkScheme();
+      }else {
+        this.updateWorkScheme(this.tableData.workSchemeId)
+      }
+    }
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询部门名称
     this.selectSect();
+    //根据id查询加班方案
+    if (this.name=="新增"){
+      this.tableData={}
+    }else{
+      this.selectWorkSchemeAll(this.$parent.$data.workplan);
+    }
+
   }
 
 }

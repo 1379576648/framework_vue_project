@@ -28,7 +28,7 @@
         <div style="margin-top:-32px;">
           <!--搜索输入框-->
           <el-row style="width:140px;float:right;">
-            <el-input v-model="seek" placeholder="方案名称">
+            <el-input v-model="seek" placeholder="方案名称" @input="selectAttendandce">
               <template #suffix>
                 <el-icon class="el-input__icon"><i-search/></el-icon>
               </template>
@@ -39,13 +39,27 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary" style="margin-top: 50px">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="name" label="方案名称" width="180" />
-            <el-table-column prop="name" label="核算规则" width="180" />
-            <el-table-column prop="name" label="适用对象" width="180" />
-            <el-table-column prop="name" label="职位" width="180" />
-            <el-table-column prop="name" label="备注" width="180" />
-            <el-table-column prop="name" label="状态" width="180" />
-            <el-table-column fixed="right" label="操作" width="180">
+            <el-table-column prop="attendandceName" label="方案名称" width="230" />
+<!--            <el-table-column prop="name" label="核算规则" width="230" />-->
+            <el-table-column label="核算规则" width="240">
+              <template #default="scope">
+                <span>迟到：扣{{this.tableData[0].attendandceLitemoney}}元x迟到次数</span><br/>
+                <span>早退：扣{{this.tableData[0].attendandceLeavemoney}}元x早退次数</span><br/>
+                <span>未签到：扣{{this.tableData[0].attendandceDidnotmoney}}元x未签到的次数</span><br/>
+                <span>未签退：扣{{this.tableData[0].attendandceDidbackmoney}}元x未签退的次数</span><br/>
+                <span>旷工：小时工资x{{this.tableData[0].attendandceAbscntmoney}}%x旷工折算的小时数</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="deptName" label="适用对象" width="230" />
+            <el-table-column prop="attendandceRemark" label="备注" width="230" />
+<!--            <el-table-column prop="attendandceState" label="状态" width="230" />-->
+            <el-table-column label="状态" width="230">
+              <template #default="scope">
+                <span class="button-await" v-if="scope.row.attendandceState===0"><span style="color: #5aaaff">启用</span></span>
+                <span class="button-pass" v-if="scope.row.attendandceState===1"><span style="color: #5aaaff">禁用</span></span>
+              </template>
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="230">
               <template #default="scope">
 
                   <el-button type="text"  size="small"
@@ -76,18 +90,20 @@
         </div>
 
         <!-- 分页插件 -->
-        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;">
+        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
+              :page-sizes="[4, 5, 10, 50]"
               v-model:page-size="pageInfo.pagesize"
               :default-page-size="pageInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageInfo.total"
               :pager-count="5"
+              prev-text="上一页"
+              next-text="下一页"
+              @size-change="selectAttendandce()"
+              @current-change="selectAttendandce()"
               background
-              @size-change="selectUsers"
-              @current-change="selectUsers"
           >
           </el-pagination>
         </div>
@@ -100,34 +116,17 @@
 </template>
 
 <script>
-import {ElMessage} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   data(){
     return{
+      //请求的路径
+      url: "http://localhost:80/",
       //新增编辑考勤扣款方案
       insertattendanceplan:'/salary/insertattendanceplan',
       seek:"",
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
@@ -146,6 +145,57 @@ export default {
         type: 'success',
       })
     },
+    //分页查询考勤扣款方案
+    selectAttendandce() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectAttendandce',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //部门名称
+          //"deptName":this.$parent.$data.two,
+          //方案名称
+          "attendandceName":this.seek,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        //如果服务关闭
+        if (response.data.data.data) {
+          ElNotification.warning({
+            title: '提示',
+            message: "服务发生关闭",
+            offset: 100,
+          })
+          //如果服务没有关闭
+        } else if (response.data.data) {
+          //如果服务是正常的
+          if (response.data.data.state == 200) {
+            _this.tableData = response.data.data.info.records
+            _this.pageInfo.total = response.data.data.info.total
+          }
+          //如果服务是雪崩的
+          else {
+            ElNotification.warning({
+              title: '提示',
+              message: "服务发生雪崩",
+              offset: 100,
+            })
+          }
+        }
+      })
+    },
+  },
+  created() {
+    //分页查询考勤扣款方案
+    this.selectAttendandce();
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
   }
 }
 </script>
