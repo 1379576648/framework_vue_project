@@ -95,6 +95,9 @@ export default {
         query: {path: this.$route.query.path}
       })
     }
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
   }
 
 }

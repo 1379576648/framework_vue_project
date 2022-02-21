@@ -115,6 +115,8 @@ export default {
   },
   //挂载
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询所有部门名称
     this.selectSect();
   }

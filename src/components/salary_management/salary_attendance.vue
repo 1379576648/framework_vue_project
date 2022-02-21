@@ -193,6 +193,9 @@ export default {
   created() {
     //分页查询考勤扣款方案
     this.selectAttendandce();
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
   }
 }
 </script>

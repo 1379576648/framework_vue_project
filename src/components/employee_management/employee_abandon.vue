@@ -107,13 +107,12 @@ export default {
       })
     },
   },
-  // 挂载
-  created() {
+  mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //分页查询已经淘汰的员工
     this.selectabandon();
-  }
+  },
 }
 </script>
 

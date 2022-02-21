@@ -375,13 +375,12 @@ export default defineComponent({
       this.become=true;
     },
   },
-  // 挂载
-  created() {
+  mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询已录用待入职的员工
     this.selectpage();
-  }
+  },
 })
 </script>
 

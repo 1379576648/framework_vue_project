@@ -643,6 +643,8 @@ export default{
     // this.selectTransferByName(this.tableData.staffName);
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //分页查询调动管理
     this.selectTransfer();
   },

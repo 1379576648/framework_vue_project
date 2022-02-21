@@ -321,7 +321,7 @@ export default {
       })
     },
   },
-  created() {
+  mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询员工花名册
@@ -335,6 +335,11 @@ export default {
     //本月新入职
     this.countStateSix();
   },
+  // 挂载
+  created() {
+    //查询员工花名册
+    //this.selectStaff();
+  }
 }
 </script>
 <style scoped>

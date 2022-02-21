@@ -568,7 +568,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询待审批出差数据失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -614,7 +614,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询待审批出差数据失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -664,7 +664,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询已办审批出差数据失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -710,7 +710,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询已办审批出差数据失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -752,7 +752,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询已审批出差数据详情失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -794,7 +794,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "查询已审批出差数据详情失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -864,7 +864,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "审批明细表编号失败",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
@@ -925,7 +925,7 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "通过当前审批失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.add_pass_remark1 = false;
@@ -995,7 +995,7 @@ export default {
               } else {
                 ElNotification.error({
                   title: '提示',
-                  message: "通过当前审批失败",
+                  message: response.data.data.info,
                   offset: 100,
                 })
                 this.add_pass_remark2 = false;
@@ -1065,7 +1065,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "驳回该审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
               this.add_reject_remark1 = false;
@@ -1133,7 +1133,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "驳回该审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
               this.add_reject_remark2 = false;
@@ -1200,7 +1200,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "驳回该审批失败",
+                message: response.data.data.info,
                 offset: 100,
               })
               this.add_reject_remark3 = false;

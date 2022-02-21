@@ -419,6 +419,8 @@ export default {
     }
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询部门名称
     this.selectSect();
     //根据id查询加班方案
