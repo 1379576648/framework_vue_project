@@ -152,46 +152,47 @@ export default {
         var _this = this
         this.axios({
           method: 'delete',
-          url: this.url + 'deleteWorkScheme',
-          data:[id],
+          url: this.url + 'deleteWorkScheme/'+this.workSchemeId,
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生关闭",
-              offset: 100,
-            })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.info == "成功") {
-                ElMessage({
-                  type: 'success',
-                  message: '删除成功',
-                })
-                this.selectWorkScheme();
-              } else {
-                ElMessage({
-                  type: 'warning',
+
+          if (response.data.code == 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果是成功
+                if (response.data.data.info == "成功") {
+                  ElNotification({
+                    title: '提示',
+                    message: '删除成功',
+                    type: 'success',
+                  })
+                  this.selectWorkScheme();
+                  this.$store.commit("updateToken", response.data.data.token);
+                } else {
+                  ElMessage({
+                    type: 'warning',
+                    message: response.data.data.info,
+                  })
+                }
+              }else {
+                ElNotification.warning({
+                  title: '提示',
                   message: response.data.data.info,
+                  offset: 100,
                 })
               }
             }
-            //如果服务是雪崩的
-            else {
-              ElNotification.error({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
-      })
+        })
+
     },
     //分页查询加班方案
     selectWorkScheme() {
@@ -212,28 +213,27 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
@@ -249,32 +249,41 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("修改状态")
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
-          this.selectWorkScheme();
-        } else if (response.data.data === 100) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败1',
-            type: 'error',
-          })
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectWorkScheme();
+                ElNotification({
+                  title: '提示',
+                  message: '修改成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败2',
-            type: 'error',
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
           })
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     //修改状态为启用
     updateWorkSchemeStateTwo(workSchemeId) {
@@ -288,32 +297,41 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("修改状态")
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
-          this.selectWorkScheme();
-        } else if (response.data.data === 100) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败1',
-            type: 'error',
-          })
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectWorkScheme();
+                ElNotification({
+                  title: '提示',
+                  message: '修改成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败2',
-            type: 'error',
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
           })
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
   },
   created() {

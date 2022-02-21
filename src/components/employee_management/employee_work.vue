@@ -100,7 +100,7 @@ export default {
             } else {
               ElNotification.error({
                 title: '提示',
-                message: "",
+                message: response.data.data.info,
                 offset: 100,
               })
             }
