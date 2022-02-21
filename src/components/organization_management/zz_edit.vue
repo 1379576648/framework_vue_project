@@ -63,27 +63,30 @@
         </el-table-column>
       </el-table>
     </div>
+    <!-- 分页 -->
     <div class="demo-pagination-block">
-      <el-pagination
-          v-model:currentPage="pageInfo.currenPage"
-          :page-sizes="[3, 5, 10, 50]"
-          v-model:page-size="pageInfo.pagesize"
-          :default-page-size="pageInfo.pagesize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pageInfo.total"
-          :pager-count="5"
-          background
-          @size-change="sele"
-          @current-change="sele"
-      >
+      <el-pagination v-model:current-page="pageInfo.currentPage"
+                     v-model:page-size="pageInfo.pagesize"
+                     :default-page-size="pageInfo.pagesize"
+                     :page-sizes="[5, 10,15,20]"
+                     :pager-count="5"
+                     :total="pageInfo.total"
+                     background
+                     layout="	total ,sizes, prev, pager, next, jumper"
+                     next-text="下一页"
+                     prev-text="上一页"
+                     @size-change="next()"
+                     @current-change="next()"
+                     @prev-click="next()"
+                     @next-click="next()">
       </el-pagination>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import {defineComponent, reactive, toRefs, ref} from 'vue'
-import {ElMessageBox, ElMessage} from 'element-plus'
+import {ElMessageBox, ElMessage, ElNotification} from 'element-plus'
 
 export default defineComponent({
   data() {
@@ -154,6 +157,7 @@ export default defineComponent({
     }
 
     return {
+      url: "http://localhost:80/",
       //通过path获取二级菜单下面所有的菜单
       menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
       //权限列表
@@ -170,39 +174,7 @@ export default defineComponent({
           label: "Option1",
         },
       ]),
-      tableData: [
-        {
-          applyfor: '销售总监',
-          department: '开发部',
-          place: '阿贝多',
-          thing: '启用'
-        },
-        {
-          applyfor: '品牌经理',
-          department: '培训部',
-          place: '凯亚',
-          thing: '禁用'
-        },
-        {
-          applyfor: '商务经理',
-          department: '情报部',
-          place: '安伯',
-          thing: '启用'
-        },
-        {
-          applyfor: '高级软件工程师',
-          department: '运营部',
-          place: '丽莎',
-          thing: '启用'
-        },
-        {
-          applyfor: '高级管理',
-          department: '运营部',
-          place: '芭芭拉',
-          thing: '启用'
-        },
-
-      ],
+      tableData: [],
       value1: "", //日期
       value: ref(""), //选择
       ...toRefs(state),
@@ -299,7 +271,48 @@ export default defineComponent({
         }
       }
       return pd;
-    }
+    },
+    /*分页查询*/
+    next() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDeptPostF',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+  },
+  mounted() {
+    this.next();
   }
 })
 </script>

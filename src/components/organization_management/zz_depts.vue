@@ -2,7 +2,7 @@
   <input v-model="permission" style="display: none">
   <div class="w">
     <div class="head">
-      <el-button type="primary" style="margin-left: 16px" @click="insert()"
+      <el-button type="primary" style="margin-left: 16px"
       >新增
       </el-button>&nbsp;&nbsp;
       <el-drawer ref="drawer" v-model="dialog" :before-close="handleClose" direction="ltr" custom-class="demo-drawer">
@@ -31,7 +31,7 @@
         </div>
       </el-drawer>
 
-      <el-button size="medium" @click="outExe">
+      <el-button size="medium" >
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
@@ -55,10 +55,16 @@
     </div>
     <div class="y">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="date" label="ID"/>
-        <el-table-column prop="name" label="部门名称"/>
-        <el-table-column prop="state" label="部门负责人"/>
-        <el-table-column prop="city" label="状态"/>
+        <el-table-column prop="deptId" label="ID"/>
+        <el-table-column prop="deptName" label="部门名称"/>
+        <el-table-column prop="staffName" label="部门负责人"/>
+        <el-table-column prop="deptState" label="状态">
+          <template #default="scope">
+          <span v-if="scope.row.deptState==0" style="color: #1d95e0" >启用</span>
+            <span v-else-if="scope.row.deptState==1" style="color: red">禁用</span>
+          </template>
+        </el-table-column>
+
         <el-table-column prop="operate" label="操作">
           <template #default>
             <el-button type="primary" style="margin-left: 16px" @click="drawer = true" label="rtl">修改</el-button>
@@ -77,8 +83,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="状态" :label-width="formLabelWidth">
-            <el-radio v-model="radio1" label="1">启用</el-radio>
-            <el-radio v-model="radio1" label="2">禁用</el-radio>
+            <el-radio v-model="radio1" label="0">启用</el-radio>
+            <el-radio v-model="radio1" label="1">禁用</el-radio>
           </el-form-item>
         </el-form>
         <div class="demo-drawer__footer">&nbsp;
@@ -88,26 +94,30 @@
         </div>
       </el-drawer>
     </div>
+
+    <!-- 分页 -->
     <div class="demo-pagination-block">
-      <el-pagination
-          v-model:currentPage="pageInfo.currenPage"
-          :page-sizes="[3, 5, 10, 50]"
-          v-model:page-size="pageInfo.pagesize"
-          :default-page-size="pageInfo.pagesize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pageInfo.total"
-          :pager-count="5"
-          background
-          @size-change="sele"
-          @current-change="sele"
-      >
+      <el-pagination v-model:current-page="pageInfo.currentPage"
+                     v-model:page-size="pageInfo.pagesize"
+                     :default-page-size="pageInfo.pagesize"
+                     :page-sizes="[5, 10,15,20]"
+                     :pager-count="5"
+                     :total="pageInfo.total"
+                     background
+                     layout="	total ,sizes, prev, pager, next, jumper"
+                     next-text="下一页"
+                     prev-text="上一页"
+                     @size-change="next()"
+                     @current-change="next()"
+                     @prev-click="next()"
+                     @next-click="next()">
       </el-pagination>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import {ElMessageBox, ElMessage} from 'element-plus'
+<script>
+import {ElMessageBox, ElMessage, ElNotification} from 'element-plus'
 import {defineComponent, reactive, toRefs, ref} from 'vue'
 import {export_json_to_excel} from '/src/excal/Export2Excel.js'
 import XLSX from 'xlsx'
@@ -161,6 +171,7 @@ export default defineComponent({
     const direction = ref('rtl')
 
     return {
+      url: "http://localhost:80/",
       dialog: false,
       loading: false,
       form: {
@@ -180,7 +191,7 @@ export default defineComponent({
       //权限列表
       permissionList: [],
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
@@ -191,48 +202,8 @@ export default defineComponent({
           label: "Option1",
         },
       ]),
-      tableData: [
-        {
-          date: '01',
-          name: '行政部',
-          state: '琴',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-        },
-        {
-          date: '02',
-          name: '人事部',
-          state: '凯亚',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-        },
-        {
-          date: '03',
-          name: '财务部',
-          state: '丽莎',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-        },
-        {
-          date: '04',
-          name: '技术部',
-          state: '阿贝多',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-        },
-        {
-          date: '05',
-          name: '市场部',
-          state: '优菈',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-        },
-      ],
+      tableData: [],
+
       value1: "", //日期
       value: ref(""), //选择
       ...toRefs(state),
@@ -242,212 +213,49 @@ export default defineComponent({
       drawer,
       direction,
     };
-  }, computed: {
-    //初始化权限列表
-    permission() {
-      this.inquire_1();
-      return this.permissionList;
-    }
-  }, methods: {
-    //导入操作
-    importfxx(obj) {
-      if (this.permissionQuery("导出")) {
-        console.log(obj);
-        let _this = this;
-        // 通过DOM取文件数据
-        this.file = obj.raw;
-        var rABS = false; //是否将文件读取为二进制字符串
-        var f = this.file;
-        var reader = new FileReader();
-        FileReader.prototype.readAsBinaryString = function (f) {
-          var binary = "";
-          var rABS = false; //是否将文件读取为二进制字符串
-          var pt = this;
-          var wb; //读取完成的数据
-          var outdata;
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var bytes = new Uint8Array(reader.result);
-            var length = bytes.byteLength;
-            for (var i = 0; i < length; i++) {
-              binary += String.fromCharCode(bytes[i]);
-            }
-            if (rABS) {
-              wb = XLSX.read(btoa(fixdata(binary)), { //手动转化
-                type: 'base64'
-              });
-            } else {
-              wb = XLSX.read(binary, {
-                type: 'binary'
-              });
-            }
-            // outdata就是你想要的东西 excel导入的数据
-            outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-            // excel 数据再处理
-            let arr = []
-            outdata.map(v => {
-              let obj = {}
-              obj.date = v.ID
-              obj.name = v.部门名称
-              obj.state = v.部门负责人
-              obj.city = v.状态
-              arr.push(obj)
-              _this.tableData.push(obj)
-            })
-          }
-          reader.readAsArrayBuffer(f);
-        }
+  },
+  methods: {
 
-        if (rABS) {
-          reader.readAsArrayBuffer(f);
+    /*分页查询*/
+    next() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDept',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
-          reader.readAsBinaryString(f);
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
-      } else {
-        ElMessage({
-          message: '权限不足',
-          type: 'warning',
-        })
-      }
-    },
-    //导出操作
-    outExe() {
-      this.export2Excel();
-      //如果有这个导出按钮的权限
-      // if (this.permissionQuery("导出")) {
-      //   ElMessageBox.confirm(
-      //       '此操作将导出excel文件, 是否继续?',
-      //       '提示',
-      //       {
-      //         confirmButtonText: '确定',
-      //         cancelButtonText: '取消',
-      //         type: 'warning',
-      //       }
-      //   ).then(() => {
-      //     this.export2Excel();
-      //   }).catch(() => {
-      //     ElMessage({
-      //       type: 'info',
-      //       message: '取消成功',
-      //     })
-      //   })
-      // } else {
-      //   ElMessage({
-      //     message: '权限不足',
-      //     type: 'warning',
-      //   })
-      // }
-    },
-    // 导出方法
-    export2Excel() {
-      var that = this;
-      let tHeader = ["ID", "部门名称", "部门负责人", "状态"]; // 导出的表头名
-
-      let filterVal = ["date", "name", "state", "city"];
-      ElMessageBox.prompt('请输入文件名', '提示', {
-        confirmButtonText: '生成',
-        cancelButtonText: '取消',
       })
-          .then(({value}) => {
-            let data = that.formatJson(filterVal, that.tableData);
-            export_json_to_excel(tHeader, data, value);
-            ElMessage({
-              type: 'success',
-              message: `生成成功`,
-            })
-          })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '取消成功',
-            })
-          })
     },
-
-    formatJson(filterVal, jsonData) {
-      return jsonData.map((v) => filterVal.map((j) => v[j]));
-    },
-    inquire_1() {
-      //如果菜单列表有值
-      if (this.menuList) {
-        //循环菜单列表
-        for (let i of this.menuList) {
-          //如果菜单有叶子 并且状态为启用
-          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
-            //如果匹配到路由地址跟浏览器地址一样
-            if (i.MENU_ROUTE == window.location.pathname) {
-              //添加到菜单权限列表中
-              this.permissionList.push(i.son);
-            } else {
-              //执行梯归
-              this.inquire_2(i.son)
-            }
-          }
-        }
-      }
-    }, inquire_2(value) {
-      //如果菜单列表有值
-      if (value) {
-        //循环菜单列表
-        for (let i of value) {
-          //如果菜单有叶子 并且状态为启用
-          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
-            //如果匹配到路由地址跟浏览器地址一样
-            if (i.MENU_ROUTE == window.location.pathname) {
-              //添加到菜单权限列表中
-              this.permissionList.push(i.son);
-            } else {
-              //执行梯归
-              this.inquire_2(i.son)
-            }
-          }
-        }
-      }
-    },
-    //新增按钮操作
-    insert() {
-      //如果有这个新增按钮的权限
-      if (this.permissionQuery("新增")) {
-        this.dialog = true;
-      } else {
-        ElMessage({
-          message: '权限不足',
-          type: 'warning',
-        })
-      }
-    },
-    //修改按钮操作
-    update() {
-      if (this.permissionQuery("修改")) {
-        this.loading = true;
-      } else {
-        ElMessage({
-          message: '权限不足',
-          type: 'warning',
-        })
-      }
-    },
-    //查询权限工具方法
-    permissionQuery(value) {
-      //判断
-      let pd = false;
-      //如果菜单列表有数据
-      if (this.permissionList[0]) {
-        //循环菜单列表
-        for (let i = 0; i < this.permissionList[0].length; i++) {
-          //模糊匹配字符串
-          //转化成正则格式的字符串
-          let str = ['', ...value, ''].join('.*');
-          //正则
-          let reg = new RegExp(str);
-          //转化成正则格式的字符串
-          if (reg.test(this.permissionList[0][i].MENU_NAME)) {
-            pd = true;
-          }
-        }
-      }
-      return pd;
-    }
+  },mounted() {
+    this.next();
   }
 })
 </script>
