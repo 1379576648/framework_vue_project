@@ -93,39 +93,47 @@ export default {
                   //显示正在识别
                   setTimeout(this.update, 1000);
                 } else {
-                  //获取后台传过来的数据
-                  let value = response.data.data.succeed;
-                  //读取需要的数据形成对象
-                  let obj = {
-                    //员工编号
-                    "staffId": value.staffId,
-                    //员工名称
-                    "staffName": value.staffName,
-                    //员工手机号
-                    "staffPhone": value.staffPhone,
-                    //员工性别
-                    "staffSex": value.staffSex,
-                    //员工照片地址
-                    "staffPicture": value.staffPicture,
-                    //员工学历
-                    "staffEducation": value.staffEducation,
-                    //员工政治面貌
-                    "staffOutlook": value.staffOutlook,
-                    //部门职位编号
-                    "deptPostId": value.deptPostId,
-                    //部门编号
-                    "deptId": value.deptId,
-                  }
-                  //将形成的对象存放起来
-                  this.$store.commit("staffInfo", obj);
-                  this.$store.commit("updateMenuList", response.data.data.menuList);
-                  sessionStorage.setItem("refresh", "true")
-                  this.$store.commit("updateToken", response.data.data.token);
-                  //跳转到主页面 并且不能回退
-                  if (response.data.data.menuList==''){
-                    this.$router.push({path: '/error', replace: true})
-                  }else{
-                    this.$router.push({path: '/home', replace: true})
+                  if (response.data.data.succeed == "成功") {
+                    //获取后台传过来的数据
+                    let value = response.data.data.info;
+                    //读取需要的数据形成对象
+                    let obj = {
+                      //员工编号
+                      "staffId": value.staffId,
+                      //员工名称
+                      "staffName": value.staffName,
+                      //员工手机号
+                      "staffPhone": value.staffPhone,
+                      //员工性别
+                      "staffSex": value.staffSex,
+                      //员工照片地址
+                      "staffPicture": value.staffPicture,
+                      //员工学历
+                      "staffEducation": value.staffEducation,
+                      //员工政治面貌
+                      "staffOutlook": value.staffOutlook,
+                      //部门职位编号
+                      "deptPostId": value.deptPostId,
+                      //部门编号
+                      "deptId": value.deptId,
+                    }
+                    //将形成的对象存放起来
+                    this.$store.commit("staffInfo", obj);
+                    this.$store.commit("updateMenuList", response.data.data.menuList);
+                    sessionStorage.setItem("refresh", "true")
+                    this.$store.commit("updateToken", response.data.data.token);
+                    //跳转到主页面 并且不能回退
+                    if (response.data.data.menuList == '') {
+                      this.$router.push({path: '/error', replace: true})
+                    } else {
+                      this.$router.push({path: '/home', replace: true})
+                    }
+                  } else {
+                    ElNotification.warning({
+                      title: '提示',
+                      message: response.data.data.succeed,
+                      offset: 100,
+                    })
                   }
                 }
               } else {

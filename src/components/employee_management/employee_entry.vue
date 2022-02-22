@@ -25,17 +25,17 @@
             <!--            </router-link>-->
             <!--            </el-menu>-->
             <div style="margin-left: 15px;">
-            <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tabs v-model="activeName" @tab-click="handleClick">
 
-              <el-tab-pane name="book" label="待入职员工">
-                <employee_stock :key="one"/>
-              </el-tab-pane>
+                <el-tab-pane name="book" label="待入职员工">
+                  <employee_stock :key="one"/>
+                </el-tab-pane>
 
-              <el-tab-pane name="second" label="放弃入职员工" >
-                <employee_abandon :key="one"/>
-              </el-tab-pane>
+                <el-tab-pane name="second" label="放弃入职员工">
+                  <employee_abandon :key="one"/>
+                </el-tab-pane>
 
-            </el-tabs>
+              </el-tabs>
             </div>
           </div>
         </div>
@@ -61,14 +61,17 @@ export default {
   },
   data() {
     return {
-      one:1,
+      one: 1,
       activeName: 'book'
     }
-  },methods:{
-    handleClick(){
-      this.one=this.one+1;
+  }, methods: {
+    handleClick() {
+      this.one = this.one + 1;
     }
-}
+  }, mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+  }
 }
 </script>
 

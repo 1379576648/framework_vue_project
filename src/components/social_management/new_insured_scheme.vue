@@ -296,7 +296,6 @@
               size="small"
               :min="0"
               :key="security_cardinal_key"
-              @input="socialInput"
               controls-position="right"
               placeholder="请输入社保基数"
               style="width: 180px"
@@ -308,7 +307,6 @@
               size="small"
               :min="0"
               controls-position="right"
-              @input="fundInput"
               :key="accumulation_cardinal_key"
               placeholder="请输入公积金基数"
               style="width: 180px"
@@ -467,7 +465,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-         if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               if (response.data.data.info != null) {
@@ -487,7 +485,7 @@ export default {
                 }
               }
               this.$store.commit("updateToken", response.data.data.token);
-            }else {
+            } else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
@@ -522,30 +520,30 @@ export default {
       //渲染键值加1
       this.social.key = this.social.key + 1;
     },
-    //社保输入
-    socialInput() {
-      //判断基数是否小于基数下限
-      if (this.security_cardinal < this.social.defSchemeMin) {
-        this.security_cardinal = this.social.defSchemeMin;
-        //判断基数是否大于基数上限
-      } else if (this.security_cardinal > this.social.defSchemeMax) {
-        this.security_cardinal = this.social.defSchemeMax;
-      }
-      //渲染键值加1
-      this.security_cardinal_key = this.security_cardinal_key + 1;
-    },
-    //积金输入
-    fundInput() {
-      //判断基数是否小于基数下限
-      if (this.accumulation_cardinal < this.fund.defSchemeMin) {
-        this.accumulation_cardinal = this.fund.defSchemeMin;
-        //判断基数是否大于基数上限
-      } else if (this.accumulation_cardinal > this.fund.defSchemeMax) {
-        this.accumulation_cardinal = this.fund.defSchemeMax
-      }
-      //渲染键值加1
-      this.accumulation_cardinal_key = this.accumulation_cardinal_key + 1;
-    },
+    // //社保输入
+    // socialInput() {
+    //   //判断基数是否小于基数下限
+    //   if (this.security_cardinal < this.social.defSchemeMin) {
+    //     this.security_cardinal = this.social.defSchemeMin;
+    //     //判断基数是否大于基数上限
+    //   } else if (this.security_cardinal > this.social.defSchemeMax) {
+    //     this.security_cardinal = this.social.defSchemeMax;
+    //   }
+    //   //渲染键值加1
+    //   this.security_cardinal_key = this.security_cardinal_key + 1;
+    // },
+    // //积金输入
+    // fundInput() {
+    //   //判断基数是否小于基数下限
+    //   if (this.accumulation_cardinal < this.fund.defSchemeMin) {
+    //     this.accumulation_cardinal = this.fund.defSchemeMin;
+    //     //判断基数是否大于基数上限
+    //   } else if (this.accumulation_cardinal > this.fund.defSchemeMax) {
+    //     this.accumulation_cardinal = this.fund.defSchemeMax
+    //   }
+    //   //渲染键值加1
+    //   this.accumulation_cardinal_key = this.accumulation_cardinal_key + 1;
+    // },
     //计算操作
     calculate() {
       //判断社保基数范围
@@ -608,14 +606,19 @@ export default {
           payment_details_sum: 0,//小计
         });
         let value = 0;
-        //如果小于下限
-        if (this.security_cardinal < this.social_tableData[i].defSchemeFloor) {
-          value = this.social_tableData[i].defSchemeFloor;
-          //如果大于上限
-        } else if (this.security_cardinal > this.social_tableData[i].defSchemeUpper) {
-          value = this.social_tableData[i].defSchemeUpper;
+        if (this.security_cardinal < this.social.defSchemeMin) {
+          value = this.social.defSchemeMin;
+        } else if (this.security_cardinal > this.social.defSchemeMax) {
+          value = this.social.defSchemeMax;
         } else {
           value = this.security_cardinal;
+        }
+        //如果小于下限
+        if (value < this.social_tableData[i].defSchemeFloor) {
+          value = this.social_tableData[i].defSchemeFloor;
+          //如果大于上限
+        } else if (value > this.social_tableData[i].defSchemeUpper) {
+          value = this.social_tableData[i].defSchemeUpper;
         }
 
         this.payment_details_table[this.payment_details_table.length - 1].payment_details_sum =
@@ -637,6 +640,13 @@ export default {
           payment_details_sum: 0,//小计
         });
         let value = 0;
+        if (this.accumulation_cardinal < this.fund.defSchemeMin) {
+          value = this.fund.defSchemeMin;
+        } else if (this.accumulation_cardinal > this.fund.defSchemeMax) {
+          value = this.fund.defSchemeMax;
+        } else {
+          value = this.accumulation_cardinal;
+        }
         //如果小于下限
         if (this.accumulation_cardinal < this.accumulation_tableData[i].defSchemeFloor) {
           value = this.accumulation_tableData[i].defSchemeFloor
@@ -653,24 +663,34 @@ export default {
       for (let i = 0; i < this.payment_details_table.length; i++) {
         let value = 0;
         if (this.payment_details_table[i].payment_name != '公积金') {
-          //如果小于下限
-          if (this.security_cardinal < this.payment_details_table[i].floor_cardinal_number) {
-            value = this.payment_details_table[i].floor_cardinal_number;
-            //如果大于上限
-          } else if (this.security_cardinal > this.payment_details_table[i].upper_cardinal_number) {
-            value = this.payment_details_table[i].upper_cardinal_number;
+          if (this.security_cardinal < this.social.defSchemeMin) {
+            value = this.social.defSchemeMin;
+          } else if (this.security_cardinal > this.social.defSchemeMax) {
+            value = this.social.defSchemeMax;
           } else {
             value = this.security_cardinal;
           }
-        } else {
           //如果小于下限
-          if (this.accumulation_cardinal < this.payment_details_table[i].floor_cardinal_number) {
+          if (value < this.payment_details_table[i].floor_cardinal_number) {
             value = this.payment_details_table[i].floor_cardinal_number;
             //如果大于上限
-          } else if (this.accumulation_cardinal > this.payment_details_table[i].upper_cardinal_number) {
+          } else if (value > this.payment_details_table[i].upper_cardinal_number) {
             value = this.payment_details_table[i].upper_cardinal_number;
+          }
+        } else {
+          if (this.accumulation_cardinal < this.fund.defSchemeMin) {
+            value = this.fund.defSchemeMin;
+          } else if (this.accumulation_cardinal > this.fund.defSchemeMax) {
+            value = this.fund.defSchemeMax;
           } else {
             value = this.accumulation_cardinal;
+          }
+          //如果小于下限
+          if (value < this.payment_details_table[i].floor_cardinal_number) {
+            value = this.payment_details_table[i].floor_cardinal_number;
+            //如果大于上限
+          } else if (value > this.payment_details_table[i].upper_cardinal_number) {
+            value = this.payment_details_table[i].upper_cardinal_number;
           }
         }
         //个人金额
@@ -703,7 +723,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-         if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -721,7 +741,7 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }else {
+            } else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
@@ -758,7 +778,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-         if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
@@ -776,7 +796,7 @@ export default {
                   message: response.data.data.info,
                 })
               }
-            }else {
+            } else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
@@ -959,7 +979,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-         if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //方案名称
@@ -967,7 +987,7 @@ export default {
               //方案编号
               this.defInsuredId = response.data.data.info.defInsuredId;
               this.$store.commit("updateToken", response.data.data.token);
-            }else {
+            } else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
@@ -993,7 +1013,7 @@ export default {
         responseEncoding: 'utf-8',
       }).then((response) => {
         if (response.data.code == 200) {
-        if (response.data.data) {
+          if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               for (let i = 0; i < response.data.data.info.length; i++) {
@@ -1010,7 +1030,7 @@ export default {
                 }
               }
               this.$store.commit("updateToken", response.data.data.token);
-            }else {
+            } else {
               ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,

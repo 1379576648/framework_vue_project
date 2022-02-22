@@ -299,28 +299,27 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
@@ -347,31 +346,41 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-          ElMessage({
-            showClose: true,
-            message: '操作成功',
-            type: 'success',
-          })
-          this.selectFixedwage();
-        } else if (response.data.data === 100) {
-          ElMessage({
-            showClose: true,
-            message: '操作失败1',
-            type: 'error',
-          })
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectFixedwage();
+                ElNotification({
+                  title: '提示',
+                  message: '修改成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
-          ElMessage({
-            showClose: true,
-            message: '操作失败2',
-            type: 'error',
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
           })
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     //添加调薪
     insertSalary(staffName) {
@@ -395,46 +404,44 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("添加成功")
-        console.log(response)
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.code == 200) {
-            //如果是成功
-            if (response.data.data == 1) {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              this.selectFixedwage();
               ElNotification({
                 title: '提示',
                 message: '添加成功',
                 type: 'success',
               })
+              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElMessage({
                 type: 'warning',
-                message: '添加失败',
+                message: response.data.data.info,
               })
             }
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
+          }else {
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.data.info,
               offset: 100,
             })
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //分页查询固定工资
     this.selectFixedwage(this.$parent.$parent.$parent.$parent.$data.one);
   }
