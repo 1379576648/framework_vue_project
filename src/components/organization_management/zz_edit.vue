@@ -52,20 +52,25 @@
     </div>
     <div class="y">
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="applyfor" label="职位"/>
-        <el-table-column prop="department" label="所属部门"/>
-        <el-table-column prop="place" label="部门负责人"/>
-        <el-table-column prop="thing" label="状态"/>
+        <el-table-column prop="postName" label="职位"/>
+        <el-table-column prop="deptName" label="所属部门"/>
+        <el-table-column prop="staffName" label="部门负责人"/>
+        <el-table-column prop="deptState" label="状态">
+          <template #default="scope">
+            <span v-if="scope.row.deptState==0" style="color: #1d95e0" >启用</span>
+            <span v-else-if="scope.row.deptState==1" style="color: red">禁用</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="operate" label="操作">
-          <template #default>
-            <el-button size="small" style="color:darkorange" @click="drop">删除</el-button>
+          <template #default="scope">
+            <el-button size="small" style="color:darkorange" @click="drop(scope.row.deptPostId)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <!-- 分页 -->
     <div class="demo-pagination-block">
-      <el-pagination v-model:current-page="pageInfo.currentPage"
+      <el-pagination v-model:current-page="pageInfo.currenPage"
                      v-model:page-size="pageInfo.pagesize"
                      :default-page-size="pageInfo.pagesize"
                      :page-sizes="[5, 10,15,20]"
@@ -165,7 +170,7 @@ export default defineComponent({
       pageInfo: {
         currenPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       options: ref([
@@ -183,73 +188,56 @@ export default defineComponent({
       radio1: ref('1'),
       open,
     };
-  }, computed: {
-  //初始化权限列表
-  permission() {
-    this.inquire_1();
-    return this.permissionList;
-  }
-
-}, methods: {
-    inquire_1() {
-      //如果菜单列表有值
-      if (this.menuList) {
-        //循环菜单列表
-        for (let i of this.menuList) {
-          //如果菜单有叶子 并且状态为启用
-          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
-            //如果匹配到路由地址跟浏览器地址一样
-            if (i.MENU_ROUTE == window.location.pathname) {
-              //添加到菜单权限列表中
-              this.permissionList.push(i.son);
-            } else {
-              //执行梯归
-              this.inquire_2(i.son)
-            }
-          }
-        }
-      }
-    }, inquire_2(value) {
-      //如果菜单列表有值
-      if (value) {
-        //循环菜单列表
-        for (let i of value) {
-          //如果菜单有叶子 并且状态为启用
-          if (i.MENU_LEAF == 0 && i.MENU_STATE == 0) {
-            //如果匹配到路由地址跟浏览器地址一样
-            if (i.MENU_ROUTE == window.location.pathname) {
-              //添加到菜单权限列表中
-              this.permissionList.push(i.son);
-            } else {
-              //执行梯归
-              this.inquire_2(i.son)
-            }
-          }
-        }
-      }
-    },
+  },
+  methods: {
     //新增按钮操作
     insert() {
-      //如果有这个新增按钮的权限
-      if (this.permissionQuery("新增")) {
-        this.dialog = true;
-      } else {
-        ElMessage({
-          message: '权限不足',
-          type: 'warning',
-        })
-      }
     },
     //删除按钮操作
-    drop() {
-      if (this.permissionQuery("删除")) {
-        this.loading = true;
-      } else {
-        ElMessage({
-          message: '权限不足',
-          type: 'warning',
-        })
-      }
+    drop(id) {
+      var _this=this
+      this.axios({
+        method:'delete',
+        url:this.url + '/scDeptPost/'+id,
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //关闭弹出对话框
+                this.outerVisible = false;
+                this.next();
+                ElMessage({
+                  type: 'success',
+                  message: '删除成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
     },
     //查询权限工具方法
     permissionQuery(value) {
@@ -280,7 +268,7 @@ export default defineComponent({
         url: this.url + 'selectDeptPostF',
         data: {
           //当前页
-          'currentPage': this.pageInfo.currentPage,
+          'currentPage': this.pageInfo.currenPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
         },
@@ -291,8 +279,10 @@ export default defineComponent({
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
+
               _this.tableData = response.data.data.info.records
               _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.warning({
                 title: '提示',
@@ -312,6 +302,8 @@ export default defineComponent({
     },
   },
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.next();
   }
 })

@@ -215,7 +215,6 @@ export default defineComponent({
     };
   },
   methods: {
-
     /*分页查询*/
     next() {
       var _this = this
@@ -237,6 +236,7 @@ export default defineComponent({
             if (response.data.data.state == 200) {
               _this.tableData = response.data.data.info.records
               _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.warning({
                 title: '提示',
@@ -255,6 +255,8 @@ export default defineComponent({
       })
     },
   },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.next();
   }
 })

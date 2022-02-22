@@ -2,7 +2,7 @@
   <div class="w">
     <div class="head">
 
-      <el-input size="small" v-model="input" placeholder="搜索" style="width:150px;margin-left: 25px">
+      <el-input size="small" v-model="deptName" @input="next" placeholder="请输入部门名称" style="width:150px;margin-left: 25px">
           <template #suffix>
           <el-icon style="margin-top:9px;margin-right:10px"><i-search /></el-icon>
         </template>
@@ -14,117 +14,109 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column type="expand">
           <template #default="props">
-            <p>部门负责人: {{ props.row.state }}</p>
-            <p>City: {{ props.row.city }}</p>
-            <p>Address: {{ props.row.address }}</p>
-            <p>Zip: {{ props.row.zip }}</p>
+            <p>部门负责人: {{ props.row.staffName }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="ID" prop="id" />
-        <el-table-column label="部门" prop="name" />
-		<el-table-column label="部门负责人" prop="state" />
-		<el-table-column label="状态" prop="city" />
+        <el-table-column label="ID" prop="deptId" />
+        <el-table-column label="部门" prop="deptName" />
+		<el-table-column label="部门负责人" prop="staffName" />
+		<el-table-column label="状态" prop="deptState" >
+      <template #default="scope">
+        <span v-if="scope.row.deptState==0" style="color: #1d95e0" >启用</span>
+        <span v-else-if="scope.row.deptState==1" style="color: red">禁用</span>
+      </template>
+    </el-table-column>
       </el-table>
     </div>
-
+    <!-- 分页 -->
+    <div class="demo-pagination-block">
+      <el-pagination v-model:current-page="pageInfo.currentPage"
+                     v-model:page-size="pageInfo.pagesize"
+                     :default-page-size="pageInfo.pagesize"
+                     :page-sizes="[5, 10,15,20]"
+                     :pager-count="5"
+                     :total="pageInfo.total"
+                     background
+                     layout="	total ,sizes, prev, pager, next, jumper"
+                     next-text="下一页"
+                     prev-text="上一页"
+                     @size-change="next()"
+                     @current-change="next()"
+                     @prev-click="next()"
+                     @next-click="next()">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { ref, defineComponent } from "vue";
-import {ElNotification} from "element-plus";
+<script>
+import {defineComponent, reactive, toRefs, ref} from 'vue'
+import {ElMessageBox, ElMessage, ElNotification} from 'element-plus'
 export default {
   data() {
     return {
       //访问路径
       url: "http://localhost:80/",
-        tableData: [
-                {
-                  id: '01',
-                  name: '行政部',
-                  state: '琴',
-                  city: 'Los Angeles',
-                  address: 'No. 189, Grove St, Los Angeles',
-                  zip: 'CA 90036',
-                },
-                {
-                  id: '02',
-                  name: '人事部',
-                  state: '凯亚',
-                  city: 'Los Angeles',
-                  address: 'No. 189, Grove St, Los Angeles',
-                  zip: 'CA 90036',
-                },
-                {
-                  id: '03',
-                  name: '财务部',
-                  state: '丽莎',
-                  city: 'Los Angeles',
-                  address: 'No. 189, Grove St, Los Angeles',
-                  zip: 'CA 90036',
-                },
-                {
-                  id: '04',
-                  name: '技术部',
-                  state: '阿贝多',
-                  city: 'Los Angeles',
-                  address: 'No. 189, Grove St, Los Angeles',
-                  zip: 'CA 90036',
-                },
-                {
-                  id: '05',
-                  name: '市场部',
-                  state: '优菈',
-                  city: 'Los Angeles',
-                  address: 'No. 189, Grove St, Los Angeles',
-                  zip: 'CA 90036',
-                },
-              ],
-            };
-
+      pageInfo: {
+        currentPage: 1,
+        /* 当前的页 */
+        pagesize: 3,
+        total: 0,
+      },
+      deptName:'',
+      tableData: [],
+    };
   },
   methods: {
-    // 查询所有部门
-    selectDept() {
+    /*分页查询*/
+    next() {
       var _this = this
       this.axios({
         method: 'post',
         url: this.url + 'selectDept',
         data: {
           //当前页
-          "currentPage": this.pageInfo.currentPage,
+          'currentPage': this.pageInfo.currentPage,
           //页大小
           "pagesize": this.pageInfo.pagesize,
+          //部门名称
+          "deptName":this.deptName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("查询部门成功");
-        console.log(response);
-        if (response.data.data.data) {
-          alert("服务发生关闭")
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.tableData = response.data.data.info.records;
-            this.pageInfo.pagesize = response.data.data.info.size;
-            this.pageInfo.total = response.data.data.info.total;
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
           }
         } else {
-          alert("服务发生雪崩")
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
-    // 挂载
-    created() {
-      // 查询部门
-      this.selectDept();
+    },
+    mounted() {
+      //jWT传梯
+      this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+      this.next();
     }
-  }
-};
+
+}
 </script>
 
 <style>
@@ -149,7 +141,7 @@ table *{
 }
 
 .demo-pagination-block{
-  margin-left:850px ;
+  margin-left:50px ;
   margin-top: 20px;
   margin-bottom: 30px;
 }
