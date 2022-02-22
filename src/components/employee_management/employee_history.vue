@@ -71,7 +71,7 @@
         pageInfo: {
           // 分页参数
           currentPage: 1, //当前页
-          pagesize: 3, // 页大小
+          pagesize: 5, // 页大小
           total: 0, // 总页数
         },
         tableData:[],
@@ -95,33 +95,34 @@
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
-          //如果服务关闭
-          if (response.data.data.data) {
-            ElNotification.warning({
+          if (response.data.code === 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state === 200) {
+                _this.tableData = response.data.data.info.records
+                _this.pageInfo.total = response.data.data.info.total
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElNotification.error({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
+                })
+              }
+            }
+          } else {
+            ElNotification.error({
               title: '提示',
-              message: "服务发生关闭",
+              message: response.data.message,
               offset: 100,
             })
-            //如果服务没有关闭
-          } else if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              _this.tableData = response.data.data.info.records
-              _this.pageInfo.total = response.data.data.info.total
-            }
-            //如果服务是雪崩的
-            else {
-              ElNotification.warning({
-                title: '提示',
-                message: "服务发生雪崩",
-                offset: 100,
-              })
-            }
           }
         })
       }
     },
     mounted(){
+      //jWT传梯
+      this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
       this.selectQuit();
     }
   }

@@ -28,7 +28,7 @@
         <div style="margin-top:-32px;">
           <!--搜索输入框-->
           <el-row style="width:140px;float:right;">
-            <el-input v-model="seek" placeholder="方案名称">
+            <el-input v-model="seek" placeholder="方案名称" @input="selectAttendandce">
               <template #suffix>
                 <el-icon class="el-input__icon"><i-search/></el-icon>
               </template>
@@ -39,17 +39,33 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary" style="margin-top: 50px">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="name" label="方案名称" width="180" />
-            <el-table-column prop="name" label="核算规则" width="180" />
-            <el-table-column prop="name" label="适用对象" width="180" />
-            <el-table-column prop="name" label="职位" width="180" />
-            <el-table-column prop="name" label="备注" width="180" />
-            <el-table-column prop="name" label="状态" width="180" />
-            <el-table-column fixed="right" label="操作" width="180">
+            <el-table-column prop="attendandceName" label="方案名称" width="230" />
+<!--            <el-table-column prop="name" label="核算规则" width="230" />-->
+            <el-table-column label="核算规则" width="240">
+              <template #default="scope">
+                <span>迟到：扣{{this.tableData[0].attendandceLitemoney}}元x迟到次数</span><br/>
+                <span>早退：扣{{this.tableData[0].attendandceLeavemoney}}元x早退次数</span><br/>
+                <span>未签到：扣{{this.tableData[0].attendandceDidnotmoney}}元x未签到的次数</span><br/>
+                <span>未签退：扣{{this.tableData[0].attendandceDidbackmoney}}元x未签退的次数</span><br/>
+                <span>旷工：小时工资x{{this.tableData[0].attendandceAbscntmoney}}%x旷工折算的小时数</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="deptName" label="适用对象" width="230" />
+            <el-table-column prop="attendandceRemark" label="备注" width="230" />
+<!--            <el-table-column prop="attendandceState" label="状态" width="230" />-->
+            <el-table-column label="状态" width="230">
+              <template #default="scope">
+                <span class="button-await" v-if="scope.row.attendandceState===0"><span style="color: #5aaaff">启用</span></span>
+                <span class="button-pass" v-if="scope.row.attendandceState===1"><span style="color: #5aaaff">禁用</span></span>
+              </template>
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="230">
               <template #default="scope">
 
                   <el-button type="text"  size="small"
-                             @click="this.$parent.$data.salary_insertplantwo=true,
+                             @click="
+                             this.$parent.$data.attendancePlan=scope.row.attendandceId,
+                             this.$parent.$data.salary_insertplantwo=true,
                     this.$parent.$data.salary_insertplan=false,
                     this.$parent.$data.salary_checkwage=false,
                     this.$parent.$data.regular=false,
@@ -60,9 +76,34 @@
                     this.$parent.$data.insertplantwo_name='编辑'">
                     编辑 </el-button
                   >
-                <el-button type="text" size="small" @click="handleClick">禁用 </el-button>
+                <el-popconfirm
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    :icon="InfoFilled"
+                    icon-color="red"
+                    title="确定禁用吗?"
+                    @confirm="updateAttendandceState(attendandceId=scope.row.attendandceId)"
+                    v-if="scope.row.attendandceState===0"
+                >
+                  <template #reference v-if="scope.row.attendandceState===0">
+                    <el-button type="text" size="small" @click="(attendandceId=scope.row.attendandceId)">禁用</el-button>
+                  </template>
+                </el-popconfirm>
+                <el-popconfirm
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    :icon="InfoFilled"
+                    icon-color="blue"
+                    title="确定启用吗?"
+                    @confirm="updateAttendandceStateTwo(attendandceId=scope.row.attendandceId)"
+                    v-if="scope.row.attendandceState===1"
+                >
+                  <template #reference v-if="scope.row.attendandceState===1">
+                    <el-button type="text" size="small" @click="(attendandceId=scope.row.attendandceId)">启用</el-button>
+                  </template>
+                </el-popconfirm>
 <!--                <el-button type="text" size="small">删除 </el-button>-->
-                <el-popconfirm @confirm="deleteRow(scope.$index, tableData)"
+                <el-popconfirm @confirm="deleteAttendandce(attendanceId=scope.row.attendandceId)"
                                title="确认要删除此方案吗?">
                   <template #reference>
                     <el-button type="text" size="small" style="color: orange">删除 </el-button>
@@ -79,15 +120,17 @@
         <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
           <el-pagination
               v-model:currentPage="pageInfo.currentPage"
-              :page-sizes="[3, 5, 10, 50]"
+              :page-sizes="[4, 5, 10, 50]"
               v-model:page-size="pageInfo.pagesize"
               :default-page-size="pageInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="pageInfo.total"
               :pager-count="5"
+              prev-text="上一页"
+              next-text="下一页"
+              @size-change="selectAttendandce()"
+              @current-change="selectAttendandce()"
               background
-              @size-change="selectUsers"
-              @current-change="selectUsers"
           >
           </el-pagination>
         </div>
@@ -100,34 +143,18 @@
 </template>
 
 <script>
-import {ElMessage} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   data(){
     return{
+      //请求的路径
+      url: "http://localhost:80/",
+      attendancePlan:'',
       //新增编辑考勤扣款方案
       insertattendanceplan:'/salary/insertattendanceplan',
       seek:"",
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Home',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036',
-          tag: 'Office',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
@@ -138,14 +165,200 @@ export default {
     }
   },
   methods:{
-    // 删除行
-    deleteRow(index, rows) {
-      rows.splice(index, 1);
-      ElMessage({
-        message: '删除成功',
-        type: 'success',
+    // 删除考勤扣款方案
+    deleteAttendandce(id) {
+      var _this = this
+      this.axios({
+        method: 'delete',
+        url: this.url + 'deleteAttendandce/'+this.attendanceId,
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                ElNotification({
+                  title: '提示',
+                  message: '删除成功',
+                  type: 'success',
+                })
+                this.selectAttendandce();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+
+    },
+    //分页查询考勤扣款方案
+    selectAttendandce() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectAttendandce',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //部门名称
+          //"deptName":this.$parent.$data.two,
+          //方案名称
+          "attendandceName":this.seek,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
       })
     },
+    //修改状态为禁用
+    updateAttendandceState(attendandceId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateAttendandceState',
+        data: {
+          attendandceId: this.attendandceId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 999) {
+                this.selectAttendandce();
+                ElNotification({
+                  title: '提示',
+                  message: '修改成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //修改状态为启用
+    updateAttendandceStateTwo(attendandceId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateAttendandceStateTwo',
+        data: {
+          attendandceId: this.attendandceId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 999) {
+                this.selectAttendandce();
+                ElNotification({
+                  title: '提示',
+                  message: '修改成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+  },
+  created() {
+    //分页查询考勤扣款方案
+    this.selectAttendandce();
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
   }
 }
 </script>

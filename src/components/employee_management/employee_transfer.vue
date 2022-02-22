@@ -53,7 +53,7 @@
                   </el-form-item><br/>
 
                   <el-form-item label="调动后部门：" prop="transferdept">
-                    <el-select v-model="ruleForm.transferdept" placeholder="请选择" style="width: 239px;">
+                    <el-select v-model="ruleForm.transferdept" placeholder="请选择" style="width: 239px;" @change="selectPostName(deptName=this.ruleForm.transferdept)">
                       <el-option  style="margin-left: 20px;"
                                   v-for="item in dept_name"
                                   :key="item.value"
@@ -65,7 +65,7 @@
                   </el-form-item><br/>
 
                   <el-form-item label="调动后职位：" prop="transferpost">
-                    <el-select v-model="ruleForm.transferpost" placeholder="请选择" style="width: 239px;">
+                    <el-select v-model="this.tableDataTwo.postName" placeholder="请选择" style="width: 239px;">
                       <el-option  style="margin-left: 20px;"
                                   v-for="item in post_name"
                                   :key="item.value"
@@ -88,7 +88,7 @@
 
                 <div style="width:25%;height: 50px;margin: auto;margin-top: 20px;">
                   <el-button @click="RestForm(),changesadd=!changesadd" style="width: 60px;">取消</el-button>
-                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(deptId=this.tableDatas.deptId),updateDeptPostName(deptPostId=this.tableDatas.deptPostId),insertTransfer(),changesadd=!changesadd">提交</el-button>
+                  <el-button  type="primary" style="width: 60px;" @click="updateDeptName(staffId=this.tableDatas.staffId),insertTransfer(),changesadd=!changesadd">提交</el-button>
                 </div>
 
               </el-form>
@@ -201,6 +201,7 @@
   </div>
 </template>
 
+
 <script>
 import {ElMessage, ElNotification} from "element-plus";
 export default{
@@ -223,7 +224,7 @@ export default{
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 3, // 页大小
+        pagesize: 5, // 页大小
         total: 0, // 总页数
       },
       //新增调动的表单
@@ -257,8 +258,10 @@ export default{
       //radio:"",
       //表格数据
       tableData: [],
-      tableDatas: {},
-      //员工名称
+      tableDataTwo:{
+
+      },
+      tableDatas: {}, //员工名称
       staff_name:[],
       //部门名称
       dept_name:[],
@@ -294,28 +297,27 @@ export default{
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            _this.tableData = response.data.data.info.records
-            _this.pageInfo.total = response.data.data.info.total
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
     },
@@ -328,30 +330,35 @@ export default{
           staffId:this.tableData.staffId,
         }
       }).then((response) => {
-        console.log("查询员工名称成功")
-        console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.staff_name = [];
-            //循环部门列表
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              //一个一个存起来
-              this.staff_name.push({
-                value: response.data.data.info[i].staffName,
-                label: response.data.data.info[i].staffName
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.staff_name = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                //一个一个存起来
+                this.staff_name.push({
+                  value: response.data.data.info[i].staffName,
+                  label: response.data.data.info[i].staffName
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
               })
             }
-
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -364,69 +371,79 @@ export default{
           staffId:this.tableData.staffId,
         }
       }).then((response) => {
-        console.log("查询部门名称成功")
-        console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.dept_name = [];
-            //循环部门列表
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              //一个一个存起来
-              this.dept_name.push({
-                value: response.data.data.info[i].deptName,
-                label: response.data.data.info[i].deptName
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.dept_name = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                //一个一个存起来
+                this.dept_name.push({
+                  value: response.data.data.info[i].deptName,
+                  label: response.data.data.info[i].deptName
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
               })
             }
-
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
-    //查询职位名称
-    selectJob() {
-      this.axios({
-        method: 'post',
-        url: this.url + 'selectJob',
-        data: {
-          staffId:this.tableData.staffId,
-        }
-      }).then((response) => {
-        console.log("查询职位名称成功")
-        console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.post_name = [];
-            //循环部门列表
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              //一个一个存起来
-              this.post_name.push({
-                value: response.data.data.info[i].postName,
-                label: response.data.data.info[i].postName
-              })
-            }
-
-          }
-        }
-      })
-    },
+    // //查询职位名称
+    // selectJob() {
+    //   this.axios({
+    //     method: 'post',
+    //     url: this.url + 'selectJob',
+    //     data: {
+    //       staffId:this.tableData.staffId,
+    //     }
+    //   }).then((response) => {
+    //     if (response.data.code === 200) {
+    //       if (response.data.data) {
+    //         //如果服务是正常的
+    //         if (response.data.data.state === 200) {
+    //           //初始化
+    //           this.post_name = [];
+    //           //循环部门列表
+    //           for (let i = 0; i < response.data.data.info.length; i++) {
+    //             //一个一个存起来
+    //             this.post_name.push({
+    //               value: response.data.data.info[i].postName,
+    //               label: response.data.data.info[i].postName
+    //             })
+    //           }
+    //           this.$store.commit("updateToken", response.data.data.token);
+    //         } else {
+    //           ElNotification.error({
+    //             title: '提示',
+    //             message: response.data.data.info,
+    //             offset: 100,
+    //           })
+    //         }
+    //       }
+    //     } else {
+    //       ElNotification.error({
+    //         title: '提示',
+    //         message: response.data.message,
+    //         offset: 100,
+    //       })
+    //     }
+    //   })
+    // },
     //根据名称查询部门名称和职位名称
     selectTransferByName(staffName) {
       var _this = this
@@ -439,27 +456,76 @@ export default{
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDatas = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            _this.tableDatas = response.data.data.info[0]
+        }
+      })
+    },
+    //根据部门查询部门职位
+    selectPostName(deptName) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectPostName',
+        data:{
+          deptName:this.ruleForm.transferdept,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.post_name = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                //一个一个存起来
+                this.post_name.push({
+                  value: response.data.data.info[i].postName,
+                  label: response.data.data.info[i].postName
+                })
+              }
+              if (response.data.data.info==''){
+                this.tableDataTwo.postName="";
+              }else{
+                _this.tableDataTwo = response.data.data.info[0]
+
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
           }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
@@ -480,7 +546,7 @@ export default{
           //调动前职位
           transferRawpostName:this.tableDatas.postName,
           //调动后职位
-          transferAfterpostName:this.ruleForm.transferpost,
+          transferAfterpostName:this.tableDataTwo.postName,
           //生效日期
           takeEffectDate:this.ruleForm.takedate,
           //备注
@@ -489,111 +555,142 @@ export default{
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("添加成功")
-        console.log(response)
-        //如果服务关闭
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.code == 200) {
-            //如果是成功
-            if (response.data.data == 1) {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              this.selectTransfer();
               ElNotification({
                 title: '提示',
                 message: '添加成功',
                 type: 'success',
               })
-              this.selectTransfer()
+              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElMessage({
                 type: 'warning',
-                message: '添加失败',
+                message: response.data.data.info,
               })
             }
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.warning({
+          }else {
+            ElNotification.error({
               title: '提示',
-              message: "服务发生雪崩",
+              message: response.data.data.info,
               offset: 100,
             })
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
-    //修改部门名称
-    updateDeptName(deptId) {
+    //修改部门和部门职位外键
+    updateDeptName(id) {
       var _this = this
       this.axios({
         method: 'put',
         url: this.url + 'updateDeptName',
         data: {
+          //员工编号
+          staffId:this.tableDatas.staffId,
           //部门编号
-          deptId:this.tableDatas.deptId,
-          //部门名称
-          deptName:this.ruleForm.transferdept,
+          deptId:this.tableDataTwo.deptId,
+          //部门职位编号
+          deptPostId:this.tableDataTwo.deptPostId,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        console.log("修改状态")
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-        } else if (response.data.data === 100) {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
+      })
     },
     //修改部门职位名称
-    updateDeptPostName(deptPostId) {
-      var _this = this
-      this.axios({
-        method: 'put',
-        url: this.url + 'updateDeptPostName',
-        data: {
-          //部门职位编号
-          deptPostId:this.tableDatas.deptPostId,
-          //职位名称
-          postName:this.ruleForm.transferpost,
-        },
-        responseType: 'json',
-        responseEncoding: 'utf-8',
-      }).then((response) => {
-        console.log("修改状态")
-        console.log(response)
-        if (response.data.code === 200 && response.data.data === 666) {
-        } else if (response.data.data === 100) {
-        } else {
-        }
-      }).catch(function (error) {
-        console.log("失败")
-        console.log(error);
-      });
-    },
+    // updateDeptPostName(deptPostId) {
+    //   var _this = this
+    //   this.axios({
+    //     method: 'put',
+    //     url: this.url + 'updateDeptPostName',
+    //     data: {
+    //       //部门职位编号
+    //       deptPostId:this.tableDatas.deptPostId,
+    //       //职位名称
+    //       postName:this.ruleForm.transferpost,
+    //     },
+    //     responseType: 'json',
+    //     responseEncoding: 'utf-8',
+    //   }).then((response) => {
+    //     if (response.data.code == 200) {
+    //       if (response.data.data) {
+    //         //如果服务是正常的
+    //         if (response.data.data.state == 200) {
+    //           //如果是成功
+    //           if (response.data.data.info == 666) {
+    //             this.$store.commit("updateToken", response.data.data.token);
+    //           } else {
+    //             ElMessage({
+    //               type: 'warning',
+    //               message: response.data.data.info,
+    //             })
+    //           }
+    //         }else {
+    //           ElNotification.error({
+    //             title: '提示',
+    //             message: response.data.data.info,
+    //             offset: 100,
+    //           })
+    //         }
+    //       }
+    //     } else {
+    //       ElNotification.error({
+    //         title: '提示',
+    //         message: response.data.message,
+    //         offset: 100,
+    //       })
+    //     }
+    //   })
+    // },
   },
-  //挂载
-  created() {
+  mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询所有员工名称
     this.selectStaffName();
     //查询所有部门名称
     this.selectSect();
-    //查询所有职位名称
-    this.selectJob();
-    //根据名称查询部门名称和职位名称
-    // alert(this.tableData.staffName)
-    // this.selectTransferByName(this.tableData.staffName);
-  },
-  mounted() {
+    // //查询所有职位名称
+    // this.selectJob();
     //分页查询调动管理
     this.selectTransfer();
   },

@@ -199,36 +199,43 @@ export default defineComponent({
           //staffId:this.tableData.staffId,
         }
       }).then((response) => {
-        console.log("查询部门名称成功")
-        console.log(response);
-        if (response.data.data.data) {
-          ElNotification.warning({
-            title: '提示',
-            message: "服务发生关闭",
-            offset: 100,
-          })
-          //如果服务没有关闭
-        } else if (response.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            //初始化
-            this.dept_name = [];
-            //循环部门列表
-            for (let i = 0; i < response.data.data.info.length; i++) {
-              //一个一个存起来
-              this.dept_name.push({
-                value: response.data.data.info[i].deptName,
-                label: response.data.data.info[i].deptName
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.dept_name = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                //一个一个存起来
+                this.dept_name.push({
+                  value: response.data.data.info[i].deptName,
+                  label: response.data.data.info[i].deptName
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
               })
             }
-
           }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
   },
   //挂载
   mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     //查询所有部门名称
     this.selectSect();
   },
