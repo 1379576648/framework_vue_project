@@ -27,17 +27,18 @@
               </div>
             </div>
 
+            <div>
             <!-- 用 户 基 本 消 息 -->
             <el-form :inline="true" :model="formInline" class="demo-form-inline"
                      style="width: 78%; margin-top: -225px; margin-left: 19%;">
-              <h3>基本信息</h3>
-
+              <h3 style="display: inline">基本信息</h3>
+              <el-button style="margin-left: 904px;" @click="resetOne">重置</el-button>
               <br>
               <el-form-item label="姓 名：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.xm"></el-input>
               </el-form-item>
               <el-form-item label="性 别：">
-                <el-select v-model="formInline.region" placeholder="请选择">
+                <el-select v-model="formInline.xb" placeholder="请选择">
                   <el-option label="男" value="男"></el-option>
                   <el-option label="女" value="女"></el-option>
                 </el-select>
@@ -45,7 +46,7 @@
               <el-form-item label="出生日期：">
                 <el-col :span="11">
                   <el-date-picker
-                      v-model="formInline.date1"
+                      v-model="formInline.birthdate"
                       type="date"
                       placeholder="请选择日期"
                       style="width: 200px"
@@ -55,13 +56,13 @@
 
               <div style="display: block;">
                 <el-form-item label="手机号：">
-                  <el-input v-model="formInline.user"></el-input>
+                  <el-input v-model="formInline.sjh"></el-input>
                 </el-form-item>
                 <el-form-item label="邮 箱：">
-                  <el-input v-model="formInline.user"></el-input>
+                  <el-input v-model="formInline.yx"></el-input>
                 </el-form-item>
                 <el-form-item label="所在地：">
-                  <el-input v-model="formInline.user"></el-input>
+                  <el-input v-model="formInline.szd"></el-input>
                 </el-form-item>
               </div>
 
@@ -70,7 +71,7 @@
 
 
                 <el-form-item label="学 历：">
-                  <el-select v-model="formInline.region" placeholder="请选择">
+                  <el-select v-model="formInline.xl" placeholder="请选择">
                     <el-option label="初中" value="初中"></el-option>
                     <el-option label="高中" value="高中"></el-option>
                     <el-option label="大专" value="大专"></el-option>
@@ -81,7 +82,7 @@
                 </el-form-item>
 
                 <el-form-item label="政治面貌：">
-                  <el-select v-model="formInline.region" placeholder="请选择">
+                  <el-select v-model="formInline.zzmm" placeholder="请选择">
                     <el-option label="群众" value="群众"></el-option>
                     <el-option label="共青团" value="共青团"></el-option>
                     <el-option label="党员" value="党员"></el-option>
@@ -89,13 +90,13 @@
                 </el-form-item>
 
                 <el-form-item label="招聘计划：">
-                  <el-select v-model="formInline.region" placeholder="请选择">
+                  <el-select v-model="formInline.zpjh" placeholder="请选择" @click="selectPlan">
                     <el-option label="Hr人力资源专员" value="Hr人力资源专员"></el-option>
                   </el-select>
                 </el-form-item>
               </div>
             </el-form>
-
+          </div>
           </div>
           <br>
           <div style="border: 1px solid #ebebeb; width: 100%; height: 0px ;"></div>
@@ -103,25 +104,26 @@
 
 
           <div>
+          <div>
             <span>
-              <h3>教育消息</h3>
-              <br>
-            </span>
+              <h3 style="display: inline">教育消息</h3>
 
+            </span>
+            <el-button style="margin-left: 1080px;margin-bottom: 20px" @click="resetTwo">重置</el-button>
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item label="学校名称：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.xxmc"></el-input>
               </el-form-item>
 
               <el-form-item label="所学专业：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.sxzy"></el-input>
               </el-form-item>
 
               <el-form-item label="开始时间：">
                 <el-col :span="11">
                   <el-date-picker
-                      v-model="formInline.date1"
+                      v-model="formInline.startdate1"
                       type="date"
                       placeholder="请选择日期"
                       style="width: 200px"
@@ -132,7 +134,7 @@
               <el-form-item label="结束时间：">
                 <el-col :span="11">
                   <el-date-picker
-                      v-model="formInline.date1"
+                      v-model="formInline.enddate1"
                       type="date"
                       placeholder="请选择日期"
                       style="width: 200px"
@@ -140,41 +142,35 @@
                 </el-col>
               </el-form-item>
 
-              <el-form-item label="是否全日制：">
-                <el-radio-group v-model="formInline.radio">
-                  <el-radio :label="0">是</el-radio>
-                  <el-radio :label="1">否</el-radio>
-                </el-radio-group>
-              </el-form-item>
+
             </el-form>
           </div>
 
-
+          </div>
           <br>
           <div style="border: 1px solid #ebebeb; width: 100%; height: 0px ;"></div>
           <br>
 
           <div>
             <span>
-              <h3>工作经历</h3>
-              <br>
+              <h3 style="display: inline">工作经历</h3>
             </span>
-
+            <el-button style="margin-left: 1080px;margin-bottom: 20px" @click="resetThree">重置</el-button>
 
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
               <el-form-item label="公司名称：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.gsmc"></el-input>
               </el-form-item>
 
               <el-form-item label="职位名称：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.zwmc"></el-input>
               </el-form-item>
 
 
               <el-form-item label="开始时间：">
                 <el-col :span="11">
                   <el-date-picker
-                      v-model="formInline.date1"
+                      v-model="formInline.startdate2"
                       type="date"
                       placeholder="请选择日期"
                       style="width: 200px"
@@ -185,7 +181,7 @@
               <el-form-item label="结束时间：">
                 <el-col :span="11">
                   <el-date-picker
-                      v-model="formInline.date1"
+                      v-model="formInline.enddate2"
                       type="date"
                       placeholder="请选择日期"
                       style="width: 200px"
@@ -194,11 +190,11 @@
               </el-form-item>
 
               <el-form-item label="所属行业：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.sshy"></el-input>
               </el-form-item>
 
               <el-form-item label="税前月薪：">
-                <el-input v-model="formInline.user"></el-input>
+                <el-input v-model="formInline.sqyx"></el-input>
               </el-form-item>
 
               <el-form-item label="工作描述：" style="display: block">
@@ -213,8 +209,8 @@
 
             </el-form>
             <el-button @click="this.$parent.$data.recruit_addresume=false">取消</el-button>
-            <el-button>重置</el-button>
-            <el-button type="primary" @click="">提交</el-button>
+
+            <el-button type="primary" @click="addResume">提交</el-button>
           </div>
 
         </div>
@@ -225,6 +221,7 @@
 </template>
 
 <script>
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import {ref} from 'vue'
 
 export default {
@@ -233,13 +230,32 @@ export default {
       src: '',
       isShow: false,
       formInline: {
+        xm:'',
+        xb:'',
+        sjh:'',
+        yx:'',
+        szd:'',
+        xl:'',
+        zzmm:'',
+        zpjh:'',
+        xxmc:'',
+        sxzy:'',
+        gsmc:'',
+        zwmc:'',
+        sshy:'',
+        sqyx:'',
         value1: '',
         user: '',
         region: '',
-        date1: '',
-        radio: ref(0),
-        textarea: ref(''),
+        birthdate: '',
+        startdate1:'',
+        enddate1:'',
+        startdate2:'',
+        enddate2:'',
+        textarea: '',
       },
+      //访问路径
+      url: "http://localhost:80/",
     }
   },
   methods: {
@@ -254,17 +270,138 @@ export default {
         _this.isShow = true;
       }
     },
-
     forkImage() {
       this.src = '';
       this.isShow = false;
     },
+    resetOne(){
+      this.formInline.xm='';
+      this.formInline.xb='';
+      this.formInline.birthdate='';
+      this.formInline.sjh='';
+      this.formInline.yx='';
+      this.formInline.szd='';
+      this.formInline.xl='';
+      this.formInline.zzmm='';
+      this.formInline.zpjh='';
+    },
+    resetTwo(){
+      this.formInline.xxmc='';
+      this.formInline.sxzy='';
+      this.formInline.startdate1='';
+      this.formInline.enddate1='';
+    },
+    resetThree(){
+      this.formInline.gsmc='';
+      this.formInline.zwmc='';
+      this.formInline.startdate2='';
+      this.formInline.enddate2='';
+      this.formInline.sshy='';
+      this.formInline.sqyx='';
+      this.formInline.textarea='';
+    },
+    addResume(){
+      this.axios({
+        method:'post',
+        url: this.url+ 'addResume',
+        data:{
+          "resumeName":this.formInline.xm,
+          "resumeSex":this.formInline.xb,
+          "resumeBirthday":this.formInline.birthdate,
+          "resumePhone": this.formInline.sjh,
+          "resumeMailbox":this.formInline.yx,
+          "resumeResidence": this.formInline.szd,
+          "resumeEducation":this.formInline.xl,
+          "resumePoliticalOutlook":this.formInline.zzmm,
+          "recruitmentPlanId":this.formInline.zpjh,
+          'educationStudentname':this.formInline.xxmc,
+          'educationMajor':this.formInline.sxzy,
+          'educationStartTime1':this.formInline.startdate1,
+          'educationEndTime1':this.formInline.enddate1,
+          'companyName':this.formInline.gsmc,
+          'positionName':this.formInline.zwmc,
+          'educationStartTime2':this.formInline.startdate2,
+          'educationEndTime2':this.formInline.enddate2,
+          'positionIndustry':this.formInline.sshy,
+          'positionSqmonthly':this.formInline.sqyx,
+          'positionDescribe':this.formInline.textarea,
+        },
+        responseType:'json',
+        responseEncoding:'utf-8',
+      }).then((response)=>{
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                ElMessage({
+                  type: 'success',
+                  message: '添加成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询招聘计划名称
+    selectPlan() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectPlan',
+      }).then((response) => {
+        console.log("查询招聘计划名称")
+        console.log(response);
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.president = response.data.data.info;
+              this.$store.commit("updateToken", response.data.data.token);
+              window.setTimeout(this.selectStaffNameAll, 500);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },mounted() {
     //jWT传梯
-    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token;
+    this.selectPlan()
   }
 }
-
 
 </script>
 
