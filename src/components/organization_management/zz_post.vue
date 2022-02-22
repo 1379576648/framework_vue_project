@@ -1,7 +1,7 @@
 <template>
   <div class="w">
     <div class="head">
-      <el-input size="small" v-model="input" placeholder="搜索" style="width:150px;margin-left: 25px">
+      <el-input size="small" v-model="deptPostName" @input="next" placeholder="请输入职位名称" style="width:150px;margin-left: 25px">
           <template #suffix>
           <el-icon style="margin-top:9px;margin-right:10px"><i-search /></el-icon>
         </template>
@@ -11,10 +11,15 @@
 
     <div class="y">
     <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="applyfor" label="职位"/> 
-		<el-table-column prop="department" label="所属部门"/>
-		<el-table-column prop="place" label="部门负责人" />
-		<el-table-column prop="thing" label="状态" />
+        <el-table-column prop="postName" label="职位"/>
+		<el-table-column prop="deptName" label="所属部门"/>
+		<el-table-column prop="staffName" label="部门负责人" />
+		<el-table-column prop="deptState" label="状态" >
+      <template #default="scope">
+        <span v-if="scope.row.deptState==0" style="color: #1d95e0" >启用</span>
+        <span v-else-if="scope.row.deptState==1" style="color: red">禁用</span>
+      </template>
+    </el-table-column>
 		<!-- <el-table-column prop="operate" label="操作" >
       <template #default>
         <el-button type="text" size="small" style="color:darkorange">删除</el-button>
@@ -23,94 +28,96 @@
     </el-table>
     </div>
 
+    <!-- 分页 -->
     <div class="demo-pagination-block">
-    <el-pagination
-      v-model:currentPage="pageInfo.currenPage"
-      :page-sizes="[3, 5, 10, 50]"
-      v-model:page-size="pageInfo.pagesize"
-      :default-page-size="pageInfo.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pageInfo.total"
-      :pager-count="5"
-      background
-      @size-change="sele"
-      @current-change="sele"
-    >
-    </el-pagination>
+      <el-pagination v-model:current-page="pageInfo.currentPage"
+                     v-model:page-size="pageInfo.pagesize"
+                     :default-page-size="pageInfo.pagesize"
+                     :page-sizes="[5, 10,15,20]"
+                     :pager-count="5"
+                     :total="pageInfo.total"
+                     background
+                     layout="	total ,sizes, prev, pager, next, jumper"
+                     next-text="下一页"
+                     prev-text="上一页"
+                     @size-change="next()"
+                     @current-change="next()"
+                     @prev-click="next()"
+                     @next-click="next()">
+      </el-pagination>
     </div>
 
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { ref, defineComponent } from "vue";
+import {ElNotification} from "element-plus/es";
 export default {
   data() {
     return {
+      url: "http://localhost:80/",
         pageInfo: {
         currenPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
       },
-      options: ref([
-        {
-          value: "Option1",
-          label: "Option1",
-        },
-        {
-          value: "Option2",
-          label: "Option2",
-        },
-        {
-          value: "Option3",
-          label: "Option3",
-        },
-        {
-          value: "Option4",
-          label: "Option4",
-        },
-        {
-          value: "Option5",
-          label: "Option5",
-        },
-      ]), 
-      tableData: [
-          {
-              applyfor:'销售总监',
-              department:'开发部',
-              place:'阿贝多',
-              thing:'启用'
-          },
-           {
-              applyfor:'品牌经理',
-              department:'培训部',
-              place:'凯亚',
-              thing:'禁用'
-          },
-           {
-              applyfor:'商务经理',
-              department:'情报部',
-              place:'安伯',
-              thing:'启用'
-          },
-           {
-              applyfor:'高级软件工程师',
-              department:'运营部',
-              place:'丽莎',
-              thing:'启用'
-          },
-          {
-              applyfor:'高级管理',
-              department:'运营部',
-              place:'芭芭拉',
-              thing:'启用'
-          },
-      ],
+      deptPostName:'',
+      options: ref([]),
+      tableData: [],
       value1: "", //日期
       value: ref(""), //选择
     };
   },
+  methods: {
+
+    /*分页查询*/
+    next() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDeptPostF',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currenPage,
+          //页大小
+          "pagesize": this.pageInfo.pagesize,
+          //职位名称
+          "postName":this.deptPostName,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+  },mounted() {
+    //jWT传梯
+    this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    this.next();
+  }
 };
 </script>
 
