@@ -14,7 +14,7 @@
               <div style="margin-left: 150px">
                 <el-form
                     ref="tableData"
-                    :model="tableData"
+                    :model="ruleForm"
                     :rules="rules"
                     label-width="150px"
                     class="demo-ruleForm"
