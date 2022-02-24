@@ -115,6 +115,7 @@ export default {
               this.pageInfo.total = response.data.data.info.total;
               this.tableData = response.data.data.info.records;
               window.setTimeout(this.selectStaffNameAll, 500);
+              this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({
                 title: '提示',
