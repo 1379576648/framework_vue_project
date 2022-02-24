@@ -300,7 +300,7 @@
                   <el-form-item>
                     <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplantwo=false,this.$parent.$data.attendanceplan=true
 ">取消</el-button>&nbsp;
-                    <el-button type="primary" style="width: 60px;" @click="attands(),submitForm('ruleForm'),this.$parent.$data.salary_insertplantwo=false,this.$parent.$data.attendanceplan=true
+                    <el-button type="primary" style="width: 60px;" @click="attands(),this.$parent.$data.salary_insertplantwo=false,this.$parent.$data.attendanceplan=true
                                                               "
                     >提交</el-button
                     >
@@ -349,64 +349,54 @@ export default {
       num3:'0',
       num4:'0',
       num5:'300',
-      rules: {
-        schemename:[
-          {
-            required: true,
-            message: '请输入方案名称',
-            trigger: 'blur',
-          }
-        ],
-        late: [
-          {
-            required: true,
-            message: '请选择迟到规则',
-            trigger: 'change',
-          },
-        ],
-        early: [
-          {
-            required: true,
-            message: '请选择早退规则',
-            trigger: 'change',
-          },
-        ],
-        notsignin: [
-          {
-            required: true,
-            message: '请选择未签到规则',
-            trigger: 'change',
-          },
-        ],
-        notsignback: [
-          {
-            required: true,
-            message: '请选择未签退规则',
-            trigger: 'change',
-          },
-        ],
-        absent: [
-          {
-            required: true,
-            message: '请选择旷工规则',
-            trigger: 'change',
-          },
-        ],
-
-      }
+      // rules: {
+      //   schemename:[
+      //     {
+      //       required: true,
+      //       message: '请输入方案名称',
+      //       trigger: 'blur',
+      //     }
+      //   ],
+      //   late: [
+      //     {
+      //       required: true,
+      //       message: '请选择迟到规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   early: [
+      //     {
+      //       required: true,
+      //       message: '请选择早退规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   notsignin: [
+      //     {
+      //       required: true,
+      //       message: '请选择未签到规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   notsignback: [
+      //     {
+      //       required: true,
+      //       message: '请选择未签退规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   absent: [
+      //     {
+      //       required: true,
+      //       message: '请选择旷工规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //
+      // }
     }
   },
   methods:{
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     //添加考勤扣款方案
     insertAttendandce() {
       this.axios({
