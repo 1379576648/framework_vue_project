@@ -20,7 +20,7 @@
                     class="demo-ruleForm"
                 >
                   <el-form-item label="方案名称：" prop="schemename" style="width:370px">
-                    <el-input v-model="ruleForm.schemename"></el-input>
+                    <el-input v-model="tableData.attendandceName"></el-input>
                   </el-form-item>
 
 
@@ -262,19 +262,24 @@
 
 
                   <el-form-item label="适用对象" prop="suitableusers">
-                    <el-select v-model="ruleForm.suitableusers" placeholder="请选择">
-                      <el-option label="1" value="suitableusers1" style="margin-left: 20px;"></el-option>
-                      <el-option label="111" value="suitableusers2" style="margin-left: 20px;"></el-option>
+                    <el-select v-model="tableData.deptName" placeholder="请选择">
+                      <el-option  style="margin-left: 20px;"
+                                  v-for="item in dept_name"
+                                  :key="item.value"
+                                  :label="item.label"
+                                  :value="item.value"
+                      >
+                      </el-option>
                     </el-select>
                   </el-form-item>
 
 
-                  <el-form-item label="职位" prop="post">
-                    <el-select v-model="ruleForm.post" placeholder="请选择">
-                      <el-option label="212" value="post1" style="margin-left: 20px;"></el-option>
-                      <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>
-                    </el-select>
-                  </el-form-item>
+<!--                  <el-form-item label="职位" prop="post">-->
+<!--                    <el-select v-model="ruleForm.post" placeholder="请选择">-->
+<!--                      <el-option label="212" value="post1" style="margin-left: 20px;"></el-option>-->
+<!--                      <el-option label="22222" value="post2" style="margin-left: 20px;"></el-option>-->
+<!--                    </el-select>-->
+<!--                  </el-form-item>-->
 
 
 
@@ -290,12 +295,13 @@
 
 
                   <el-form-item label="备注" prop="remark" style="width:500px">
-                    <el-input v-model="ruleForm.remark" type="textarea"></el-input>
+                    <el-input v-model="tableData.attendandceRemark" type="textarea"></el-input>
                   </el-form-item>
                   <el-form-item>
                     <el-button style="width: 60px;" @click="this.$parent.$data.salary_insertplantwo=false,this.$parent.$data.attendanceplan=true
 ">取消</el-button>&nbsp;
-                    <el-button type="primary" style="width: 60px;" @click="submitForm('ruleForm')"
+                    <el-button type="primary" style="width: 60px;" @click="attands(),this.$parent.$data.salary_insertplantwo=false,this.$parent.$data.attendanceplan=true
+                                                              "
                     >提交</el-button
                     >
 
@@ -308,20 +314,23 @@
       </div>
     </div>
   </div>
-  &nbsp;
 </template>
 
 
 
 
-<script lang="ts">
-import {ElMessage} from "element-plus";
+<script>
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   props:['name'],
   data() {
 
     return {
+      tableData:[],
+      //请求的路径
+      url: "http://localhost:80/",
+      dept_name:[],
       //考勤扣款
       attendanceplan:'/salary/attendanceplan',
       ruleForm: {
@@ -340,67 +349,274 @@ export default {
       num3:'0',
       num4:'0',
       num5:'300',
-      rules: {
-        schemename:[
-          {
-            required: true,
-            message: '请输入方案名称',
-            trigger: 'blur',
-          }
-        ],
-        late: [
-          {
-            required: true,
-            message: '请选择迟到规则',
-            trigger: 'change',
-          },
-        ],
-        early: [
-          {
-            required: true,
-            message: '请选择早退规则',
-            trigger: 'change',
-          },
-        ],
-        notsignin: [
-          {
-            required: true,
-            message: '请选择未签到规则',
-            trigger: 'change',
-          },
-        ],
-        notsignback: [
-          {
-            required: true,
-            message: '请选择未签退规则',
-            trigger: 'change',
-          },
-        ],
-        absent: [
-          {
-            required: true,
-            message: '请选择旷工规则',
-            trigger: 'change',
-          },
-        ],
-
-      }
+      // rules: {
+      //   schemename:[
+      //     {
+      //       required: true,
+      //       message: '请输入方案名称',
+      //       trigger: 'blur',
+      //     }
+      //   ],
+      //   late: [
+      //     {
+      //       required: true,
+      //       message: '请选择迟到规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   early: [
+      //     {
+      //       required: true,
+      //       message: '请选择早退规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   notsignin: [
+      //     {
+      //       required: true,
+      //       message: '请选择未签到规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   notsignback: [
+      //     {
+      //       required: true,
+      //       message: '请选择未签退规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //   absent: [
+      //     {
+      //       required: true,
+      //       message: '请选择旷工规则',
+      //       trigger: 'change',
+      //     },
+      //   ],
+      //
+      // }
     }
   },
   methods:{
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
+    //添加考勤扣款方案
+    insertAttendandce() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'insertAttendandce',
+        data: {
+          //方案名称
+          attendandceName:this.tableData.attendandceName,
+          //迟到一次金额
+          attendandceLitemoney:this.num,
+          //早退一次金额
+          attendandceLeavemoney:this.num2,
+          //未签到一次金额
+          attendandceDidnotmoney:this.num3,
+          //未签退一次金额
+          attendandceDidbackmoney:this.num4,
+          //旷工一次金额
+          attendandceAbscntmoney:this.num5,
+          //适用对象
+          deptName:this.tableData.deptName,
+          //备注
+          attendandceRemark:this.tableData.attendandceRemark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              ElNotification({
+                title: '提示',
+                message: '添加成功',
+                type: 'success',
+              })
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.data.info,
+              offset: 100,
+            })
+          }
         } else {
-          console.log('error submit!!')
-          return false
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },
+    //查询部门名称
+    selectSect() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectSect',
+        data: {
+          //staffId:this.tableData.staffId,
+        }
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.dept_name = [];
+              //循环部门列表
+              for (let i = 0; i < response.data.data.info.length; i++) {
+                //一个一个存起来
+                this.dept_name.push({
+                  value: response.data.data.info[i].deptName,
+                  label: response.data.data.info[i].deptName
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //根据id查询考勤扣款方案
+    selectAttendandceAll(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectAttendandceAll',
+        data:{
+          attendandceId:this.$parent.$data.attendancePlan,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableData = response.data.data.info[0];
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //修改考勤扣款方案
+    updateAttendandce(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'updateAttendandce',
+        data: {
+          //编号
+          attendandceId: this.tableData.attendandceId,
+          //方案名称
+          attendandceName:this.tableData.attendandceName,
+          //迟到一次金额
+          attendandceLitemoney:this.num,
+          //早退一次金额
+          attendandceLeavemoney:this.num2,
+          //未签到一次金额
+          attendandceDidnotmoney:this.num3,
+          //未签退一次金额
+          attendandceDidbackmoney:this.num4,
+          //旷工一次金额
+          attendandceAbscntmoney:this.num5,
+          //适用对象
+          deptName:this.tableData.deptName,
+          //备注
+          attendandceRemark:this.tableData.attendandceRemark,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 999) {
+                this.selectAttendandceAll();
+                ElNotification({
+                  title: '提示',
+                  message: '修改成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //添加或者修改方法
+    attands(){
+      if(this.name=='新增'){
+        this.insertAttendandce();
+      }else {
+        this.updateAttendandce(this.tableData.attendandceId)
+      }
+    }
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    //查询部门名称
+    this.selectSect();
+    //根据id查询加班方案
+    if (this.name=="新增"){
+      this.tableData={}
+    }else{
+      this.selectAttendandceAll(this.$parent.$data.attendancePlan);
+    }
+
   }
 }
 </script>
