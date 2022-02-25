@@ -42,7 +42,8 @@
                        @click="outerVisible = true,
                        searchTwo.staffPhone='',
                        searchTwo.staffName='',
-                        next_two()"
+                        next_two(),
+                        selectPostNameList()"
                        style="margin-left: 5px;height: 33px">
               添加用户
             </el-button>
@@ -126,15 +127,28 @@
             <!-- form表单 -->
             <el-form class="announcement" :inline="true" style="margin-top: 20px;" v-model="searchTwo">
 
-              <el-form-item class="username" label="用户名称" style="margin-left: 70px">
-                <el-input size="mini" v-model="searchTwo.staffName" placeholder="请输入用户名称"></el-input>
+
+              <el-form-item class="username" label="用户名称" style="margin-left: 35px">
+                <el-input size="mini" v-model="searchTwo.staffName" placeholder="请输入用户名称" clearable></el-input>
+              </el-form-item>
+
+              <el-form-item class="username" label="职位名称" style="margin-left:35px">
+                <el-select v-model="searchTwo.postName" placeholder="请选择职位" clearable>
+                  <el-option
+                      v-for="item in postNameList"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
 
               <el-form-item class="phones" label="手机号码">
-                <el-input size="mini" v-model="searchTwo.staffPhone" placeholder="请输入手机号码"></el-input>
+                <el-input size="mini" v-model="searchTwo.staffPhone" placeholder="请输入手机号码" clearable></el-input>
               </el-form-item>
 
-              <el-form-item style="margin-top: -32px;">
+              <el-form-item style="margin-top: -22px;margin-left: 660px">
                 <el-button size="mini" class="dialog-box-ss" type="primary" @click="next_two">
                   <i class="iconfont" style="font-size: 13.5px;">
                     &#xe61b
@@ -254,7 +268,8 @@ export default {
         //总条数
         total: 0,
       },
-
+      //职位列表
+      postNameList:[],
       // 分页
       pageInfo_two: {
         /* 当前的页 */
@@ -279,6 +294,8 @@ export default {
         staffName: '',
         //员工手机号
         staffPhone: '',
+        //职位名称
+        postName:'',
       },
       //表格
       tableDataOne: [],
@@ -484,6 +501,46 @@ export default {
         }
       })
     },
+    //查询所有的职位
+    selectPostNameList() {
+      this.axios({
+        method: 'get',
+        url: this.url + 'selectDeptPostAll',
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //初始化
+              this.postNameList=[]
+              //循环结果
+              for (let i = 0; i <response.data.data.info.length; i++) {
+                  let one ={
+                    label:response.data.data.info[i],
+                    value:response.data.data.info[i]
+                  }
+                  this.postNameList.push(one);
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
     //分页查询所以的在职员工
     next_two() {
       this.axios({
@@ -500,6 +557,8 @@ export default {
           "staffPhone": this.searchTwo.staffPhone,
           //角色编号
           'roleId': this.$parent.$data.fromValue.roleId,
+          //职位名称
+          'deptPostName':this.searchTwo.postName
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -626,7 +685,10 @@ export default {
         staffName: '',
         //员工手机号
         staffPhone: '',
+        //职位名称
+        postName:'',
       }
+
     }
   }, mounted() {
     //jWT传梯
@@ -757,7 +819,9 @@ export default {
   margin-top: -10px;
   margin-left: 10px;
 }
-
+/deep/ .el-input__inner{
+  height: 30px;
+}
 
 .cancel {
   color: #5aaaff;
