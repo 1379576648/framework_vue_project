@@ -134,6 +134,7 @@
 
 <script>
 import {ElMessage, ElNotification} from 'element-plus'
+import {ref} from 'vue'
 //新增招聘计划
 import recruit_add_plan from '../recruit_management/recruit_add_plan.vue';
 //招聘计划详情页面
@@ -146,6 +147,7 @@ export default {
     //招聘计划详情页面
     recruit_plan_details
   },
+
   data() {
     return {
       //新增招聘计划

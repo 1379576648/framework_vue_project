@@ -59,7 +59,7 @@
                     type="daterange"
                     start-placeholder="Start Date"
                     end-placeholder="End Date"
-                    :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]">
+                    :default-value="[new Date()]">
                 </el-date-picker>
               </el-form-item>
 
@@ -72,7 +72,7 @@
 
               <el-form-item>
                 <el-button  style="margin-left: 30px; width: 100px" @click="this.$parent.$data.recruit_add_plan=false">取消</el-button>
-                <el-button style="width: 100px;"  type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                <el-button style="width: 100px;"  type="primary" @click="addRecruitmentPlan" :plain="true">提交</el-button>
               </el-form-item>
 
             </el-form>
@@ -83,7 +83,6 @@
 
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -92,14 +91,22 @@
 import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import { ref } from 'vue'
 export default {
+  setup() {
+    const EmployAddRemark = ref(false);
+    const textarea = ref('');
+    const num = ref(1000);
+    return {
+      EmployAddRemark,
+    };
+  },
   props:['name'],
   data() {
     const rs = ref(1)
     return {
       //职位
-      zpzw:[],
+      zpzw:'',
       //需求部门
-      zpdept: [],
+      zpdept: '',
       //月薪范围
       yxfw: [],
       //访问路径
@@ -107,8 +114,6 @@ export default {
       ruleForm: {
         //计划名称
         zpname: '',
-        //需求部门
-        zpdept: '',
         //人数
         rs:1,
         //学历
@@ -159,13 +164,53 @@ export default {
   },
   methods: {
     //提交按钮
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
+    addRecruitmentPlan(){
+      this.axios({
+        method:'post',
+        url: this.url+ 'addRecruitmentPlan',
+        data:{
+          "recruitmentPlanName":this.ruleForm.zpname,
+          "deptName":this.ruleForm.zpdept,
+          "postName":this.ruleForm.zpzw,
+          "recruitmentPlanNumber":this.ruleForm.rs,
+          "educationName":this.ruleForm.xl,
+          "recruitmentPlanStartTime":this.ruleForm.sjfw[0],
+          "recruitmentPlanEndTime":this.ruleForm.sjfw[1],
+          "monthlySalaryStar":this.ruleForm.yxfw!=null?this.ruleForm.yxfw.substring(0,this.ruleForm.yxfw.indexOf("-")):'',
+          "monthlySalaryEnd":this.ruleForm.yxfw!=null?this.ruleForm.yxfw.substring(this.ruleForm.yxfw.indexOf("-")+1):'',
+        },
+        responseType:'json',
+        responseEncoding:'utf-8',
+      }).then((response)=>{
+        console.log("添加")
+        console.log(response)
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.succeed == "成功") {
+                this.$parent.$data.recruit_add_plan=false
+                this.$store.commit("updateToken", response.data.data.token);
+                ElMessage({
+                  message: '录用成功',
+                  type: 'success',
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
-          console.log('error submit!!')
-          return false
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     },

@@ -257,7 +257,6 @@ export default {
                 message: '添加成功',
                 type: 'success',
               })
-              this.$parent.$parent.$parent.$parent.selectWorkScheme();
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElMessage({
