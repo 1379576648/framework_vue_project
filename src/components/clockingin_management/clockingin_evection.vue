@@ -210,13 +210,12 @@ export default {
           type: 'success',
           message: `生成成功`,
         })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
       })
-          .catch(() => {
-            ElMessage({
-              type: 'info',
-              message: '取消成功',
-            })
-          })
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));

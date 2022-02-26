@@ -123,30 +123,36 @@ export default {
     },
     // 导入
     ExcelImport(response) {
-      if (response.data.data) {
-        ElNotification.warning({
-          title: '提示',
-          message: "服务发生关闭",
-          offset: 100,
-        })
-      } else if (response.data.state === 200) {
-        if (response.data.info === 99) {
-          ElMessage({
-            type: 'success',
-            message: `导入成功`,
-          })
-          this.$store.commit("updateToken", response.data.data.token);
+      console.log("登录")
+      console.log(response)
+      if (response.code == 200) {
+        //如果服务是正常的
+        if (response.data.state == 200) {
+          if (response.data.info == 99) {
+            ElMessage({
+              type: 'success',
+              message: `导入成功`,
+            })
+            this.$store.commit("updateToken", response.data.data.token);
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.info,
+              offset: 100,
+            })
+          }
+
         } else {
-          ElNotification.warning({
+          ElNotification.error({
             title: '提示',
             message: response.data.info,
             offset: 100,
           })
         }
       } else {
-        ElNotification.warning({
+        ElNotification.error({
           title: '提示',
-          message: "服务发生雪崩",
+          message: response.data.message,
           offset: 100,
         })
       }
@@ -200,7 +206,7 @@ export default {
           // 查询员工名称条件
           "staffName1": this.staffName,
           // 部门名称
-          "deptNameTwo":this.deptNameTwo,
+          "deptNameTwo": this.deptNameTwo,
         }
       }).then((response) => {
         console.log("查询当月所有考勤记录")
