@@ -509,7 +509,7 @@ export default {
                 })
               }
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -646,7 +646,7 @@ export default {
               _this.pageInfo.total = response.data.data.info.total
               this.$store.commit("updateToken", response.data.data.token);
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -704,7 +704,7 @@ export default {
                   })
                 }
               }else {
-                ElNotification.warning({
+                ElNotification.error({
                   title: '提示',
                   message: response.data.data.info,
                   offset: 100,
@@ -763,7 +763,7 @@ export default {
                   })
                 }
               }else {
-                ElNotification.warning({
+                ElNotification.error({
                   title: '提示',
                   message: response.data.data.info,
                   offset: 100,
@@ -932,7 +932,7 @@ export default {
                       })
                     }
                   }else {
-                    ElNotification.warning({
+                    ElNotification.error({
                       title: '提示',
                       message: response.data.data.info,
                       offset: 100,
@@ -977,7 +977,7 @@ export default {
                       })
                     }
                   }else {
-                    ElNotification.warning({
+                    ElNotification.error({
                       title: '提示',
                       message: response.data.data.info,
                       offset: 100,
@@ -1012,7 +1012,7 @@ export default {
               this.roleNamePd = response.data.data.info;
               this.$store.commit("updateToken", response.data.data.token);
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
