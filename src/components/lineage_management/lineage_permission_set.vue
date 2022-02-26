@@ -447,7 +447,7 @@ export default {
                 })
               }
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -498,7 +498,7 @@ export default {
                 })
               }
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -568,7 +568,7 @@ export default {
                 })
               }
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -602,7 +602,7 @@ export default {
               }
               this.$store.commit("updateToken", response.data.data.token);
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -664,7 +664,7 @@ export default {
                 })
               }
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,
@@ -706,7 +706,7 @@ export default {
               this.tableData = response.data.data.info;
               this.$store.commit("updateToken", response.data.data.token);
             }else {
-              ElNotification.warning({
+              ElNotification.error({
                 title: '提示',
                 message: response.data.data.info,
                 offset: 100,

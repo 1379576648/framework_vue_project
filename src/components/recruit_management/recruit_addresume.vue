@@ -55,14 +55,14 @@
               </el-form-item>
 
               <div style="display: block;">
+                <el-form-item label="年龄：">
+                  <el-input v-model="formInline.nl"></el-input>
+                </el-form-item>
                 <el-form-item label="手机号：">
                   <el-input v-model="formInline.sjh"></el-input>
                 </el-form-item>
                 <el-form-item label="邮 箱：">
                   <el-input v-model="formInline.yx"></el-input>
-                </el-form-item>
-                <el-form-item label="所在地：">
-                  <el-input v-model="formInline.szd"></el-input>
                 </el-form-item>
               </div>
 
@@ -89,9 +89,9 @@
                   </el-select>
                 </el-form-item>
 
-                <el-form-item label="招聘计划：">
+                <el-form-item label="招聘计划" >
                   <el-select v-model="formInline.zpjh" placeholder="请选择" @click="selectPlan">
-                    <el-option label="Hr人力资源专员" value="Hr人力资源专员"></el-option>
+                    <el-option v-for="item in zpjh" :value="item.label" :key="item.value" :label="item.label"></el-option>
                   </el-select>
                 </el-form-item>
               </div>
@@ -210,12 +210,11 @@
             </el-form>
             <el-button @click="this.$parent.$data.recruit_addresume=false">取消</el-button>
 
-            <el-button type="primary" @click="addResume">提交</el-button>
+            <el-button type="primary" @click="addResume" :plain="true">提交</el-button>
           </div>
 
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -225,19 +224,27 @@ import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import {ref} from 'vue'
 
 export default {
+  setup() {
+    const EmployAddRemark = ref(false);
+    const textarea = ref('');
+    const num = ref(1000);
+    return {
+      EmployAddRemark,
+    };
+  },
   data() {
     return {
       src: '',
       isShow: false,
+      zpjh:[],
       formInline: {
         xm:'',
         xb:'',
         sjh:'',
         yx:'',
-        szd:'',
+        nl:'',
         xl:'',
         zzmm:'',
-        zpjh:'',
         xxmc:'',
         sxzy:'',
         gsmc:'',
@@ -280,7 +287,7 @@ export default {
       this.formInline.birthdate='';
       this.formInline.sjh='';
       this.formInline.yx='';
-      this.formInline.szd='';
+      this.formInline.nl='';
       this.formInline.xl='';
       this.formInline.zzmm='';
       this.formInline.zpjh='';
@@ -310,18 +317,18 @@ export default {
           "resumeBirthday":this.formInline.birthdate,
           "resumePhone": this.formInline.sjh,
           "resumeMailbox":this.formInline.yx,
-          "resumeResidence": this.formInline.szd,
+          "resumeAge": this.formInline.nl,
           "resumeEducation":this.formInline.xl,
           "resumePoliticalOutlook":this.formInline.zzmm,
-          "recruitmentPlanId":this.formInline.zpjh,
+          "recruitmentPlanName":this.formInline.zpjh,
           'educationStudentname':this.formInline.xxmc,
           'educationMajor':this.formInline.sxzy,
-          'educationStartTime1':this.formInline.startdate1,
-          'educationEndTime1':this.formInline.enddate1,
+          'educationStartTime':this.formInline.startdate1,
+          'educationEndTime':this.formInline.enddate1,
           'companyName':this.formInline.gsmc,
           'positionName':this.formInline.zwmc,
-          'educationStartTime2':this.formInline.startdate2,
-          'educationEndTime2':this.formInline.enddate2,
+          'workStareTime':this.formInline.startdate2,
+          'workEndTime':this.formInline.enddate2,
           'positionIndustry':this.formInline.sshy,
           'positionSqmonthly':this.formInline.sqyx,
           'positionDescribe':this.formInline.textarea,
@@ -329,21 +336,19 @@ export default {
         responseType:'json',
         responseEncoding:'utf-8',
       }).then((response)=>{
+        console.log("添加")
+        console.log(response)
         if (response.data.code == 200) {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state == 200) {
               //如果是成功
-              if (response.data.data.info == "成功") {
-                ElMessage({
-                  type: 'success',
-                  message: '添加成功',
-                })
+              if (response.data.data.succeed == "添加成功") {
+                this.$parent.$data.recruit_addresume=false
                 this.$store.commit("updateToken", response.data.data.token);
-              } else {
                 ElMessage({
-                  type: 'warning',
-                  message: response.data.data.info,
+                  message: '录用成功',
+                  type: 'success',
                 })
               }
             }else {
@@ -365,7 +370,6 @@ export default {
     },
     // 查询招聘计划名称
     selectPlan() {
-      var _this = this
       this.axios({
         method: 'post',
         url: this.url + 'selectPlan',
@@ -376,9 +380,18 @@ export default {
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
-              _this.president = response.data.data.info;
+              //初始化
+              this.zpjh=[];
+              for(let i=0;i < response.data.data.succeed.length; i++){
+                //存
+
+                    this.zpjh.push({
+                      value : response.data.data.succeed[i].recruitmentPlanId,
+                      label: response.data.data.succeed[i].recruitmentPlanName,
+                    })
+                  }
+
               this.$store.commit("updateToken", response.data.data.token);
-              window.setTimeout(this.selectStaffNameAll, 500);
             } else {
               ElNotification.error({
                 title: '提示',
@@ -399,7 +412,7 @@ export default {
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token;
-    this.selectPlan()
+    this.selectPlan();
   }
 }
 

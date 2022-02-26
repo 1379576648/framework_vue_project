@@ -21,34 +21,28 @@
 
               <el-form-item label="需求部门" prop="zpdept">
                 <el-select v-model="ruleForm.zpdept" style="width:380px;">
-                  <el-option label="市场部" value="市场部"></el-option>
-                  <el-option label="销售部" value="销售部"></el-option>
-                  <el-option label="秘书办" value="秘书办"></el-option>
-                  <el-option label="人才部" value="人才部"></el-option>
+                  <el-option v-for="item in zpdept" :value="item.label" :key="item.value" :label="item.label"></el-option>
                 </el-select>
               </el-form-item>
 
               <el-form-item label="招聘职位" prop="zpzw">
                 <el-select v-model="ruleForm.zpzw" style="width:380px;">
-                  <el-option label="客服主管" value="客服主管"></el-option>
-                  <el-option label="前端工程师" value="前端工程师"></el-option>
-                  <el-option label="生产主管" value="生产主管"></el-option>
-                  <el-option label="劳动关系专员" value="劳动关系专员"></el-option>
+                  <el-option v-for="item in zpzw" :value="item.label" :key="item.value" :label="item.label"></el-option>
                 </el-select>
               </el-form-item>
 
 
-              <el-form-item label="需招聘人数" prop="zpnum">
+              <el-form-item label="需招聘人数" prop="rs">
                 <el-input-number
-                    v-model="ruleForm.zpnum"
+                    v-model="ruleForm.rs"
                     :min="1"
                     :max="50"
                     controls-position="right"
                 />
               </el-form-item>
 
-              <el-form-item label="最低学历" prop="zpxl">
-                <el-select v-model="ruleForm.zpxl" placeholder="请选择">
+              <el-form-item label="最低学历" prop="xl">
+                <el-select v-model="ruleForm.xl" placeholder="请选择">
                   <el-option label="不限" value="不限"></el-option>
                   <el-option label="初中" value="初中"></el-option>
                   <el-option label="高中" value="高中"></el-option>
@@ -61,27 +55,24 @@
 
               <el-form-item label="计划开始时间" required style="width:380px">
                 <el-date-picker
-                    v-model="ruleForm.timef"
+                    v-model="ruleForm.sjfw"
                     type="daterange"
                     start-placeholder="Start Date"
                     end-placeholder="End Date"
-                    :default-value="[new Date(2010, 9, 1), new Date(2010, 10, 1)]">
+                    :default-value="[new Date()]">
                 </el-date-picker>
               </el-form-item>
 
-              <el-form-item label="月薪范围" prop="zpxqf">
-                <el-select v-model="ruleForm.zpxqf" placeholder="Activity zone">
-                  <el-option label="3000-5000" value="3000-5000"></el-option>
-                  <el-option label="5000-8000" value="5000-8000"></el-option>
-                  <el-option label="8000-12000" value="8000-12000"></el-option>
-                  <el-option label="12000以上" value="12000以上"></el-option>
+              <el-form-item label="月薪范围" prop="yxfw">
+                <el-select v-model="ruleForm.yxfw" placeholder="Activity zone">
+                  <el-option v-for="item in yxfw" :value="item.label" :key="item.value" :label="item.label" ></el-option>
                 </el-select>
               </el-form-item>
 
 
               <el-form-item>
                 <el-button  style="margin-left: 30px; width: 100px" @click="this.$parent.$data.recruit_add_plan=false">取消</el-button>
-                <el-button style="width: 100px;"  type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                <el-button style="width: 100px;"  type="primary" @click="addRecruitmentPlan" :plain="true">提交</el-button>
               </el-form-item>
 
             </el-form>
@@ -92,33 +83,44 @@
 
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import { ref } from 'vue'
 export default {
+  setup() {
+    const EmployAddRemark = ref(false);
+    const textarea = ref('');
+    const num = ref(1000);
+    return {
+      EmployAddRemark,
+    };
+  },
   props:['name'],
   data() {
-    const zpnum = ref(1)
+    const rs = ref(1)
     return {
+      //职位
+      zpzw:'',
+      //需求部门
+      zpdept: '',
+      //月薪范围
+      yxfw: [],
+      //访问路径
+      url: "http://localhost:80/",
       ruleForm: {
         //计划名称
         zpname: '',
-        //需求部门
-        zpdept: '',
-        //职位
-        zpzw:'',
         //人数
-        zpnum:1,
+        rs:1,
         //学历
-        zpxl: '',
+        xl: '',
         //时间范围
-        timef:'',
-        //薪酬范围
-        zpxqf: ''
+        sjfw:'',
+
       },
       rules: {
         zpname: [{
@@ -132,29 +134,29 @@ export default {
           message: '请选择需求部门!',
           trigger: 'change',
         }, ],
-        zpzw: [{
+        zw: [{
           required: true,
           message: '请设置招聘职位!',
           trigger: 'change',
         }, ],
-        zpnum: [{
+        rs: [{
           required: true,
           message: '计划招聘人数不能为空!',
           trigger: 'blur',
         }, ],
-        zpxl: [{
+        xl: [{
           required: true,
           message: '最低学历不能为空!',
           trigger: 'change',
         }, ],
-        timef: [{
+        sjfw: [{
           required: true,
           message: '请选择招聘时间范围!',
           trigger: 'change',
         }, ],
-        zpxqf: [{
+        yxfw: [{
           required: true,
-          message: '请选择薪酬范围!',
+          message: '请选择月薪范围!',
           trigger: 'change',
         }, ],
       },
@@ -162,19 +164,179 @@ export default {
   },
   methods: {
     //提交按钮
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
+    addRecruitmentPlan(){
+      this.axios({
+        method:'post',
+        url: this.url+ 'addRecruitmentPlan',
+        data:{
+          "recruitmentPlanName":this.ruleForm.zpname,
+          "deptName":this.ruleForm.zpdept,
+          "postName":this.ruleForm.zpzw,
+          "recruitmentPlanNumber":this.ruleForm.rs,
+          "educationName":this.ruleForm.xl,
+          "recruitmentPlanStartTime":this.ruleForm.sjfw[0],
+          "recruitmentPlanEndTime":this.ruleForm.sjfw[1],
+          "monthlySalaryStar":this.ruleForm.yxfw!=null?this.ruleForm.yxfw.substring(0,this.ruleForm.yxfw.indexOf("-")):'',
+          "monthlySalaryEnd":this.ruleForm.yxfw!=null?this.ruleForm.yxfw.substring(this.ruleForm.yxfw.indexOf("-")+1):'',
+        },
+        responseType:'json',
+        responseEncoding:'utf-8',
+      }).then((response)=>{
+        console.log("添加")
+        console.log(response)
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.succeed == "成功") {
+                this.$parent.$data.recruit_add_plan=false
+                this.$store.commit("updateToken", response.data.data.token);
+                ElMessage({
+                  message: '录用成功',
+                  type: 'success',
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
         } else {
-          console.log('error submit!!')
-          return false
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询部门名称（新增招聘计划下拉列表框）
+    selectDeptName1() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDeptName1',
+      }).then((response) => {
+        console.log("查询部门名称")
+        console.log(response);
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.zpdept=[];
+              for(let i=0;i < response.data.data.succeed.length; i++){
+                //存
+                this.zpdept.push({
+                  value : response.data.data.succeed[i].deptId,
+                  label: response.data.data.succeed[i].deptName,
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询部门名称（新增招聘计划下拉列表框）
+    selectDeptPostName1() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectDeptPostName1',
+      }).then((response) => {
+        console.log("查询部门职位名称")
+        console.log(response);
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.zpzw=[];
+              for(let i=0;i < response.data.data.succeed.length; i++){
+                //存
+                this.zpzw.push({
+                  value : response.data.data.succeed[i].deptPostId,
+                  label: response.data.data.succeed[i].postName,
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询部门名称（新增招聘计划下拉列表框）
+    selectMonthlySalary() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectMonthlySalary',
+      }).then((response) => {
+        console.log("查询月薪范围")
+        console.log(response);
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              //初始化
+              this.yxfw=[];
+              for(let i=0;i < response.data.data.succeed.length; i++){
+                //存
+                this.yxfw.push({
+                  value : response.data.data.succeed[i].monthlySalaryId,
+                  label: response.data.data.succeed[i].monthlySalaryStar+"-"+response.data.data.succeed[i].monthlySalaryEnd,
+                })
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
         }
       })
     }
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    this.selectDeptName1()
+    this.selectDeptPostName1()
+    this.selectMonthlySalary()
   }
 }
 </script>
