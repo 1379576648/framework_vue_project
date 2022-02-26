@@ -75,6 +75,7 @@
           <el-table-column prop="offMoney" label="休息日加班工资" width="110" />
           <el-table-column prop="holidayMoney" label="节假日加班工资" width="110" />
         </el-table-column>
+        <el-table-column prop="travelMoney" label="出差工资" width="100" />
         <el-table-column prop="totalWage" label="工资合计" width="100" />
         <el-table-column label="考勤扣款" >
           <el-table-column prop="lateMoney" label="迟到" width="100" />

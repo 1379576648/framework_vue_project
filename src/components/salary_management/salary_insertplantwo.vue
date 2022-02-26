@@ -433,6 +433,7 @@ export default {
                 message: '添加成功',
                 type: 'success',
               })
+              this.$parent.$parent.$data.selectAttendandce();
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElMessage({

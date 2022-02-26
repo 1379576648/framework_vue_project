@@ -40,14 +40,19 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
           <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="name" label="部门" width="160"/>
-            <el-table-column prop="date" label="计薪人数" width="160"/>
-            <el-table-column prop="name" label="应发工资" width="160"/>
-            <el-table-column prop="name" label="实发工资" width="160"/>
-            <el-table-column prop="name" label="公司缴纳" width="160"/>
-            <el-table-column prop="name" label="员工成本" width="160"/>
-            <el-table-column prop="date" label="状态" width="160"/>
-            <el-table-column label="操作" width="170">
+<!--            <el-table-column prop="name" label="部门" width="160"/>-->
+            <el-table-column prop="countPerson" label="计薪人数" width="190"/>
+            <el-table-column prop="countyMoney" label="应发工资" width="190"/>
+            <el-table-column prop="countsMoney" label="实发工资" width="190"/>
+            <el-table-column prop="countcPay" label="公司缴纳" width="190"/>
+            <el-table-column prop="staffPay" label="员工成本" width="190"/>
+<!--            <el-table-column prop="date" label="状态" width="190"/>-->
+            <el-table-column label="状态" width="190">
+              <template #default="scope">
+                <span>未归档</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="180">
               <template #default>
                 <el-button type="text" size="small" @click="this.$parent.$data.salary_checkwage=true">查看工资表&nbsp;</el-button>
                 <!--                      <el-button type="text" size="small" @click="handleClick">归档</el-button>-->
@@ -61,69 +66,61 @@
           </el-table>
         </div>
 
-
       </el-tab-pane>
       <el-tab-pane label="已归档">
 
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
 
-          <el-table :data="tableData" stripe style="width: 100%">
-            <el-table-column prop="name" label="部门" width="160"/>
-            <el-table-column prop="date" label="计薪人数" width="160"/>
-            <el-table-column prop="name" label="应发工资" width="160"/>
-            <el-table-column prop="name" label="实发工资" width="160"/>
-            <el-table-column prop="name" label="公司缴纳" width="160"/>
-            <el-table-column prop="name" label="员工成本" width="160"/>
-            <el-table-column prop="date" label="状态" width="160"/>
-            <el-table-column label="操作" width="170">
-              <template #default>
+<!--          <el-table :data="tableData" stripe style="width: 100%">-->
+<!--            <el-table-column prop="name" label="部门" width="160"/>-->
+<!--            <el-table-column prop="date" label="计薪人数" width="160"/>-->
+<!--            <el-table-column prop="name" label="应发工资" width="160"/>-->
+<!--            <el-table-column prop="name" label="实发工资" width="160"/>-->
+<!--            <el-table-column prop="name" label="公司缴纳" width="160"/>-->
+<!--            <el-table-column prop="name" label="员工成本" width="160"/>-->
+<!--            <el-table-column prop="date" label="状态" width="160"/>-->
+<!--            <el-table-column label="操作" width="170">-->
+<!--              <template #default>-->
 
-                <el-button type="text" size="small" @click="this.$parent.$data.salary_checkwage=true">查看工资表&nbsp;</el-button>
+<!--                <el-button type="text" size="small" @click="this.$parent.$data.salary_checkwage=true">查看工资表&nbsp;</el-button>-->
 
-              </template>
-            </el-table-column>
-          </el-table>
+<!--              </template>-->
+<!--            </el-table-column>-->
+<!--          </el-table>-->
+        </div>
+        <!-- 分页插件 -->
+        <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
+          <el-pagination
+              v-model:currentPage="pageInfo.currentPage"
+              :page-sizes="[4, 5, 10, 50]"
+              v-model:page-size="pageInfo.pagesize"
+              :default-page-size="pageInfo.pagesize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="pageInfo.total"
+              :pager-count="5"
+              prev-text="上一页"
+              next-text="下一页"
+              @size-change="seluser()"
+              @current-change="seluser()"
+              background
+          >
+          </el-pagination>
         </div>
       </el-tab-pane>
     </el-tabs>
   </div>
-
-  <!-- 分页插件 -->
-  <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;">
-    <el-pagination
-        v-model:currentPage="pageInfo.currentPage"
-        :page-sizes="[3, 5, 10, 50]"
-        v-model:page-size="pageInfo.pagesize"
-        :default-page-size="pageInfo.pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="pageInfo.total"
-        :pager-count="5"
-        background
-        @size-change="selectUsers"
-        @current-change="selectUsers"
-    >
-    </el-pagination>
-  </div>
+  {{tableData}}
 </template>
-<script lang="ts">
-
+<script>
+import {ElNotification} from "element-plus";
 export default {
   data() {
     return {
-
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ],
+      //请求的路径
+      url: "http://localhost:80/",
+      tableData: [],
+      tableDataTwo:[],
       months: '',
       seek: '',
       pageInfo: {
@@ -136,9 +133,50 @@ export default {
 
     }
 
-  },mounted() {
+  },
+  methods:{
+    //分页查询工资表
+    countWage() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countWage',
+        data: {
+         // "staffName":this.tableData.staffName
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log(response)
+        if (response.data.code === 200) {
+            if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableData.push(response.data.data.info),
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+  }
+  ,mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    //分页查询
+    this.countWage();
   }
 
 }
