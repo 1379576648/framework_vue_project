@@ -72,22 +72,20 @@
         <!-- 表格内容部分 -->
         <div class="sub-Content__primary">
 
-<!--          <el-table :data="tableData" stripe style="width: 100%">-->
+          <el-table :data="tableDataTwo" stripe style="width: 100%">
 <!--            <el-table-column prop="name" label="部门" width="160"/>-->
-<!--            <el-table-column prop="date" label="计薪人数" width="160"/>-->
-<!--            <el-table-column prop="name" label="应发工资" width="160"/>-->
-<!--            <el-table-column prop="name" label="实发工资" width="160"/>-->
-<!--            <el-table-column prop="name" label="公司缴纳" width="160"/>-->
-<!--            <el-table-column prop="name" label="员工成本" width="160"/>-->
-<!--            <el-table-column prop="date" label="状态" width="160"/>-->
-<!--            <el-table-column label="操作" width="170">-->
-<!--              <template #default>-->
-
-<!--                <el-button type="text" size="small" @click="this.$parent.$data.salary_checkwage=true">查看工资表&nbsp;</el-button>-->
-
-<!--              </template>-->
-<!--            </el-table-column>-->
-<!--          </el-table>-->
+            <el-table-column prop="date" label="计薪人数" width="190"/>
+            <el-table-column prop="name" label="应发工资" width="190"/>
+            <el-table-column prop="name" label="实发工资" width="190"/>
+            <el-table-column prop="name" label="公司缴纳" width="190"/>
+            <el-table-column prop="name" label="员工成本" width="190"/>
+            <el-table-column prop="date" label="状态" width="190"/>
+            <el-table-column label="操作" width="190">
+              <template #default>
+                <el-button type="text" size="small" @click="this.$parent.$data.salary_checkwage=true">查看工资表&nbsp;</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
         <!-- 分页插件 -->
         <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
@@ -120,7 +118,11 @@ export default {
       //请求的路径
       url: "http://localhost:80/",
       tableData: [],
-      tableDataTwo:[],
+      tableDataTwo:[
+        {
+          name:'ooo'
+        }
+      ],
       months: '',
       seek: '',
       pageInfo: {
