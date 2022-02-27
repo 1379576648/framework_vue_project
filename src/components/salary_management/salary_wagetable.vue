@@ -59,7 +59,7 @@
           <el-table-column  label="基本信息">
             <el-table-column     prop="staffName" label="姓名" width="100" />
             <el-table-column   prop="deptName" label="部门" width="100" />
-            <el-table-column   prop="postName" label="职位" width="100" />
+            <el-table-column   prop="moneyPigeonholePost" label="职位" width="100" />
 <!--            <el-table-column   prop="name" label="本月变动" width="100" />-->
         </el-table-column>
 <!--        <el-table-column label="考勤数据" >
@@ -68,24 +68,24 @@
           <el-table-column prop="name" label="月计薪天数" width="100" />
         </el-table-column>-->
 
-          <el-table-column prop="baseWage" label="基本工资" width="110" />
+          <el-table-column prop="moneyPigeonholeBasePay" label="基本工资" width="110" />
 <!--          <el-table-column prop="name" label="实发固定工资" width="100" />-->
         <el-table-column label="加班工资" >
-          <el-table-column prop="workMoney" label="工作日加班工资" width="110" />
-          <el-table-column prop="offMoney" label="休息日加班工资" width="110" />
-          <el-table-column prop="holidayMoney" label="节假日加班工资" width="110" />
+          <el-table-column prop="workdayOvertimePay" label="工作日加班工资" width="110" />
+          <el-table-column prop="dayOffOvertimePay" label="休息日加班工资" width="110" />
+          <el-table-column prop="holidayOvertimePay" label="节假日加班工资" width="110" />
         </el-table-column>
-        <el-table-column prop="travelMoney" label="出差工资" width="100" />
+        <el-table-column prop="travelwage" label="出差工资" width="100" />
         <el-table-column prop="totalWage" label="工资合计" width="100" />
         <el-table-column label="考勤扣款" >
-          <el-table-column prop="lateMoney" label="迟到" width="100" />
-          <el-table-column prop="lateMoneycs" label="迟到次数" width="100" />
-          <el-table-column prop="elaryMoney" label="早退" width="100" />
-          <el-table-column prop="elaryMoneycs" label="早退次数" width="100" />
+          <el-table-column prop="moneyPigeonholeLate" label="迟到" width="100" />
+<!--          <el-table-column prop="lateMoneycs" label="迟到次数" width="100" />-->
+          <el-table-column prop="moneyPigeonholeLeaveArly" label="早退" width="100" />
+<!--          <el-table-column prop="elaryMoneycs" label="早退次数" width="100" />-->
 <!--          <el-table-column prop="name" label="未签到" width="100" />-->
 <!--          <el-table-column prop="name" label="未签退" width="100" />-->
-          <el-table-column prop="leaveMoney" label="旷工" width="100" />
-          <el-table-column prop="leaveMoneycs" label="旷工次数" width="100" />
+          <el-table-column prop="absenteism" label="旷工" width="100" />
+<!--          <el-table-column prop="leaveMoneycs" label="旷工次数" width="100" />-->
 <!--          <el-table-column prop="-" label="事假" width="100" />-->
           <el-table-column label="事假" width="100">
             <template #default="scope">
@@ -101,15 +101,15 @@
 <!--          <el-table-column prop="name" label="不在职免发" width="100" />-->
         </el-table-column>
         <el-table-column label="社保" >
-          <el-table-column prop="insuredArchive.insArchiveSocialPersonPay" label="个人缴纳社保" width="100" />
-          <el-table-column prop="insuredArchive.insArchiveSocialFirmPay" label="公司缴纳社保" width="100" />
+          <el-table-column prop="personageSocial" label="个人缴纳社保" width="100" />
+          <el-table-column prop="companySocial" label="公司缴纳社保" width="100" />
         </el-table-column>
         <el-table-column label="公积金" >
-          <el-table-column prop="insuredArchive.insArchiveFundPersonPay" label="个人缴纳公积金" width="100" />
-          <el-table-column prop="insuredArchive.insArchiveFundFirmPay" label="公司缴纳公积金" width="100" />
+          <el-table-column prop="personageAccumulAtion" label="个人缴纳公积金" width="100" />
+          <el-table-column prop="icompanyAccumulAtion" label="公司缴纳公积金" width="100" />
         </el-table-column>
-        <el-table-column prop="totalWage" label="应发工资" width="100" fixed="right"/>
-        <el-table-column prop="salarySum" label="实发工资" width="100" fixed="right"/>
+        <el-table-column prop="moneyPigeonholeSalary" label="应发工资" width="100" fixed="right"/>
+        <el-table-column prop="moneyPigeonholePayrollSalary" label="实发工资" width="100" fixed="right"/>
       </el-table>
     </div>
 
@@ -137,6 +137,7 @@
   </div>
 <!--  </div>-->
   {{tableData}}
+  {{tableDataTwo}}
 </template>
 
 
@@ -148,23 +149,24 @@ export default {
       //请求的路径
       url: "http://localhost:80/",
       tableData: [],
+      tableDataTwo: [],
       seek:"",
       pageInfo: {
         // 分页参数
         currentPage: 1, //当前页
-        pagesize: 8, // 页大小
+        pagesize: 5, // 页大小
         total: 0, // 总页数
       },
 
     }
   },
   methods:{
-    //分页查询工资表
-    selectWage() {
+    //分页查询未归档工资表
+    selectMoney() {
       var _this = this
       this.axios({
         method: 'post',
-        url: this.url + 'selectWage',
+        url: this.url + 'selectMoney',
         data: {
           //当前页
           'currentPage': this.pageInfo.currentPage,
@@ -202,12 +204,60 @@ export default {
         }
       })
     },
+    //分页查询已归档工资表
+    selectMoneys(moth) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectMoneys',
+        data: {
+          //当前页
+          'currentPage': this.pageInfo.currentPage,
+          //页大小
+          "pageSize": this.pageInfo.pagesize,
+          //薪资月份
+          "payMonth":moth,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableData = response.data.data.info.records
+              _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },
   mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
-    //分页查询工资表
-    this.selectWage();
+    //如果未归档
+    if (this.$parent.$parent.$parent.$parent.$data.state==0){
+      //分页查询工资表
+      this.selectMoney();
+    }else{
+      this.selectMoneys(this.$parent.$parent.$parent.$parent.$data.payMonth);
+    }
+
+
   }
 }
 </script>
