@@ -70,27 +70,33 @@
         <!--        <el-table-column prop="state" label="状态" width="140"/>-->
 
         <el-table-column fixed="right" label="操作" width="180">
-          <template #default>
+          <template #default="scope">
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
+              <el-button type="text" size="small" @click="popup(),one=scope.row.resumeId">设为候选人</el-button>
               <el-row class="block-col-2" style="float: right;">
                 <el-col :span="8">
                   <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
-                  <el-button type="text" size="small">更多<i class="iconfont"
-                                                           style="font-size: 10px">&#xe772;</i></el-button>
+                  <el-button type="text" size="small">更多<i class="iconfont" style="font-size: 10px">&#xe772;</i></el-button>
                 </span>
-                    <template #dropdown>
+                    <template #dropdown #default="scope">
                       <el-dropdown-menu>
                         <el-dropdown-item>删除</el-dropdown-item>
-                        <el-dropdown-item>转入淘汰库</el-dropdown-item>
+                        <el-dropdown-item @click="Obsolete(scope.row.resumeId)">转入淘汰库</el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
                 </el-col>
               </el-row>
             </div>
-
+            <el-dialog v-model="dialogVisible" title="是否设为候选人" width="30%" center>
+              <template #footer #default="scope">
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="SetCandidate(one)">确定</el-button>
+      </span>
+              </template>
+            </el-dialog>
           </template>
         </el-table-column>
       </el-table>
@@ -118,14 +124,19 @@
 </template>
 
 <script>
-import {
-  ref
-} from 'vue'
-import {ElNotification} from "element-plus";
+import { ref } from 'vue'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 export default {
+  setup(){
+    const dialogVisible = ref(false)
+    return {
+      dialogVisible,
+    };
+  },
   data() {
     return {
+      handleClose:'',
       //访问路径
       url: "http://localhost:80/",
       pageInfo: {
@@ -141,6 +152,8 @@ export default {
       //表格数据
       tableData: [],
       formInline:[],
+      Remark:'',
+      one:0
     }
   },
   methods: {
@@ -181,7 +194,100 @@ export default {
         }
       })
 
+    },
+    //设为候选人
+    SetCandidate(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'SetCandidate',
+        data: {
+          "resumeId":id,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.dialogVisible=false;
+                this.selectResume();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //转入淘汰库
+    Obsolete(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'Obsolete',
+        data: {
+          "resumeId":id,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.dialogVisible=false;
+                this.selectResume();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //弹出设为候选人
+    popup(){
+      this.dialogVisible=true
     }
+
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
@@ -257,5 +363,11 @@ export default {
 .abt:hover {
   color: #0c9c6e;
   border: 1px solid #0c9c6e;
+}
+.dialog-footer button:first-child {
+  margin-right: 10px;
+}
+::v-deep .el-overlay {
+  background-color: transparent;
 }
 </style>
