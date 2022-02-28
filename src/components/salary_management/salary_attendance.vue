@@ -45,9 +45,9 @@
               <template #default="scope">
                 <span>迟到：扣{{this.tableData[0].attendandceLitemoney}}元x迟到次数</span><br/>
                 <span>早退：扣{{this.tableData[0].attendandceLeavemoney}}元x早退次数</span><br/>
-                <span>未签到：扣{{this.tableData[0].attendandceDidnotmoney}}元x未签到的次数</span><br/>
-                <span>未签退：扣{{this.tableData[0].attendandceDidbackmoney}}元x未签退的次数</span><br/>
-                <span>旷工：小时工资x{{this.tableData[0].attendandceAbscntmoney}}%x旷工折算的小时数</span>
+<!--                <span>未签到：扣{{this.tableData[0].attendandceDidnotmoney}}元x未签到的次数</span><br/>-->
+<!--                <span>未签退：扣{{this.tableData[0].attendandceDidbackmoney}}元x未签退的次数</span><br/>-->
+                <span>旷工：扣{{this.tableData[0].attendandceAbscntmoney}}元x旷工次数</span>
               </template>
             </el-table-column>
             <el-table-column prop="deptName" label="适用对象" width="230" />

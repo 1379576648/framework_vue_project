@@ -25,7 +25,7 @@
               <template #default="scope">
                 <el-button type="text" size="small" @click="this.$parent.$data.salary_checkwage=true,this.$parent.$data.state=scope.row.moneyPigeonholeState">查看工资表&nbsp;</el-button>
                 <!--                      <el-button type="text" size="small" @click="handleClick">归档</el-button>-->
-                <el-popconfirm title="归档之后，数据一律不允许修改" @confirm="updateMoney(moneyPigeonholeId=scope.row.moneyPigeonholeId)">
+                <el-popconfirm title="归档之后，数据一律不允许修改" @confirm="updateMoney()">
                   <template #reference>
                     <el-button type="text" size="small">归档</el-button>
                   </template>
@@ -99,15 +99,13 @@
           </el-pagination>
         </div>
       </el-tab-pane>
+      &nbsp;
     </el-tabs>
   </div>
-  {{this.months[0]}}
-  {{this.months}}
-  {{tableData}}
-  {{tableDataTwo}}
+  &nbsp;
 </template>
 <script>
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 export default {
   data() {
     return {

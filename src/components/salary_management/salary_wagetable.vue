@@ -106,7 +106,7 @@
         </el-table-column>
         <el-table-column label="公积金" >
           <el-table-column prop="personageAccumulAtion" label="个人缴纳公积金" width="100" />
-          <el-table-column prop="icompanyAccumulAtion" label="公司缴纳公积金" width="100" />
+          <el-table-column prop="companyAccumulAtion" label="公司缴纳公积金" width="100" />
         </el-table-column>
         <el-table-column prop="moneyPigeonholeSalary" label="应发工资" width="100" fixed="right"/>
         <el-table-column prop="moneyPigeonholePayrollSalary" label="实发工资" width="100" fixed="right"/>
@@ -114,7 +114,7 @@
     </div>
 
     <!-- 分页插件 -->
-    <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px">
+    <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px" v-if="this.$parent.$parent.$parent.$parent.$data.state==0">
       <el-pagination
           v-model:currentPage="pageInfo.currentPage"
           :page-sizes="[4, 5, 10, 50]"
@@ -125,8 +125,28 @@
           :pager-count="5"
           prev-text="上一页"
           next-text="下一页"
-          @size-change="selectWage()"
-          @current-change="selectWage()"
+          @size-change="selectMoney()"
+          @current-change="selectMoney()"
+          background
+      >
+      </el-pagination>
+    </div>
+
+
+    <!-- 分页插件 -->
+    <div class="demo-pagination-block" style="margin-left: 25px;margin-top: 20px;margin-bottom: 10px" v-else>
+      <el-pagination
+          v-model:currentPage="pageInfo.currentPage"
+          :page-sizes="[4, 5, 10, 50]"
+          v-model:page-size="pageInfo.pagesize"
+          :default-page-size="pageInfo.pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="pageInfo.total"
+          :pager-count="5"
+          prev-text="上一页"
+          next-text="下一页"
+          @size-change="selectMoneys()"
+          @current-change="selectMoneys()"
           background
       >
       </el-pagination>
@@ -135,21 +155,19 @@
 
 
   </div>
-<!--  </div>-->
   {{tableData}}
-  {{tableDataTwo}}
+<!--  </div>-->
 </template>
 
 
 <script>
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 export default {
   data() {
     return {
       //请求的路径
       url: "http://localhost:80/",
       tableData: [],
-      tableDataTwo: [],
       seek:"",
       pageInfo: {
         // 分页参数
