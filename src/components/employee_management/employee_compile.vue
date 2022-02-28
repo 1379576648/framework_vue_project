@@ -10,26 +10,26 @@
         <div style="text-align: center; margin-top: 60px">
 
           <!-- 用户照片 -->
-          <div style="width: 170px;margin: auto;margin-top: -42px;padding-bottom: 37px;">
-            <div class="upload-btn common mb_10" v-if="!isShow">
-              <div style="margin-top: 65px;">
-              <i class="iconfont">&#xe636;</i>
-              </div>
-              <label>
-                <input type="file" @change="uploadImg"/>
-              </label>
-            </div>
-            <div class="img-list-item common mb_10" v-if="isShow">
-              <img :src="src" class="common">
-              <i class="del-img" @click="forkImage">
-              </i>
-            </div>
-          </div>
+<!--          <div style="width: 170px;margin: auto;margin-top: -42px;padding-bottom: 37px;">-->
+<!--            <div class="upload-btn common mb_10" v-if="!isShow">-->
+<!--              <div style="margin-top: 65px;">-->
+<!--              <i class="iconfont">&#xe636;</i>-->
+<!--              </div>-->
+<!--              <label>-->
+<!--                <input type="file" @change="uploadImg"/>-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="img-list-item common mb_10" v-if="isShow">-->
+<!--              <img :src="src" class="common">-->
+<!--              <i class="del-img" @click="forkImage">-->
+<!--              </i>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <el-dialog v-model="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="" />
-          </el-dialog>
-          <h1>12345</h1>
+<!--          <el-dialog v-model="dialogVisible">-->
+<!--            <img width="100%" :src="dialogImageUrl" alt="" />-->
+<!--          </el-dialog>-->
+<!--          <h1>12345</h1>-->
 
 <!--         <div class="j-tabs2">-->
 <!--           <el-menu-->

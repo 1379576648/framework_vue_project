@@ -162,11 +162,29 @@ export default {
           responseType:'json',
           responseEncoding:'utf-8',
       }).then((response)=>{
-          console.log("查询面试通过")
-          console.log(response)
-          this.tableData = response.data.data.succeed.records;
-          this.pageInfo.pagesize = response.data.data.succeed.size;
-          this.pageInfo.total = response.data.data.succeed.total;
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.succeed.records;
+              this.pageInfo.pagesize = response.data.data.succeed.size;
+              this.pageInfo.total = response.data.data.succeed.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "",
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
       })
     },
     // 点击录用弹出弹出框
@@ -193,7 +211,8 @@ export default {
         responseEncoding:'utf-8',
       }).then((response)=>{
         console.log("添加录用成功")
-        console.log(response)
+        console.log(response);
+        this.$store.commit("updateToken", response.data.data.token);
       }),ElMessage({
         message: '录用成功',
         type: 'success',

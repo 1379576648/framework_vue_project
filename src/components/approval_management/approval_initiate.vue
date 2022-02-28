@@ -1505,7 +1505,12 @@ export default defineComponent({
       },
       // 调岗后查部门
       variation_dept: [],
-
+      // 是否正在请假
+      underwayLeave: "",
+      // 是否正在加班
+      underwayOverTime: "",
+      // 是否正在出差
+      underwayTravel: "",
     };
   },
   setup() {
@@ -3576,9 +3581,7 @@ export default defineComponent({
         }
       }
       this.address = dz
-
-      console.log(dz)
-      console.log(value)
+      console.log(this.address);
     },
     // 判断部门是否相同
     judgingDept() {
@@ -4120,12 +4123,36 @@ export default defineComponent({
             if (this.type === "补打卡") {
               window.setTimeout(this.selectCardExamine, 500);
             } else if (this.type === "加班") {
-              // 如果为加班，则去查询当天有无加班申请记录
-              window.setTimeout(this.selectTodayOverTimeExamine, 500);
+              if (this.underwayLeave !== 0 || this.underwayOverTime !== 0 || this.underwayTravel !== 0) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "查询到您正在进行请假或加班或出差",
+                  offset: 100,
+                })
+              } else {
+                // 如果为加班，则去查询当天有无加班申请记录
+                window.setTimeout(this.selectTodayOverTimeExamine, 500);
+              }
             } else if (this.type === "出差") {
-              window.setTimeout(this.selectEvectionExamine, 500);
+              if (this.underwayLeave !== 0 || this.underwayOverTime !== 0 || this.underwayTravel !== 0) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "查询到您正在进行请假或加班或出差",
+                  offset: 100,
+                })
+              } else {
+                window.setTimeout(this.selectEvectionExamine, 500);
+              }
             } else if (this.type === "请假") {
-              window.setTimeout(this.selectLeaveExamine, 500);
+              if (this.underwayLeave !== 0 || this.underwayOverTime !== 0 || this.underwayTravel !== 0) {
+                ElNotification.warning({
+                  title: '提示',
+                  message: "查询到您正在进行请假或加班或出差",
+                  offset: 100,
+                })
+              } else {
+                window.setTimeout(this.selectLeaveExamine, 500);
+              }
             } else if (this.type === "转正") {
               if (this.staffstate == 1) {
                 ElNotification.warning({
@@ -4758,6 +4785,129 @@ export default defineComponent({
         this.sick = true
       }
     },
+    // 查询当前员工是否有正在进行中的请假
+    inquireUnderwayLeave() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'inquireUnderwayLeave',
+        data: {
+          staffName: this.NowStaffName
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询当前员工是否有正在进行中的请假")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              // 如果大于等于1则为有正在进行的请假
+              if (response.data.data.info.length >= 1) {
+                this.underwayLeave = 1;
+              } else {
+                this.underwayLeave = 0;
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询当前员工是否有正在进行的加班
+    inquireUnderwayOverTime() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'inquireUnderwayOverTime',
+        data: {
+          staffName: this.NowStaffName
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询当前员工是否有正在进行中的加班")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              // 如果大于等于1则为有正在进行的加班
+              if (response.data.data.info.length >= 1) {
+                this.underwayOverTime = 1;
+              } else {
+                this.underwayOverTime = 0;
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    // 查询当前员工是否有正在进行的出差
+    inquireUnderwayTravel() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'inquireUnderwayTravel',
+        data: {
+          staffName: this.NowStaffName
+        }
+      }).then((response) => {
+        //如果服务是正常的
+        console.log("查询当前员工是否有正在进行中的出差")
+        console.log(response);
+        //如果服务关闭
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              // 如果大于等于1则为有正在进行的加班
+              if (response.data.data.info.length >= 1) {
+                this.underwayTravel = 1;
+              } else {
+                this.underwayTravel = 0;
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },
   // 挂载
   created() {
@@ -4773,6 +4923,12 @@ export default defineComponent({
     this.inquirePosition();
     // 查询员工状态
     this.inquireStaffstate();
+    // 查询当前员工是否有正在进行中的请假
+    this.inquireUnderwayLeave();
+    // 查询当前员工是否有正在进行中的加班
+    this.inquireUnderwayOverTime();
+    // 查询当前员工是否有正在进行中的出差
+    this.inquireUnderwayTravel();
   }
 })
 </script>

@@ -485,6 +485,7 @@ export default defineComponent({
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
+              this.selectpost()
               _this.tableDatas = response.data.data.info[0]
               this.$store.commit("updateToken", response.data.data.token);
             } else {
@@ -519,6 +520,7 @@ export default defineComponent({
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
+              this.selectpost()
               _this.tableDataTwo = response.data.data.info[0]
               this.$store.commit("updateToken", response.data.data.token);
             } else {
@@ -553,6 +555,7 @@ export default defineComponent({
           if (response.data.data) {
             //如果服务是正常的
             if (response.data.data.state === 200) {
+              this.selectpost()
               _this.tableDataThree = response.data.data.info[0]
               this.$store.commit("updateToken", response.data.data.token);
             } else {

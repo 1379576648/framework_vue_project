@@ -55,11 +55,11 @@
         <!--        <el-table-column prop="gradschool" label="毕业学校" width="140"/>-->
         <!--        <el-table-column prop="invitation" label="是否邀约" width="140"/>-->
         <!--        <el-table-column prop="state" label="状态" width="140"/>-->
-        <el-table-column fixed="right" label="操作" width="130">
+        <el-table-column fixed="right" label="操作" width="180">
           <template #default>
-            <div style="width: 10px">
+            <div style="width: 110px">
               <el-button type="text" size="small" @click="">删除</el-button>
-
+              <el-button type="text" size="small" @click="">移出</el-button>
             </div>
 
           </template>
@@ -98,12 +98,10 @@ import {ElNotification} from "element-plus";
 export default {
   data() {
     return {
-      //路由地址
-      details: '/recruit/recruit/addresume',
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       //访问路径
@@ -132,29 +130,28 @@ export default {
         responseType: 'json',
         responseEncoding: 'utf-8',
       }).then((response) => {
-        //如果服务关闭
-        if (response.data.data.data) {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.succeed.records;
+              this.pageInfo.pagesize = response.data.data.succeed.size;
+              this.pageInfo.total = response.data.data.succeed.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "",
+                offset: 100,
+              })
+            }
+          }
+        } else {
           ElNotification.error({
             title: '提示',
-            message: "服务发生关闭",
+            message: response.data.message,
             offset: 100,
           })
-          //如果服务没有关闭
-        } else if (response.data.data) {
-          //如果服务是正常的
-          if (response.data.data.state == 200) {
-            this.tableData = response.data.data.succeed.records;
-            this.pageInfo.pagesize = response.data.data.succeed.size;
-            this.pageInfo.total = response.data.data.succeed.total;
-          }
-          //如果服务是雪崩的
-          else {
-            ElNotification.error({
-              title: '提示',
-              message: "服务发生雪崩",
-              offset: 100,
-            })
-          }
         }
       })
 

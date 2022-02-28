@@ -172,10 +172,6 @@ export default defineComponent({
     var myChart5 = echarts.init(chartDom5);
     var option5;
 
-
-
-
-
     /*    固定工资分布 */
     optiony1 = {
       tooltip: {

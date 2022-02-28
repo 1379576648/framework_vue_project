@@ -14,7 +14,7 @@
               <div style="margin-left: 150px">
                 <el-form
                     ref="tableData"
-                    :model="tableData"
+                    :model="ruleForm"
                     :rules="rules"
                     label-width="150px"
                     class="demo-ruleForm"
@@ -257,7 +257,7 @@ export default {
                 message: '添加成功',
                 type: 'success',
               })
-              this.$parent.$parent.$parent.$parent.selectWorkScheme();
+              this.$parent.$parent.$parent.$data.selectWorkScheme();
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElMessage({

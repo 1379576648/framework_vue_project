@@ -33,7 +33,7 @@
             </li>
 
             <li style="border: none"><i class="iconfont" style="margin-top: 52px">&#xe658;</i></li>
-            <li class="" @click="salary">
+            <li class="" @click="reveal">
               <i class="iconfont">&#xe624;</i>
               <h3>
                 <span>第三步</span>
@@ -121,6 +121,10 @@ export default {
   },
   data() {
     return {
+      //归档状态
+      state:0,
+      //薪资月份
+      payMonth:'',
       //薪酬结构
       flat: true,
       //核算方案
@@ -178,9 +182,13 @@ export default {
       //薪酬结构
       this.flat = false;
     },
-    //全局显示隐藏
     reveal() {
-
+      let date = new Date();
+      if(date.getDate()<6){
+        this.salary();
+      }else {
+        this.salary();
+      }
     }
   },mounted() {
     //jWT传梯
