@@ -1,12 +1,19 @@
 <template>
   <div class="w">
     <div class="head">
-      <el-input size="small" v-model="deptPostName" @input="next" placeholder="请输入职位名称" style="width:150px;margin-left: 25px">
+      <el-input v-if="two" size="small" v-model="deptPostName" @input="next" placeholder="请输入职位名称" style="width:150px;margin-left: 25px">
           <template #suffix>
           <el-icon style="margin-top:9px;margin-right:10px"><i-search /></el-icon>
         </template>
       </el-input>
 
+      <el-input v-else size="small" v-model="deptName" @input="next" placeholder="请输入部门名称" style="width:150px;margin-left: 25px">
+        <template #suffix>
+          <el-icon style="margin-top:9px;margin-right:10px"><i-search /></el-icon>
+        </template>
+      </el-input>
+
+      <el-button @click="two=!two">切换</el-button>
     </div>
 
     <div class="y">
@@ -60,10 +67,12 @@ export default {
         pageInfo: {
         currenPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
+      two:true,
       deptPostName:'',
+      deptName: '',
       options: ref([]),
       tableData: [],
       value1: "", //日期
@@ -85,6 +94,8 @@ export default {
           "pagesize": this.pageInfo.pagesize,
           //职位名称
           "postName":this.deptPostName,
+          //部门名称
+          "deptName":this.deptName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
