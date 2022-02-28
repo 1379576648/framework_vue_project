@@ -103,12 +103,6 @@ export default {
   data() {
     const rs = ref(1)
     return {
-      //职位
-      zpzw:'',
-      //需求部门
-      zpdept: '',
-      //月薪范围
-      yxfw: [],
       //访问路径
       url: "http://localhost:80/",
       ruleForm: {
@@ -120,7 +114,12 @@ export default {
         xl: '',
         //时间范围
         sjfw:'',
-
+        //职位
+        zpzw:'',
+        //需求部门
+        zpdept: '',
+        //月薪范围
+        yxfw: [],
       },
       rules: {
         zpname: [{
@@ -133,7 +132,7 @@ export default {
           required: true,
           message: '请选择需求部门!',
           trigger: 'change',
-        }, ],
+        }],
         zw: [{
           required: true,
           message: '请设置招聘职位!',

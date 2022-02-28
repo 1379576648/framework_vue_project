@@ -42,26 +42,29 @@
     <!-- 表格数据 -->
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-        <el-table-column fixed="left"  align="center" type="selection" width="80" />
-        <el-table-column fixed="left" prop="name" label="姓名" width="150">
+        <el-table-column fixed="left"  align="center" type="selection" width="100" />
+        <el-table-column fixed="left" label="姓名" width="150">
           <template #default="scope">
-            <router-link :to="{path:this.details,query:{path:this.$route.query.path,name:scope.row.name}}">{{scope.row.name}}</router-link>
+            <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
+             {{ scope.row.resumeName }}
+            </span>
+
           </template>
         </el-table-column>
-        <el-table-column fixed="left" prop="departm" label="投递部门" width="140"/>
-        <el-table-column prop="gender" label="性别" width="140"/>
-        <el-table-column prop="schoolli" label="学历" width="140"/>
-        <el-table-column prop="phone" label="手机号" width="140"/>
-        <el-table-column prop="age" label="年龄" width="140"/>
-        <el-table-column prop="email" label="邮箱" width="140"/>
-        <el-table-column prop="professional" label="专业" width="140"/>
-        <el-table-column prop="birth" label="出生日期" width="140"/>
-        <el-table-column prop="face" label="政治面貌" width="140"/>
-        <el-table-column prop="gradschool" label="毕业学校" width="140"/>
-        <el-table-column prop="invitation" label="是否邀约" width="140"/>
-        <el-table-column prop="state" label="状态" width="140"/>
+        <el-table-column fixed="left" prop="postName" label="投递部门" width="140"/>
+        <el-table-column prop="resumeSex" label="性别" width="140"/>
+        <el-table-column prop="resumeEducation" label="学历" width="140"/>
+        <el-table-column prop="resumePhone" label="手机号" width="140"/>
+        <!--        <el-table-column prop="age" label="年龄" width="140"/>-->
+        <el-table-column prop="resumeMailbox" label="邮箱" width="140"/>
+        <!--        <el-table-column prop="professional" label="专业" width="140"/>-->
+        <el-table-column prop="resumeBirthday" label="出生日期" width="140"/>
+        <!--        <el-table-column prop="face" label="政治面貌" width="140"/>-->
+        <!--        <el-table-column prop="gradschool" label="毕业学校" width="140"/>-->
+        <!--        <el-table-column prop="invitation" label="是否邀约" width="140"/>-->
+        <!--        <el-table-column prop="state" label="状态" width="140"/>-->
 
-        <el-table-column fixed="right" label="操作" width="180">
+        <el-table-column fixed="right" label="操作" width="220">
           <template #default>
             <div style="width: 110px">
               <el-button type="text" size="small" @click="">填写评价</el-button>
@@ -90,7 +93,7 @@
       <div class="demo-pagination-block">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
-            v-model:currentPage="pageInfo.currenPage"
+            v-model:currentPage="pageInfo.currentPage"
             :page-sizes="[3, 5, 10, 50]"
             v-model:page-size="pageInfo.pagesize"
             :default-page-size="pageInfo.pagesize"
@@ -98,8 +101,8 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="sele"
-            @current-change="sele"
+            @size-change="selectInInterview"
+            @current-change="selectInInterview"
         >
         </el-pagination>
       </div>
@@ -122,7 +125,7 @@ export default {
     return {
       details:'/recruit/resume/details',
       pageInfo: {
-        currenPage: 1,
+        currentPage: 1,
         /* 当前的页 */
         pagesize: 3,
         total: 0,
@@ -135,14 +138,53 @@ export default {
       tableData: [],
       //筛选框数据
       formInline:[],
-
+      //访问路径
+      url: "http://localhost:80/",
 
     }
   },
   methods:{
+    //查询面试中
+    selectInInterview() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectInInterview',
+        data: {
+          "currentPage": this.pageInfo.currentPage,
+          "pagesize": this.pageInfo.pagesize,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              this.tableData = response.data.data.succeed.records;
+              this.pageInfo.pagesize = response.data.data.succeed.size;
+              this.pageInfo.total = response.data.data.succeed.total;
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: "",
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
+    this.selectInInterview()
   }
 
 }
