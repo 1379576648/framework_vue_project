@@ -3,7 +3,7 @@
   <!-- 补打卡页面-->
   <div class="w">
     <div class="head">
-      <el-button size="medium">
+      <el-button size="medium" @click="derive()">
         <el-icon style="font-size: 18px">
           <i-upload/>
         </el-icon>
@@ -68,14 +68,14 @@
       >
       </el-pagination>
     </div>
-
+{{tableData}}
   </div>
 </template>
 
 <script>
 import {ref, defineComponent} from "vue";
-import {ElMessage, ElNotification} from "element-plus";
-
+import {ElMessage, ElMessageBox, ElNotification} from "element-plus";
+import {export_json_to_excel} from "../../excal/Export2Excel";
 export default {
   data() {
     return {
@@ -125,6 +125,50 @@ export default {
     };
   },
   methods: {
+    // 点击导出操作
+    derive() {
+      ElMessageBox.confirm(
+          '此操作将导出excel文件, 是否继续?',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      ).then(() => {
+        this.deriveExcel();
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    // 导出方法
+    deriveExcel() {
+      let _this= this;
+      let tHeader = ["申请人", "补打卡类型", "补打卡时间", "备注"]; // 导出的表头名
+      let filterVal = ["staffName", "cardType", "cardDate", "cardRemarks"];//导出其prop属性
+      ElMessageBox.prompt('请输入文件名', '提示', {
+        confirmButtonText: '生成',
+        cancelButtonText: '取消',
+      }).then(({value}) => {
+        let data = _this.formatJson(filterVal, _this.tableData);
+        export_json_to_excel(tHeader, data, value);
+        ElMessage({
+          type: 'success',
+          message: '生成成功',
+        })
+      }).catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消成功',
+        })
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
     // 根据员工名称查询补打卡
     selectReissueCardRecordAll() {
       var _this = this;

@@ -3,13 +3,12 @@
   <!-- 月份报表页面 -->
   <div class="head">
     <div class="head-surface">
-      <span>{{ this.$parent.$data.archiveName}}</span>
+      <span>{{ this.$parent.$data.archiveName }}</span>
       <span style="margin-left: 28%;cursor: pointer" @click="this.$parent.$data.archive=false">
             <svg t="1641819317404" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                  p-id="6044" width="40" height="40"><path
                 d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512z m0-992a480 480 0 1 0 480 480A480 480 0 0 0 512 32z m16 527.616v63.824a32 32 0 0 1-49.744 26.544l-192-127.632a31.856 31.856 0 0 1 0-53.104l192-127.632A32 32 0 0 1 528 368.16V432a191.728 191.728 0 0 1 192 191.44 114.624 114.624 0 0 1-16 64.368c-30.896-73.92-93.264-128.112-176-128.192zM496 464v-90.496a45.552 45.552 0 0 0-22.576 4.592L323.2 477.024a22.752 22.752 0 0 0-11.696 19.728A26.08 26.08 0 0 0 323.2 518.4l150.224 92.432a51.328 51.328 0 0 0 22.576 5.6V528c183.472 0 208.32 122.784 208.32 122.784C704.32 505.6 592 464 496 464z"
                 p-id="6045" fill="#2c2c2c"></path></svg>
-
           </span>
     </div>
     <div class="head-to">
@@ -98,7 +97,7 @@ export default {
   },
   methods: {
     // 根据归档名称查询对应的考勤归档记录
-    selectArchiveByNameAndIPage(){
+    selectArchiveByNameAndIPage() {
       var _this = this
       this.axios({
         method: 'post',
@@ -195,11 +194,5 @@ export default {
   margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 5px;
-}
-
-/* 计薪月份 */
-.month_span {
-  font-weight: bold;
-  font-size: 30px;
 }
 </style>
