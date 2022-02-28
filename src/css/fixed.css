@@ -66,6 +66,6 @@
 }
 /* 分页的样式 */
 .demo-pagination-block {
-    float: right;
+    margin-top: 20px;
     margin: 20px;
 }
