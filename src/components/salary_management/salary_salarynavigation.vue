@@ -82,6 +82,8 @@ import salary_archive from '../salary_management/salary_archive.vue';
 import salary_checkwage from '../salary_management/salary_checkwage.vue';
 //固定工资
 import regular from '../salary_management/salary_fixedwage.vue';
+//社保
+import social from '../social_management/insured_management.vue';
 //加班工资
 import callbackpay from '../salary_management/salary_workovertimeplan.vue';
 //考勤扣款
@@ -120,6 +122,8 @@ export default {
     salary_insertplanthree,
     //新增修改考勤扣款方案
     salary_insertplantwo,
+    //社保
+    social,
   },
   data() {
     return {
