@@ -26,7 +26,7 @@
                   <el-form-item label="出差工资" prop="businesswage">
                     <el-select v-model="ruleForm.businesswage" placeholder="请选择">
                       <el-option label="按出差时长" value="wagebyhour" style="margin-left: 20px;"></el-option>
-                      <el-option label="按固定金额" value="wagebyfixed" style="margin-left: 20px;"></el-option>
+<!--                      <el-option label="按固定金额" value="wagebyfixed" style="margin-left: 20px;"></el-option>-->
                     </el-select>
                   </el-form-item>
 

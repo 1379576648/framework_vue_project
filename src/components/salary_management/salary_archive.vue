@@ -99,15 +99,13 @@
           </el-pagination>
         </div>
       </el-tab-pane>
+      &nbsp;
     </el-tabs>
   </div>
-  {{this.months[0]}}
-  {{this.months}}
-  {{tableData}}
-  {{tableDataTwo}}
+  &nbsp;
 </template>
 <script>
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 export default {
   data() {
     return {

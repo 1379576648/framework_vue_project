@@ -25,7 +25,7 @@
 
                   <el-form-item label="工作日加班工资" prop="workday">
                     <el-select v-model="ruleForm.workday" placeholder="请选择">
-                      <el-option label="按小时工资百分比计薪" style="margin-left: 20px;" value="按小时工资百分比计薪" selected="selected"></el-option>
+<!--                      <el-option label="按小时工资百分比计薪" style="margin-left: 20px;" value="按小时工资百分比计薪" selected="selected"></el-option>-->
                       <el-option label="按固定金额" value="按固定金额" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
@@ -59,7 +59,7 @@
 
                   <el-form-item label="休息日加班工资" prop="offday">
                     <el-select v-model="ruleForm.offday" placeholder="请选择">
-                      <el-option label="按小时工资百分比计薪" value="按小时工资百分比计薪" style="margin-left: 20px;"></el-option>
+<!--                      <el-option label="按小时工资百分比计薪" value="按小时工资百分比计薪" style="margin-left: 20px;"></el-option>-->
                       <el-option label="按固定金额" value="按固定金额" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>
@@ -93,7 +93,7 @@
 
                   <el-form-item label="节假日加班工资" prop="holiday">
                     <el-select v-model="ruleForm.holiday" placeholder="请选择">
-                      <el-option label="按小时工资百分比计薪" value="按小时工资百分比计薪" style="margin-left: 20px;"></el-option>
+<!--                      <el-option label="按小时工资百分比计薪" value="按小时工资百分比计薪" style="margin-left: 20px;"></el-option>-->
                       <el-option label="按固定金额" value="按固定金额" style="margin-left: 20px;"></el-option>
                     </el-select>
                   </el-form-item>

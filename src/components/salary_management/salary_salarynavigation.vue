@@ -47,7 +47,7 @@
         <!--        核算方案-->
         <salary_accountscheme v-if="scheme"/>
         <!--        工资表-->
-        <salary_archive v-if="paysheet"/>
+        <salary_archive v-if="paysheet" ref="child"/>
       </div>
     </div>
   </div>
@@ -67,9 +67,11 @@
   <salary_insertplanthree v-if="salary_insertplanthree" :name="insertplanthree_name"/>
 <!--  考勤扣款新增或修改方案-->
   <salary_insertplantwo v-if="salary_insertplantwo" :name="insertplantwo_name"/>
-</template>
 
+</template>
+&nbsp;
 <script>
+import {ElMessage, ElNotification} from "element-plus";
 //薪酬结构
 import salary_construction from '../salary_management/salary_construction.vue';
 //核算方案
@@ -121,6 +123,8 @@ export default {
   },
   data() {
     return {
+      //请求的路径
+      url: "http://localhost:80/",
       //归档状态
       state:0,
       //薪资月份
@@ -184,12 +188,65 @@ export default {
     },
     reveal() {
       let date = new Date();
-      if(date.getDate()<6){
+      if(date.getDate()<29){
+        this.selectWage();
         this.salary();
       }else {
         this.salary();
       }
-    }
+    },
+    //生成工资表
+    selectWage() {
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectWage',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              if (response.data.data.info=="成功"){
+                //如果是成功
+                ElNotification({
+                  title: '提示',
+                  message: '生成工资表成功',
+                  type: 'success',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              }else{
+                //如果是成功
+                ElNotification({
+                  title: '提示',
+                  message: response.data.data.info,
+                  type: 'success',
+                })
+              }
+            } else {
+              ElMessage({
+                type: 'warning',
+                message: response.data.data.info,
+              })
+            }
+          }else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.data.info,
+              offset: 100,
+            })
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
