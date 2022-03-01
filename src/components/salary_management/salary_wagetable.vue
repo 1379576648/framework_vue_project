@@ -154,9 +154,7 @@
 
 
 
-  </div>
-  {{tableData}}
-<!--  </div>-->
+  </div><!--  </div>-->
 </template>
 
 
