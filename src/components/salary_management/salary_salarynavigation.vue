@@ -8,7 +8,7 @@
        evectionplan==false&&
        salary_insertplan==false&&
       salary_insertplanthree==false&&
-      salary_insertplantwo==false">
+      salary_insertplantwo==false&&social==false">
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body">
         <span></span>
@@ -53,6 +53,8 @@
   </div>
   <!--  查看工资表-->
   <salary_checkwage v-if="salary_checkwage"/>
+  <!--  查看工资表-->
+  <social v-if="social"/>
   <!-- 固定工资 -->
   <regular v-if="regular"/>
   <!-- 加班工资 -->
@@ -145,6 +147,8 @@ export default {
       regular: false,
       //加班工资
       callbackpay: false,
+      //社保
+      social:false,
       //考勤扣款
       attendanceplan: false,
       //出差方案
