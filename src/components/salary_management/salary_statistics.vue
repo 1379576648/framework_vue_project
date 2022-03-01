@@ -26,7 +26,7 @@
           <el-collapse :name="index"  v-model="activeNames" @change="selectstatc(obj.payMonth)" >
             <el-collapse-item :name="index">
               <template #title>
-                <span style="margin-left: 0px;font-weight: bolder">{{ obj.payMonth }}月份</span>
+                <span style="margin-left: 10px;font-weight: bolder">{{ obj.payMonth }}月份</span>
                 <span style="margin-left: 90px">计薪人数：{{ obj.countPerson }}</span>
                 <span style="margin-left: 80px">应发工资：{{ obj.countyMoney }}</span>
                 <span style="margin-left: 100px">实发工资：{{ obj.countsMoney }}</span>
