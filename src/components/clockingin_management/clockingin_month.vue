@@ -45,6 +45,7 @@
         <el-table-column prop="leaveEarly" align="center" label="迟到"/>
         <el-table-column prop="tardy" align="center" label="早退"/>
         <el-table-column prop="absenteeism" align="center" label="旷工"/>
+        <el-table-column prop="attendanceDays" align="center" label="应出勤天数"/>
         <el-table-column align="center" label="是否全勤">
           <template #default="scope">
             <span v-if="scope.row.leaveEarly ===0 && scope.row.tardy ===0 && scope.row.absenteeism === 0">是</span>
@@ -99,6 +100,7 @@ export default {
       salaryMonth: "",
       tableData: [],
       tableDataTwo: [],
+      attendanceDays:"",
     };
   },
   methods: {
@@ -213,6 +215,7 @@ export default {
                   leaveEarly: 0,
                   tardy: 0,
                   absenteeism: 0,
+                  attendanceDays:this.attendanceDays,
                 }
                 for (let j = 0; j < this.tableData[i].list.length; j++) {
                   if (this.tableData[i].list[j].checkState == "正常") {
@@ -322,7 +325,12 @@ export default {
     let month = new Date().getMonth() + 1;
     // 当前月份
     this.salaryMonth = month > 9 ? year + "-" + month : year + "-" + "0" + month;
-
+      // 当前月份应出勤天数（除去周末）
+      var today = new Date();
+      // 获取当月天数 curretMonthDayCount
+      var curretMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      var curretMonthDayCount = curretMonth.getDate();
+      this.attendanceDays = curretMonthDayCount-((curretMonthDayCount/7)*2).toString().substring(0,1);
   }
 };
 </script>
