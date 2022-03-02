@@ -4,32 +4,7 @@
     <div class="j-card j-card-bordered mainContent">
       <div class="j-card-body ">
         <div class="j-tabs">
-          <!--          <ul>-->
-          <!--            <li @click="liback(1)">-->
-          <!--              <div v-bind:class="{active:isActive1}">-->
-          <!--                <router-link :to="{path:this.daiInterview,query:{path:this.$route.query.path}}">-->
-          <!--                  <span v-bind:class="{sactive:isActive1}">面试中 (99)</span>-->
-          <!--                </router-link>-->
-          <!--              </div>-->
-          <!--            </li>-->
 
-          <!--            <li @click="liback(3)">-->
-          <!--              <div v-bind:class="{active:isActive3}">-->
-          <!--                <router-link :to="{path:this.daiSecondInterview,query:{path:this.$route.query.path}}">-->
-          <!--                  <span v-bind:class="{sactive:isActive3}">复试中 (99)</span>-->
-          <!--                </router-link>-->
-          <!--              </div>-->
-          <!--            </li>-->
-
-          <!--            <li @click="liback(2)">-->
-          <!--              <div v-bind:class="{active:isActive2}">-->
-          <!--                <router-link :to="{path:this.interviewPass,query:{path:this.$route.query.path}}">-->
-          <!--                  <span v-bind:class="{sactive:isActive2}">面试通过 (99)</span>-->
-          <!--                </router-link>-->
-          <!--              </div>-->
-          <!--            </li>-->
-
-          <!--          </ul>-->
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane name="daiInterview" label="待面试">
               <recruit_zp_daiInterview/>
@@ -40,10 +15,12 @@
             </el-tab-pane>
             <el-tab-pane name="daiSecondInterviewPass" label="复试中">
               <recruit_zp_daiSecondInterviewPass/>
-
             </el-tab-pane>
             <el-tab-pane name="interviewPass" label="面试通过">
               <recruit_zp_interviewPass/>
+            </el-tab-pane>
+            <el-tab-pane name="InterviewElimination" label="面试淘汰库">
+              <recruit_zp_InterviewElimination/>
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -66,6 +43,8 @@ import recruit_zp_interviewPass from '../recruit_management/recruit_zp_interview
 import recruit_zp_daiSecondInterview from '../recruit_management/recruit_zp_daiSecondInterview.vue';
 //面试通过
 import recruit_zp_daiSecondInterviewPass from '../recruit_management/recruit_zp_daiSecondInterviewPass.vue';
+//面试淘汰库
+import recruit_zp_InterviewElimination from '../recruit_management/recruit_zp_InterviewElimination.vue';
 
 export default {
   //注册组件
@@ -78,6 +57,8 @@ export default {
     recruit_zp_daiSecondInterview,
     //面试通过
     recruit_zp_daiSecondInterviewPass,
+    //面试淘汰库
+    recruit_zp_InterviewElimination
   },
   data() {
     return {
@@ -85,6 +66,7 @@ export default {
       isActive2: false,
       isActive3: false,
       isActive4: false,
+      isActive5: false,
       activeName: 'daiInterview',
 
     }
@@ -96,26 +78,36 @@ export default {
         this.isActive2 = false;
         this.isActive3 = false;
         this.isActive4 = false;
+        this.isActive5 = false;
       }
       if (n === 2) {
         this.isActive1 = false;
         this.isActive2 = true;
         this.isActive3 = false;
         this.isActive4 = false;
+        this.isActive5 = false;
       }
       if (n === 3) {
         this.isActive1 = false;
         this.isActive2 = false;
         this.isActive3 = true;
         this.isActive4 = false;
+        this.isActive5 = false;
       }
       if (n === 4) {
         this.isActive1 = false;
         this.isActive2 = false;
         this.isActive3 = false;
         this.isActive4 = true;
+        this.isActive5 = false;
       }
-
+      if (n === 5) {
+        this.isActive1 = false;
+        this.isActive2 = false;
+        this.isActive3 = false;
+        this.isActive4 = false;
+        this.isActive5 = true;
+      }
     }
   },mounted() {
     //jWT传梯

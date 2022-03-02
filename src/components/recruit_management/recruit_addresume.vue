@@ -1,5 +1,4 @@
 <!-- 新增简历-->
-
 <template>
   <div class="saas-main-content">
     <div class="j-card j-card-bordered mainContent">
@@ -13,7 +12,6 @@
       <div class="j-card-body ">
         <div style="padding: 25px; height: 1000px">
           <div>
-             用户照片
             <div style="width: 170px;">
               <div class="upload-btn common mb_10">
                 <label>
@@ -35,7 +33,7 @@
               <el-button style="margin-left: 904px;" @click="resetOne">重置</el-button>
               <br>
               <el-form-item label="姓 名：">
-                <el-input v-model="formInline.xm"></el-input>
+                <el-input v-model="formInline.xm" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
               <el-form-item label="性 别：">
                 <el-select v-model="formInline.xb" placeholder="请选择">
@@ -50,19 +48,21 @@
                       type="date"
                       placeholder="请选择日期"
                       style="width: 200px"
+                      :default-value="[new Date()]"
+                      @change="ages(formInline.birthdate)"
                   ></el-date-picker>
                 </el-col>
               </el-form-item>
 
               <div style="display: block;">
-                <el-form-item label="年龄：">
-                  <el-input v-model="formInline.nl"></el-input>
+                <el-form-item label="年龄：" >
+                  <el-input v-model="formInline.nl" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="手机号：">
-                  <el-input v-model="formInline.sjh"></el-input>
+                  <el-input v-model="formInline.sjh"  @blur="animate()" max="11"></el-input>
                 </el-form-item>
                 <el-form-item label="邮 箱：">
-                  <el-input v-model="formInline.yx"></el-input>
+                  <el-input v-model="formInline.yx" @blur="OnSubscribe()"></el-input>
                 </el-form-item>
               </div>
 
@@ -113,11 +113,11 @@
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item label="学校名称：">
-                <el-input v-model="formInline.xxmc"></el-input>
+                <el-input v-model="formInline.xxmc" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
 
               <el-form-item label="所学专业：">
-                <el-input v-model="formInline.sxzy"></el-input>
+                <el-input v-model="formInline.sxzy" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
 
               <el-form-item label="开始时间：">
@@ -159,11 +159,11 @@
 
             <el-form :inline="true" :model="formInline" class="">
               <el-form-item label="公司名称：">
-                <el-input v-model="formInline.gsmc"></el-input>
+                <el-input v-model="formInline.gsmc" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
 
               <el-form-item label="职位名称：">
-                <el-input v-model="formInline.zwmc"></el-input>
+                <el-input v-model="formInline.zwmc" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
 
 
@@ -190,11 +190,11 @@
               </el-form-item>
 
               <el-form-item label="所属行业：">
-                <el-input v-model="formInline.sshy"></el-input>
+                <el-input v-model="formInline.sshy" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
 
               <el-form-item label="税前月薪：">
-                <el-input v-model="formInline.sqyx"></el-input>
+                <el-input v-model="formInline.sqyx" type="text" onkeyup="value=value.replace(/[^\d\X]/g,'')"></el-input>
               </el-form-item>
 
               <el-form-item label="工作描述：" style="display: block">
@@ -236,6 +236,7 @@ export default {
     return {
       src: '',
       isShow: false,
+      disabled:false,
       zpjh:[],
       formInline: {
         xm:'',
@@ -261,11 +262,61 @@ export default {
         enddate2:'',
         textarea: '',
       },
+
       //访问路径
       url: "http://localhost:80/",
     }
   },
   methods: {
+
+    //事件函数的逻辑
+    OnSubscribe() {
+      //邮箱验证的正则表达式
+      const reg = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+      let str = this.formInline.yx;
+      if (reg.test(str)) {
+        // 这里是邮箱验证成功的代码
+        subscribe({
+          e_mail: this.formInline.yx,
+          state: this.state,
+          notes: this.notes
+        }).then(res => {
+          console.log(res);
+          if (res.data.code === 20000) {
+
+          } else {
+            this.$message.warning(res.data.message);
+            return false;
+          }
+        });
+      } else {
+        this.$message.warning("电子邮件格式错误");
+      }
+    },
+    animate(){
+      var re = /^1\d{10}$/;
+      let str = this.formInline.sjh;
+      if(re.test(str)){
+
+      }else {
+        ElMessage("抱歉手机号不合法");
+        this.formInline.sjh=''
+      }
+    },
+    //计算年龄
+    ages(value){
+      const birthdays = new Date(value + "".replace(/-/g, "/"));
+      const d = new Date();
+      const age =
+          d.getFullYear() -
+          birthdays.getFullYear() -
+          (d.getMonth() < birthdays.getMonth() ||
+          (d.getMonth() == birthdays.getMonth() &&
+              d.getDate() < birthdays.getDate())
+              ? 1
+              : 0);
+      this.formInline.nl=age;
+    },
     uploadImg(e) {
       let _this = this;
       let files = e.target.files[0];
@@ -307,66 +358,108 @@ export default {
       this.formInline.sqyx='';
       this.formInline.textarea='';
     },
-    addResume(){
-      this.axios({
-        method:'post',
-        url: this.url+ 'addResume',
-        data:{
-          "resumeName":this.formInline.xm,
-          "resumeSex":this.formInline.xb,
-          "resumeBirthday":this.formInline.birthdate,
-          "resumePhone": this.formInline.sjh,
-          "resumeMailbox":this.formInline.yx,
-          "resumeAge": this.formInline.nl,
-          "resumeEducation":this.formInline.xl,
-          "resumePoliticalOutlook":this.formInline.zzmm,
-          "recruitmentPlanName":this.formInline.zpjh,
-          'educationStudentname':this.formInline.xxmc,
-          'educationMajor':this.formInline.sxzy,
-          'educationStartTime':this.formInline.startdate1,
-          'educationEndTime':this.formInline.enddate1,
-          'companyName':this.formInline.gsmc,
-          'positionName':this.formInline.zwmc,
-          'workStareTime':this.formInline.startdate2,
-          'workEndTime':this.formInline.enddate2,
-          'positionIndustry':this.formInline.sshy,
-          'positionSqmonthly':this.formInline.sqyx,
-          'positionDescribe':this.formInline.textarea,
-        },
-        responseType:'json',
-        responseEncoding:'utf-8',
-      }).then((response)=>{
-        console.log("添加")
-        console.log(response)
-        if (response.data.code == 200) {
-          if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.succeed == "添加成功") {
-                this.$parent.$data.recruit_addresume=false
-                this.$store.commit("updateToken", response.data.data.token);
-                ElMessage({
-                  message: '录用成功',
-                  type: 'success',
+    addResume() {
+      if (this.formInline.xm.length === 0) {
+        ElMessage("请填写姓名");
+      } else if (this.formInline.xb.length === 0) {
+        ElMessage("请选择性别");
+      } else if (this.formInline.birthdate.length === 0) {
+        ElMessage("请选择出生日期");
+      } else if (this.formInline.sjh.length === 0) {
+        ElMessage("请填写年龄");
+      } else if (this.formInline.yx.length === 0) {
+        ElMessage("请填写手机号");
+      } else if (this.formInline.nl.length === 0) {
+        ElMessage("请填写邮箱");
+      } else if (this.formInline.xl.length === 0) {
+        ElMessage("请选择学历");
+      } else if (this.formInline.zzmm.length === 0) {
+        ElMessage("请选择政治面貌");
+      } else if (this.formInline.zpjh.length === 0) {
+        ElMessage("请选择招聘计划");
+      } else if (this.formInline.xxmc.length === 0) {
+        ElMessage("请输入学校名称");
+      } else if (this.formInline.sxzy.length === 0) {
+        ElMessage("请输入所学专业");
+      } else if (this.formInline.startdate1.length === 0) {
+        ElMessage("请选择教育开始时间");
+      } else if (this.formInline.enddate1.length === 0) {
+        ElMessage("请选择教育结束时间");
+      } else if (this.formInline.gsmc.length === 0) {
+        ElMessage("请填写公司名称");
+      } else if (this.formInline.zwmc.length === 0) {
+        ElMessage("请填写职位名称");
+      } else if (this.formInline.startdate2.length === 0) {
+        ElMessage("请选择工作经历开始时间");
+      } else if (this.formInline.enddate2.length === 0) {
+        ElMessage("请选择工作经历结束时间");
+      } else if (this.formInline.sshy.length === 0) {
+        ElMessage("请填写招聘职位");
+      } else if (this.formInline.sqyx.length === 0) {
+        ElMessage("请填写税前月薪");
+      } else if (this.formInline.textarea.length === 0) {
+        ElMessage("请填写工作描述");
+      } else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'addResume',
+          data: {
+            "resumeName": this.formInline.xm,
+            "resumeSex": this.formInline.xb,
+            "resumeBirthday": this.formInline.birthdate,
+            "resumePhone": this.formInline.sjh,
+            "resumeMailbox": this.formInline.yx,
+            "resumeAge": this.formInline.nl,
+            "resumeEducation": this.formInline.xl,
+            "resumePoliticalOutlook": this.formInline.zzmm,
+            "recruitmentPlanName": this.formInline.zpjh,
+            'educationStudentname': this.formInline.xxmc,
+            'educationMajor': this.formInline.sxzy,
+            'educationStartTime': this.formInline.startdate1,
+            'educationEndTime': this.formInline.enddate1,
+            'companyName': this.formInline.gsmc,
+            'positionName': this.formInline.zwmc,
+            'workStareTime': this.formInline.startdate2,
+            'workEndTime': this.formInline.enddate2,
+            'positionIndustry': this.formInline.sshy,
+            'positionSqmonthly': this.formInline.sqyx,
+            'positionDescribe': this.formInline.textarea,
+          },
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          console.log("添加")
+          console.log(response)
+          if (response.data.code == 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果是成功
+                if (response.data.data.succeed == "添加成功") {
+                  this.$parent.$data.recruit_addresume = false
+                  this.$store.commit("updateToken", response.data.data.token);
+                  ElMessage({
+                    message: '新增成功',
+                    type: 'success',
+                  })
+                }
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
                 })
               }
-            }else {
-              ElNotification.warning({
-                title: '提示',
-                message: response.data.data.info,
-                offset: 100,
-              })
             }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
-        } else {
-          ElNotification.error({
-            title: '提示',
-            message: response.data.message,
-            offset: 100,
-          })
-        }
-      })
+        })
+      }
     },
     // 查询招聘计划名称
     selectPlan() {

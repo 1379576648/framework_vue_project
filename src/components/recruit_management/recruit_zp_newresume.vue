@@ -11,18 +11,6 @@
               <span>+ 新增</span>
             </button>
           </a>
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
-          <!-- 批量批量删除按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量删除</span>
-          </button>
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量设为候选人</span>
-          </button>
 
 
           <!--搜索框-->
@@ -30,11 +18,11 @@
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item>
-                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+                <el-input v-model="resumeName" placeholder="姓名=" clearable></el-input>
               </el-form-item>
 
               <el-form-item>
-                <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+                <el-button type="primary" @click="selectResume" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -136,6 +124,7 @@ export default {
   },
   data() {
     return {
+      resumeName:'',
       handleClose:'',
       //访问路径
       url: "http://localhost:80/",
@@ -165,6 +154,7 @@ export default {
         data: {
           "currentPage": this.pageInfo.currentPage,
           "pagesize": this.pageInfo.pagesize,
+          "resumeName":this.resumeName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

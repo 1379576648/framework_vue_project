@@ -56,6 +56,7 @@
             <el-tab-pane name="eliminate" label="淘汰库">
               <recruit_zp_eliminate/>
             </el-tab-pane>
+
           </el-tabs>
         </div>
 <!--        <div>-->

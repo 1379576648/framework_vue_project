@@ -20,31 +20,13 @@
 
           <!-- 下拉选择器 -->
           <div class="resume-operation">
-            <el-select v-model="value1" clearable placeholder="招聘职位">
-              <el-option
-                  v-for="item in options1"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-              >
-              </el-option>
-            </el-select>
-            &nbsp;&nbsp;&nbsp;
-            <el-select v-model="value2" clearable placeholder="招聘状态">
-              <el-option
-                  v-for="item in options2"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-              >
-              </el-option>
-            </el-select>
+
             <!--搜索输入框-->
             &nbsp;&nbsp;&nbsp;
-            <el-input style="width: 200px;" v-model="input" placeholder="招聘计划名称" clearable/>
+            <el-input style="width: 200px;" v-model="recruitmentPlanName" placeholder="招聘计划名称" clearable/>
             <!--搜索按钮-->
             &nbsp;&nbsp;&nbsp;
-            <el-button style="background-color: #085fc3; color: white;" size="small">搜索</el-button>
+            <el-button style="background-color: #085fc3; color: white;" size="small" @click="selectRecruitment">搜索</el-button>
           </div>
 
 
@@ -150,6 +132,7 @@ export default {
 
   data() {
     return {
+      recruitmentPlanName:"",
       //新增招聘计划
       recruit_add_plan:false,
       //判断是新增还是编辑
@@ -221,10 +204,12 @@ export default {
           data: {
             "currentPage": this.pageInfo.currentPage,
             "pagesize": this.pageInfo.pagesize,
+            "recruitmentPlanName":this.recruitmentPlanName,
           },
           responseType: 'json',
           responseEncoding: 'utf-8',
         }).then((response) => {
+          console.log(response)
           if (response.data.code === 200) {
             if (response.data.data) {
               //如果服务是正常的

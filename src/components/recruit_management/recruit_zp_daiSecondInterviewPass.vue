@@ -17,30 +17,17 @@
 <!--          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">-->
 <!--            <span>批量设为候选人</span>-->
 <!--          </button>-->
-          <el-dropdown :hide-on-click="false">
-            <span class="el-dropdown-link">
-                <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-                  <span>批量操作</span>
-                </button>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>淘汰/放弃</el-dropdown-item>
-                <el-dropdown-item>面试通过</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
 
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item>
-                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+                <el-input v-model="resumeName" placeholder="姓名" clearable></el-input>
               </el-form-item>
 
               <el-form-item>
-                <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+                <el-button type="primary" @click="selectSecondInterview" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -53,7 +40,8 @@
     <div class="ant-table-wrapper j_statistics_layout">
       <el-table :data="tableData" style="width: 100%; cursor: pointer" size="mini"
                 :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-        <el-table-column fixed="left" align="center" type="selection" width="80"/>
+        <el-table-column fixed="left"  align="center" type="selection" width="80" />
+        <el-table-column fixed :index="indexMethod" align="center" prop="resumeId" label="序号" type="index" min-width="100"/>
         <el-table-column fixed="left" label="姓名" width="150">
           <template #default="scope">
             <span @click="this.$parent.$parent.$parent.$data.recruit_plan_details=true">
@@ -77,9 +65,9 @@
 
 
         <el-table-column fixed="right" label="操作" width="220">
-          <template #default>
+          <template #default="scope">
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">设为候选人</el-button>
+              <el-button type="text" size="small" @click="secondInterviewPass(interviewId=scope.row.interviewId)">复试通过</el-button>
               <el-row class="block-col-2" style="float: right;">
                 <el-col :span="8">
                   <el-dropdown trigger="click">
@@ -87,10 +75,9 @@
                   <el-button type="text" size="small">更多<i class="iconfont"
                                                            style="font-size: 10px">&#xe772;</i></el-button>
                 </span>
-                    <template #dropdown>
+                    <template #dropdown #default="scope">
                       <el-dropdown-menu>
-                        <el-dropdown-item>删除</el-dropdown-item>
-                        <el-dropdown-item>转入淘汰库</el-dropdown-item>
+                        <el-dropdown-item @click="GiveUp3(interviewId=scope.row.interviewId)">转入淘汰库</el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
@@ -102,7 +89,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
             v-model:currentPage="pageInfo.currentPage"
@@ -129,10 +116,12 @@
 import {
   ref
 } from 'vue'
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      resumeName:'',
       //路由地址
       details: '/recruit/resume/details',
       //分页
@@ -154,7 +143,7 @@ export default {
     }
   },
   methods: {
-//查询复试中
+    //查询复试中
     selectSecondInterview() {
       this.axios({
         method: 'post',
@@ -162,6 +151,7 @@ export default {
         data: {
           "currentPage": this.pageInfo.currentPage,
           "pagesize": this.pageInfo.pagesize,
+          "resumeName":this.resumeName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -191,12 +181,104 @@ export default {
         }
       })
     },
+    //复试通过
+    secondInterviewPass(interviewId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'secondInterviewPass',
+        data: {
+          "interviewId":this.interviewId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectSecondInterview();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //淘汰
+    GiveUp3(interviewId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'GiveUp3',
+        data: {
+          "interviewId":this.interviewId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectSecondInterview();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.selectSecondInterview()
-  }
-
+  },
+  //序号
+  indexMethod(index) {
+    let curpage = this.pageInfo.currentPage; //单前页码，具体看组件取值
+    let limitpage = this.pageInfo.pagesize; //每页条数，具体是组件取值
+    return index + 1 + (curpage - 1) * limitpage;
+  },
 }
 
 </script>

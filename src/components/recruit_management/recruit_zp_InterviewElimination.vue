@@ -1,13 +1,10 @@
-  <!--简历：候选人-->
+<!--简历：淘汰库-->
 <template>
   <div class="sub-Content__primary">
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
+
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -17,13 +14,14 @@
               </el-form-item>
 
               <el-form-item>
-                <el-button type="primary" @click="selectCandidate" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+                <el-button type="primary" @click="selectInterviewOut" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
           </div>
 
         </div>
       </div>
+
     </div>
     <br/>
     <!-- 表格数据 -->
@@ -53,19 +51,12 @@
         <!--        <el-table-column prop="invitation" label="是否邀约" width="140"/>-->
         <!--        <el-table-column prop="state" label="状态" width="140"/>-->
         <el-table-column fixed="right" label="操作" width="180">
-          <template #default="scope">
-            <div style="width: 130px">
-              <el-button type="text" size="small" @click="popup(),one=scope.row.resumeId">设为面试候选人</el-button>
-              <el-button type="text" size="small" @click="HObsolete(scope.row.resumeId)">移出</el-button>
+          <template #default>
+            <div style="width: 110px">
+              <el-button type="text" size="small" @click="">删除</el-button>
+              <el-button type="text" size="small" @click="">移出</el-button>
             </div>
-            <el-dialog v-model="dialogVisible" title="是否设为面试候选人" width="30%" center>
-              <template #footer #default="scope">
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="InterviewCcandidate(one)">确定</el-button>
-      </span>
-              </template>
-            </el-dialog>
+
           </template>
         </el-table-column>
       </el-table>
@@ -81,8 +72,8 @@
             :total="pageInfo.total"
             :pager-count="5"
             background
-            @size-change="selectCandidate"
-            @current-change="selectCandidate"
+            @size-change="selectInterviewOut"
+            @current-change="selectInterviewOut"
         >
         </el-pagination>
       </div>
@@ -100,40 +91,34 @@ import {
 import {ElNotification} from "element-plus";
 
 export default {
-  setup(){
-    const dialogVisible = ref(false)
-    return {
-      dialogVisible,
-    };
-  },
   data() {
     return {
-      resumeName:"",
+      resumeName:'',
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
         pagesize: 5,
         total: 0,
       },
-      //筛选框显示隐藏
-      //搜索框
-      input: "",
       //访问路径
       url: "http://localhost:80/",
+      //筛选框显示隐藏
+      icons: false,
+      //搜索框
+      input: "",
       //表格数据
       tableData: [],
       formInline:[],
-      one:''
 
 
     }
   },
   methods: {
-    //查询候选人
-    selectCandidate() {
+    //查询面试淘汰
+    selectInterviewOut() {
       this.axios({
         method: 'post',
-        url: this.url + 'selectCandidate',
+        url: this.url + 'selectInterviewOut',
         data: {
           "currentPage": this.pageInfo.currentPage,
           "pagesize": this.pageInfo.pagesize,
@@ -166,103 +151,13 @@ export default {
           })
         }
       })
-    },
-    //设为面试候选人
-    InterviewCcandidate(id) {
-      var _this = this
-      this.axios({
-        method: 'put',
-        url: this.url + 'InterviewCcandidate',
-        data: {
-          "resumeId":id,
-        },
-        responseType: 'json',
-        responseEncoding: 'utf-8',
-      }).then((response) => {
-        if (response.data.code == 200) {
-          if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.info == 666) {
-                this.dialogVisible=false;
-                this.selectCandidate();
-                this.$store.commit("updateToken", response.data.data.token);
-              } else {
-                ElMessage({
-                  type: 'warning',
-                  message: response.data.data.info,
-                })
-              }
-            }else {
-              ElNotification.error({
-                title: '提示',
-                message: response.data.data.info,
-                offset: 100,
-              })
-            }
-          }
-        } else {
-          ElNotification.error({
-            title: '提示',
-            message: response.data.message,
-            offset: 100,
-          })
-        }
-      })
-    },
-    //转入淘汰库
-    HObsolete(id) {
-      var _this = this
-      this.axios({
-        method: 'put',
-        url: this.url + 'HObsolete',
-        data: {
-          "resumeId":id,
-        },
-        responseType: 'json',
-        responseEncoding: 'utf-8',
-      }).then((response) => {
-        if (response.data.code == 200) {
-          if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.info == 666) {
-                this.dialogVisible=false;
-                this.selectCandidate();
-                this.$store.commit("updateToken", response.data.data.token);
-              } else {
-                ElMessage({
-                  type: 'warning',
-                  message: response.data.data.info,
-                })
-              }
-            }else {
-              ElNotification.error({
-                title: '提示',
-                message: response.data.data.info,
-                offset: 100,
-              })
-            }
-          }
-        } else {
-          ElNotification.error({
-            title: '提示',
-            message: response.data.message,
-            offset: 100,
-          })
-        }
-      })
-    },
-    //弹出设为面试候选人
-    popup(){
-      this.dialogVisible=true
+
     }
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
-    this.selectCandidate();
+    this.selectInterviewOut();
+
   },
   //序号
   indexMethod(index) {
@@ -335,11 +230,5 @@ export default {
 .abt:hover {
   color: #0c9c6e;
   border: 1px solid #0c9c6e;
-}
-.dialog-footer button:first-child {
-  margin-right: 10px;
-}
-::v-deep .el-overlay {
-  background-color: transparent;
 }
 </style>

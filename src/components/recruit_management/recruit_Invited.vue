@@ -16,11 +16,11 @@
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item>
-                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+                <el-input v-model="resumeName" placeholder="姓名" clearable></el-input>
               </el-form-item>
 
               <el-form-item>
-                <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+                <el-button type="primary" @click="selectInvite" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -57,9 +57,9 @@
         <!--        <el-table-column prop="state" label="状态" width="140"/>-->
 
         <el-table-column fixed="right" label="操作" width="180">
-          <template #default>
+          <template #default="scope">
             <div style="width: 110px">
-              <el-button type="text" size="small" @click="">查看</el-button>
+              <el-button type="text" size="small" @click="InterviewSign(scope.row.resumeId)">面试签到</el-button>
               <el-row class="block-col-2" style="float: right;">
                 <el-col :span="8">
                   <el-dropdown trigger="click">
@@ -68,7 +68,6 @@
                 </span>
                     <template #dropdown>
                       <el-dropdown-menu>
-                        <el-dropdown-item >面试签到</el-dropdown-item>
                         <el-dropdown-item >淘汰/放弃</el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
@@ -110,11 +109,12 @@
 import {
   ref
 } from 'vue'
-import {ElNotification} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 
 export default {
   data() {
     return {
+      resumeName:'',
       //路由地址 ：简历详情页面
       details:'/recruit/resume/details',
       pageInfo: {
@@ -146,6 +146,7 @@ export default {
         data: {
           "currentPage": this.pageInfo.currentPage,
           "pagesize": this.pageInfo.pagesize,
+          "resumeName":this.resumeName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -174,8 +175,58 @@ export default {
           })
         }
       })
-
-    }
+    },
+    //面试签到
+    InterviewSign(id) {
+      console.log(id)
+      this.axios({
+        method: 'post',
+        url: this.url + 'InterviewSign',
+        data: {
+          resumeId:id,
+          resumeName: this.resumeName,
+          postName: this.postName,
+          resumeSex: this.resumeSex,
+          resumeEducation:this.resumeEducation,
+          resumePhone:this.resumePhone,
+          resumeMailbox:this.resumeMailbox,
+          resumeBirthday:this.resumeBirthday,
+        },
+        responseType:'json',
+        responseEncoding:'utf-8',
+      }).then((response)=>{
+        console.log("面试签到")
+        console.log(response);
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectInvite();
+                this.$store.commit("updateToken", response.data.data.token);
+                ElMessage({
+                  message: '面试签到成功',
+                  type: 'success',
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },mounted() {
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token

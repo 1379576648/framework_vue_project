@@ -227,6 +227,7 @@ watch: {
         console.log(error);
       });
     }
+    
   },created() {
     this.selectStaffSex();
   }

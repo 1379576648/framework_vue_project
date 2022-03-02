@@ -9,11 +9,11 @@ l<!--面试通过-->
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item>
-                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+                <el-input v-model="resumeName" placeholder="姓名" clearable></el-input>
               </el-form-item>
 
               <el-form-item>
-                <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+                <el-button type="primary" @click="selectInterviewPass" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -54,17 +54,16 @@ l<!--面试通过-->
         <el-table-column fixed="right" label="操作" width="220">
           <template #default="scope">
             <div style="width: 200px">
-              <el-button type="text" size="small" @click="">填写评价</el-button>
-              <el-button type="text" size="small" @click="(resumeId=scope.row.resumeId),employ(resumeId)">录用</el-button>
+              <el-button type="text" size="small" @click="(resumeId=scope.row.resumeId,interviewId=scope.row.interviewId),employ(resumeId,interviewId)">录用</el-button>
 
-              <el-button type="text" size="small" @click="">淘汰/放弃</el-button>
+              <el-button type="text" size="small" @click="GiveUp4(interviewId=scope.row.interviewId)">淘汰/放弃</el-button>
             </div>
 
           </template>
         </el-table-column>
       </el-table>
 
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
             v-model:currentPage="pageInfo.currentPage"
@@ -86,7 +85,9 @@ l<!--面试通过-->
 
       <el-form :model="Remark">
         <span >试用工资：</span>
-        <el-input-number v-model="num" :precision="2" :step="1000" :max="5000" :min="1000" style="margin-bottom: 30px"/>
+        <el-input-number v-model="num" :precision="2" :step="5000" :max="13000" :min="5000" style="margin-bottom: 30px"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span >正式工资：</span>
+        <el-input-number v-model="num2" :precision="2" :step="5000" :max="20000" :min="5000" style="margin-bottom: 30px"/>
         <el-input
             v-model="evaluate"
             :rows="2"
@@ -94,10 +95,10 @@ l<!--面试通过-->
             placeholder="填写评价"
         />
       </el-form>
-      <template #footer>
+      <template #footer #default="scope">
       <span class="dialog-footer">
         <el-button @click="cancel">取消</el-button>
-        <el-button type="primary" @click="confirm" :plain="true"
+        <el-button type="primary" @click="confirm(),interviewHire(interviewId)" :plain="true"
         >确定</el-button>
       </span>
       </template>
@@ -105,12 +106,11 @@ l<!--面试通过-->
 
 
   </div>
-
 </template>
 
 <script>
 import {ref} from 'vue'
-import { ElMessageBox, ElMessage } from 'element-plus'
+import {ElMessageBox, ElMessage, ElNotification} from 'element-plus'
 
 export default {
   setup() {
@@ -123,14 +123,16 @@ export default {
   },
   data() {
     return {
+      resumeName:'',
       // 弹出框备注
       evaluate:"",
       // 弹出框数字输入框
       num:"",
+      num2:"",
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       // 点击录用弹出框表单
@@ -147,6 +149,7 @@ export default {
       //表格数据
       tableData: [],
       formInline:[],
+      id:0,
 
     }
   },
@@ -158,6 +161,7 @@ export default {
           data:{
             "currentPage": this.pageInfo.currentPage,
             "pagesize": this.pageInfo.pagesize,
+            "resumeName":this.resumeName,
           },
           responseType:'json',
           responseEncoding:'utf-8',
@@ -196,6 +200,7 @@ export default {
     confirm() {
       console.log(this.resumeId)
       console.log(this.num)
+      console.log(this.num2)
       console.log(this.evaluate)
       this.EmployAddRemark=false;
       this.axios({
@@ -205,19 +210,129 @@ export default {
           resumeId: this.resumeId,
           remarks: this.evaluate,
           employmentSalary: this.num,
+          employmentSalaryz: this.num2,
           employmentState:0,
         },
         responseType:'json',
         responseEncoding:'utf-8',
       }).then((response)=>{
-        console.log("添加录用成功")
+        console.log("添加录用")
         console.log(response);
-        this.$store.commit("updateToken", response.data.data.token);
-      }),ElMessage({
-        message: '录用成功',
-        type: 'success',
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.succeed == "1") {
+                this.selectInterviewPass();
+                this.$store.commit("updateToken", response.data.data.token);
+                ElMessage({
+                  message: '录用成功',
+                  type: 'success',
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
       })
+    },
+    //修改面试到录用
+    interviewHire(interviewId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'InterviewHire',
+        data: {
+          "interviewId":interviewId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
 
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //淘汰
+    GiveUp4(interviewId) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'GiveUp4',
+        data: {
+          "interviewId":this.interviewId,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.selectInterviewPass();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
     },
     cancel(){
       this.EmployAddRemark=false;

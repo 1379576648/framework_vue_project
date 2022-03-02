@@ -16,7 +16,7 @@
             <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px"
                      class="demo-ruleForm">
               <el-form-item label="招聘计划名称" prop="zpname" style="width:500px;">
-                <el-input v-model="ruleForm.zpname"></el-input>
+                <el-input v-model="ruleForm.zpname" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"></el-input>
               </el-form-item>
 
               <el-form-item label="需求部门" prop="zpdept">
@@ -59,7 +59,10 @@
                     type="daterange"
                     start-placeholder="Start Date"
                     end-placeholder="End Date"
-                    :default-value="[new Date()]">
+                    :default-value="[new Date()]"
+                    @change="judge(ruleForm.sjfw)"
+                >
+
                 </el-date-picker>
               </el-form-item>
 
@@ -113,7 +116,7 @@ export default {
         //学历
         xl: '',
         //时间范围
-        sjfw:'',
+        sjfw:[],
         //职位
         zpzw:'',
         //需求部门
@@ -121,97 +124,85 @@ export default {
         //月薪范围
         yxfw: [],
       },
-      rules: {
-        zpname: [{
-          required: true,
-          message: '招聘计划名称不能为空!',
-          trigger: 'blur',
-        },
-        ],
-        zpdept: [{
-          required: true,
-          message: '请选择需求部门!',
-          trigger: 'change',
-        }],
-        zw: [{
-          required: true,
-          message: '请设置招聘职位!',
-          trigger: 'change',
-        }, ],
-        rs: [{
-          required: true,
-          message: '计划招聘人数不能为空!',
-          trigger: 'blur',
-        }, ],
-        xl: [{
-          required: true,
-          message: '最低学历不能为空!',
-          trigger: 'change',
-        }, ],
-        sjfw: [{
-          required: true,
-          message: '请选择招聘时间范围!',
-          trigger: 'change',
-        }, ],
-        yxfw: [{
-          required: true,
-          message: '请选择月薪范围!',
-          trigger: 'change',
-        }, ],
-      },
     }
   },
   methods: {
+    judge(value){
+      console.log(value[0])
+      console.log(value[1])
+      console.log(value)
+      var date = new Date();
+      if (value[0]<date){
+        ElMessage("时间选择有误");
+        value[0]=''
+      }
+    },
     //提交按钮
     addRecruitmentPlan(){
-      this.axios({
-        method:'post',
-        url: this.url+ 'addRecruitmentPlan',
-        data:{
-          "recruitmentPlanName":this.ruleForm.zpname,
-          "deptName":this.ruleForm.zpdept,
-          "postName":this.ruleForm.zpzw,
-          "recruitmentPlanNumber":this.ruleForm.rs,
-          "educationName":this.ruleForm.xl,
-          "recruitmentPlanStartTime":this.ruleForm.sjfw[0],
-          "recruitmentPlanEndTime":this.ruleForm.sjfw[1],
-          "monthlySalaryStar":this.ruleForm.yxfw!=null?this.ruleForm.yxfw.substring(0,this.ruleForm.yxfw.indexOf("-")):'',
-          "monthlySalaryEnd":this.ruleForm.yxfw!=null?this.ruleForm.yxfw.substring(this.ruleForm.yxfw.indexOf("-")+1):'',
-        },
-        responseType:'json',
-        responseEncoding:'utf-8',
-      }).then((response)=>{
-        console.log("添加")
-        console.log(response)
-        if (response.data.code == 200) {
-          if (response.data.data) {
-            //如果服务是正常的
-            if (response.data.data.state == 200) {
-              //如果是成功
-              if (response.data.data.succeed == "成功") {
-                this.$parent.$data.recruit_add_plan=false
-                this.$store.commit("updateToken", response.data.data.token);
-                ElMessage({
-                  message: '录用成功',
-                  type: 'success',
+      if(this.ruleForm.zpname.length===0){
+        ElMessage("请填写招聘计划名称");
+      }else if(this.ruleForm.zpdept.length===0){
+        ElMessage("请选择需求部门");
+      }else if(this.ruleForm.zpzw.length===0){
+        ElMessage("请选择招聘职位");
+      }else if(this.ruleForm.rs.length===0){
+        ElMessage("请设置招聘人数");
+      }else if(this.ruleForm.xl.length===0){
+        ElMessage("请选择最低学历");
+      }else if(this.ruleForm.sjfw.length===0){
+        ElMessage("请选择计划时间");
+      }else if(this.ruleForm.yxfw.length===0){
+        ElMessage("请选择月薪范围");
+      }else {
+        this.axios({
+          method: 'post',
+          url: this.url + 'addRecruitmentPlan',
+          data: {
+            "recruitmentPlanName": this.ruleForm.zpname,
+            "deptName": this.ruleForm.zpdept,
+            "postName": this.ruleForm.zpzw,
+            "recruitmentPlanNumber": this.ruleForm.rs,
+            "educationName": this.ruleForm.xl,
+            "recruitmentPlanStartTime": this.ruleForm.sjfw[0],
+            "recruitmentPlanEndTime": this.ruleForm.sjfw[1],
+            "monthlySalaryStar": this.ruleForm.yxfw != null ? this.ruleForm.yxfw.substring(0, this.ruleForm.yxfw.indexOf("-")) : '',
+            "monthlySalaryEnd": this.ruleForm.yxfw != null ? this.ruleForm.yxfw.substring(this.ruleForm.yxfw.indexOf("-") + 1) : '',
+          },
+          responseType: 'json',
+          responseEncoding: 'utf-8',
+        }).then((response) => {
+          console.log("添加")
+          console.log(response)
+          if (response.data.code == 200) {
+            if (response.data.data) {
+              //如果服务是正常的
+              if (response.data.data.state == 200) {
+                //如果是成功
+                if (response.data.data.succeed == "成功") {
+                  this.$parent.$data.recruit_add_plan = false
+                  this.$store.commit("updateToken", response.data.data.token);
+                  ElMessage({
+                    message: '录用成功',
+                    type: 'success',
+                  })
+                }
+              } else {
+                ElNotification.warning({
+                  title: '提示',
+                  message: response.data.data.info,
+                  offset: 100,
                 })
               }
-            }else {
-              ElNotification.warning({
-                title: '提示',
-                message: response.data.data.info,
-                offset: 100,
-              })
             }
+          } else {
+            ElNotification.error({
+              title: '提示',
+              message: response.data.message,
+              offset: 100,
+            })
           }
-        } else {
-          ElNotification.error({
-            title: '提示',
-            message: response.data.message,
-            offset: 100,
-          })
-        }
-      })
+        })
+      }
     },
     // 查询部门名称（新增招聘计划下拉列表框）
     selectDeptName1() {

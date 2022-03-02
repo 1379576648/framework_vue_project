@@ -4,10 +4,7 @@
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 批量设为候选人 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量邀约面试</span>
-          </button>
+
 
 
           <!--搜索框-->
@@ -15,11 +12,11 @@
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
               <el-form-item>
-                <el-input v-model="formInline.user" placeholder="姓名、招聘计划名称" clearable></el-input>
+                <el-input v-model="resumeName" placeholder="面试人姓名" clearable></el-input>
               </el-form-item>
 
               <el-form-item>
-                <el-button type="primary" @click="" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
+                <el-button type="primary" @click="selectInterviewCandidate" size="mini"><i class="iconfont">&#xeafe;</i></el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -115,6 +112,7 @@ export default {
   },
   data() {
     return {
+      resumeName:"",
       //路由地址 ：简历详情页面
       details:'/recruit/resume/details',
       pageInfo: {
@@ -146,6 +144,7 @@ export default {
         data: {
           "currentPage": this.pageInfo.currentPage,
           "pagesize": this.pageInfo.pagesize,
+          "resumeName":this.resumeName,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
