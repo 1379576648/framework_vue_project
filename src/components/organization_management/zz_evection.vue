@@ -8,13 +8,23 @@
         </template>
       </el-input>
 
-      <el-input v-else size="small" v-model="staffName" @input="next" placeholder="请输入职员名称" style="width:150px;margin-left: 25px">
+      <el-input v-else size="small" v-model="staffName" @input="next" placeholder="请输入负责人名称" style="width:150px;margin-left: 25px">
         <template #suffix>
           <el-icon style="margin-top:9px;margin-right:10px"><i-search /></el-icon>
         </template>
       </el-input>
 
-      <el-button @click="one=!one" style="">切换</el-button>
+      <el-button @click="one=!one" size="small" style="width:70px;margin-left: 25px">切换</el-button>
+
+      <el-select v-model="deptState" @change="next" size="small" placeholder="请选择状态" style="width:70px;margin-left: 25px">
+        <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+        >
+        </el-option>
+      </el-select>
     </div>
 
     <div class="y">
@@ -70,9 +80,20 @@ export default {
         pagesize: 5,
         total: 0,
       },
+      options:[
+        {
+          value: 0,
+          label: '启用',
+        },
+        {
+          value: 1,
+          label: '禁用',
+        },
+      ],
       one:true,
       deptName:'',
       staffName:'',
+      deptState: '',
       tableData: [],
     };
   },
@@ -92,6 +113,8 @@ export default {
           "deptName":this.deptName,
           //职员名称
           "staffName":this.staffName,
+          //状态
+          "deptState":this.deptState,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',

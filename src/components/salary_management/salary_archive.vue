@@ -102,7 +102,6 @@
       &nbsp;
     </el-tabs>
   </div>
-  &nbsp;
 </template>
 <script>
 import {ElMessage, ElNotification} from "element-plus";

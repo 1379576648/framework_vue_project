@@ -2851,8 +2851,8 @@ export default defineComponent({
                     showClose: true,
                     message: '操作成功，请等待审批结果',
                     type: 'success',
-                  })
-                  this.$store.commit("updateToken", response.data.data.token);
+                })
+                this.$store.commit("updateToken", response.data.data.token);
                   this.punch = false;
                 } else {
                   ElNotification.warning({

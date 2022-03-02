@@ -1,52 +1,52 @@
 <!--查看工资表 -->
 <template>
   <div style="width:100%;">
-  <div style="width:100%;height:10px;">
-    <!--搜索输入框-->
-    <el-row style="width:200px;float:right;">
-      <el-input v-model="seek" placeholder="搜索">
-        <template #suffix>
-          <el-icon class="el-input__icon"><i-search/></el-icon>
-        </template>
-      </el-input>
-    </el-row>
-  </div>
+<!--  <div style="width:100%;height:10px;">-->
+<!--    &lt;!&ndash;搜索输入框&ndash;&gt;-->
+<!--    <el-row style="width:200px;float:right;">-->
+<!--      <el-input v-model="seek" placeholder="姓名" @input="selectMoney(),selectMoneys()">-->
+<!--        <template #suffix>-->
+<!--          <el-icon class="el-input__icon"><i-search/></el-icon>-->
+<!--        </template>-->
+<!--      </el-input>-->
+<!--    </el-row>-->
+<!--  </div>-->
     <div style="width:100%;margin-top: 50px;" class="icon-p">
 <!--      <div style="width:80%;height:100px;margin: auto;background: #42b983">-->
       <el-row>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(35, 102, 167);font-size:14px;color: white">
-           <p>29</p>
+           <p>{{this.tableDataTwo.tjFive+this.tableDataThree.tjSix}}</p>
             <p>全部</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="hover" style="background-color: rgb(73, 167, 130);font-size:14px;color: white">
-            <p>29</p>
+            <p>{{this.tableDataTwo.tjFive}}</p>
             <p>正式员工</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="never" style="background-color: rgb(57, 146, 193);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDataThree.tjSix }}</p>
             <p>试用员工</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(233, 143, 39);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDataFour.tjSeven }}</p>
             <p>本月新入职</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(35, 102, 167);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDatatx.tx }}</p>
             <p>本月调薪</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(73, 167, 130);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDatas.tjFour }}</p>
             <p>本月离职</p>
           </el-card>
         </el-col>
@@ -154,9 +154,7 @@
 
 
 
-  </div>
-  {{tableData}}
-<!--  </div>-->
+  </div><!--  </div>-->
 </template>
 
 
@@ -168,6 +166,11 @@ export default {
       //请求的路径
       url: "http://localhost:80/",
       tableData: [],
+      tableDataTwo:[],
+      tableDataThree:[],
+      tableDataFour:[],
+      tableDatas:[],
+      tableDatatx:[],
       seek:"",
       pageInfo: {
         // 分页参数
@@ -175,7 +178,7 @@ export default {
         pagesize: 5, // 页大小
         total: 0, // 总页数
       },
-
+      month:"",
     }
   },
   methods:{
@@ -224,6 +227,9 @@ export default {
     },
     //分页查询已归档工资表
     selectMoneys(moth) {
+      if (moth!=null){
+        this.month=moth
+      }
       var _this = this
       this.axios({
         method: 'post',
@@ -234,7 +240,7 @@ export default {
           //页大小
           "pageSize": this.pageInfo.pagesize,
           //薪资月份
-          "payMonth":moth,
+          "payMonth":this.month,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
@@ -245,6 +251,176 @@ export default {
             if (response.data.data.state === 200) {
               _this.tableData = response.data.data.info.records
               _this.pageInfo.total = response.data.data.info.total
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //正式
+    countStateFour() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateFour',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDataTwo = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //试用
+    countStateFive() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateFive',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDataThree = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //本月新入职
+    countStateSix() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateSix',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDataFour = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //本月离职
+    countStateThree() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateThree',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDatas = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //本月调薪
+    counttx() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'counttx',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDatatx = response.data.data.info[0]
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({
@@ -274,7 +450,16 @@ export default {
     }else{
       this.selectMoneys(this.$parent.$parent.$parent.$parent.$data.payMonth);
     }
-
+    //正式员工
+    this.countStateFour();
+    //试用
+    this.countStateFive();
+    //本月新入职
+    this.countStateSix();
+    //离职
+    this.countStateThree();
+    //本月调薪
+    this.counttx();
 
   }
 }
