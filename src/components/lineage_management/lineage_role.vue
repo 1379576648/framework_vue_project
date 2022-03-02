@@ -892,7 +892,8 @@ export default {
           //角色状态
           this.roleState = '',
           //创建时间
-          this.selectTime = []
+          this.selectTime = [],
+          this.next();
     },
     //新增修改菜单操作
     addUpdate(fromValue) {

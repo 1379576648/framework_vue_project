@@ -38,7 +38,7 @@
                   </svg>
                   搜索
                 </el-button>
-                <el-button style="color: #606266" @click="menuPowerName='',menuPowerRoute='',date=[]">
+                <el-button style="color: #606266" @click="menuPowerName='',menuPowerRoute='',date=[],menuPowerInCondition()">
                   <svg t="1639014771399" class="icon" viewBox="0 0 1024 1024" version="1.1"
                        xmlns="http://www.w3.org/2000/svg" p-id="4267" width="17" height="17">
                     <path
@@ -51,7 +51,12 @@
             </div>
             <div class="j-set-top-bottom">
               <el-button type="primary"
-                         @click="this.insertMenu=true,this.clear,this.boxName='新增菜单',this.ruleForm.previousMenu='主类目',this.channel=0">
+                         @click="
+                         this.insertMenu=true,
+                         this.clear,
+                         this.boxName='新增菜单',
+                         this.ruleForm.previousMenu='主类目',
+                         this.channel=0">
                 <svg t="1639015562660" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5342" width="17" height="17">
                   <path
