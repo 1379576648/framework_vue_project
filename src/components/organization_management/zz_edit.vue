@@ -2,8 +2,8 @@
   <input v-model="permission" style="display: none">
   <div class="w">
     <div class="head">
-      <el-button type="primary" style="margin-left: 16px" @click="insert"
-      >新增
+      <el-button type="primary" style="margin-left: 16px" @click="dialog=true,cxdept()"
+       >新增
       </el-button>&nbsp;&nbsp;
       <el-drawer
           ref="drawer"
@@ -19,18 +19,13 @@
             </el-form-item>
             <el-form-item label="所属部门" :label-width="formLabelWidth">
               <el-select v-model="form.region" placeholder="请选择">
-                <el-option label="Area1" value="shanghai"></el-option>
-                <el-option label="Area2" value="beijing"></el-option>
+                <el-option v-for="item in cx" :value="item.deptId" :label="item.deptName">{{item.deptName}}</el-option>
               </el-select>
-            </el-form-item>
-            <el-form-item label="状态" :label-width="formLabelWidth">
-              <el-radio v-model="radio1" label="1">启用</el-radio>
-              <el-radio v-model="radio1" label="2">禁用</el-radio>
             </el-form-item>
           </el-form>
           <div class="demo-drawer__footer">
             <el-button @click="cancelForm">关闭</el-button>
-            <el-button type="primary" :loading="loading"><!-- @click="$refs.drawer.closeDrawer() -->
+            <el-button type="primary" :loading="loading" @click="insert"><!-- @click="$refs.drawer.closeDrawer() -->
               {{ loading ? 'Submitting ...' : '确认' }}
             </el-button>
           </div>
@@ -87,6 +82,8 @@
       </el-pagination>
     </div>
   </div>
+  {{form.name}}
+  {{form.region}}
 </template>
 
 <script>
@@ -162,6 +159,7 @@ export default defineComponent({
     }
 
     return {
+      dialog:false,
       url: "http://localhost:80/",
       //通过path获取二级菜单下面所有的菜单
       menuList: this.$store.getters.store_menuList(this.$route.query.path)[0],
@@ -173,12 +171,17 @@ export default defineComponent({
         pagesize: 5,
         total: 0,
       },
+      cx:[],
       options: ref([
         {
           value: "Option1",
           label: "Option1",
         },
       ]),
+      form:{
+        name: '',
+        region: '',
+      },
       tableData: [],
       value1: "", //日期
       value: ref(""), //选择
@@ -190,8 +193,86 @@ export default defineComponent({
     };
   },
   methods: {
+    cxdept(){
+      var _this = this
+      this.axios({
+        method: 'get',
+        url: this.url + 'cxDept',
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              this.cx=response.data.data.info
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
     //新增按钮操作
     insert() {
+      var _this=this
+      this.axios({
+        method:'post',
+        url:this.url + '/xzDeptPost/',
+        data:{
+          "postName" : this.form.name,
+          "deptId" : this.form.region,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //关闭弹出对话框
+                this.dialog = false;
+                this.next();
+                ElMessage({
+                  type: 'success',
+                  message: '新增成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
     },
     //删除按钮操作
     drop(id) {
@@ -305,6 +386,7 @@ export default defineComponent({
     //jWT传梯
     this.axios.defaults.headers.Authorization = "Bearer " + this.$store.state.token
     this.next();
+
   }
 })
 </script>

@@ -60,7 +60,7 @@
           <template #default="scope">
             <div style="width: 140px">
               <el-button type="text" size="small" @click="popup(),one=scope.row.resumeId">邀约面试</el-button>
-              <el-button type="text" size="small" @click="">淘汰/放弃</el-button>
+              <el-button type="text" size="small" @click="Abandon(scope.row.resumeId)">淘汰/放弃</el-button>
             </div>
 
             <el-dialog v-model="dialogVisible" title="是否设为面试候选人" width="30%" center>
@@ -181,6 +181,50 @@ export default {
       this.axios({
         method: 'put',
         url: this.url + 'OfferInterview',
+        data: {
+          "resumeId":id,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == 666) {
+                this.dialogVisible=false;
+                this.selectInterviewCandidate();
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //淘汰放弃
+    Abandon(id) {
+      var _this = this
+      this.axios({
+        method: 'put',
+        url: this.url + 'Abandon',
         data: {
           "resumeId":id,
         },

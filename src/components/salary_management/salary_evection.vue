@@ -48,7 +48,7 @@
 <!--            <el-table-column prop="name" label="核算规则" width="230"/>-->
             <el-table-column label="核算规则" width="240">
               <template #default="scope">
-                <span>小时工资x{{this.tableData[0].businessOnemoney}}%</span><br/>
+                <span>扣{{this.tableData[0].businessOnemoney}}元x小时</span><br/>
               </template>
             </el-table-column>
             <el-table-column prop="deptName" label="适用对象" width="230"/>

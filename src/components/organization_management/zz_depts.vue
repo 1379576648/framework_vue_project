@@ -2,7 +2,7 @@
   <input v-model="permission" style="display: none">
   <div class="w">
     <div class="head">
-      <el-button type="primary" style="margin-left: 16px"
+      <el-button type="primary" style="margin-left: 16px" @click="dialog=true,cxstaff()"
       >新增
       </el-button>&nbsp;&nbsp;
       <el-drawer ref="drawer" v-model="dialog" :before-close="handleClose" direction="ltr" custom-class="demo-drawer">
@@ -12,19 +12,18 @@
               <el-input v-model="form.name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="负责人" :label-width="formLabelWidth">
-              <el-select v-model="form.region" placeholder="请选择">
-                <el-option label="Area1" value="shanghai"></el-option>
-                <el-option label="Area2" value="beijing"></el-option>
-              </el-select>
+                <el-select v-model="form.region" placeholder="请选择">
+                  <el-option v-for="item in cx" :value="item.staffId" :label="item.staffName">{{item.staffName}}</el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="状态" :label-width="formLabelWidth">
-              <el-radio v-model="radio1" label="1">启用</el-radio>
-              <el-radio v-model="radio1" label="2">禁用</el-radio>
+              <el-radio v-model="form.state" label="0">启用</el-radio>
+              <el-radio v-model="form.state" label="1">禁用</el-radio>
             </el-form-item>
           </el-form>
           <div class="demo-drawer__footer">
             <el-button @click="cancelForm">关闭</el-button>
-            <el-button type="primary" :loading="loading"><!-- @click="$refs.drawer.closeDrawer() -->
+            <el-button type="primary" :loading="loading" @click="insert" ><!-- @click="$refs.drawer.closeDrawer() -->
               {{ loading ? 'Submitting ...' : '确认' }}
             </el-button>
           </div>
@@ -66,35 +65,41 @@
         </el-table-column>
 
         <el-table-column prop="operate" label="操作">
-          <template #default>
-            <el-button type="primary" style="margin-left: 16px" @click="drawer = true" label="rtl">修改</el-button>
+          <template #default="scope">
+            <el-button type="primary" style="margin-left: 16px" @click="
+            drawer = true,cxstaff(),
+            form.region=scope.row.staffId,
+            form.name=scope.row.deptName,
+            form.state=scope.row.deptState,
+            form.deptId=scope.row.deptId" label="rtl">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-drawer v-model="drawer" title="部门负责人修改" :direction="direction" :before-close="handleClose">
         <el-form :model="form">
           <el-form-item label="部门名称" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
+            <el-input v-model="form.name"  autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="负责人" :label-width="formLabelWidth">
-            <el-select v-model="form.region" placeholder="请选择">
-              <el-option label="Area1" value="shanghai"></el-option>
-              <el-option label="Area2" value="beijing"></el-option>
-            </el-select>
+              <el-select v-model="form.region" placeholder="请选择">
+                <el-option v-for="item in cx" :value="item.staffId" :label="item.staffName"/>
+              </el-select>
           </el-form-item>
-          <el-form-item label="状态" :label-width="formLabelWidth">
-            <el-radio v-model="radio1" label="0">启用</el-radio>
-            <el-radio v-model="radio1" label="1">禁用</el-radio>
+          <el-form-item label="状态"  :label-width="formLabelWidth" :key="key">
+              <el-radio :label="0"  v-model="form.state"  >启用</el-radio>
+              <el-radio :label="1" v-model="form.state" >禁用</el-radio>
           </el-form-item>
         </el-form>
         <div class="demo-drawer__footer">&nbsp;
-          <el-button type="primary" :loading="loading"><!-- @click="$refs.drawer.closeDrawer() -->
+          <el-button type="primary" :loading="loading" @click="xg(),drawer = false"><!-- @click="$refs.drawer.closeDrawer() -->
             {{ loading ? 'Submitting ...' : '确认' }}
           </el-button>
         </div>
       </el-drawer>
     </div>
-
+    {{form.name}}
+    {{form.region}}
+    {{form.state}}
     <!-- 分页 -->
     <div class="demo-pagination-block">
       <el-pagination v-model:current-page="pageInfo.currentPage"
@@ -136,6 +141,7 @@ export default defineComponent({
         type: [],
         resource: '',
         desc: '',
+        deptId:0,
       },
       formLabelWidth: '80px',
       timer: null,
@@ -171,19 +177,11 @@ export default defineComponent({
     const direction = ref('rtl')
 
     return {
-      url: "http://localhost:80/",
       dialog: false,
+      url: "http://localhost:80/",
+
       loading: false,
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
-      },
+      key:0,
       formLabelWidth: '80px',
       timer: null,
       //通过path获取二级菜单下面所有的菜单
@@ -193,7 +191,7 @@ export default defineComponent({
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       options: ref([
@@ -202,8 +200,14 @@ export default defineComponent({
           label: "Option1",
         },
       ]),
+      form:{
+        name: '',
+        region: '',
+        state:'',
+        deptId:0,
+      },
       tableData: [],
-
+      cx:[],
       value1: "", //日期
       value: ref(""), //选择
       ...toRefs(state),
@@ -215,6 +219,141 @@ export default defineComponent({
     };
   },
   methods: {
+    //查询员工
+    cxstaff(){
+      var _this = this
+      this.axios({
+        method: 'get',
+        url: this.url + 'selectStaffF',
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              this.cx=response.data.data.info
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //新增按钮操作
+    insert() {
+      var _this=this
+      this.axios({
+        method:'post',
+        url:this.url + '/xzDept/',
+        data:{
+          "deptName" : this.form.name,
+          "staffId" : this.form.region,
+          "deptState":this.form.state,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //关闭弹出对话框
+                this.dialog = false;
+                this.next();
+                ElMessage({
+                  type: 'success',
+                  message: '新增成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //修改
+    xg() {
+      var _this=this
+      this.axios({
+        method:'put',
+        url:this.url + '/upDept/',
+        data:{
+          "deptName" : this.form.name,
+          "staffId" : this.form.region,
+          "deptState":this.form.state,
+          "deptId":this.form.deptId
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code == 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state == 200) {
+              //如果是成功
+              if (response.data.data.info == "成功") {
+                //关闭弹出对话框
+                this.dialog = false;
+                this.next();
+                ElMessage({
+                  type: 'success',
+                  message: '修改成功',
+                })
+                this.$store.commit("updateToken", response.data.data.token);
+              } else {
+                ElMessage({
+                  type: 'warning',
+                  message: response.data.data.info,
+                })
+              }
+            }else {
+              ElNotification.warning({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
     /*分页查询*/
     next() {
       var _this = this
