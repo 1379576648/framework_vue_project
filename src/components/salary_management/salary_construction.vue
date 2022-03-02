@@ -59,7 +59,7 @@
               this.$parent.$data.attendanceplan=false,
               this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
-              this.$parent.$data.salary_insertplanthree=false"
+              this.$parent.$data.salary_insertplanthree=false,this.$parent.$data.social=false"
                       style="color: #040711;cursor: pointer">去设置</span> </span>
               </template>
             </el-collapse-item>
@@ -77,7 +77,7 @@
               this.$parent.$data.attendanceplan=false,
               this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
-              this.$parent.$data.salary_insertplanthree=false"
+              this.$parent.$data.salary_insertplanthree=false,this.$parent.$data.social=false"
                       style="color: #040711;cursor: pointer">去设置</span> </span>
               </template>
             </el-collapse-item>
@@ -96,7 +96,7 @@
               this.$parent.$data.attendanceplan=true,
               this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
-              this.$parent.$data.salary_insertplanthree=false"
+              this.$parent.$data.salary_insertplanthree=false,this.$parent.$data.social=false"
                       style="color: #040711;cursor: pointer">去设置</span></span>
               </template>
             </el-collapse-item>
@@ -115,7 +115,8 @@
               this.$parent.$data.attendanceplan=false,
               this.$parent.$data.evectionplan=true,
               this.$parent.$data.salary_insertplan=false,
-              this.$parent.$data.salary_insertplanthree=false"
+              this.$parent.$data.salary_insertplanthree=false,
+this.$parent.$data.social=false"
                       style="color: #040711;cursor: pointer">去设置</span> </span>
               </template>
 
@@ -128,42 +129,43 @@
                 <span class="span_1_zhe">【加项】针对员工社保缴纳，在自主社保模块设置数据
                   <span
                       @click="
-                        this.$parent.$data.salary_checkwage=false,
+                                               this.$parent.$data.salary_checkwage=false,
               this.$parent.$data.regular=false,
               this.$parent.$data.callbackpay=false,
               this.$parent.$data.attendanceplan=false,
-              this.$parent.$data.evectionplan=true,
+              this.$parent.$data.evectionplan=false,
               this.$parent.$data.salary_insertplan=false,
-              this.$parent.$data.salary_insertplanthree=false"
+              this.$parent.$data.salary_insertplanthree=false,
+this.$parent.$data.social=false,
+               this.$parent.$data.social=true"
                       style="color: #040711;cursor: pointer">去设置</span> </span>
               </template>
 
             </el-collapse-item>
-            <br/>
-            <el-collapse-item title="Efficiency" name="5" disabled>
-              <template #title>
-                <h3 style="margin-left: 20px;">公积金</h3>
-                <span class="span_1_zhe">【加项】针对员工公积金缴纳，在自主社保模块设置数据
-                  <span
-                      @click="
-                        this.$parent.$data.salary_checkwage=false,
-              this.$parent.$data.regular=false,
-              this.$parent.$data.callbackpay=false,
-              this.$parent.$data.attendanceplan=false,
-              this.$parent.$data.evectionplan=true,
-              this.$parent.$data.salary_insertplan=false,
-              this.$parent.$data.salary_insertplanthree=false"
-                      style="color: #040711;cursor: pointer">去设置</span> </span>
-              </template>
+<!--            <el-collapse-item title="Efficiency" name="5" disabled>-->
+<!--              <template #title>-->
+<!--                <h3 style="margin-left: 20px;">公积金</h3>-->
+<!--                <span class="span_1_zhe">【加项】针对员工公积金缴纳，在自主社保模块设置数据-->
+<!--                  <span-->
+<!--                      @click="-->
+<!--                        this.$parent.$data.salary_checkwage=false,-->
+<!--              this.$parent.$data.regular=false,-->
+<!--              this.$parent.$data.callbackpay=false,-->
+<!--              this.$parent.$data.attendanceplan=false,-->
+<!--              this.$parent.$data.evectionplan=true,-->
+<!--              this.$parent.$data.salary_insertplan=false,-->
+<!--              this.$parent.$data.salary_insertplanthree=false"-->
+<!--                      style="color: #040711;cursor: pointer">去设置</span> </span>-->
+<!--              </template>-->
 
-            </el-collapse-item>
+<!--            </el-collapse-item>-->
 
           </el-collapse>
         </div>
       </div>
     </div>
   </div>
-
+  &nbsp;
 </template>
 
 <script>

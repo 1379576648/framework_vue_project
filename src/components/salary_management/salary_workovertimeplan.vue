@@ -46,9 +46,9 @@
 <!--            <el-table-column prop="工作日加班工资：小时X" label="核算规则" width="220"/>-->
             <el-table-column label="核算规则" width="220">
               <template #default="scope">
-                <span>工作日加班工资：小时工资x{{this.tableData[0].workSchemeWorkratio}}%</span><br/>
-                <span>休息日加班工资：小时工资x{{this.tableData[0].workSchemeDayoffratio}}%</span><br/>
-                <span>节假日加班工资：小时工资x{{this.tableData[0].workSchemeHolidayratio}}%</span>
+                <span>工作日加班工资：扣{{this.tableData[0].workSchemeWorkratio}}元x小时</span><br/>
+                <span>休息日加班工资：扣{{this.tableData[0].workSchemeDayoffratio}}元x小时</span><br/>
+                <span>节假日加班工资：扣{{this.tableData[0].workSchemeHolidayratio}}元x小时</span>
               </template>
             </el-table-column>
             <el-table-column prop="deptName" label="适用对象" width="230"/>

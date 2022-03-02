@@ -41,12 +41,8 @@
         <el-table-column prop="lateFrequency" align="center" label="迟到"/>
         <el-table-column prop="leaveEarlyFrequency" align="center" label="早退"/>
         <el-table-column prop="absenteeismFrequency" align="center" label="旷工"/>
-        <el-table-column align="center" label="是否全勤">
-          <template #default="scope">
-            <span v-if="scope.row.leaveEarly ===0 && scope.row.tardy ===0 && scope.row.absenteeism === 0">是</span>
-            <span v-if="scope.row.leaveEarly !==0 || scope.row.tardy !==0 || scope.row.absenteeism !==0">否</span>
-          </template>
-        </el-table-column>
+        <el-table-column prop="present" align="center" label="是否全勤"/>
+        <el-table-column prop="attendanceDays" align="center" label="应出勤天数"/>
       </el-table>
     </div>
     <!--分页-->

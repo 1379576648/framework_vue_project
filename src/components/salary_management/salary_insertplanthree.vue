@@ -26,7 +26,7 @@
                   <el-form-item label="出差工资" prop="businesswage">
                     <el-select v-model="ruleForm.businesswage" placeholder="请选择">
                       <el-option label="按出差时长" value="wagebyhour" style="margin-left: 20px;"></el-option>
-                      <el-option label="按固定金额" value="wagebyfixed" style="margin-left: 20px;"></el-option>
+<!--                      <el-option label="按固定金额" value="wagebyfixed" style="margin-left: 20px;"></el-option>-->
                     </el-select>
                   </el-form-item>
 
@@ -58,12 +58,13 @@
 
 
                   <el-form-item label="适用对象" prop="suitableusers">
-                    <el-select v-model="tableData.deptName" placeholder="请选择">
+                    <el-select v-model="tableData.deptName" placeholder="请选择" @change="selectBusinessBydept">
                       <el-option  style="margin-left: 20px;"
                                   v-for="item in dept_name"
                                   :key="item.value"
                                   :label="item.label"
                                   :value="item.value"
+
                       >
                       </el-option>
                     </el-select>
@@ -108,6 +109,7 @@ export default {
       //请求的路径
       url: "http://localhost:80/",
       tableData:[],
+      tableDatas:[],
       ruleForm: {
         schemename: '',
         businesswage: '',
@@ -245,6 +247,50 @@ export default {
             //如果服务是正常的
             if (response.data.data.state === 200) {
               _this.tableData = response.data.data.info[0];
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //根据部门名称查询有无方案
+    selectBusinessBydept(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectBusinessBydept',
+        data:{
+          deptName:this.tableData.deptName,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("根据部门名称查询有无方案")
+        console.log(response)
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+             if (response.data.data.info.length>=1 ){
+               ElNotification({
+                 title: '提示',
+                 message: '该部门已有方案',
+                 type: 'warning',
+               })
+               this.tableData.deptName=[]
+             }
               this.$store.commit("updateToken", response.data.data.token);
             } else {
               ElNotification.error({

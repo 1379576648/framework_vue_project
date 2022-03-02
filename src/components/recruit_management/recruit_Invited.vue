@@ -81,7 +81,7 @@
         </el-table-column>
       </el-table>
 
-      <div class="demo-pagination-block">
+      <div class="demo-pagination-block" style="margin-left: 0px">
         <!-- <span class="demonstration">All combined</span> -->
         <el-pagination
             v-model:currentPage="pageInfo.currentPage"
@@ -120,7 +120,7 @@ export default {
       pageInfo: {
         currentPage: 1,
         /* 当前的页 */
-        pagesize: 3,
+        pagesize: 5,
         total: 0,
       },
       //筛选框显示隐藏

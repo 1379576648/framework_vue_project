@@ -13,8 +13,8 @@
       <div class="j-card-body ">
         <div style="padding: 25px; height: 1000px">
           <div>
-            <!-- 用户照片 -->
-<!--            <div style="width: 170px;">
+             用户照片
+            <div style="width: 170px;">
               <div class="upload-btn common mb_10">
                 <label>
                   <input type="file" @change="uploadImg"/>
@@ -25,7 +25,7 @@
                 <i class="del-img" @click="forkImage">
                 </i>
               </div>
-            </div>-->
+            </div>
 
             <div>
             <!-- 用 户 基 本 消 息 -->
