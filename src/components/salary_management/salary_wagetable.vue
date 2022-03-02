@@ -16,37 +16,37 @@
       <el-row>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(35, 102, 167);font-size:14px;color: white">
-           <p>29</p>
+           <p>{{this.tableDataTwo.tjFive+this.tableDataThree.tjSix}}</p>
             <p>全部</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="hover" style="background-color: rgb(73, 167, 130);font-size:14px;color: white">
-            <p>29</p>
+            <p>{{this.tableDataTwo.tjFive}}</p>
             <p>正式员工</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="never" style="background-color: rgb(57, 146, 193);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDataThree.tjSix }}</p>
             <p>试用员工</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(233, 143, 39);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDataFour.tjSeven }}</p>
             <p>本月新入职</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(35, 102, 167);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDatatx.tx }}</p>
             <p>本月调薪</p>
           </el-card>
         </el-col>
         <el-col :span="4">
           <el-card shadow="always" style="background-color: rgb(73, 167, 130);font-size:14px;color: white">
-            <p>22</p>
+            <p>{{ this.tableDatas.tjFour }}</p>
             <p>本月离职</p>
           </el-card>
         </el-col>
@@ -166,6 +166,11 @@ export default {
       //请求的路径
       url: "http://localhost:80/",
       tableData: [],
+      tableDataTwo:[],
+      tableDataThree:[],
+      tableDataFour:[],
+      tableDatas:[],
+      tableDatatx:[],
       seek:"",
       pageInfo: {
         // 分页参数
@@ -261,6 +266,176 @@ export default {
         }
       })
     },
+    //正式
+    countStateFour() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateFour',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDataTwo = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //试用
+    countStateFive() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateFive',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDataThree = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //本月新入职
+    countStateSix() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateSix',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDataFour = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //本月离职
+    countStateThree() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'countStateThree',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDatas = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //本月调薪
+    counttx() {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'counttx',
+        data: {
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              _this.tableDatatx = response.data.data.info[0]
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
   },
   mounted() {
     //jWT传梯
@@ -272,7 +447,16 @@ export default {
     }else{
       this.selectMoneys(this.$parent.$parent.$parent.$parent.$data.payMonth);
     }
-
+    //正式员工
+    this.countStateFour();
+    //试用
+    this.countStateFive();
+    //本月新入职
+    this.countStateSix();
+    //离职
+    this.countStateThree();
+    //本月调薪
+    this.counttx();
 
   }
 }
