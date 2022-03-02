@@ -23,7 +23,7 @@
           </el-form>
           <div class="demo-drawer__footer">
             <el-button @click="cancelForm">关闭</el-button>
-            <el-button type="primary" :loading="loading" @click="insert"><!-- @click="$refs.drawer.closeDrawer() -->
+            <el-button type="primary" :loading="loading" @click="insert" ><!-- @click="$refs.drawer.closeDrawer() -->
               {{ loading ? 'Submitting ...' : '确认' }}
             </el-button>
           </div>
@@ -68,7 +68,7 @@
           <template #default="scope">
             <el-button type="primary" style="margin-left: 16px" @click="
             drawer = true,cxstaff(),
-            form.region=scope.row.staffName,
+            form.region=scope.row.staffId,
             form.name=scope.row.deptName,
             form.state=scope.row.deptState,
             form.deptId=scope.row.deptId" label="rtl">修改</el-button>
@@ -97,6 +97,9 @@
         </div>
       </el-drawer>
     </div>
+    {{form.name}}
+    {{form.region}}
+    {{form.state}}
     <!-- 分页 -->
     <div class="demo-pagination-block">
       <el-pagination v-model:current-page="pageInfo.currentPage"
@@ -116,9 +119,6 @@
       </el-pagination>
     </div>
   </div>
-  {{form.name}}
-  {{form.region}}
-  {{form.state}}
 </template>
 
 <script>
