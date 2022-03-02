@@ -262,7 +262,7 @@
 
 
                   <el-form-item label="适用对象" prop="suitableusers">
-                    <el-select v-model="tableData.deptName" placeholder="请选择">
+                    <el-select v-model="tableData.deptName" placeholder="请选择" @change="selectAttendandceBydept">
                       <el-option  style="margin-left: 20px;"
                                   v-for="item in dept_name"
                                   :key="item.value"
@@ -447,6 +447,50 @@ export default {
               message: response.data.data.info,
               offset: 100,
             })
+          }
+        } else {
+          ElNotification.error({
+            title: '提示',
+            message: response.data.message,
+            offset: 100,
+          })
+        }
+      })
+    },
+    //根据部门名称查询有无方案
+    selectAttendandceBydept(id) {
+      var _this = this
+      this.axios({
+        method: 'post',
+        url: this.url + 'selectAttendandceBydept',
+        data:{
+          deptName:this.tableData.deptName,
+        },
+        responseType: 'json',
+        responseEncoding: 'utf-8',
+      }).then((response) => {
+        console.log("根据部门名称查询有无方案")
+        console.log(response)
+        if (response.data.code === 200) {
+          if (response.data.data) {
+            //如果服务是正常的
+            if (response.data.data.state === 200) {
+              if (response.data.data.info.length>=1 ){
+                ElNotification({
+                  title: '提示',
+                  message: '该部门已有方案',
+                  type: 'warning',
+                })
+                this.tableData.deptName=[]
+              }
+              this.$store.commit("updateToken", response.data.data.token);
+            } else {
+              ElNotification.error({
+                title: '提示',
+                message: response.data.data.info,
+                offset: 100,
+              })
+            }
           }
         } else {
           ElNotification.error({
