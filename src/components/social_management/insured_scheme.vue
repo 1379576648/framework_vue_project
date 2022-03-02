@@ -16,7 +16,7 @@
                 size="small"
                 clearable
                 @change="next"
-                placeholder="请选择"
+                placeholder="请选择状态"
             >
               <el-option
                   v-for="item in options"

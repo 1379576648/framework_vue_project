@@ -676,6 +676,7 @@ export default {
         //员工手机号
         staffPhone: '',
       }
+      this.next_one();
     },
     //搜索重置方法
     resetTwo() {
@@ -688,7 +689,7 @@ export default {
         //职位名称
         postName:'',
       }
-
+      this.next_two();
     }
   }, mounted() {
     //jWT传梯
