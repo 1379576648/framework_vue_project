@@ -1,16 +1,16 @@
 <!--查看工资表 -->
 <template>
   <div style="width:100%;">
-  <div style="width:100%;height:10px;">
-    <!--搜索输入框-->
-    <el-row style="width:200px;float:right;">
-      <el-input v-model="seek" placeholder="搜索">
-        <template #suffix>
-          <el-icon class="el-input__icon"><i-search/></el-icon>
-        </template>
-      </el-input>
-    </el-row>
-  </div>
+<!--  <div style="width:100%;height:10px;">-->
+<!--    &lt;!&ndash;搜索输入框&ndash;&gt;-->
+<!--    <el-row style="width:200px;float:right;">-->
+<!--      <el-input v-model="seek" placeholder="姓名" @input="selectMoney(),selectMoneys()">-->
+<!--        <template #suffix>-->
+<!--          <el-icon class="el-input__icon"><i-search/></el-icon>-->
+<!--        </template>-->
+<!--      </el-input>-->
+<!--    </el-row>-->
+<!--  </div>-->
     <div style="width:100%;margin-top: 50px;" class="icon-p">
 <!--      <div style="width:80%;height:100px;margin: auto;background: #42b983">-->
       <el-row>
@@ -178,7 +178,7 @@ export default {
         pagesize: 5, // 页大小
         total: 0, // 总页数
       },
-
+      month:"",
     }
   },
   methods:{
@@ -227,6 +227,9 @@ export default {
     },
     //分页查询已归档工资表
     selectMoneys(moth) {
+      if (moth!=null){
+        this.month=moth
+      }
       var _this = this
       this.axios({
         method: 'post',
@@ -237,7 +240,7 @@ export default {
           //页大小
           "pageSize": this.pageInfo.pagesize,
           //薪资月份
-          "payMonth":moth,
+          "payMonth":this.month,
         },
         responseType: 'json',
         responseEncoding: 'utf-8',
