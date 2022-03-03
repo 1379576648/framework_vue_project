@@ -4,10 +4,6 @@
     <div class="ant-spin-nested-loading">
       <div class="ant-spin-container">
         <div class="mt-20 ml-20 mr-20">
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
           <!--搜索框-->
           <div style="float: right;">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">

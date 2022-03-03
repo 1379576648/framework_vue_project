@@ -13,10 +13,6 @@
                 <span>新增招聘计划</span>
               </button>
           </a>
-          <!-- 批量导入按钮 -->
-          <button style="margin-top: 4px; margin-left: 10px;" type="button" class="ant-btn abt">
-            <span>批量导入</span>
-          </button>
 
           <!-- 下拉选择器 -->
           <div class="resume-operation">
@@ -59,26 +55,26 @@
             <el-table-column fixed="right" label="操作" width="180">
               <template #default="scope">
                 <div style="width: 140px">
-                  <el-button type="text" size="small" @click="">删除</el-button>
+<!--                  <el-button type="text" size="small" @click="">删除</el-button>-->
                 </div>
                 <div v-if="tableData[scope.$index].zpzt=='招聘中'">
-                    <el-button type="text" size="small" @click="recruit_add_plan=true,recruit_add_plan_name='编辑'">编辑</el-button>
+<!--                    <el-button type="text" size="small" @click="recruit_add_plan=true,recruit_add_plan_name='编辑'">编辑</el-button>
                   &nbsp;
                   <el-popconfirm title="是否确定关闭?" @confirm="confirmgb()" @cancel="cancelgb()">
                     <template #reference>
                       <el-button type="text" size="small">关闭</el-button>
                     </template>
-                  </el-popconfirm>
+                  </el-popconfirm>-->
 
                 </div>
                 <div v-else-if="tableData[scope.$index].zpzt=='已结束'">
-                  <el-button type="text" size="small" @click="">查看</el-button>
+<!--                  <el-button type="text" size="small" @click="">查看</el-button>
 
                   <el-popconfirm title="是否确认删除该招聘计划?" @confirm="confirmsc()" @cancel="cancelsc()">
                     <template #reference>
                       <el-button type="text" size="small">删除</el-button>
                     </template>
-                  </el-popconfirm>
+                  </el-popconfirm>-->
 
                 </div>
               </template>
